@@ -1,4 +1,4 @@
-# bezier-swift
+# Bezier-swift
 Swift components from Bezier Design System.
 
 ## Install
