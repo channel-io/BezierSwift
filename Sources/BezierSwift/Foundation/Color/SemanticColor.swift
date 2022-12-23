@@ -138,6 +138,7 @@ public enum SemanticColor {
   case bgtxtNavyLight
   case bgtxtNavyNormal
   case bgtxtNavyDark
+  case custom(PaletteSet)
 }
 
 // MARK: Light, Dark Color
@@ -148,7 +149,9 @@ extension SemanticColor {
 
 // MARK: Palette Set
 extension SemanticColor {
-  private var paletteSet: (Color, Color) {
+  public typealias PaletteSet = (Color, Color)
+  
+  private var paletteSet: PaletteSet {
     switch self {
       // MARK: - Background
     case .bgWhiteHigh: return (Palette.white, Palette.grey700)
@@ -280,6 +283,7 @@ extension SemanticColor {
     case .bgtxtNavyLight: return (Palette.navy400_30, Palette.navy300_40)
     case .bgtxtNavyNormal: return (Palette.navy400, Palette.navy300)
     case .bgtxtNavyDark: return (Palette.navy500, Palette.navy400)
+    case .custom(let paletteSet): return (paletteSet.0, paletteSet.1)
     }
   }
 }
