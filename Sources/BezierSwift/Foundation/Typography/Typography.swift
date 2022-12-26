@@ -7,17 +7,26 @@
 
 import SwiftUI
 
-public extension Text {
-  func applyBezierFontStyle(
+extension View {
+  public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    textColor: SemanticColor = .txtBlackDarkest,
-    truncationMode: TruncationMode? = nil
+    semanticColor: SemanticColor = .txtBlackDarkest
   ) -> some View {
-    return self
+    self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
+  }
+}
+
+private struct BezierFontStyle: ViewModifier, Themeable {
+  @Environment(\.colorScheme) var colorScheme
+  
+  let bezierFont: BezierFont
+  let semanticColor: SemanticColor
+  
+  func body(content: Content) -> some View {
+    content
       .font(bezierFont.font)
-      .ifApply(truncationMode.isNotNil) {
-        $0.truncationMode(truncationMode ?? .tail)
-      }
-      .frame(height: bezierFont.lineHeight)
+      .lineSpacing(bezierFont.lineSpacing)
+      .padding(.vertical, bezierFont.verticalPadding)
+      .foregroundColor(self.palette(self.semanticColor))
   }
 }

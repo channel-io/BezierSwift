@@ -28,8 +28,8 @@ public enum BezierFont {
   case bold22
   case normal24
   case bold24
-  case bold30
   case bold36
+  case bold44
 }
 
 public extension BezierFont {
@@ -55,11 +55,11 @@ public extension BezierFont {
     case .bold22: return self.getBoldFont(size: 22)
     case .normal24: return self.getNormalFont(size: 24)
     case .bold24: return self.getBoldFont(size: 24)
-    case .bold30: return self.getBoldFont(size: 30)
     case .bold36: return self.getBoldFont(size: 36)
+    case .bold44: return self.getBoldFont(size: 44)
     }
   }
-
+  
   var lineHeight: CGFloat {
     switch self {
     case .normal11: return CGFloat(16)
@@ -82,11 +82,42 @@ public extension BezierFont {
     case .bold22: return CGFloat(28)
     case .normal24: return CGFloat(32)
     case .bold24: return CGFloat(32)
-    case .bold30: return CGFloat(32)
     case .bold36: return CGFloat(44)
+    case .bold44: return CGFloat(53)
     }
   }
-
+  
+  var lineSpacing: CGFloat {
+    switch self {
+    case .normal11: return CGFloat(2.7)
+    case .bold11: return CGFloat(2.7)
+    case .normal12: return CGFloat(1.5)
+    case .bold12: return CGFloat(1.5)
+    case .normal13: return CGFloat(2.5)
+    case .bold13: return CGFloat(2.5)
+    case .normal14: return CGFloat(1.4)
+    case .bold14: return CGFloat(1.4)
+    case .normal15: return CGFloat(2)
+    case .bold15: return CGFloat(2)
+    case .normal16: return CGFloat(3)
+    case .bold16: return CGFloat(3)
+    case .normal17: return CGFloat(1.8)
+    case .bold17: return CGFloat(1.8)
+    case .normal18: return CGFloat(2.5)
+    case .bold18: return CGFloat(2.5)
+    case .normal22: return CGFloat(1.8)
+    case .bold22: return CGFloat(1.8)
+    case .normal24: return CGFloat(3.2)
+    case .bold24: return CGFloat(3.2)
+    case .bold36: return CGFloat(1.1)
+    case .bold44: return CGFloat(0.5)
+    }
+  }
+  
+  var verticalPadding: CGFloat {
+    return self.lineSpacing / 2
+  }
+  
   var letterSpacing: CGFloat {
     switch self {
     case .normal11: return CGFloat(0)
@@ -109,8 +140,8 @@ public extension BezierFont {
     case .bold22: return -CGFloat(0.4)
     case .normal24: return -CGFloat(0.4)
     case .bold24: return -CGFloat(0.4)
-    case .bold30: return -CGFloat(0.4)
     case .bold36: return -CGFloat(1.0)
+    case .bold44: return -CGFloat(1.0)
     }
   }
 }
@@ -134,7 +165,7 @@ private extension BezierFont {
   func getNormalFont(size: CGFloat) -> Font {
     return .system(size: size, weight: .regular)
   }
-
+  
   func getBoldFont(size: CGFloat) -> Font {
     return .system(size: size, weight: .bold)
   }
