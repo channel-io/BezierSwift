@@ -32,6 +32,7 @@ final class BezierToastHostingController<Content>: UIViewController where Conten
     self.view = BezierToastHostingView()
     self.view.addSubview(toastView)
     
+    self.view.layer.zPosition = 1
     self.view.backgroundColor = .clear
     self.view.isUserInteractionEnabled = false
     self.view.translatesAutoresizingMaskIntoConstraints = false
