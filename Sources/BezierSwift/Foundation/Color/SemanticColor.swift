@@ -8,6 +8,8 @@
 import SwiftUI
 
 public enum SemanticColor {
+  case bgTransparent
+  
   // MARK: - Background
   case bgWhiteHigh
   case bgWhiteLow
@@ -154,6 +156,7 @@ extension SemanticColor {
   
   private var paletteSet: PaletteSet {
     switch self {
+    case .bgTransparent: return (Palette.white_0, Palette.white_0)
       // MARK: - Background
     case .bgWhiteHigh: return (Palette.white, Palette.grey700)
     case .bgWhiteLow: return (Palette.white, Palette.grey800)
