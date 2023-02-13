@@ -70,7 +70,6 @@ struct BezierToast: View, Themeable {
           HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
             if let leftImage = self.info.leftImage {
               leftImage
-                .renderingMode(.template)
                 .resizable()
                 .foregroundColor(self.palette(self.info.leftImageTintColor))
                 .scaledToFit()
@@ -122,7 +121,30 @@ private extension View {
 
 struct BezierToast_Previews: PreviewProvider {
   static var previews: some View {
-    EmptyView()
+    let justTitleInfo = BezierToastInfo(title: "Bezier Toast")
+    let defaultImageInfo = BezierToastInfo(
+      leftImage: Image(systemName: "globe"),
+      title: "Bezier Toast"
+    )
+    let applyTintColorImageInfo = BezierToastInfo(
+      leftImage: Image(systemName: "globe"),
+      leftImageTintColor: .bgtxtOrangeNormal,
+      title: "Bezier Toast"
+    )
+    
+    if #available(iOS 14.0, *) {
+      // Some Content View
+      return VStack {
+        // Just Preview Usecase
+        BezierToast(info: justTitleInfo)
+        BezierToast(info: defaultImageInfo)
+        BezierToast(info: applyTintColorImageInfo)
+      }
+      // If you want a global toast, use it
+      .bezierToast(info: .constant(justTitleInfo))
+    } else {
+      return EmptyView()
+    }
   }
 }
 
