@@ -15,16 +15,16 @@ public struct BezierToastViewModel: Equatable {
   var leftImageLength: CGFloat { 20 }
   var leftImageTopPadding: CGFloat { 3 }
   
-  init(title: String) {
+  public init(title: String) {
     self.title = title
   }
   
-  init(leftImage: Image, title: String) {
+  public init(leftImage: Image, title: String) {
     self.leftImage = leftImage
     self.title = title
   }
   
-  init(leftImage: Image, leftImageTintColor: SemanticColor, title: String) {
+  public init(leftImage: Image, leftImageTintColor: SemanticColor, title: String) {
     self.leftImage = leftImage
     self.leftImageTintColor = leftImageTintColor
     self.title = title
