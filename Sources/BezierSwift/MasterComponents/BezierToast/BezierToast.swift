@@ -9,10 +9,26 @@ import SwiftUI
 
 struct BezierToastInfo: Equatable {
   var leftImage: Image?
+  var leftImageTintColor: SemanticColor = .bgtxtAbsoluteWhiteDark
   var title: String
   
   var leftImageLength: CGFloat { CGFloat(20) }
   var leftImageTopPadding: CGFloat { CGFloat(3) }
+  
+  init(title: String) {
+    self.title = title
+  }
+  
+  init(leftImage: Image, title: String) {
+    self.leftImage = leftImage
+    self.title = title
+  }
+  
+  init(leftImage: Image, leftImageTintColor: SemanticColor, title: String) {
+    self.leftImage = leftImage
+    self.leftImageTintColor = leftImageTintColor
+    self.title = title
+  }
   
   static func == (lhs: Self, rhs: Self) -> Bool {
     return false
@@ -56,6 +72,7 @@ struct BezierToast: View, Themeable {
               leftImage
                 .renderingMode(.template)
                 .resizable()
+                .foregroundColor(self.palette(self.info.leftImageTintColor))
                 .scaledToFit()
                 .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
                 .padding(.top, self.info.leftImageTopPadding)
