@@ -8,24 +8,17 @@
 import SwiftUI
 
 struct BezierToastInfo: Equatable {
-  enum LeftItemInfo {
-    case emoji(url: URL?)
-    case icon(image: Image?, color: SemanticColor)
-    
-    var length: CGFloat { return CGFloat(20) }
-    var top: CGFloat { return CGFloat(3) }
-  }
-  
-  var leftItem: LeftItemInfo
+  var leftImage: Image?
   var title: String
+  
+  var leftImageLength: CGFloat { CGFloat(20) }
+  var leftImageTopPadding: CGFloat { CGFloat(3) }
   
   static func == (lhs: Self, rhs: Self) -> Bool {
     return false
   }
 }
 
-
-@available(iOS 15.0, *)
 struct BezierToast: View, Themeable {
   private enum Metric {
     static let contentHorizontalPadding = CGFloat(10)
@@ -33,10 +26,7 @@ struct BezierToast: View, Themeable {
     static let conentHStackSpacing = CGFloat(6)
     static let contentStackVerticalPadding = CGFloat(10)
     static let contentStackHorizontalPadding = CGFloat(14)
-    
-    static let iconLength = CGFloat(20)
-    static let iconTopPadding = CGFloat(3)
-    
+
     static let textTopPadding = CGFloat(4)
   }
   
@@ -62,19 +52,14 @@ struct BezierToast: View, Themeable {
       if self.isPresented {
         VStack {
           HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
-            switch self.info.leftItem {
-            case .emoji(let url):
-              AsyncImage(url: url)
-                .frame(width: Metric.iconLength, height: Metric.iconLength)
-                .padding(.top, Metric.iconTopPadding)
-            case .icon(let image, color: let color):
-              image?
+            if let leftImage = self.info.leftImage {
+              leftImage
                 .renderingMode(.template)
-                .foregroundColor(self.palette(color))
-                .frame(width: Metric.iconLength, height: Metric.iconLength)
-                .padding(.top, Metric.iconTopPadding)
+                .resizable()
+                .scaledToFit()
+                .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
+                .padding(.top, self.info.leftImageTopPadding)
             }
-            
             
             VStack {
               Text(self.info.title)
@@ -88,7 +73,7 @@ struct BezierToast: View, Themeable {
           .padding(.horizontal, Metric.contentStackHorizontalPadding)
         }
         .background(self.palette(SemanticColor.bgBlackDarker))
-        .background(.thickMaterial)
+        .applyBlurEffectIfApply()
         .applyBezierCornerRadius(type: .round22)
         .frame(maxWidth: Constant.contentMaxWidth)
         .padding(.horizontal, Metric.contentHorizontalPadding)
@@ -104,6 +89,16 @@ struct BezierToast: View, Themeable {
       withAnimation(.easeInOut(duration: Constant.animationDuration).delay(Constant.animationDuration + Constant.disappearDelay)) {
         self.isPresented = false
       }
+    }
+  }
+}
+
+private extension View {
+  func applyBlurEffectIfApply() -> some View {
+    if #available(iOS 15.0, *) {
+      return self.background(.thickMaterial)
+    } else {
+      return self
     }
   }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-  @available(iOS 15.0, *)
+  @available(iOS 14.0, *)
   func bezierToast(info: Binding<BezierToastInfo?>) -> some View {
     modifier (
       BezierToastViewModifier(info: info)

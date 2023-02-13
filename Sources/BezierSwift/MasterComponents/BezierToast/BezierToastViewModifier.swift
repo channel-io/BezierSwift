@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
+@available(iOS 14.0, *)
 struct BezierToastViewModifier: ViewModifier {
   @Binding private var info: BezierToastInfo?
   
@@ -17,19 +17,21 @@ struct BezierToastViewModifier: ViewModifier {
   
   func body(content: Content) -> some View {
     content
-      .onChange(of: self.info) { newValue in
-        self.present()
+      .onChange(of: self.info) { info in
+        guard let info else { return }
+        
+        self.present(with: info)
       }
   }
   
-  func present() {
+  func present(with info: BezierToastInfo) {
     let keyWindow = UIApplication.shared.connectedScenes
       .map { $0 as? UIWindowScene }
       .compactMap { $0 }
       .first?.windows
       .first { $0.isKeyWindow }
     
-    guard let keyWindow, let info else { return }
+    guard let keyWindow else { return }
     
     keyWindow.subviews.forEach {
       guard $0 is BezierToastHostingView else { return }
