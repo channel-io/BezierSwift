@@ -9,22 +9,22 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct BezierToastViewModifier: ViewModifier {
-  @Binding private var info: BezierToastInfo?
+  @Binding private var viewModel: BezierToastViewModel?
   
-  init(info: Binding<BezierToastInfo?>) {
-    self._info = info
+  init(viewModel: Binding<BezierToastViewModel?>) {
+    self._viewModel = viewModel
   }
   
   func body(content: Content) -> some View {
     content
-      .onChange(of: self.info) { info in
-        guard let info else { return }
+      .onChange(of: self.viewModel) { viewModel in
+        guard let viewModel else { return }
         
-        self.present(with: info)
+        self.present(with: viewModel)
       }
   }
   
-  func present(with info: BezierToastInfo) {
+  func present(with viewModel: BezierToastViewModel) {
     let keyWindow = UIApplication.shared.connectedScenes
       .map { $0 as? UIWindowScene }
       .compactMap { $0 }
@@ -39,7 +39,7 @@ struct BezierToastViewModifier: ViewModifier {
       $0.removeFromSuperview()
     }
     
-    let toastView = BezierToast(info: info)
+    let toastView = BezierToast(viewModel: viewModel)
     
     guard let toastUIView = BezierToastHostingController(rootView: toastView).view else { return }
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct BezierToastInfo: Equatable {
+public struct BezierToastViewModel: Equatable {
   var leftImage: Image?
   var leftImageTintColor: SemanticColor?
   var title: String
@@ -57,10 +57,10 @@ struct BezierToast: View, Themeable {
   
   @State private var isPresented: Bool = false
   
-  private var info: BezierToastInfo
+  private var viewModel: BezierToastViewModel
   
-  init(info: BezierToastInfo) {
-    self.info = info
+  init(viewModel: BezierToastViewModel) {
+    self.viewModel = viewModel
   }
   
   var body: some View {
@@ -68,23 +68,23 @@ struct BezierToast: View, Themeable {
       if self.isPresented {
         VStack(spacing: .zero) {
           HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
-            if let leftImage = self.info.leftImage, let leftImageTintColor = self.info.leftImageTintColor {
+            if let leftImage = self.viewModel.leftImage, let leftImageTintColor = self.viewModel.leftImageTintColor {
               leftImage
                 .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
-                .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
-                .padding(.top, self.info.leftImageTopPadding)
+                .frame(width: self.viewModel.leftImageLength, height: self.viewModel.leftImageLength)
+                .padding(.top, self.viewModel.leftImageTopPadding)
                 .foregroundColor(self.palette(leftImageTintColor))
-            } else if let leftImage = self.info.leftImage {
+            } else if let leftImage = self.viewModel.leftImage {
               leftImage
                 .resizable()
                 .scaledToFit()
-                .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
-                .padding(.top, self.info.leftImageTopPadding)
+                .frame(width: self.viewModel.leftImageLength, height: self.viewModel.leftImageLength)
+                .padding(.top, self.viewModel.leftImageTopPadding)
             }
             
-            Text(self.info.title)
+            Text(self.viewModel.title)
               .applyBezierFontStyle(.bold14, semanticColor: .bgtxtAbsoluteWhiteDark)
               .lineLimit(Constant.textLineLimit)
               .padding(.vertical, Metric.textTopPadding)
@@ -93,7 +93,7 @@ struct BezierToast: View, Themeable {
           .padding(.horizontal, Metric.contentStackHorizontalPadding)
         }
         .background(self.palette(.bgBlackDarker))
-        .applyBlurEffectIfApply()
+        .applyBlurEffect()
         .applyBezierCornerRadius(type: .round22)
         .frame(maxWidth: Constant.contentMaxWidth)
         .padding(.horizontal, Metric.contentHorizontalPadding)
@@ -114,7 +114,7 @@ struct BezierToast: View, Themeable {
 }
 
 private extension View {
-  func applyBlurEffectIfApply() -> some View {
+  func applyBlurEffect() -> some View {
     if #available(iOS 15.0, *) {
       return self.background(.thickMaterial)
     } else {
@@ -125,27 +125,22 @@ private extension View {
 
 struct BezierToast_Previews: PreviewProvider {
   static var previews: some View {
-    let justTitleInfo = BezierToastInfo(title: "Bezier Toast")
-    let defaultImageInfo = BezierToastInfo(
-      leftImage: Image(systemName: "globe"),
-      title: "Bezier Toast"
-    )
-    let applyTintColorImageInfo = BezierToastInfo(
+    let onlyTitleViewModel = BezierToastViewModel(title: "Bezier Toast")
+    let withImageViewModel = BezierToastViewModel(leftImage: Image(systemName: "globe"), title: "Bezier Toast")
+    let withIconViewModel = BezierToastViewModel(
       leftImage: Image(systemName: "globe"),
       leftImageTintColor: .bgtxtOrangeNormal,
       title: "Bezier Toast"
     )
     
     if #available(iOS 14.0, *) {
-      // Some Content View
       return VStack {
-        // Just Preview Usecase
-        BezierToast(info: justTitleInfo)
-        BezierToast(info: defaultImageInfo)
-        BezierToast(info: applyTintColorImageInfo)
+        BezierToast(viewModel: onlyTitleViewModel)
+        BezierToast(viewModel: withImageViewModel)
+        BezierToast(viewModel: withIconViewModel)
       }
       // If you want a global toast, use it
-      .bezierToast(info: .constant(justTitleInfo))
+      .bezierToast(viewModel: .constant(onlyTitleViewModel))
     } else {
       return EmptyView()
     }
