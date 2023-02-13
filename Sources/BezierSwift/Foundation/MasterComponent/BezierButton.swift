@@ -15,7 +15,7 @@ private enum Constant {
   static let disalbedOpacity = CGFloat(0.4)
 }
 
-enum ButtonSize {
+public enum ButtonSize {
   case xsmall
   case small
   case medium
@@ -114,7 +114,7 @@ enum ButtonSize {
   }
 }
 
-enum ButtonColor: String {
+public enum ButtonColor: String {
   case blue
   case red
   case green
@@ -126,13 +126,13 @@ enum ButtonColor: String {
   case absoulteWhite
 }
 
-enum ButtonType: Equatable {
+public enum ButtonType: Equatable {
   case primary(ButtonColor)
   case secondary(ButtonColor)
   case tertiary(ButtonColor)
   case floating(ButtonColor)
   
-  static func == (lhs: Self, rhs: Self) -> Bool {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
     switch (lhs, rhs) {
     case (let .primary(lhsColor), let .primary(rhsColor)):
       return lhsColor == rhsColor
@@ -429,12 +429,12 @@ enum ButtonState {
   case disabled
 }
 
-enum ButtonResizing {
+public enum ButtonResizing {
   case hug
   case fill
 }
 
-struct BezierButton: View, Themeable {
+public struct BezierButton: View, Themeable {
   private var size: ButtonSize
   private var type: ButtonType
   private var resizing: ButtonResizing
@@ -464,7 +464,7 @@ struct BezierButton: View, Themeable {
     self.rightImage = rightContent
   }
   
-  init(
+  public init(
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
@@ -484,7 +484,7 @@ struct BezierButton: View, Themeable {
     )
   }
   
-  init(
+  public init(
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
@@ -502,7 +502,7 @@ struct BezierButton: View, Themeable {
     )
   }
   
-  init(
+  public init(
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
@@ -520,7 +520,7 @@ struct BezierButton: View, Themeable {
     )
   }
   
-  init(
+  public init(
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
@@ -536,7 +536,7 @@ struct BezierButton: View, Themeable {
     )
   }
   
-  init(
+  public init(
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
@@ -552,7 +552,7 @@ struct BezierButton: View, Themeable {
     )
   }
   
-  var body: some View {
+  public var body: some View {
     Button {
       self.action()
     } label: {
