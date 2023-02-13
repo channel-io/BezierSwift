@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct BezierToastInfo: Equatable {
   var leftImage: Image?
-  var leftImageTintColor: SemanticColor = .bgtxtAbsoluteWhiteDark
+  var leftImageTintColor: SemanticColor?
   var title: String
   
   var leftImageLength: CGFloat { 20 }
@@ -68,13 +68,20 @@ struct BezierToast: View, Themeable {
       if self.isPresented {
         VStack(spacing: .zero) {
           HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
-            if let leftImage = self.info.leftImage {
+            if let leftImage = self.info.leftImage, let leftImageTintColor = self.info.leftImageTintColor {
+              leftImage
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
+                .padding(.top, self.info.leftImageTopPadding)
+                .foregroundColor(self.palette(leftImageTintColor))
+            } else if let leftImage = self.info.leftImage {
               leftImage
                 .resizable()
                 .scaledToFit()
                 .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
                 .padding(.top, self.info.leftImageTopPadding)
-                .foregroundColor(self.palette(self.info.leftImageTintColor))
             }
             
             Text(self.info.title)
