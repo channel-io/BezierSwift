@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct BezierToastInfo: Equatable {
+public struct BezierToastInfo: Equatable {
   var leftImage: Image?
   var leftImageTintColor: SemanticColor = .bgtxtAbsoluteWhiteDark
   var title: String
   
-  var leftImageLength: CGFloat { CGFloat(20) }
-  var leftImageTopPadding: CGFloat { CGFloat(3) }
+  var leftImageLength: CGFloat { 20 }
+  var leftImageTopPadding: CGFloat { 3 }
   
   init(title: String) {
     self.title = title
@@ -30,7 +30,7 @@ struct BezierToastInfo: Equatable {
     self.title = title
   }
   
-  static func == (lhs: Self, rhs: Self) -> Bool {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
     return false
   }
 }
@@ -66,29 +66,26 @@ struct BezierToast: View, Themeable {
   var body: some View {
     VStack(alignment: .center, spacing: .zero) {
       if self.isPresented {
-        VStack {
+        VStack(spacing: .zero) {
           HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
             if let leftImage = self.info.leftImage {
               leftImage
                 .resizable()
-                .foregroundColor(self.palette(self.info.leftImageTintColor))
                 .scaledToFit()
                 .frame(width: self.info.leftImageLength, height: self.info.leftImageLength)
                 .padding(.top, self.info.leftImageTopPadding)
+                .foregroundColor(self.palette(self.info.leftImageTintColor))
             }
             
-            VStack {
-              Text(self.info.title)
-                .applyBezierFontStyle(.bold14, semanticColor: .bgtxtAbsoluteWhiteDark)
-                .lineLimit(Constant.textLineLimit)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.vertical, Metric.textTopPadding)
-            }
+            Text(self.info.title)
+              .applyBezierFontStyle(.bold14, semanticColor: .bgtxtAbsoluteWhiteDark)
+              .lineLimit(Constant.textLineLimit)
+              .padding(.vertical, Metric.textTopPadding)
           }
           .padding(.vertical, Metric.contentStackVerticalPadding)
           .padding(.horizontal, Metric.contentStackHorizontalPadding)
         }
-        .background(self.palette(SemanticColor.bgBlackDarker))
+        .background(self.palette(.bgBlackDarker))
         .applyBlurEffectIfApply()
         .applyBezierCornerRadius(type: .round22)
         .frame(maxWidth: Constant.contentMaxWidth)
@@ -98,11 +95,11 @@ struct BezierToast: View, Themeable {
     }
     .frame(maxHeight: .infinity, alignment: .top)
     .onAppear {
-      withAnimation(.easeInOut(duration: Constant.animationDuration)) {
+      withAnimation(.easeIn(duration: Constant.animationDuration)) {
         self.isPresented = true
       }
       
-      withAnimation(.easeInOut(duration: Constant.animationDuration).delay(Constant.animationDuration + Constant.disappearDelay)) {
+      withAnimation(.easeOut(duration: Constant.animationDuration).delay(Constant.animationDuration + Constant.disappearDelay)) {
         self.isPresented = false
       }
     }
