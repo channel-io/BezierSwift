@@ -14,8 +14,9 @@ public enum SemanticColor {
   case bgWhiteNormal
   case bgWhiteDimDark
   case bgWhiteDimLight
-  case bgBlackDarkest
   case bgBlackDark
+  case bgBlackDarker
+  case bgBlackDarkest
   case bgBlackLight
   case bgBlackLighter
   case bgBlackLightest
@@ -160,8 +161,9 @@ extension SemanticColor {
     case .bgWhiteNormal: return (Palette.white, Palette.grey900)
     case .bgWhiteDimDark: return (Palette.white_60, Palette.black_60)
     case .bgWhiteDimLight: return (Palette.white_20, Palette.black_20)
-    case .bgBlackDarkest: return (Palette.black_40, Palette.white_40)
     case .bgBlackDark: return (Palette.black_15, Palette.white_20)
+    case .bgBlackDarker: return (Palette.black_40, Palette.white_40)
+    case .bgBlackDarkest: return (Palette.black_60, Palette.white_60)
     case .bgBlackLight: return (Palette.black_8, Palette.white_12)
     case .bgBlackLighter: return (Palette.black_5, Palette.white_8)
     case .bgBlackLightest: return (Palette.black_3, Palette.white_5)
