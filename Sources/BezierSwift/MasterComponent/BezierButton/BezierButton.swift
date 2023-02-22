@@ -450,7 +450,7 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    title: String? = nil,
+    titleContent: String? = nil,
     leftContent: Image? = nil,
     rightContent: Image? = nil,
     action: @escaping () -> Void
@@ -459,7 +459,7 @@ public struct BezierButton: View, Themeable {
     self.type = type
     self.resizing = resizing
     self.action = action
-    self.title = title
+    self.title = titleContent
     self.leftImage = leftContent
     self.rightImage = rightContent
   }
@@ -477,7 +477,7 @@ public struct BezierButton: View, Themeable {
       size: size,
       type: type,
       resizing: resizing,
-      title: title,
+      titleContent: title,
       leftContent: leftImage,
       rightContent: rightImage,
       action: action
@@ -496,7 +496,7 @@ public struct BezierButton: View, Themeable {
       size: size,
       type: type,
       resizing: resizing,
-      title: title,
+      titleContent: title,
       leftContent: leftImage,
       action: action
     )
@@ -514,7 +514,7 @@ public struct BezierButton: View, Themeable {
       size: size,
       type: type,
       resizing: resizing,
-      title: title,
+      titleContent: title,
       rightContent: rightImage,
       action: action
     )
@@ -540,15 +540,15 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
-    title: @escaping () -> String
+    title: String,
+    action: @escaping () -> Void
   ) {
     self.init(
       size: size,
       type: type,
       resizing: resizing,
-      action: action,
-      title: title
+      titleContent: title,
+      action: action
     )
   }
   
