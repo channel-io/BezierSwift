@@ -450,10 +450,10 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
     title: String? = nil,
     leftContent: Image? = nil,
-    rightContent: Image? = nil
+    rightContent: Image? = nil,
+    action: @escaping () -> Void
   ) {
     self.size = size
     self.type = type
@@ -468,19 +468,19 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
-    title: @escaping () -> String,
-    leftImage: @escaping () -> Image,
-    rightImage: @escaping () -> Image
+    title: String,
+    leftImage: Image,
+    rightImage: Image,
+    action: @escaping () -> Void
   ) {
     self.init(
       size: size,
       type: type,
       resizing: resizing,
-      action: action,
-      title: title(),
-      leftContent: leftImage(),
-      rightContent: rightImage()
+      title: title,
+      leftContent: leftImage,
+      rightContent: rightImage,
+      action: action
     )
   }
   
@@ -488,17 +488,17 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
-    title: @escaping () -> String,
-    leftImage: @escaping () -> Image
+    title: String,
+    leftImage: Image,
+    action: @escaping () -> Void
   ) {
     self.init(
       size: size,
       type: type,
       resizing: resizing,
-      action: action,
-      title: title(),
-      leftContent: leftImage()
+      title: title,
+      leftContent: leftImage,
+      action: action
     )
   }
   
@@ -506,17 +506,17 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
-    title: @escaping () -> String,
-    rightImage: @escaping () -> Image
+    title: String,
+    rightImage: Image,
+    action: @escaping () -> Void
   ) {
     self.init(
       size: size,
       type: type,
       resizing: resizing,
-      action: action,
-      title: title(),
-      rightContent: rightImage()
+      title: title,
+      rightContent: rightImage,
+      action: action
     )
   }
   
@@ -524,15 +524,15 @@ public struct BezierButton: View, Themeable {
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing,
-    action: @escaping () -> Void,
-    leftImage: @escaping () -> Image
+    centerImage: Image,
+    action: @escaping () -> Void
   ) {
     self.init(
       size: size,
       type: type,
       resizing: resizing,
-      action: action,
-      leftContent: leftImage()
+      leftContent: centerImage,
+      action: action
     )
   }
   
@@ -548,7 +548,7 @@ public struct BezierButton: View, Themeable {
       type: type,
       resizing: resizing,
       action: action,
-      title: title()
+      title: title
     )
   }
   
@@ -592,7 +592,6 @@ public struct BezierButton: View, Themeable {
     }
     .buttonStyle(
       BezierButtonStyle(
-        self,
         size: size,
         type: type,
         resizing: resizing
@@ -622,8 +621,9 @@ private extension Image {
   }
 }
 
-struct BezierButtonStyle: ButtonStyle {
-  private let themeable: Themeable
+private struct BezierButtonStyle: ButtonStyle, Themeable {
+  @Environment(\.colorScheme) var colorScheme
+  
   private let size: ButtonSize
   private let type: ButtonType
   private let resizing: ButtonResizing
@@ -631,12 +631,10 @@ struct BezierButtonStyle: ButtonStyle {
   @Environment(\.isEnabled) var isEnabled: Bool
   
   init(
-    _ themeable: Themeable,
     size: ButtonSize,
     type: ButtonType,
     resizing: ButtonResizing
   ) {
-    self.themeable = themeable
     self.size = size
     self.type = type
     self.resizing = resizing
@@ -647,7 +645,7 @@ struct BezierButtonStyle: ButtonStyle {
     configuration.label
       .frame(height: self.size.height)
       .disabled(!self.isEnabled)
-      .background(themeable.palette(self.type.backgroundColor(state: buttonState)))
+      .background(self.palette(self.type.backgroundColor(state: buttonState)))
       .applyBezierCornerRadius(type: self.size.cornerRadius(type: self.type))
       .opacity(self.isEnabled ? 1 : Constant.disalbedOpacity)
   }
@@ -660,71 +658,35 @@ struct BezierButtonStyle: ButtonStyle {
 struct BezierButton_Previews: PreviewProvider {
   static var previews: some View {
     VStack {
-      BezierButton(size: .large, type: .primary(.green), resizing: .fill) {
+      BezierButton(size: .large, type: .primary(.green), resizing: .fill, title: "Get started", leftImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .primary(.blue), resizing: .hug) {
+      
+      BezierButton(size: .large, type: .primary(.blue), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .primary(.red), resizing: .hug) {
+      BezierButton(size: .large, type: .primary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .secondary(.red), resizing: .hug) {
+      BezierButton(size: .large, type: .secondary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .tertiary(.red), resizing: .hug) {
+      BezierButton(size: .large, type: .tertiary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .floating(.red), resizing: .hug) {
+      BezierButton(size: .large, type: .floating(.cobalt), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
-      } title: {
-        "Get started"
-      } leftImage: {
-        Image(systemName: "trash")
-      } rightImage: {
-        Image(systemName: "trash")
       }
       
-      BezierButton(size: .large, type: .primary(.yellow), resizing: .hug) {
+      BezierButton(size: .large, type: .primary(.yellow), resizing: .hug, centerImage: Image(systemName: "trash")) {
         print("")
-      } leftImage: {
-        Image(systemName: "trash")
       }
+      
     }.padding()
   }
 }

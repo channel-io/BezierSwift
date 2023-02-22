@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BezierElevation {
+public enum BezierElevation {
   case mEv1
   case mEv2
   case mEv3
