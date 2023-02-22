@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BezierCornerRadius {
+public enum BezierCornerRadius {
   case round2
   case round3
   case round4
