@@ -56,7 +56,7 @@ public enum BezierCornerRadius {
 
 
 extension View {
-  func applyBezierCornerRadius(type: BezierCornerRadius, correction: CGFloat = 0) -> some View {
+  public func applyBezierCornerRadius(type: BezierCornerRadius, correction: CGFloat = 0) -> some View {
     return self
       .clipShape(
         RoundedRectangle(

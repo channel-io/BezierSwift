@@ -30,7 +30,7 @@ public enum BezierElevation {
 }
 
 extension View {
-  func applyBezierElevation(_ themeable: Themeable, type: BezierElevation) -> some View {
+  public func applyBezierElevation(_ themeable: Themeable, type: BezierElevation) -> some View {
     let rawVaue = type.rawValue(themeable)
     return self
       .shadow(
