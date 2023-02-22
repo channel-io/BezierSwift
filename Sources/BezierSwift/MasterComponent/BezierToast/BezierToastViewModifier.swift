@@ -53,5 +53,9 @@ struct BezierToastViewModifier: ViewModifier {
     ]
     
     NSLayoutConstraint.activate(toastConstraints)
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+      self.viewModel = nil
+    }
   }
 }
