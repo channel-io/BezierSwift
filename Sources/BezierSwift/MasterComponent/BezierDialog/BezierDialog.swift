@@ -39,7 +39,7 @@ public struct BezierDialogParam {
   var buttonInfo: BezierDialogButtonInfo?
   var dismissCompletion: (() -> Void)?
   
-  init(priority: Int, title: String?, description: String?, buttonInfo: BezierDialogButtonInfo?, dismissCompletion: (() -> Void)?) {
+  public init(priority: Int, title: String?, description: String?, buttonInfo: BezierDialogButtonInfo?, dismissCompletion: (() -> Void)?) {
     self.priority = priority
     self.title = title ?? ""
     self.description = description ?? ""
@@ -66,7 +66,7 @@ extension View {
 }
 
 class DialogViewModel: ObservableObject {
-  @Published private(set) var isPresented: Bool = true
+  @Published private(set) var isPresented: Bool = false
   
   @Published var title: String = ""
   @Published var description: String = ""
@@ -78,7 +78,7 @@ class DialogViewModel: ObservableObject {
   var currentPriority: Int = Int.min
   
   func update(param: BezierDialogParam) {
-    guard param.priority < self.currentPriority else {
+    guard param.priority > self.currentPriority else {
       param.dismissCompletion?()
       return
     }
@@ -115,7 +115,7 @@ class DialogViewModel: ObservableObject {
     
     self.currentDismissCompletion = nil
     self.currentParamId = UUID()
-    self.currentPriority = -1
+    self.currentPriority = Int.min
     
     self.isPresented = false
   }
@@ -145,12 +145,10 @@ struct BezierDialog: ViewModifier, Themeable {
         if viewModel.isPresented {
           self.palette(.bgtxtAbsoluteBlackLighter)
             .edgesIgnoringSafeArea(.all)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay {
               VStack(alignment: .center, spacing: .zero) {
-                Spacer()
                 HStack(spacing: .zero) {
-                  Spacer()
-
                   HStack(spacing: .zero) {
                     Spacer()
                     VStack(alignment: .center, spacing: Metric.belowStackTop) {
@@ -182,6 +180,7 @@ struct BezierDialog: ViewModifier, Themeable {
                       
                     }
                     .padding(.all, Metric.dialogPadding)
+                    .frame(maxWidth: .infinity)
 
                     Spacer()
                   }
@@ -190,13 +189,8 @@ struct BezierDialog: ViewModifier, Themeable {
                   .applyBezierElevation(self, type: .mEv3)
                   .frame(maxWidth: Metric.dialogMaxWidth)
                   .padding(.horizontal, Metric.dimSideMinPadding)
-
-                  Spacer()
                 }
-
-                Spacer()
               }
-              
             }
         }
       }
