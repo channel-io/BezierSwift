@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Dispatch
 
 private enum Metric {
   static let dimSideMinPadding = CGFloat(40)
@@ -29,14 +30,21 @@ public enum BezierDialogButtonInfo {
 }
 
 public struct BezierDialogParam {
+  var id = UUID()
+  
+  // TODO: priority 일정 enum으로 제한두기. by jam 2023.02.24
+  var priority: Int
   var title: String
   var description: String
   var buttonInfo: BezierDialogButtonInfo?
+  var dismissCompletion: (() -> Void)?
   
-  init(title: String?, description: String?, buttonInfo: BezierDialogButtonInfo?) {
+  init(priority: Int, title: String?, description: String?, buttonInfo: BezierDialogButtonInfo?, dismissCompletion: (() -> Void)?) {
+    self.priority = priority
     self.title = title ?? ""
     self.description = description ?? ""
     self.buttonInfo = buttonInfo
+    self.dismissCompletion = dismissCompletion
   }
 }
 
@@ -46,7 +54,7 @@ public struct BezierDialogManager {
   }
 
   public static func dismiss() {
-    BezierDialogSingleton.shared.viewModel.isPresented = false
+    BezierDialogSingleton.shared.viewModel.dismiss()
   }
 }
 
@@ -58,30 +66,58 @@ extension View {
 }
 
 class DialogViewModel: ObservableObject {
-  @Published var isPresented: Bool = true
+  @Published private(set) var isPresented: Bool = true
   
   @Published var title: String = ""
   @Published var description: String = ""
   @Published var buttons: [BezierButton] = []
   @Published var isButtonStackVertical = false
   
+  var currentParamId: UUID = UUID()
+  var currentDismissCompletion: (() -> Void)?
+  var currentPriority: Int = Int.min
+  
   func update(param: BezierDialogParam) {
-    self.title = param.title
-    self.description = param.description
-    if let buttonInfo = param.buttonInfo {
-      switch buttonInfo {
-      case .vertical(let buttons):
-        self.buttons = buttons
-        self.isButtonStackVertical = true
-      case .horizontal(let buttons):
-        self.buttons = buttons
-        self.isButtonStackVertical = false
+    guard param.priority < self.currentPriority else {
+      param.dismissCompletion?()
+      return
+    }
+    
+    self.dismiss()
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+      guard let self = self else { return }
+      
+      self.currentParamId = param.id
+      self.currentDismissCompletion = param.dismissCompletion
+      self.currentPriority = param.priority
+      
+      self.title = param.title
+      self.description = param.description
+      
+      if let buttonInfo = param.buttonInfo {
+        switch buttonInfo {
+        case .vertical(let buttons):
+          self.buttons = buttons
+          self.isButtonStackVertical = true
+        case .horizontal(let buttons):
+          self.buttons = buttons
+          self.isButtonStackVertical = false
+        }
       }
     }
+    
+    self.isPresented = true
   }
   
-  func update(isPresented: Bool) {
-    self.isPresented = isPresented
+  func dismiss() {
+    self.currentDismissCompletion?()
+    
+    self.currentDismissCompletion = nil
+    self.currentParamId = UUID()
+    self.currentPriority = -1
+    
+    self.isPresented = false
   }
 }
 
