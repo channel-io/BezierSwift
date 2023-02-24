@@ -83,11 +83,11 @@ class DialogViewModel: ObservableObject {
       return
     }
     
+    let delayTime: DispatchTime = .now() + (self.isPresented ? 0.3 :  0)
+    
     self.dismiss()
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-      guard let self = self else { return }
-      
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.currentParamId = param.id
       self.currentDismissCompletion = param.dismissCompletion
       self.currentPriority = param.priority
@@ -105,9 +105,11 @@ class DialogViewModel: ObservableObject {
           self.isButtonStackVertical = false
         }
       }
+      
+      withAnimation(.easeInOut(duration: 0.3)) {
+        self.isPresented = true
+      }
     }
-    
-    self.isPresented = true
   }
   
   func dismiss() {
@@ -117,7 +119,9 @@ class DialogViewModel: ObservableObject {
     self.currentParamId = UUID()
     self.currentPriority = Int.min
     
-    self.isPresented = false
+    withAnimation(.easeInOut(duration: 0.3)) {
+      self.isPresented = false
+    }
   }
 }
 
@@ -150,7 +154,6 @@ struct BezierDialog: ViewModifier, Themeable {
               VStack(alignment: .center, spacing: .zero) {
                 HStack(spacing: .zero) {
                   HStack(spacing: .zero) {
-                    Spacer()
                     VStack(alignment: .center, spacing: Metric.belowStackTop) {
                       if !viewModel.title.isEmpty || !viewModel.description.isEmpty {
                         VStack(alignment: .center, spacing: Metric.upperStackSpace) {
@@ -181,8 +184,6 @@ struct BezierDialog: ViewModifier, Themeable {
                     }
                     .padding(.all, Metric.dialogPadding)
                     .frame(maxWidth: .infinity)
-
-                    Spacer()
                   }
                   .background(self.palette(.bgWhiteHigh))
                   .applyBezierCornerRadius(type: .round16)
