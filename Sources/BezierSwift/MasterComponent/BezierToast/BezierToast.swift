@@ -133,17 +133,13 @@ struct BezierToast_Previews: PreviewProvider {
       title: "Bezier Toast"
     )
     
-    if #available(iOS 14.0, *) {
-      return VStack {
-        BezierToast(viewModel: onlyTitleViewModel)
-        BezierToast(viewModel: withImageViewModel)
-        BezierToast(viewModel: withIconViewModel)
-      }
-      // If you want a global toast, use it
-      .bezierToast(viewModel: .constant(onlyTitleViewModel))
-    } else {
-      return EmptyView()
+    return VStack {
+      BezierToast(viewModel: onlyTitleViewModel)
+      BezierToast(viewModel: withImageViewModel)
+      BezierToast(viewModel: withIconViewModel)
     }
+    // If you want a global toast, use it
+    .bezierToast(viewModel: .constant(onlyTitleViewModel))
   }
 }
 

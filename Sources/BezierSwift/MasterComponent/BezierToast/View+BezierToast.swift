@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension View {
-  @available(iOS 14.0, *)
   public func bezierToast(viewModel: Binding<BezierToastViewModel?>) -> some View {
     modifier (
       BezierToastViewModifier(viewModel: viewModel)
