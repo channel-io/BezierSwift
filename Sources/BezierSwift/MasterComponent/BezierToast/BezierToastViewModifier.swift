@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct BezierToastViewModifier: ViewModifier {
   @Binding private var viewModel: BezierToastViewModel?
   
