@@ -40,6 +40,7 @@ public enum Palette {
   public static let grey900 = Color(r: 36, g: 36, b: 40, alpha: 1.0)
   public static let grey900_90 = Color(r: 36, g: 36, b: 40, alpha: 0.9)
   public static let grey850 = Color(r: 42, g: 43, b: 45, alpha: 1.0)
+  public static let grey850_80 = Color(r: 42, g: 43, b: 45, alpha: 0.8)
   public static let grey800 = Color(r: 49, g: 50, b: 52, alpha: 1.0)
   public static let grey800_80 = Color(r: 49, g: 50, b: 52, alpha: 0.8)
   public static let grey700 = Color(r: 70, g: 71, b: 72, alpha: 1.0)
@@ -51,6 +52,7 @@ public enum Palette {
   public static let grey100_90 = Color(r: 247, g: 247, b: 248, alpha: 0.9)
   public static let grey100_80 = Color(r: 247, g: 247, b: 248, alpha: 0.8)
   public static let grey50 = Color(r: 252, g: 252, b: 252, alpha: 1.0)
+  public static let grey50_80 = Color(r: 252, g: 252, b: 252, alpha: 0.8)
   
   public static let blue500 = Color(r: 78, g: 64, b: 201, alpha: 1.0)
   public static let blue400 = Color(r: 94, g: 86, b: 240, alpha: 1.0)
