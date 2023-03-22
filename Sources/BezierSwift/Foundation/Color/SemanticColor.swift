@@ -27,6 +27,7 @@ public enum SemanticColor {
   case bgGreyLight
   case bgGreyLighter
   case bgGreyLightest
+  case bgGreyDimLightest
   case bgGnb
   case bgNavi
   case bgHeaderFloat
@@ -175,6 +176,7 @@ extension SemanticColor {
     case .bgGreyLight: return (Palette.grey200, Palette.grey700)
     case .bgGreyLighter: return (Palette.grey100, Palette.grey800)
     case .bgGreyLightest: return (Palette.grey50, Palette.grey850)
+    case .bgGreyDimLightest: return (Palette.grey50_80, Palette.grey850_80)
     case .bgGnb: return (Palette.grey200_80, Palette.grey700_80)
     case .bgNavi: return (Palette.grey100_80, Palette.grey800_80)
     case .bgHeaderFloat: return (Palette.white_90, Palette.grey800_80)
