@@ -142,5 +142,3 @@ struct BezierToast_Previews: PreviewProvider {
     .bezierToast(viewModel: .constant(onlyTitleViewModel))
   }
 }
-
-

@@ -13,5 +13,10 @@ extension View {
       BezierToastViewModifier(viewModel: viewModel)
     )
   }
+  
+  public func bezierToast1(_ param: BezierToastParam) -> some View {
+    let _ = BezierToastManager.showToast(param)
+    return self
+  }
 }
 
