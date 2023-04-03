@@ -10,7 +10,6 @@ import SwiftUI
 final class BezierToastHostingView: UIView { }
 
 final class BezierToastHostingController<Content>: UIViewController where Content: View {
-  
   private var hostingController: UIHostingController<Content>?
   
   init(rootView: Content) {

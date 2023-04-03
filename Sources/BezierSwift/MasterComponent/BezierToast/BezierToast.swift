@@ -7,24 +7,24 @@
 
 import SwiftUI
 
+private enum Metric {
+  static let horizontalPadding = CGFloat(10)
+  
+  static let contentHStackSpacing = CGFloat(6)
+  static let contentHStackVerticalPadding = CGFloat(10)
+  static let contentHStackHorizontalPadding = CGFloat(14)
+  
+  static let textTopPadding = CGFloat(4)
+}
+
+private enum Constant {
+  static let contentMaxWidth = CGFloat(460)
+  static let textLineLimit = 2
+  static let animationDuration = CGFloat(0.3)
+  static let disappearDelay = CGFloat(3.0)
+}
+
 public struct BezierToast: View, Themeable {
-  private enum Metric {
-    static let contentHorizontalPadding = CGFloat(10)
-    
-    static let conentHStackSpacing = CGFloat(6)
-    static let contentStackVerticalPadding = CGFloat(10)
-    static let contentStackHorizontalPadding = CGFloat(14)
-    
-    static let textTopPadding = CGFloat(4)
-  }
-  
-  private enum Constant {
-    static let contentMaxWidth = CGFloat(460)
-    static let textLineLimit = 2
-    static let animationDuration = CGFloat(0.3)
-    static let disappearDelay = CGFloat(3.0)
-  }
-  
   @Environment(\.colorScheme) public var colorScheme
   @EnvironmentObject private var viewModel: BezierToastViewModel
   
@@ -36,7 +36,7 @@ public struct BezierToast: View, Themeable {
   
   public var body: some View {
     VStack(spacing: .zero) {
-      HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
+      HStack(alignment: .top, spacing: Metric.contentHStackSpacing) {
         if let leftItem = self.param.leftItem {
           switch leftItem {
           case .icon(let image, let color):
@@ -55,14 +55,14 @@ public struct BezierToast: View, Themeable {
           .lineLimit(Constant.textLineLimit)
           .padding(.vertical, Metric.textTopPadding)
       }
-      .padding(.vertical, Metric.contentStackVerticalPadding)
-      .padding(.horizontal, Metric.contentStackHorizontalPadding)
+      .padding(.vertical, Metric.contentHStackVerticalPadding)
+      .padding(.horizontal, Metric.contentHStackHorizontalPadding)
     }
     .background(self.palette(.bgBlackDarker))
     .applyBlurEffect()
     .applyBezierCornerRadius(type: .round22)
     .frame(maxWidth: Constant.contentMaxWidth)
-    .padding(.horizontal, Metric.contentHorizontalPadding)
+    .padding(.horizontal, Metric.horizontalPadding)
   }
 }
 
