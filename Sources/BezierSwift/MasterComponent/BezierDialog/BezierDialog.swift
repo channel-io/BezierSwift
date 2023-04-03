@@ -49,7 +49,7 @@ public struct BezierDialogParam {
 }
 
 public struct BezierDialogManager {
-  public static func show(with param: BezierDialogParam) {
+  public static func show(param: BezierDialogParam) {
     BezierDialogSingleton.shared.viewModel.update(param: param)
   }
 
