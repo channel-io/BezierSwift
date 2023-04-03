@@ -38,7 +38,7 @@ public struct BezierToastContainerView: View, Themeable {
     ZStack(alignment: .top) {
       Color.clear
       ForEach(self.viewModel.toastItems) { item in
-        BezierToast(item: item)
+        BezierToast(param: item.param)
           .transition(.toast(position: item.param.toastPosition))
       }
     }

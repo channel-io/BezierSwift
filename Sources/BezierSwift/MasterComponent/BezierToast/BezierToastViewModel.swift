@@ -19,12 +19,7 @@ public final class BezierToastViewModel: ObservableObject {
   
   func appendToastItem(_ item: BezierToastItem) {
     while self.toastItems.count >= Constant.maxToastCount {
-      withAnimation(.toastRemoval) {
-        let toastItem = self.toastItems.removeFirst()
-        toastItem.binding?.wrappedValue = nil
-        self.timerCancelBags[toastItem.uuid]?.cancel()
-        self.timerCancelBags[toastItem.uuid] = nil
-      }
+      self.removeToastItem(index: 0)
     }
     
     withAnimation(.toastInsertion) {
@@ -35,12 +30,20 @@ public final class BezierToastViewModel: ObservableObject {
       .autoconnect()
       .prefix(1)
       .sink { _ in
-        guard let index = self.toastItems.firstIndex(where: { $0.uuid == item.uuid }) else { return }
+        guard let index = self.toastItems.firstIndex(where: { $0.id == item.id }) else { return }
         
-        withAnimation(.toastRemoval) {
-          self.toastItems.remove(at: index)
-          self.timerCancelBags[item.uuid] = nil
-        }
+        self.removeToastItem(index: index)
       }
+  }
+  
+  private func removeToastItem(index: Int) {
+    withAnimation(.toastRemoval) {
+      guard index < self.toastItems.count else { return }
+      
+      let toastItem = self.toastItems.remove(at: index)
+      toastItem.binding?.wrappedValue = nil
+      self.timerCancelBags[toastItem.id]?.cancel()
+      self.timerCancelBags[toastItem.id] = nil
+    }
   }
 }

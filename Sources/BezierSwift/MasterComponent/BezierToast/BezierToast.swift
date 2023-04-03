@@ -28,12 +28,8 @@ public struct BezierToast: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   @EnvironmentObject private var viewModel: BezierToastViewModel
   
-  private var param: BezierToastParam
-  
-  init(item: BezierToastItem) {
-    self.param = item.param
-  }
-  
+  private let param: BezierToastParam
+
   public init(param: BezierToastParam) {
     self.param = param
   }
