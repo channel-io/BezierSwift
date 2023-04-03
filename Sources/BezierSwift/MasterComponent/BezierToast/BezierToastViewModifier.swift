@@ -58,9 +58,3 @@ struct BezierToastViewModifier: ViewModifier {
     }
   }
 }
-
-struct BezierToastViewModifier1: ViewModifier {
-  func body(content: Content) -> some View {
-    content
-  }
-}

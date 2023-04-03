@@ -16,36 +16,30 @@ private enum Constant {
 
 struct BezierToastItem: Identifiable {
   let param: BezierToastParam
+  let binding: Binding<BezierToastParam?>?
   let uuid = UUID()
   var id: UUID { self.uuid }
+  
+  init(param: BezierToastParam, binding: Binding<BezierToastParam?>? = nil) {
+    self.param = param
+    self.binding = binding
+  }
 }
 
 public final class BezierToastViewModel1: ObservableObject {
   @Published private(set) var toastItems: [BezierToastItem] = []
-  private(set) var removeToastSubject = PassthroughSubject<UUID, Never>()
-  private var cancelBag = Set<AnyCancellable>()
-
-  init() {
-    self.removeToastSubject
-      .delay(for: 3, scheduler: DispatchQueue.main)
-      .sink { uuid in
-        guard let index = self.toastItems.firstIndex(where: { $0.uuid == uuid }) else { return }
-        
-        self.toastItems.remove(at: index)
-      }
-      .store(in: &self.cancelBag)
-  }
+//  private var cancelBag = Set<AnyCancellable>()
+//  private var timerCancelBags: [UUID: AnyCancellable] = [:]
   
-  func appendToastParam(_ param: BezierToastParam) {
-    self.toastItems.forEach {
-      self.removeToastSubject.send($0.uuid)
+  func appendToastItem(_ item: BezierToastItem) {
+//    while self.toastItems.count >= Constant.maxToastCount {
+//      let toastItem = self.toastItems.removeFirst()
+//      toastItem.binding?.wrappedValue = nil
+//    }
+//
+    withAnimation(.easeIn(duration: 2)) {
+      self.toastItems.append(item)
     }
-
-    self.toastItems.append(BezierToastItem(param: param))
-  }
-  
-  func pulisherForRemoteToast() -> AnyPublisher<UUID, Never> {
-    self.removeToastSubject.eraseToAnyPublisher()
   }
 }
 
@@ -59,12 +53,15 @@ public struct BezierToastContainerView: View, Themeable {
   
   public var body: some View {
     ZStack(alignment: .top) {
-      ForEach(self.viewModel.toastItems) { item in
+      if let item = self.viewModel.toastItems.first {
         BezierToast1(item: item)
+          .transition(.scale)
       }
-      Color.clear
+//      ForEach(self.viewModel.toastItems) { item in
+//      }
+//      Color.clear
     }
-    .environmentObject(self.viewModel)
+//    .environmentObject(self.viewModel)
   }
 }
 
@@ -88,33 +85,17 @@ public struct BezierToast1: View, Themeable {
   
   @Environment(\.colorScheme) public var colorScheme
   @EnvironmentObject private var viewModel: BezierToastViewModel1
-  @State private var timer = Timer.publish(every: Constant.disappearDelay, on: .main, in: .common).autoconnect()
-  @State private var isPresented: Bool = false
-  @State private var willDismiss: Bool = false
-
-  private var offsetY: CGFloat {
-    self.isPresented || self.willDismiss
-    ? self.param.toastPosition.endOffsetY
-    : self.param.toastPosition.startOffsetY
-  }
   
-  private var opacity: CGFloat {
-    self.isPresented ? 1 : 0
-  }
-
   private var param: BezierToastParam
-  private let viewId: UUID?
-  
+
   init(item: BezierToastItem) {
     self.param = item.param
-    self.viewId = item.uuid
   }
   
   public init(param: BezierToastParam) {
     self.param = param
-    self.viewId = nil
   }
-  
+
   public var body: some View {
     VStack(spacing: .zero) {
       HStack(alignment: .top, spacing: Metric.conentHStackSpacing) {
@@ -144,47 +125,23 @@ public struct BezierToast1: View, Themeable {
     .applyBezierCornerRadius(type: .round22)
     .frame(maxWidth: Constant.contentMaxWidth)
     .padding(.horizontal, Metric.contentHorizontalPadding)
-    .offset(y: self.offsetY)
-    .opacity(self.opacity)
-    .onAppear {
-      withAnimation(.easeIn(duration: Constant.animationDuration)) {
-        self.isPresented = true
-      }
-    }
-    .onReceive(self.viewModel.pulisherForRemoteToast()) { uuid in
-      guard uuid == self.viewId else { return }
-      
-      self.prepareDismiss()
-    }
-    .onReceive(self.timer) { _ in
-      self.prepareDismiss()
-    }
-  }
-  
-  private func prepareDismiss() {
-    withAnimation(.easeOut(duration: Constant.animationDuration)) {
-      self.willDismiss = true
-      self.isPresented = false
-      self.param.isShowing?.wrappedValue = false
-    }
+//    .transition(.toast(position: self.param.toastPosition))
   }
 }
 
-public struct BezierToastParam {
+public struct BezierToastParam: Equatable {
   var title: String
   var toastPosition: BezierToastPosition
   var leftItem: BezierToastLeftItem?
-  var isShowing: Binding<Bool>?
   
-  public init(title: String, leftItem: BezierToastLeftItem? = nil, isShowing: Binding<Bool>? = nil) {
+  public init(title: String, leftItem: BezierToastLeftItem? = nil) {
     self.title = title
     self.toastPosition = .top
     self.leftItem = leftItem
-    self.isShowing = isShowing
   }
 }
 
-public enum BezierToastLeftItem {
+public enum BezierToastLeftItem: Equatable {
   // TODO: 추후 이모지 지원 작업하기
   // by woody 2003.31
   // case emoji(name: String)
@@ -192,14 +149,23 @@ public enum BezierToastLeftItem {
 
   var length: CGFloat { return 20 }
   var top: CGFloat { return 3 }
+  
+  public static func == (lhs: BezierToastLeftItem, rhs: BezierToastLeftItem) -> Bool {
+    switch (lhs, rhs) {
+    case (.icon(let lhsImage, let lhsColor), .icon(let rhsImage, let rhsColor)):
+      return lhsImage == rhsImage
+      && lhsColor.light == rhsColor.light
+      && lhsColor.dark == rhsColor.dark
+    }
+  }
 }
 
-public enum BezierToastPosition {
+public enum BezierToastPosition: Equatable {
   case top
 
   var startOffsetY: CGFloat {
     switch self {
-    case .top: return -16
+    case .top: return -50 // -16
     }
   }
 
@@ -216,6 +182,31 @@ private extension View {
       return self.background(.thickMaterial)
     } else {
       return self
+    }
+  }
+}
+
+extension AnyTransition {
+  public static func toast(position: BezierToastPosition) -> AnyTransition {
+    AnyTransition.modifier(
+      active: ModalModifier(position: position, transitionPercent: 0),
+      identity: ModalModifier(position: position, transitionPercent: 1)
+    )
+  }
+  
+  struct ModalModifier: Animatable, ViewModifier {
+    let position: BezierToastPosition
+    var transitionPercent: Double
+    
+    private var offsetY: CGFloat {
+      position.startOffsetY + (position.endOffsetY - position.startOffsetY) * transitionPercent
+    }
+    
+    func body(content: Content) -> some View {
+      let _ = print(transitionPercent)
+      return content
+        .opacity(self.transitionPercent)
+        .offset(y: self.transitionPercent > 0.5 ? -20 : 0)
     }
   }
 }

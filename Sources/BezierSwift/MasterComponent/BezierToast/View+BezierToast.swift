@@ -14,9 +14,23 @@ extension View {
     )
   }
   
-  public func bezierToast1(_ param: BezierToastParam) -> some View {
-    let _ = BezierToastManager.showToast(param)
-    return self
+  public func bezierToast1(param: Binding<BezierToastParam?>) -> some View {
+    modifier (
+      BezierToastViewModifier1(param: param)
+    )
   }
 }
 
+
+struct BezierToastViewModifier1: ViewModifier {
+  @Binding var param: BezierToastParam?
+  
+  func body(content: Content) -> some View {
+    content
+      .onChange(of: self.param) { param in
+        guard let param else { return }
+        
+        BezierToastManager.showToast(BezierToastItem(param: param, binding: self.$param))
+      }
+  }
+}
