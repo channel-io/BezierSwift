@@ -16,10 +16,11 @@ extension AnyTransition {
   }
   
   static func toastInsertion(position: BezierToastPosition) -> AnyTransition {
-    AnyTransition.modifier(
+    .modifier(
       active: ToastInsertionModifier(position: position, transitionPercent: 0),
       identity: ToastInsertionModifier(position: position, transitionPercent: 1)
-    ).combined(with: .opacity)
+    )
+    .combined(with: .opacity)
   }
   
   struct ToastInsertionModifier: Animatable, ViewModifier {

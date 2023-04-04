@@ -29,7 +29,7 @@ public final class BezierToastManager {
       
       let bezierContainerView = BezierToastContainerView(viewModel: self.viewModel)
       let controller = BezierToastHostingController(rootView: bezierContainerView)
-          
+      
       guard let toastUIView = controller.view else { return }
       
       keyWindow.addSubview(toastUIView)

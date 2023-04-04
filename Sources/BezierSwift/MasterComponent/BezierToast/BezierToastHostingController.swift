@@ -20,7 +20,7 @@ final class BezierToastHostingController<Content>: UIViewController where Conten
     self.initViews()
     self.setupLayouts()
   }
-  
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

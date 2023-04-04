@@ -9,9 +9,7 @@ import SwiftUI
 
 extension View {
   public func bezierToast(param: Binding<BezierToastParam?>) -> some View {
-    modifier (
-      BezierToastViewModifier(param: param)
-    )
+    self.modifier(BezierToastViewModifier(param: param))
   }
   
   public func initBezierToast() -> some View {

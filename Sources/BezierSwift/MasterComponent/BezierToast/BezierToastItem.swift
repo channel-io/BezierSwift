@@ -10,9 +10,10 @@ import SwiftUI
 struct BezierToastItem: Identifiable {
   let param: BezierToastParam
   let binding: Binding<BezierToastParam?>?
-  let uuid = UUID()
   var id: UUID { self.uuid }
   
+  private let uuid = UUID()
+
   init(param: BezierToastParam, binding: Binding<BezierToastParam?>? = nil) {
     self.param = param
     self.binding = binding
