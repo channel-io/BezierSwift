@@ -148,13 +148,13 @@ public enum SemanticColor {
 
 // MARK: Light, Dark Color
 extension SemanticColor {
-  public var light: Color { self.paletteSet.0 }
-  public var dark: Color { self.paletteSet.1 }
+  public var light: ColorComponentsWithAlpha { self.paletteSet.light }
+  public var dark: ColorComponentsWithAlpha { self.paletteSet.dark }
 }
 
 // MARK: Palette Set
 extension SemanticColor {
-  public typealias PaletteSet = (Color, Color)
+  public typealias PaletteSet = (light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
   
   private var paletteSet: PaletteSet {
     switch self {
@@ -292,7 +292,28 @@ extension SemanticColor {
     case .bgtxtNavyLight: return (Palette.navy400_30, Palette.navy300_40)
     case .bgtxtNavyNormal: return (Palette.navy400, Palette.navy300)
     case .bgtxtNavyDark: return (Palette.navy500, Palette.navy400)
-    case .custom(let paletteSet): return (paletteSet.0, paletteSet.1)
+    case .custom(let paletteSet): return (paletteSet.light, paletteSet.dark)
+    }
+  }
+}
+
+extension SemanticColor {
+  public func palette(_ component: BezierComponentable) -> UIColor {
+    switch component.componentTheme {
+    case .normal:
+      switch component.colorTheme {
+      case .light:
+        return self.paletteSet.light.uiColor
+      case .dark:
+        return self.paletteSet.dark.uiColor
+      }
+    case .inverted:
+      switch component.colorTheme {
+      case .light:
+        return self.paletteSet.dark.uiColor
+      case .dark:
+        return self.paletteSet.light.uiColor
+      }
     }
   }
 }
