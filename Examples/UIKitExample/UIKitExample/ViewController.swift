@@ -8,10 +8,7 @@
 import UIKit
 import BezierSwift
 
-class ViewController: UIViewController, BezierComponentable {
-  var colorTheme: BezierColorTheme = .light
-  var componentTheme: BezierComponentTheme = .normal
-  
+class ViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
