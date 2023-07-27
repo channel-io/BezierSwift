@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+public enum BezierFontType {
+  case normal
+  case bold
+}
+
 public enum BezierFont {
   case normal11
   case bold11
@@ -35,35 +40,72 @@ public enum BezierFont {
 }
 
 public extension BezierFont {
-  var font: Font {
+  var fontType: BezierFontType {
     switch self {
-    case .normal11: return self.getNormalFont(size: 11)
-    case .bold11: return self.getBoldFont(size: 11)
-    case .normal12: return self.getNormalFont(size: 12)
-    case .bold12: return self.getBoldFont(size: 12)
-    case .normal13: return self.getNormalFont(size: 13)
-    case .bold13: return self.getBoldFont(size: 13)
-    case .normal14: return self.getNormalFont(size: 14)
-    case .bold14: return self.getBoldFont(size: 14)
-    case .normal15: return self.getNormalFont(size: 15)
-    case .bold15: return self.getBoldFont(size: 15)
-    case .normal16: return self.getNormalFont(size: 16)
-    case .bold16: return self.getBoldFont(size: 16)
-    case .normal17: return self.getNormalFont(size: 17)
-    case .bold17: return self.getBoldFont(size: 17)
-    case .normal18: return self.getNormalFont(size: 18)
-    case .bold18: return self.getBoldFont(size: 18)
-    case .normal22: return self.getNormalFont(size: 22)
-    case .bold22: return self.getBoldFont(size: 22)
-    case .normal24: return self.getNormalFont(size: 24)
-    case .bold24: return self.getBoldFont(size: 24)
-    case .normal30: return self.getNormalFont(size: 30)
-    case .bold30: return self.getBoldFont(size: 30)
-    case .bold36: return self.getBoldFont(size: 36)
-    case .bold44: return self.getBoldFont(size: 44)
+    case
+        .normal11,
+        .normal12,
+        .normal13,
+        .normal14,
+        .normal15,
+        .normal16,
+        .normal17,
+        .normal18,
+        .normal22,
+        .normal24,
+        .normal30:
+      return .normal
+    
+    case
+        .bold11,
+        .bold12,
+        .bold13,
+        .bold14,
+        .bold15,
+        .bold16,
+        .bold17,
+        .bold18,
+        .bold22,
+        .bold24,
+        .bold30,
+        .bold36,
+        .bold44:
+      return .bold
     }
   }
   
+  var fontSize: CGFloat {
+    switch self {
+    case .normal11, .bold11: return 11
+    case .normal12, .bold12: return 12
+    case .normal13, .bold13: return 13
+    case .normal14, .bold14: return 14
+    case .normal15, .bold15: return 15
+    case .normal16, .bold16: return 16
+    case .normal17, .bold17: return 17
+    case .normal18, .bold18: return 18
+    case .normal22, .bold22: return 22
+    case .normal24, .bold24: return 24
+    case .normal30, .bold30: return 30
+    case .bold36: return 36
+    case .bold44: return 44
+    }
+  }
+  
+  var font: Font {
+    switch self.fontType {
+    case .normal: return self.getNormalFont(size: self.fontSize)
+    case .bold: return self.getBoldFont(size: self.fontSize)
+    }
+  }
+  
+  var uiFont: UIFont {
+    switch self.fontType {
+    case .normal: return self.getNormalUIFont(size: self.fontSize)
+    case .bold: return self.getBoldUIFont(size: self.fontSize)
+    }
+  }
+
   var lineHeight: CGFloat {
     switch self {
     case .normal11: return CGFloat(16)
@@ -178,7 +220,15 @@ private extension BezierFont {
     return .system(size: size, weight: .regular)
   }
   
+  func getNormalUIFont(size: CGFloat) -> UIFont {
+    return .systemFont(ofSize: size, weight: .regular)
+  }
+  
   func getBoldFont(size: CGFloat) -> Font {
     return .system(size: size, weight: .bold)
+  }
+  
+  func getBoldUIFont(size: CGFloat) -> UIFont {
+    return .systemFont(ofSize: size, weight: .bold)
   }
 }
