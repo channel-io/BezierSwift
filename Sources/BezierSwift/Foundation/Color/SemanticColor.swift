@@ -201,7 +201,7 @@ extension SemanticColor {
     case .bgtxtAbsoluteWhiteLighter: return (Palette.white_40, Palette.white_40)
     case .bgtxtAbsoluteWhiteLightest: return (Palette.white_20, Palette.white_20)
       
-        // MARK: - Shadow for elevation
+      // MARK: - Shadow for elevation
     case .shdwXlarge: return (Palette.black_30, Palette.black_60)
     case .shdwLarge: return (Palette.black_22, Palette.black_40)
     case .shdwMedium: return (Palette.black_15, Palette.black_20)
@@ -209,14 +209,14 @@ extension SemanticColor {
     case .shdwBase: return (Palette.black_5, Palette.black_8)
     case .shdwBaseInner: return (Palette.white_12, Palette.white_8)
       
-        // MARK: - Border & Divider
+      // MARK: - Border & Divider
     case .bdrBlackDark: return (Palette.black_15, Palette.white_20)
     case .bdrBlackLight: return (Palette.black_8, Palette.white_12)
     case .bdrBlackLightest: return (Palette.black_3, Palette.white_5)
     case .bdrGreyLight: return (Palette.grey200, Palette.grey700)
     case .bdrWhite: return (Palette.white, Palette.grey700)
       
-        // MARK: - Appendix, Blue
+      // MARK: - Appendix, Blue
     case .bgtxtBlueLightest: return (Palette.blue400_10, Palette.blue300_20)
     case .bgtxtBlueLighter: return (Palette.blue400_20, Palette.blue300_30)
     case .bgtxtBlueLight: return (Palette.blue400_30, Palette.blue300_40)
@@ -299,20 +299,25 @@ extension SemanticColor {
 
 extension SemanticColor {
   public func palette(_ component: BezierComponentable) -> UIColor {
-    switch component.componentTheme {
-    case .normal:
-      switch component.colorTheme {
-      case .light:
-        return self.paletteSet.light.uiColor
-      case .dark:
-        return self.paletteSet.dark.uiColor
-      }
-    case .inverted:
-      switch component.colorTheme {
-      case .light:
-        return self.paletteSet.dark.uiColor
-      case .dark:
-        return self.paletteSet.light.uiColor
+    UIColor { [weak component] _ in
+      let component = component ?? TempBezierComponent()
+      let colorTheme = component.colorTheme
+      let componentTheme = component.componentTheme
+      switch componentTheme {
+      case .normal:
+        switch colorTheme {
+        case .light:
+          return paletteSet.light.uiColor
+        case .dark:
+          return paletteSet.dark.uiColor
+        }
+      case .inverted:
+        switch colorTheme {
+        case .light:
+          return paletteSet.dark.uiColor
+        case .dark:
+          return paletteSet.light.uiColor
+        }
       }
     }
   }
