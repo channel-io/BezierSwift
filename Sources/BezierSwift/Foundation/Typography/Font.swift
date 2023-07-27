@@ -198,7 +198,7 @@ public extension BezierFont {
   }
 }
 
-private extension BezierFont {
+extension BezierFont {
   var getPairedBoldFont: BezierFont {
     switch self {
     case .normal11: return .bold11
