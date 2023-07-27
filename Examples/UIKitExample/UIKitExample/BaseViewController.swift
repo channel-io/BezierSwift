@@ -9,6 +9,6 @@ import UIKit
 import BezierSwift
 
 class BaseViewController: UIViewController, BezierComponentable {
-  var colorTheme: BezierColorTheme = .light
+  var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
   var componentTheme: BezierComponentTheme = .normal
 }
