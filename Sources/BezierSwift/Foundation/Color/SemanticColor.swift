@@ -39,6 +39,7 @@ public enum SemanticColor {
   case txtBlackDarker
   case txtBlackDark
   case txtWhiteNormal
+  case txtBlackPure
   
   // MARK: - Background & Text - Absolute
   case bgtxtAbsoluteBlackDark
@@ -181,13 +182,14 @@ extension SemanticColor {
     case .bgNavi: return (Palette.grey100_80, Palette.grey800_80)
     case .bgHeaderFloat: return (Palette.white_90, Palette.grey800_80)
     case .bgHeader: return (Palette.white, Palette.grey800)
-    case .bgLounge: return (Palette.grey100_90, Palette.grey900_90)
+    case .bgLounge: return (Palette.grey100_90, Palette.grey800_90)
       
       // MARK: - Text
     case .txtBlackDarkest: return (Palette.black_85, Palette.white_80)
     case .txtBlackDarker: return (Palette.black_60, Palette.white_60)
     case .txtBlackDark: return (Palette.black_40, Palette.white_40)
     case .txtWhiteNormal: return (Palette.white, Palette.grey800)
+    case .txtBlackPure: return (Palette.black, Palette.white)
       
       // MARK: - Background & Text - Absolute
     case .bgtxtAbsoluteBlackDark: return (Palette.black, Palette.black)

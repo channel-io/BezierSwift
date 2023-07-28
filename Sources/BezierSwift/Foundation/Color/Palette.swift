@@ -57,6 +57,7 @@ public enum Palette {
   public static let grey850 = ColorComponentsWithAlpha(red: 42, green: 43, blue: 45, alpha: 1.0)
   public static let grey850_80 = ColorComponentsWithAlpha(red: 42, green: 43, blue: 45, alpha: 0.8)
   public static let grey800 = ColorComponentsWithAlpha(red: 49, green: 50, blue: 52, alpha: 1.0)
+  public static let grey800_90 = ColorComponentsWithAlpha(red: 49, green: 50, blue: 52, alpha: 0.9)
   public static let grey800_80 = ColorComponentsWithAlpha(red: 49, green: 50, blue: 52, alpha: 0.8)
   public static let grey700 = ColorComponentsWithAlpha(red: 70, green: 71, blue: 72, alpha: 1.0)
   public static let grey700_80 = ColorComponentsWithAlpha(red: 70, green: 71, blue: 72, alpha: 0.8)
