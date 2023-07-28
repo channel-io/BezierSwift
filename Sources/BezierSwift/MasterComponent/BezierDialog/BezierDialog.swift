@@ -187,7 +187,7 @@ struct BezierDialog: ViewModifier, Themeable {
                   }
                   .background(self.palette(.bgWhiteHigh))
                   .applyBezierCornerRadius(type: .round16)
-                  .applyBezierElevation(self, type: .mEv3)
+                  .applyBezierElevation(.mEv3)
                   .frame(maxWidth: Metric.dialogMaxWidth)
                   .padding(.horizontal, Metric.dimSideMinPadding)
                 }
