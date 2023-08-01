@@ -149,8 +149,11 @@ public enum ButtonType: Equatable {
   
   func textColor(_ size: ButtonSize) -> SemanticColor {
     switch self {
-    case .primary:
-      return .bgtxtAbsoluteWhiteDark
+    case .primary(let buttonColor):
+      switch buttonColor {
+      case .monochromeDark: return .txtWhiteNormal
+      default: return .bgtxtAbsoluteWhiteDark
+      }
     case .secondary(let color), .tertiary(let color):
       switch color {
       case .blue:
