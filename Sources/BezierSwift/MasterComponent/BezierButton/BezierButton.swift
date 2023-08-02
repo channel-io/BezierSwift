@@ -192,8 +192,11 @@ public enum ButtonType: Equatable {
   
   func imageTintColor(_ size: ButtonSize) -> SemanticColor {
     switch self {
-    case .primary:
-      return .bgtxtAbsoluteWhiteDark
+    case .primary(let buttonColor):
+      switch buttonColor {
+      case .monochromeDark: return .txtWhiteNormal
+      default: return .bgtxtAbsoluteWhiteDark
+      }
     case .secondary(let color), .tertiary(let color):
       switch color {
       case .blue:
@@ -276,8 +279,10 @@ public enum ButtonType: Equatable {
         case .pressed:
           return .bgtxtAbsoluteBlackLighter
         }
-      case .monochromeLight, .monochromeDark:
+      case .monochromeLight:
         return .bgBlackLighter
+      case .monochromeDark:
+        return .bgGreyDarkest
       case .absoulteWhite:
         return .bgTransparent
       }
