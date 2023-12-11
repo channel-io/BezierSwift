@@ -19,7 +19,7 @@ struct BezierToastViewModifier: ViewModifier {
       .onChange(of: self.param) { param in
         guard let param else { return }
         
-        BezierToastManager.show(item: BezierToastItem(param: param, binding: self.$param))
+//        BezierToastManager.show(item: BezierToastItem(param: param, binding: self.$param))
       }
   }
 }

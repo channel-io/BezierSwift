@@ -13,7 +13,7 @@ extension View {
   }
   
   public func initBezierToast() -> some View {
-    BezierToastManager.shared.prepare()
+//    BezierToastManager.shared.prepare()
     return self
   }
 }

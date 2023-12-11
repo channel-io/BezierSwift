@@ -37,6 +37,15 @@ final class ViewController: BaseViewController {
       self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       self.titleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
     ])
+    
+    let tap = UITapGestureRecognizer()
+    self.view.addGestureRecognizer(tap)
+    tap.addTarget(self, action: #selector(tapped))
+  }
+  
+  @objc func tapped() {
+    print("👍👍👍👍👍")
+    BezierSwift.showToast(with: BezierToastParam(title: "👍👍👍👍👍"))
   }
 }
 
