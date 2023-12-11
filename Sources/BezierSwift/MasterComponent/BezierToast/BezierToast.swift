@@ -60,7 +60,7 @@ public struct BezierToast: View, Themeable {
     }
     .background(self.palette(.bgBlackDarker))
     .applyBlurEffect()
-    .applyBezierCornerRadius(type: .round22)
+    .applyBezierCornerRadius(type: .round20)
     .frame(maxWidth: Constant.contentMaxWidth)
     .padding(.horizontal, Metric.horizontalPadding)
   }
