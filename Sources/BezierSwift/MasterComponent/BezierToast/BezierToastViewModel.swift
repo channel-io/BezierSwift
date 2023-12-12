@@ -17,6 +17,10 @@ public final class BezierToastViewModel: ObservableObject {
   @Published private(set) var toastItems: [BezierToastItem] = []
   private var timerCancelBags: [UUID: AnyCancellable] = [:]
   
+  deinit {
+    self.timerCancelBags.forEach { $0.value.cancel() }
+  }
+  
   func appendToastItem(_ item: BezierToastItem) {
     while self.toastItems.count >= Constant.maxToastCount {
       self.removeToastItem(index: 0)
