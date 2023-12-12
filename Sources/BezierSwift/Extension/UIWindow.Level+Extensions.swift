@@ -10,5 +10,3 @@ import UIKit
 extension UIWindow.Level {
   public static let bezierSwift: Self = .statusBar - 1
 }
-
-

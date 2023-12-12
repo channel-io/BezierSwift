@@ -16,7 +16,6 @@ public final class BezierSwift {
   let dialogViewModel = BezierDialogViewModel()
   
   weak var bezierWindow: BezierWindow?
-  var canInitialize: Bool { self.bezierWindow.isNil }
   var allowHitTest: Bool { self.dialogViewModel.item.isNotNil }
 }
 

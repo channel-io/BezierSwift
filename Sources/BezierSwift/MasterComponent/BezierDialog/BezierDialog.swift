@@ -1,9 +1,9 @@
-////
-////  BezierDialog.swift
-////
-////
-////  Created by Jam on 2023/02/15.
-////
+//
+//  BezierDialog.swift
+//
+//
+//  Created by Jam on 2023/02/15.
+//
 
 import SwiftUI
 import Dispatch
