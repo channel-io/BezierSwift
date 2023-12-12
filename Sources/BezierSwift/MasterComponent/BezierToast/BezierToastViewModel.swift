@@ -41,7 +41,7 @@ public final class BezierToastViewModel: ObservableObject {
       guard index < self.toastItems.count else { return }
       
       let toastItem = self.toastItems.remove(at: index)
-      toastItem.binding?.wrappedValue = nil
+      toastItem.onDismiss?()
       self.timerCancelBags[toastItem.id]?.cancel()
       self.timerCancelBags[toastItem.id] = nil
     }

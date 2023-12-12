@@ -7,19 +7,14 @@
 
 import SwiftUI
 
-private enum Metric {
-  static let topPadding = CGFloat(5)
-}
-
 public struct BezierContainerView: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   
   public var body: some View {
     ZStack {
+      BezierDialogContainerView(viewModel: BezierSwift.shared.dialogViewModel)
       BezierToastContainerView(viewModel: BezierSwift.shared.toastViewModel)
     }
-    .padding(.top, Metric.topPadding)
-    .background(Color.clear)
   }
 }
 

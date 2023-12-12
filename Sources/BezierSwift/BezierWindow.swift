@@ -28,6 +28,9 @@ final class BezierWindow: UIWindow {
   
   override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
     let hitView = super.hitTest(point, with: event)
+    
+    guard BezierSwift.shared.allowHitTest else { return nil }
+    
     return (hitView == self || self.rootViewController?.view == hitView) ? nil : hitView
   }
 }
