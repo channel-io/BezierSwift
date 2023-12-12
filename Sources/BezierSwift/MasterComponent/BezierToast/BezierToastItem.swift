@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct BezierToastItem: Identifiable {
-  public let param: BezierToastParam
-  public let onDismiss: (() -> Void)?
+  let param: BezierToastParam
+  let onDismiss: (() -> Void)?
   public let id = UUID()
 
   public init(param: BezierToastParam, onDismiss: (() -> Void)? = nil) {

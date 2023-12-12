@@ -25,7 +25,7 @@ private enum Metric {
 }
 
 struct BezierDialog: View, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
+  @Environment(\.colorScheme) var colorScheme
   
   struct ViewState {
     let title: String
@@ -53,7 +53,7 @@ struct BezierDialog: View, Themeable {
   
   private let viewState: ViewState
   
-  public init(param: BezierDialogParam) {
+  init(param: BezierDialogParam) {
     self.viewState = ViewState(param: param)
   }
   

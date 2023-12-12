@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension AnyTransition {
-  public static func toast(position: BezierToastPosition) -> AnyTransition {
+  static func toast(position: BezierToastPosition) -> AnyTransition {
     .asymmetric(
       insertion: .toastInsertion(position: position),
       removal: .opacity

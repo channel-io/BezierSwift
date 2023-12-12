@@ -11,9 +11,4 @@ extension View {
   public func bezierToast(param: Binding<BezierToastParam?>) -> some View {
     self.modifier(BezierToastViewModifier(param: param))
   }
-  
-  public func initBezierToast() -> some View {
-//    BezierToastManager.shared.prepare()
-    return self
-  }
 }

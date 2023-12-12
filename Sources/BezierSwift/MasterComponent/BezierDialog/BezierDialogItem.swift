@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct BezierDialogItem: Identifiable {
-  public let param: BezierDialogParam
-  public let onDismiss: (() -> Void)?
+  let param: BezierDialogParam
+  let onDismiss: (() -> Void)?
   public let id = UUID()
 
   public init(param: BezierDialogParam, onDismiss: (() -> Void)? = nil) {

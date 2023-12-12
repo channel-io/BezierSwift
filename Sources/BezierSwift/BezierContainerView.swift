@@ -12,10 +12,10 @@ private enum ZIndex {
   static let dialog = 2.0
 }
 
-public struct BezierContainerView: View, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
+struct BezierContainerView: View, Themeable {
+  @Environment(\.colorScheme) var colorScheme
   
-  public var body: some View {
+  var body: some View {
     ZStack {
       BezierToastContainerView(viewModel: BezierSwift.shared.toastViewModel)
         .zIndex(ZIndex.toast)

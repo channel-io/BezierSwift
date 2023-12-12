@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct BezierDialogContainerView: View, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
+  @Environment(\.colorScheme) var colorScheme
   @StateObject private var viewModel: BezierDialogViewModel
   
-  public init(viewModel: BezierDialogViewModel) {
+  init(viewModel: BezierDialogViewModel) {
     self._viewModel = StateObject(wrappedValue: viewModel)
   }
   

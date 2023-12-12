@@ -13,7 +13,7 @@ private enum Constant {
   static let autoDismissTime = CGFloat(3)
 }
 
-public final class BezierToastViewModel: ObservableObject {
+final class BezierToastViewModel: ObservableObject {
   @Published private(set) var toastItems: [BezierToastItem] = []
   private var timerCancelBags: [UUID: AnyCancellable] = [:]
   
