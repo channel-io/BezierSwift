@@ -19,8 +19,12 @@ final class BezierDialogViewModel: ObservableObject {
       return
     }
     
-    withAnimation(.easeInOut) {
-      self.item = item
+    animationWithCompletion(.easeInOut) {
+      self.item = nil
+    } completion: {
+      withAnimation(.easeInOut) {
+        self.item = item
+      }
     }
   }
   
