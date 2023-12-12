@@ -8,16 +8,16 @@
 import SwiftUI
 
 final class BezierWindow: UIWindow {
-  override init(frame: CGRect) {
+  init(frame: CGRect, windowLevel: UIWindow.Level) {
     super.init(frame: frame)
     
-    self.initialize()
+    self.initialize(windowLevel: windowLevel)
   }
   
-  override init(windowScene: UIWindowScene) {
+  init(windowScene: UIWindowScene, windowLevel: UIWindow.Level) {
     super.init(windowScene: windowScene)
     
-    self.initialize()
+    self.initialize(windowLevel: windowLevel)
   }
   
   required init?(coder: NSCoder) {
@@ -36,11 +36,11 @@ final class BezierWindow: UIWindow {
 }
 
 extension BezierWindow {
-  private func initialize() {
-    self.windowLevel = .statusBar - 1
+  private func initialize(windowLevel: UIWindow.Level) {
+    self.windowLevel = windowLevel
     self.backgroundColor = nil
     self.rootViewController = UIHostingController(rootView: BezierContainerView())
     self.rootViewController?.view.backgroundColor = nil
-    self.makeKeyAndVisible()
+    self.isHidden = false
   }
 }

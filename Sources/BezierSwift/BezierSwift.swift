@@ -14,8 +14,8 @@ public final class BezierSwift {
   
   let toastViewModel = BezierToastViewModel()
   let dialogViewModel = BezierDialogViewModel()
-
-  var bezierWindow: BezierWindow?
+  
+  weak var bezierWindow: BezierWindow?
   var canInitialize: Bool { self.bezierWindow.isNil }
   var allowHitTest: Bool { self.dialogViewModel.item.isNotNil }
 }
@@ -23,17 +23,28 @@ public final class BezierSwift {
 extension BezierSwift {
   @available(iOS, deprecated: 16.0)
   @MainActor
-  public static func initializeWindow(windowLevel: UIWindow.Level = .statusBar - 1) {
-    guard BezierSwift.shared.canInitialize else { return }
-            
-    BezierSwift.shared.bezierWindow = BezierWindow(frame: UIScreen.main.bounds)
+  public static func initializeWindow(windowLevel: UIWindow.Level = .bezierSwift) -> UIWindow {
+    guard let bezierWindow = BezierSwift.shared.bezierWindow else {
+      let bezierWindow = BezierWindow(frame: UIScreen.main.bounds, windowLevel: windowLevel)
+      BezierSwift.shared.bezierWindow = bezierWindow
+      return bezierWindow
+    }
+    
+    return bezierWindow
   }
   
   @MainActor
-  public static func initializeWindow(windowScene: UIWindowScene, windowLevel: UIWindow.Level = .statusBar - 1) {
-    guard BezierSwift.shared.canInitialize else { return }
+  public static func initializeWindow(
+    windowScene: UIWindowScene,
+    windowLevel: UIWindow.Level = .bezierSwift
+  ) -> UIWindow {
+    guard let bezierWindow = BezierSwift.shared.bezierWindow else {
+      let bezierWindow = BezierWindow(windowScene: windowScene, windowLevel: windowLevel)
+      BezierSwift.shared.bezierWindow = bezierWindow
+      return bezierWindow
+    }
     
-    BezierSwift.shared.bezierWindow = BezierWindow(windowScene: windowScene)
+    return bezierWindow
   }
 }
 
@@ -64,4 +75,4 @@ extension BezierSwift {
     BezierSwift.shared.dialogViewModel.dismiss()
   }
 }
- 
+
