@@ -24,6 +24,11 @@ private enum Metric {
   static let belowStackSpace = CGFloat(8)
 }
 
+private enum Constant {
+  static let maxHorizontalButtonCount = 4
+  static let maxVerticalButtonCount = 2
+}
+
 struct BezierDialog: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
   
@@ -40,10 +45,10 @@ struct BezierDialog: View, Themeable {
       switch param.buttonInfo {
       case .horizontal(let buttons):
         self.buttonAxis = .horizontal
-        self.buttons = Array(buttons.prefix(4))
+        self.buttons = Array(buttons.prefix(Constant.maxHorizontalButtonCount))
       case .vertical(let buttons):
         self.buttonAxis = .vertical
-        self.buttons = Array(buttons.prefix(2))
+        self.buttons = Array(buttons.prefix(Constant.maxVerticalButtonCount))
       default:
         self.buttonAxis = .vertical
         self.buttons = []
