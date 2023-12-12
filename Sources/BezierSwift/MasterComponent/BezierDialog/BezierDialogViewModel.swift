@@ -20,7 +20,7 @@ final class BezierDialogViewModel: ObservableObject {
     }
     
     animationWithCompletion(.easeInOut) {
-      self.item = nil
+      self.clearItem()
     } completion: {
       withAnimation(.easeInOut) {
         self.item = item
@@ -32,13 +32,18 @@ final class BezierDialogViewModel: ObservableObject {
     guard self.item?.id == id else { return }
     
     withAnimation(.easeInOut) {
-      self.item = nil
+      self.clearItem()
     }
   }
   
   func dismiss() {
     withAnimation(.easeInOut) {
-      self.item = nil
+      self.clearItem()
     }
+  }
+  
+  private func clearItem() {
+    self.item?.onDismiss?()
+    self.item = nil
   }
 }
