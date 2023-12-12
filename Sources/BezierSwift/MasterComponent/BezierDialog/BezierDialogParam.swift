@@ -32,24 +32,16 @@ public enum BezierDialogButtonInfo {
 }
 
 public enum BezierDialogPriority {
-  case networkError
-  case versionCheckError
-  case unAuthorizedError
-  case roleChanged
-  case forbidden
-  case serverError
-  case `default`
+  case high
+  case normal
+  case low
   case custom(Int)
  
   var rawValue: Int {
     switch self {
-    case .networkError: return 0
-    case .versionCheckError: return 1
-    case .unAuthorizedError: return 2
-    case .roleChanged: return 3
-    case .forbidden: return 4
-    case .serverError: return 5
-    case .`default`: return 6
+    case .high: return 1
+    case .normal: return 3
+    case .low: return 5
     case .custom(let priority): return priority
     }
   }
