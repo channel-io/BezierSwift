@@ -16,21 +16,18 @@ struct BezierDialogContainerView: View, Themeable {
   }
   
   var body: some View {
-    ZStack {
-      if let item = self.viewModel.item {
-        BezierDialog(param: item.param)
-      }
+    if let item = self.viewModel.item {
+      BezierDialog(param: item.param)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+          Group {
+            if self.viewModel.item.isNotNil {
+              self.palette(.bgtxtAbsoluteBlackLighter)
+                .ignoresSafeArea()
+            }
+          }
+        )
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(
-      Group {
-        if self.viewModel.item.isNotNil {
-          self.palette(.bgtxtAbsoluteBlackLighter)
-            .ignoresSafeArea()
-        }
-      }
-    )
-    .allowsTightening(self.viewModel.item.isNotNil)
   }
 }
 

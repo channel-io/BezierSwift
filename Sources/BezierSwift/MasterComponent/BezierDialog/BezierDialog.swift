@@ -66,11 +66,13 @@ struct BezierDialog: View, Themeable {
               if !self.viewState.title.isEmpty {
                 Text(self.viewState.title)
                   .applyBezierFontStyle(.bold16)
+                  .multilineTextAlignment(.center)
               }
               
               if !self.viewState.description.isEmpty {
                 Text(self.viewState.description)
                   .applyBezierFontStyle(.normal14)
+                  .multilineTextAlignment(.center)
               }
             }
             .padding(.top, Metric.upperStackContainerTop)
