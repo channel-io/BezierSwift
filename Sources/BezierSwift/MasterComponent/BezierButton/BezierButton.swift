@@ -151,7 +151,7 @@ public enum ButtonType: Equatable {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
-      case .monochromeDark: return .txtWhiteNormal
+      case .monochromeLight, .monochromeDark: return .txtWhiteNormal
       default: return .bgtxtAbsoluteWhiteDark
       }
     case .secondary(let color), .tertiary(let color):
@@ -194,7 +194,7 @@ public enum ButtonType: Equatable {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
-      case .monochromeDark: return .txtWhiteNormal
+      case .monochromeLight, .monochromeDark: return .txtWhiteNormal
       default: return .bgtxtAbsoluteWhiteDark
       }
     case .secondary(let color), .tertiary(let color):
@@ -280,7 +280,7 @@ public enum ButtonType: Equatable {
           return .bgtxtAbsoluteBlackLighter
         }
       case .monochromeLight:
-        return .bgBlackLighter
+        return .bgBlackDarker
       case .monochromeDark:
         return .bgGreyDarkest
       case .absoulteWhite:
@@ -669,8 +669,7 @@ struct BezierButton_Previews: PreviewProvider {
       BezierButton(size: .large, type: .primary(.green), resizing: .fill, title: "Get started", leftImage: Image(systemName: "trash")) {
         print("")
       }
-      
-      
+
       BezierButton(size: .large, type: .primary(.blue), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
         print("")
       }
