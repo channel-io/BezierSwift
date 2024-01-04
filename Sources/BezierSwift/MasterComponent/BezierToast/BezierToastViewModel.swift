@@ -26,23 +26,23 @@ final class BezierToastViewModel: ObservableObject {
       self.removeToastItem(index: 0)
     }
     
-    withAnimation(.toastInsertion) {
-      self.toastItems.append(item)
+    withAnimation(.toastInsertion) { [weak self] in
+      self?.toastItems.append(item)
     }
     
     self.timerCancelBags[item.id] = Timer.publish(every: Constant.autoDismissTime, on: .main, in: .default)
       .autoconnect()
       .prefix(1)
-      .sink { _ in
-        guard let index = self.toastItems.firstIndex(where: { $0.id == item.id }) else { return }
+      .sink { [weak self] _ in
+        guard let self, let index = self.toastItems.firstIndex(where: { $0.id == item.id }) else { return }
         
         self.removeToastItem(index: index)
       }
   }
   
   private func removeToastItem(index: Int) {
-    withAnimation(.toastRemoval) {
-      guard index < self.toastItems.count else { return }
+    withAnimation(.toastRemoval) { [weak self] in
+      guard let self, index < self.toastItems.count else { return }
       
       let toastItem = self.toastItems.remove(at: index)
       toastItem.onDismiss?()

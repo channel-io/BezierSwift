@@ -19,11 +19,11 @@ final class BezierDialogViewModel: ObservableObject {
       return
     }
     
-    animationWithCompletion(.easeInOut) {
-      self.clearItem()
-    } completion: {
-      withAnimation(.easeInOut) {
-        self.item = item
+    animationWithCompletion(.easeInOut) { [weak self] in
+      self?.clearItem()
+    } completion: { [weak self] in
+      withAnimation(.easeInOut) { [weak self] in
+        self?.item = item
       }
     }
   }
@@ -31,14 +31,14 @@ final class BezierDialogViewModel: ObservableObject {
   func dismiss(with id: UUID) {
     guard self.item?.id == id else { return }
     
-    withAnimation(.easeInOut) {
-      self.clearItem()
+    withAnimation(.easeInOut) { [weak self] in
+      self?.clearItem()
     }
   }
   
   func dismiss() {
-    withAnimation(.easeInOut) {
-      self.clearItem()
+    withAnimation(.easeInOut) { [weak self] in
+      self?.clearItem()
     }
   }
   
