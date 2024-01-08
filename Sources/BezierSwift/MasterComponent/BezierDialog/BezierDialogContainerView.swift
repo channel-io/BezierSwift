@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+private enum Metric {
+  static let dialogHorizontalPadding = 40.f
+}
+
 struct BezierDialogContainerView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
   @StateObject private var viewModel: BezierDialogViewModel
@@ -16,18 +20,21 @@ struct BezierDialogContainerView: View, Themeable {
   }
   
   var body: some View {
-    if let item = self.viewModel.item {
-      BezierDialog(param: item.param)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-          Group {
-            if self.viewModel.item.isNotNil {
-              self.palette(.bgtxtAbsoluteBlackLighter)
-                .ignoresSafeArea()
-            }
-          }
-        )
+    ZStack {
+      if let item = self.viewModel.item {
+        BezierDialog(param: item.param)
+          .padding(.horizontal, Metric.dialogHorizontalPadding)
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
     }
+    .background(
+      Group {
+        if self.viewModel.item.isNotNil {
+          self.palette(.bgtxtAbsoluteBlackLighter)
+            .ignoresSafeArea()
+        }
+      }
+    )
   }
 }
 
