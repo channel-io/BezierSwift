@@ -8,9 +8,9 @@
 import SwiftUI
 
 public struct BezierToastParam: Equatable {
-  var title: String
-  var toastPosition: BezierToastPosition
-  var leftItem: BezierToastLeftItem?
+  let title: String
+  let toastPosition: BezierToastPosition
+  let leftItem: BezierToastLeftItem?
   
   public init(title: String, leftItem: BezierToastLeftItem? = nil) {
     self.title = title

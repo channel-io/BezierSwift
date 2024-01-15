@@ -1,6 +1,6 @@
 //
 //  BezierToast.swift
-//  
+//
 //
 //  Created by dumba on 2023/02/10.
 //
@@ -24,17 +24,17 @@ private enum Constant {
   static let disappearDelay = CGFloat(3.0)
 }
 
-public struct BezierToast: View, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
+struct BezierToast: View, Themeable {
+  @Environment(\.colorScheme) var colorScheme
   @EnvironmentObject private var viewModel: BezierToastViewModel
   
   private let param: BezierToastParam
-
-  public init(param: BezierToastParam) {
+  
+  init(param: BezierToastParam) {
     self.param = param
   }
   
-  public var body: some View {
+  var body: some View {
     VStack(spacing: .zero) {
       HStack(alignment: .top, spacing: Metric.contentHStackSpacing) {
         if let leftItem = self.param.leftItem {
@@ -66,12 +66,3 @@ public struct BezierToast: View, Themeable {
   }
 }
 
-private extension View {
-  func applyBlurEffect() -> some View {
-    if #available(iOS 15.0, *) {
-      return self.background(.thickMaterial)
-    } else {
-      return self
-    }
-  }
-}

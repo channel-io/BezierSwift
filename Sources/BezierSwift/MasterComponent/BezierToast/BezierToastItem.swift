@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-struct BezierToastItem: Identifiable {
+public struct BezierToastItem: Identifiable {
   let param: BezierToastParam
-  let binding: Binding<BezierToastParam?>?
-  var id: UUID { self.uuid }
-  
-  private let uuid = UUID()
+  let onDismiss: (() -> Void)?
+  public let id = UUID()
 
-  init(param: BezierToastParam, binding: Binding<BezierToastParam?>? = nil) {
+  public init(param: BezierToastParam, onDismiss: (() -> Void)? = nil) {
     self.param = param
-    self.binding = binding
+    self.onDismiss = onDismiss
   }
 }
