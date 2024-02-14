@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5CA59A322B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA59A312B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift */; };
 		5CC266972B43DB7400EA1483 /* ColorPOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266962B43DB7400EA1483 /* ColorPOCView.swift */; };
 		5CC266992B43DF5C00EA1483 /* ColorPOCSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */; };
+		5CC2892C2B7C986A006E0B2E /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC2892B2B7C986A006E0B2E /* ColorSchemeManager.swift */; };
 		E234260D2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234260C2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift */; };
 		E234260F2B332E5E0044AF90 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234260E2B332E5E0044AF90 /* ContentView.swift */; };
 		E23426112B332E5F0044AF90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E23426102B332E5F0044AF90 /* Assets.xcassets */; };
@@ -17,8 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5CA59A312B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignSwiftUIExampleAppDelegate.swift; sourceTree = "<group>"; };
 		5CC266962B43DB7400EA1483 /* ColorPOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPOCView.swift; sourceTree = "<group>"; };
 		5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPOCSubview.swift; sourceTree = "<group>"; };
+		5CC2892B2B7C986A006E0B2E /* ColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
 		E23426092B332E5E0044AF90 /* RedesignSwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedesignSwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E234260C2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignSwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		E234260E2B332E5E0044AF90 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -38,13 +42,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5CC266952B43DB5C00EA1483 /* TestViews */ = {
+		5CC266952B43DB5C00EA1483 /* ColorSchemeChange */ = {
+			isa = PBXGroup;
+			children = (
+				5CC2892A2B7C983C006E0B2E /* Managers */,
+				5CC289292B7C9837006E0B2E /* Views */,
+			);
+			path = ColorSchemeChange;
+			sourceTree = "<group>";
+		};
+		5CC289292B7C9837006E0B2E /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				5CC266962B43DB7400EA1483 /* ColorPOCView.swift */,
 				5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */,
 			);
-			path = TestViews;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5CC2892A2B7C983C006E0B2E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				5CC2892B2B7C986A006E0B2E /* ColorSchemeManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		E23426002B332E5E0044AF90 = {
@@ -67,9 +88,10 @@
 		E234260B2B332E5E0044AF90 /* RedesignSwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
-				5CC266952B43DB5C00EA1483 /* TestViews */,
+				5CC266952B43DB5C00EA1483 /* ColorSchemeChange */,
 				E234260C2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift */,
 				E234260E2B332E5E0044AF90 /* ContentView.swift */,
+				5CA59A312B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift */,
 				E23426102B332E5F0044AF90 /* Assets.xcassets */,
 				E23426122B332E5F0044AF90 /* Preview Content */,
 			);
@@ -164,6 +186,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CC2892C2B7C986A006E0B2E /* ColorSchemeManager.swift in Sources */,
+				5CA59A322B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift in Sources */,
 				E234260F2B332E5E0044AF90 /* ContentView.swift in Sources */,
 				E234260D2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift in Sources */,
 				5CC266992B43DF5C00EA1483 /* ColorPOCSubview.swift in Sources */,
