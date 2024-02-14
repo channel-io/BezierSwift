@@ -90,6 +90,8 @@ extension ColorPOCView {
         }
       }
     }
+    .navigationTitle("ColorPOCView")
+    .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(for: Path.self) { path in
       switch path {
       case .colorPocSubview:

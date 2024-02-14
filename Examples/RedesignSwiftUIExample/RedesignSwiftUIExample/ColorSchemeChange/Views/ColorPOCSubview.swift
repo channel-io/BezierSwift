@@ -21,7 +21,9 @@ struct ColorPOCSubview: View {
       }
     }
     .sheet(isPresented: self.$isPresented) {
-      ColorPOCView()
+      NavigationStack {
+        ColorPOCView()
+      }
     }
   }
 }
