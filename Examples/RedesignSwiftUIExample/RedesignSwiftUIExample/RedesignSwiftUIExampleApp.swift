@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-struct Container: View {
-  var body: some View {
-    ContentView()
-  }
-}
-
 @main
 struct RedesignSwiftUIExampleApp: App {
   @UIApplicationDelegateAdaptor(RedesignSwiftUIExampleAppDelegate.self) private var appDelegate
@@ -20,7 +14,7 @@ struct RedesignSwiftUIExampleApp: App {
 
   var body: some Scene {
     WindowGroup {
-      Container()
+      ContentView()
         .environmentObject(self.colorSchemeManager)
         .onAppear {
           self.appDelegate.initWindow()
