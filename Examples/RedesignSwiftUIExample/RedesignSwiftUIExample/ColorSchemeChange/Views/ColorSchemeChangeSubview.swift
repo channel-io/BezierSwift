@@ -1,5 +1,5 @@
 //
-//  ColorPOCSubview.swift
+//  ColorSchemeChangeSubview.swift
 //  RedesignSwiftUIExample
 //
 //  Created by 구본욱 on 1/2/24.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ColorPOCSubview: View {
+struct ColorSchemeChangeSubview: View {
   @State private var isPresented: Bool = false
 
   var body: some View {
     VStack(spacing: 12) {
-      Text("이것은 ColorPOCView의 하위에 정의된 뷰입니다.")
+      Text("이것은 ColorChangeSchemeView의 하위에 정의된 뷰입니다.")
 
       Button {
         self.isPresented = true
@@ -22,12 +22,12 @@ struct ColorPOCSubview: View {
     }
     .sheet(isPresented: self.$isPresented) {
       NavigationStack {
-        ColorPOCView()
+        ColorSchemeChangeView()
       }
     }
   }
 }
 
 #Preview {
-    ColorPOCSubview()
+    ColorSchemeChangeSubview()
 }

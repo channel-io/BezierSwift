@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5CA59A322B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA59A312B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift */; };
-		5CC266972B43DB7400EA1483 /* ColorPOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266962B43DB7400EA1483 /* ColorPOCView.swift */; };
-		5CC266992B43DF5C00EA1483 /* ColorPOCSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */; };
+		5CC266972B43DB7400EA1483 /* ColorSchemeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266962B43DB7400EA1483 /* ColorSchemeChangeView.swift */; };
+		5CC266992B43DF5C00EA1483 /* ColorSchemeChangeSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC266982B43DF5C00EA1483 /* ColorSchemeChangeSubview.swift */; };
 		5CC2892C2B7C986A006E0B2E /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC2892B2B7C986A006E0B2E /* ColorSchemeManager.swift */; };
 		E234260D2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234260C2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift */; };
 		E234260F2B332E5E0044AF90 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234260E2B332E5E0044AF90 /* ContentView.swift */; };
@@ -20,8 +20,8 @@
 
 /* Begin PBXFileReference section */
 		5CA59A312B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignSwiftUIExampleAppDelegate.swift; sourceTree = "<group>"; };
-		5CC266962B43DB7400EA1483 /* ColorPOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPOCView.swift; sourceTree = "<group>"; };
-		5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPOCSubview.swift; sourceTree = "<group>"; };
+		5CC266962B43DB7400EA1483 /* ColorSchemeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeChangeView.swift; sourceTree = "<group>"; };
+		5CC266982B43DF5C00EA1483 /* ColorSchemeChangeSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeChangeSubview.swift; sourceTree = "<group>"; };
 		5CC2892B2B7C986A006E0B2E /* ColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
 		E23426092B332E5E0044AF90 /* RedesignSwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedesignSwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E234260C2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignSwiftUIExampleApp.swift; sourceTree = "<group>"; };
@@ -54,8 +54,8 @@
 		5CC289292B7C9837006E0B2E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5CC266962B43DB7400EA1483 /* ColorPOCView.swift */,
-				5CC266982B43DF5C00EA1483 /* ColorPOCSubview.swift */,
+				5CC266962B43DB7400EA1483 /* ColorSchemeChangeView.swift */,
+				5CC266982B43DF5C00EA1483 /* ColorSchemeChangeSubview.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,8 +190,8 @@
 				5CA59A322B735D2900F2A9DD /* RedesignSwiftUIExampleAppDelegate.swift in Sources */,
 				E234260F2B332E5E0044AF90 /* ContentView.swift in Sources */,
 				E234260D2B332E5E0044AF90 /* RedesignSwiftUIExampleApp.swift in Sources */,
-				5CC266992B43DF5C00EA1483 /* ColorPOCSubview.swift in Sources */,
-				5CC266972B43DB7400EA1483 /* ColorPOCView.swift in Sources */,
+				5CC266992B43DF5C00EA1483 /* ColorSchemeChangeSubview.swift in Sources */,
+				5CC266972B43DB7400EA1483 /* ColorSchemeChangeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

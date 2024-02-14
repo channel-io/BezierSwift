@@ -11,7 +11,7 @@ import RedesignBezierSwift
 struct ContentView: View {
   enum Path: Int, Hashable {
     case testView
-    case colorPocView
+    case colorSchemeChangeView
   }
 
   var body: some View {
@@ -20,8 +20,8 @@ struct ContentView: View {
         NavigationLink(value: Path.testView) {
           Text("TestView로 가기")
         }
-        NavigationLink(value: Path.colorPocView) {
-          Text("ColorPOCView로 가기")
+        NavigationLink(value: Path.colorSchemeChangeView) {
+          Text("ColorSchemeChangeView로 가기")
         }
       }
       .padding()
@@ -29,8 +29,8 @@ struct ContentView: View {
         switch path {
         case .testView:
           TestView()
-        case .colorPocView:
-          ColorPOCView()
+        case .colorSchemeChangeView:
+          ColorSchemeChangeView()
         }
       }
     }

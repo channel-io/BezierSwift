@@ -1,5 +1,5 @@
 //
-//  ColorPOCView.swift
+//  ColorSchemeChangeView.swift
 //  RedesignSwiftUIExample
 //
 //  Created by 구본욱 on 1/2/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ColorPOCView: View {
+struct ColorSchemeChangeView: View {
   enum Path: Int, Hashable {
-    case colorPocSubview
+    case colorSchemeChangeSubview
   }
 
   private enum Option: Int, CaseIterable {
@@ -59,14 +59,14 @@ struct ColorPOCView: View {
   }
 }
 
-extension ColorPOCView {
+extension ColorSchemeChangeView {
   private var selectedOption: Option {
     return Option(with: self.colorSchemeManager.colorScheme)
   }
 
   private var content: some View {
     List {
-      NavigationLink(value: Path.colorPocSubview) {
+      NavigationLink(value: Path.colorSchemeChangeSubview) {
         Text("테마 설정이 상속되는지 확인하기 위해 하위 뷰를 푸쉬하기")
       }
       
@@ -90,20 +90,20 @@ extension ColorPOCView {
         }
       }
     }
-    .navigationTitle("ColorPOCView")
+    .navigationTitle("ColorSchemeChangeView")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(for: Path.self) { path in
       switch path {
-      case .colorPocSubview:
-        ColorPOCView()
+      case .colorSchemeChangeSubview:
+        ColorSchemeChangeView()
       }
     }
     .sheet(isPresented: self.$isPresented) {
-      ColorPOCSubview()
+      ColorSchemeChangeSubview()
     }
   }
 }
 
 #Preview {
-  ColorPOCView()
+  ColorSchemeChangeView()
 }
