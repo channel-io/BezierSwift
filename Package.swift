@@ -29,7 +29,11 @@ let package = Package(
       dependencies: []),
     .target(
       name: "RedesignBezierSwift",
-      dependencies: []),
+      dependencies: [],
+      resources: [
+        .process("Resources")
+      ]
+    ),
     .testTarget(
       name: "BezierSwiftTests",
       dependencies: ["BezierSwift"]),
