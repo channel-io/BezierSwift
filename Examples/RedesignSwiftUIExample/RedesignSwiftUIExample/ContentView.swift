@@ -9,11 +9,31 @@ import SwiftUI
 import RedesignBezierSwift
 
 struct ContentView: View {
+  enum Path: Int, Hashable {
+    case testView
+    case colorSchemeChangeView
+  }
+
   var body: some View {
-    VStack {
-      TestView()
+    NavigationStack {
+      VStack(spacing: 12) {
+        NavigationLink(value: Path.testView) {
+          Text("TestView로 가기")
+        }
+        NavigationLink(value: Path.colorSchemeChangeView) {
+          Text("ColorSchemeChangeView로 가기")
+        }
+      }
+      .padding()
+      .navigationDestination(for: Path.self) { path in
+        switch path {
+        case .testView:
+          TestView()
+        case .colorSchemeChangeView:
+          ColorSchemeChangeView()
+        }
+      }
     }
-    .padding()
   }
 }
 

@@ -9,9 +9,21 @@ import SwiftUI
 
 @main
 struct RedesignSwiftUIExampleApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+  @UIApplicationDelegateAdaptor(RedesignSwiftUIExampleAppDelegate.self) private var appDelegate
+  @StateObject var colorSchemeManager = ColorSchemeManager()
+
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+        .environmentObject(self.colorSchemeManager)
+        .onAppear {
+          self.appDelegate.initWindow()
+        }
+        .onChange(of: self.colorSchemeManager.colorScheme) { oldValue, newValue in
+          guard oldValue != newValue else { return }
+
+          self.appDelegate.overrideUIInterfaceThemeStyle(newValue)
         }
     }
+  }
 }
