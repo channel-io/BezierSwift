@@ -49,9 +49,9 @@ extension GlobalToken {
   static var yellow400_20: GlobalToken { GlobalToken(hex: "#EDAE0D33") }
   static var yellow400_10: GlobalToken { GlobalToken(hex: "#EDAE0D1A") }
   static var yellow300: GlobalToken { GlobalToken(hex: "#F9C835") }
-  static var yellow300_40: GlobalToken { GlobalToken(hex: "#F9C83573") }
+  static var yellow300_45: GlobalToken { GlobalToken(hex: "#F9C83573") }
   static var yellow300_30: GlobalToken { GlobalToken(hex: "#F9C8354D") }
-  static var yellow300_20: GlobalToken { GlobalToken(hex: "#F9C83526") }
+  static var yellow300_15: GlobalToken { GlobalToken(hex: "#F9C83526") }
   static var yellow200: GlobalToken { GlobalToken(hex: "#FED968") }
   static var yellow100: GlobalToken { GlobalToken(hex: "#FFE38F") }
 }
@@ -65,9 +65,9 @@ extension GlobalToken {
   static var olive400_20: GlobalToken { GlobalToken(hex: "#A9B11033") }
   static var olive400_10: GlobalToken { GlobalToken(hex: "#A9B1101A") }
   static var olive300: GlobalToken { GlobalToken(hex: "#C8D630") }
-  static var olive300_40: GlobalToken { GlobalToken(hex: "#C8D63073") }
+  static var olive300_45: GlobalToken { GlobalToken(hex: "#C8D63073") }
   static var olive300_30: GlobalToken { GlobalToken(hex: "#C8D6304D") }
-  static var olive300_20: GlobalToken { GlobalToken(hex: "#C8D63026") }
+  static var olive300_15: GlobalToken { GlobalToken(hex: "#C8D63026") }
   static var olive200: GlobalToken { GlobalToken(hex: "#DBE56E") }
   static var olive100: GlobalToken { GlobalToken(hex: "#E7F17C") }
 }
@@ -81,9 +81,9 @@ extension GlobalToken {
   static var teal400_20: GlobalToken { GlobalToken(hex: "#09B2AC33") }
   static var teal400_10: GlobalToken { GlobalToken(hex: "#09B2AC1A") }
   static var teal300: GlobalToken { GlobalToken(hex: "#40D3C5") }
-  static var teal300_40: GlobalToken { GlobalToken(hex: "#40D3C573") }
+  static var teal300_45: GlobalToken { GlobalToken(hex: "#40D3C573") }
   static var teal300_30: GlobalToken { GlobalToken(hex: "#40D3C54D") }
-  static var teal300_20: GlobalToken { GlobalToken(hex: "#40D3C526") }
+  static var teal300_15: GlobalToken { GlobalToken(hex: "#40D3C526") }
   static var teal200: GlobalToken { GlobalToken(hex: "#72E0D5") }
   static var teal100: GlobalToken { GlobalToken(hex: "#9BEEE6") }
 }
@@ -97,9 +97,9 @@ extension GlobalToken {
   static var navy400_20: GlobalToken { GlobalToken(hex: "#424FAB33") }
   static var navy400_10: GlobalToken { GlobalToken(hex: "#424FAB1A") }
   static var navy300: GlobalToken { GlobalToken(hex: "#7683D3") }
-  static var navy300_40: GlobalToken { GlobalToken(hex: "#7683D373") }
+  static var navy300_45: GlobalToken { GlobalToken(hex: "#7683D373") }
   static var navy300_30: GlobalToken { GlobalToken(hex: "#7683D34D") }
-  static var navy300_20: GlobalToken { GlobalToken(hex: "#7683D326") }
+  static var navy300_15: GlobalToken { GlobalToken(hex: "#7683D326") }
   static var navy200: GlobalToken { GlobalToken(hex: "#8B99D9") }
   static var navy100: GlobalToken { GlobalToken(hex: "#A5B2EE") }
 }
@@ -113,9 +113,9 @@ extension GlobalToken {
   static var purple400_20: GlobalToken { GlobalToken(hex: "#8E57E733") }
   static var purple400_10: GlobalToken { GlobalToken(hex: "#8E57E71A") }
   static var purple300: GlobalToken { GlobalToken(hex: "#B184FF") }
-  static var purple300_40: GlobalToken { GlobalToken(hex: "#B184FF73") }
+  static var purple300_45: GlobalToken { GlobalToken(hex: "#B184FF73") }
   static var purple300_30: GlobalToken { GlobalToken(hex: "#B184FF4D") }
-  static var purple300_20: GlobalToken { GlobalToken(hex: "#B184FF26") }
+  static var purple300_15: GlobalToken { GlobalToken(hex: "#B184FF26") }
   static var purple200: GlobalToken { GlobalToken(hex: "#C19AFF") }
   static var purple100: GlobalToken { GlobalToken(hex: "#D1B5FF") }
 }
@@ -129,9 +129,9 @@ extension GlobalToken {
   static var pink400_20: GlobalToken { GlobalToken(hex: "#D64BB533") }
   static var pink400_10: GlobalToken { GlobalToken(hex: "#D64BB51A") }
   static var pink300: GlobalToken { GlobalToken(hex: "#EC6FD3") }
-  static var pink300_40: GlobalToken { GlobalToken(hex: "#EC6FD373") }
+  static var pink300_45: GlobalToken { GlobalToken(hex: "#EC6FD373") }
   static var pink300_30: GlobalToken { GlobalToken(hex: "#EC6FD34D") }
-  static var pink300_20: GlobalToken { GlobalToken(hex: "#EC6FD326") }
+  static var pink300_15: GlobalToken { GlobalToken(hex: "#EC6FD326") }
   static var pink200: GlobalToken { GlobalToken(hex: "#F896E5") }
   static var pink100: GlobalToken { GlobalToken(hex: "#FFAFEF") }
 }
