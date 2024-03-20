@@ -21,8 +21,8 @@ private enum Metric {
 }
 
 private enum Constant {
-  static let maxHorizontalButtonCount = 4
-  static let maxVerticalButtonCount = 2
+  static let maxHorizontalButtonCount = 2
+  static let maxVerticalButtonCount = 4
 }
 
 struct BezierDialog: View, Themeable {
