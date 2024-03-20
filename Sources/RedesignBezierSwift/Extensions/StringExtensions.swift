@@ -29,9 +29,9 @@ extension String {
             )
           } else if hexColor.count == 6 {
             return (
-              red: CGFloat((hexNumber & 0xFF000000) >> 24) / 255,
-              green: CGFloat((hexNumber & 0x00FF0000) >> 16) / 255,
-              blue: CGFloat((hexNumber & 0x0000FF00) >> 8) / 255,
+              red: CGFloat((hexNumber & 0xFF0000) >> 16) / 255,
+              green: CGFloat((hexNumber & 0x00FF00) >> 8) / 255,
+              blue: CGFloat(hexNumber & 0x0000FF) / 255,
               alpha: 1
             )
           }
