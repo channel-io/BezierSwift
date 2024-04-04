@@ -55,7 +55,7 @@ extension GlobalToken {
   static var green400_30: GlobalToken { GlobalToken(hex: "#40AD674D") }
   static var green400_20: GlobalToken { GlobalToken(hex: "#40AD6733") }
   static var green400_10: GlobalToken { GlobalToken(hex: "#40AD671A") }
-  static var green300: GlobalToken { GlobalToken(hex: "#40AD671A") }
+  static var green300: GlobalToken { GlobalToken(hex: "#7AD890") }
   static var green300_45: GlobalToken { GlobalToken(hex: "#7AD89073") }
   static var green300_30: GlobalToken { GlobalToken(hex: "#7AD8904D") }
   static var green300_15: GlobalToken { GlobalToken(hex: "#7AD89026") }
