@@ -191,77 +191,149 @@ extension GlobalToken {
   static var pink100: GlobalToken { GlobalToken(hex: "#FFAFEF") }
 }
 
-// MARK: - Shadeblue
+// MARK: - ShadeBlue
 extension GlobalToken {
-  
+  static var shadeBlue600: GlobalToken { GlobalToken(hex: "#4C5289") }
+  static var shadeBlue600_40: GlobalToken { GlobalToken(hex: "#4C528966") }
+  static var shadeBlue400: GlobalToken { GlobalToken(hex: "#7175E0") }
+  static var shadeBlue400_20: GlobalToken { GlobalToken(hex: "#7175E033") }
 }
 
-// MARK: - Shadecobalt
+// MARK: - ShadeCobalt
 extension GlobalToken {
-  
+  static var shadeCobalt600: GlobalToken { GlobalToken(hex: "#4A6185") }
+  static var shadeCobalt600_40: GlobalToken { GlobalToken(hex: "#4A618566") }
+  static var shadeCobalt400: GlobalToken { GlobalToken(hex: "#57ACE8") }
+  static var shadeCobalt400_20: GlobalToken { GlobalToken(hex: "#57ACE833") }
 }
 
-// MARK: - Shadegreen
+// MARK: - ShadeGreen
 extension GlobalToken {
-  
+  static var shadeGreen600: GlobalToken { GlobalToken(hex: "#4C7A5E") }
+  static var shadeGreen600_40: GlobalToken { GlobalToken(hex: "#4C7A5E66") }
+  static var shadeGreen400: GlobalToken { GlobalToken(hex: "#62AF7C") }
+  static var shadeGreen400_20: GlobalToken { GlobalToken(hex: "#62AF7C33") }
 }
 
-// MARK: - Shadered
+// MARK: - ShadeRed
 extension GlobalToken {
-  
+  static var shadeRed600: GlobalToken { GlobalToken(hex: "#904248") }
+  static var shadeRed600_40: GlobalToken { GlobalToken(hex: "#90424866") }
+  static var shadeRed400: GlobalToken { GlobalToken(hex: "#DE6870") }
+  static var shadeRed400_20: GlobalToken { GlobalToken(hex: "#DE687033") }
 }
 
-// MARK: - Shadeorange
+// MARK: - ShadeOrange
 extension GlobalToken {
-  
+  static var shadeOrange600: GlobalToken { GlobalToken(hex: "#895A34") }
+  static var shadeOrange600_40: GlobalToken { GlobalToken(hex: "#895A3466") }
+  static var shadeOrange400: GlobalToken { GlobalToken(hex: "#E08C48") }
+  static var shadeOrange400_20: GlobalToken { GlobalToken(hex: "#E08C4833") }
 }
 
-// MARK: - Shadeyellow
+// MARK: - ShadeYellow
 extension GlobalToken {
-  
+  static var shadeYellow600: GlobalToken { GlobalToken(hex: "#7D6A26") }
+  static var shadeYellow600_40: GlobalToken { GlobalToken(hex: "#7D6A2666") }
+  static var shadeYellow400: GlobalToken { GlobalToken(hex: "#E8AE3C") }
+  static var shadeYellow400_20: GlobalToken { GlobalToken(hex: "#E8AE3C33") }
 }
 
-// MARK: - Shadeolive
+// MARK: - ShadeOlive
 extension GlobalToken {
-  
+  static var shadeOlive600: GlobalToken { GlobalToken(hex: "#737638") }
+  static var shadeOlive600_40: GlobalToken { GlobalToken(hex: "#73763866") }
+  static var shadeOlive400: GlobalToken { GlobalToken(hex: "#A5A953") }
+  static var shadeOlive400_20: GlobalToken { GlobalToken(hex: "#A5A95333") }
 }
 
-// MARK: - Shadeteal
+// MARK: - ShadeTeal
 extension GlobalToken {
-  
+  static var shadeTeal600: GlobalToken { GlobalToken(hex: "#47737D") }
+  static var shadeTeal600_40: GlobalToken { GlobalToken(hex: "#47737D66") }
+  static var shadeTeal400: GlobalToken { GlobalToken(hex: "#55AAA7") }
+  static var shadeTeal400_20: GlobalToken { GlobalToken(hex: "#55AAA733") }
 }
 
-// MARK: - Shadenavy
+// MARK: - ShadeNavy
 extension GlobalToken {
-  
+  static var shadeNavy600: GlobalToken { GlobalToken(hex: "#373B56") }
+  static var shadeNavy600_40: GlobalToken { GlobalToken(hex: "#373B5666") }
+  static var shadeNavy400: GlobalToken { GlobalToken(hex: "#5F69B0") }
+  static var shadeNavy400_20: GlobalToken { GlobalToken(hex: "#5F69B033") }
 }
 
-// MARK: - Shadepurple
+// MARK: - ShadePurple
 extension GlobalToken {
-  
+  static var shadePurple600: GlobalToken { GlobalToken(hex: "#5B467D") }
+  static var shadePurple600_40: GlobalToken { GlobalToken(hex: "#5B467D66") }
+  static var shadePurple400: GlobalToken { GlobalToken(hex: "#9D6FE5") }
+  static var shadePurple400_20: GlobalToken { GlobalToken(hex: "#9D6FE533") }
 }
 
-// MARK: - Shadepink
+// MARK: - ShadePink
 extension GlobalToken {
-  
+  static var shadePink600: GlobalToken { GlobalToken(hex: "#854075") }
+  static var shadePink600_40: GlobalToken { GlobalToken(hex: "#85407566") }
+  static var shadePink400: GlobalToken { GlobalToken(hex: "#D369BA") }
+  static var shadePink400_20: GlobalToken { GlobalToken(hex: "#D369BA33") }
 }
 
 // MARK: - White
 extension GlobalToken {
-  
+  static var white100: GlobalToken { GlobalToken(hex: "#FFFFFF") }
+  static var white90: GlobalToken { GlobalToken(hex: "#FFFFFFE6") }
+  static var white80: GlobalToken { GlobalToken(hex: "#FFFFFFCC") }
+  static var white60: GlobalToken { GlobalToken(hex: "#FFFFFF99") }
+  static var white40: GlobalToken { GlobalToken(hex: "#FFFFFF66") }
+  static var white20: GlobalToken { GlobalToken(hex: "#FFFFFF33") }
+  static var white12: GlobalToken { GlobalToken(hex: "#FFFFFF1F") }
+  static var white8: GlobalToken { GlobalToken(hex: "#FFFFFF14") }
+  static var white5: GlobalToken { GlobalToken(hex: "#FFFFFF0D") }
+  static var white0: GlobalToken { GlobalToken(hex: "#FFFFFF00") }
 }
 
 // MARK: - Black
 extension GlobalToken {
-  
+  static var black100: GlobalToken { GlobalToken(hex: "#000000") }
+  static var black85: GlobalToken { GlobalToken(hex: "#000000D9") }
+  static var black70: GlobalToken { GlobalToken(hex: "#000000B3") }
+  static var black60: GlobalToken { GlobalToken(hex: "#00000099") }
+  static var black50: GlobalToken { GlobalToken(hex: "#00000080") }
+  static var black40: GlobalToken { GlobalToken(hex: "#00000066") }
+  static var black30: GlobalToken { GlobalToken(hex: "#0000004D") }
+  static var black22: GlobalToken { GlobalToken(hex: "#00000038") }
+  static var black20: GlobalToken { GlobalToken(hex: "#00000033") }
+  static var black15: GlobalToken { GlobalToken(hex: "#00000026") }
+  static var black8: GlobalToken { GlobalToken(hex: "#00000014") }
+  static var black5: GlobalToken { GlobalToken(hex: "#0000000D") }
+  static var black3: GlobalToken { GlobalToken(hex: "#00000008") }
 }
 
 // MARK: - Grey(Solid)
 extension GlobalToken {
-  
+  static var grey900: GlobalToken { GlobalToken(hex: "#242428") }
+  static var grey850: GlobalToken { GlobalToken(hex: "#2A2B2D") }
+  static var grey800: GlobalToken { GlobalToken(hex: "#313234") }
+  static var grey700: GlobalToken { GlobalToken(hex: "#464748") }
+  static var grey600: GlobalToken { GlobalToken(hex: "#7B7B7B") }
+  static var grey500: GlobalToken { GlobalToken(hex: "#A7A7AA") }
+  static var grey400: GlobalToken { GlobalToken(hex: "#CFCFD1") }
+  static var grey300: GlobalToken { GlobalToken(hex: "#E2E2E4") }
+  static var grey200: GlobalToken { GlobalToken(hex: "#EFEFF0") }
+  static var grey100: GlobalToken { GlobalToken(hex: "#F7F7F8") }
+  static var grey50: GlobalToken { GlobalToken(hex: "#FCFCFC") }
 }
 
 // MARK: - Grey(Alpha)
 extension GlobalToken {
-  
+  static var grey900_90: GlobalToken { GlobalToken(hex: "#242428E6") }
+  static var grey800_90: GlobalToken { GlobalToken(hex: "#313234E6") }
+  static var grey850_80: GlobalToken { GlobalToken(hex: "#2A2B2DCC") }
+  static var grey800_80: GlobalToken { GlobalToken(hex: "#313234CC") }
+  static var grey700_80: GlobalToken { GlobalToken(hex: "#464748CC") }
+  static var grey200_80: GlobalToken { GlobalToken(hex: "#EFEFF0CC") }
+  static var grey100_90: GlobalToken { GlobalToken(hex: "#F7F7F8E6") }
+  static var grey100_80: GlobalToken { GlobalToken(hex: "#F7F7F8CC") }
+  static var grey50_80: GlobalToken { GlobalToken(hex: "#FCFCFCCC") }
 }
