@@ -8,6 +8,14 @@
 import UIKit
 
 public final class BezierSwift {
+  public struct Config {
+    fileprivate let hideKeyboardOnDialogDisplay: Bool
+    
+    public init(hideKeyboardOnDialogDisplay: Bool = true) {
+      self.hideKeyboardOnDialogDisplay = hideKeyboardOnDialogDisplay
+    }
+  }
+  
   static let shared = BezierSwift()
   
   private init() { }
@@ -17,8 +25,9 @@ public final class BezierSwift {
   
   weak var bezierWindow: BezierWindow?
   var allowHitTest: Bool { self.dialogViewModel.item.isNotNil }
+  var config = Config()
   
-  func hideKeyboard() {
+  fileprivate func hideKeyboard() {
     // NOTE: BezierDialog update 시 firstResponder 전달이 안돼서 키보드가 닫히지 않는 문제가 있습니다.
     // Keyboard 를 닫아 키보드 입력을 막기 위한 함수입니다. by Tom 2024.04.17
     DispatchQueue.main.async {
@@ -34,10 +43,14 @@ public final class BezierSwift {
 extension BezierSwift {
   @available(iOS, deprecated: 16.0)
   @MainActor
-  public static func initializeWindow(windowLevel: UIWindow.Level = .bezierSwift) -> UIWindow {
+  public static func initializeWindow(
+    windowLevel: UIWindow.Level = .bezierSwift,
+    config: Config = Config()
+  ) -> UIWindow {
     guard let bezierWindow = BezierSwift.shared.bezierWindow else {
       let bezierWindow = BezierWindow(frame: UIScreen.main.bounds, windowLevel: windowLevel)
       BezierSwift.shared.bezierWindow = bezierWindow
+      BezierSwift.shared.config = config
       return bezierWindow
     }
     
@@ -47,11 +60,13 @@ extension BezierSwift {
   @MainActor
   public static func initializeWindow(
     windowScene: UIWindowScene,
-    windowLevel: UIWindow.Level = .bezierSwift
+    windowLevel: UIWindow.Level = .bezierSwift,
+    config: Config = Config()
   ) -> UIWindow {
     guard let bezierWindow = BezierSwift.shared.bezierWindow else {
       let bezierWindow = BezierWindow(windowScene: windowScene, windowLevel: windowLevel)
       BezierSwift.shared.bezierWindow = bezierWindow
+      BezierSwift.shared.config = config
       return bezierWindow
     }
     
@@ -88,4 +103,3 @@ extension BezierSwift {
     BezierSwift.shared.dialogViewModel.dismiss()
   }
 }
-
