@@ -30,11 +30,13 @@ public final class BezierSwift {
   fileprivate func hideKeyboard() {
     // NOTE: BezierDialog update 시 firstResponder 전달이 안돼서 키보드가 닫히지 않는 문제가 있습니다.
     // Keyboard 를 닫아 키보드 입력을 막기 위한 함수입니다. by Tom 2024.04.17
-    DispatchQueue.main.async {
-      if #available(iOS 15.0, *) {
-        self.bezierWindow?.windowScene?.keyWindow?.endEditing(true)
-      } else {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    if self.config.hideKeyboardOnDialogDisplay {
+      DispatchQueue.main.async {
+        if #available(iOS 15.0, *) {
+          self.bezierWindow?.windowScene?.keyWindow?.endEditing(true)
+        } else {
+          UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
       }
     }
   }
