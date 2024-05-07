@@ -22,80 +22,80 @@ internal struct SemanticColorToken: BezierColorType {
 
 // MARK: PrimaryBackground
 extension SemanticColorToken {
-  static var primaryBgNormal: Self = SemanticColorToken(functionalColorToken: .bgBlueNormal)
-  static var primaryBgLight: Self = SemanticColorToken(functionalColorToken: .bgBlueLight)
-  static var primaryBgLighter: Self = SemanticColorToken(functionalColorToken: .bgBlueLighter)
-  static var primaryBgLightest: Self = SemanticColorToken(functionalColorToken: .bgBlueLightest)
-  static var primaryBgDark: Self = SemanticColorToken(functionalColorToken: .bgBlueDark)
+  static var primaryBgNormal = SemanticColorToken(functionalColorToken: .bgBlueNormal)
+  static var primaryBgLight = SemanticColorToken(functionalColorToken: .bgBlueLight)
+  static var primaryBgLighter = SemanticColorToken(functionalColorToken: .bgBlueLighter)
+  static var primaryBgLightest = SemanticColorToken(functionalColorToken: .bgBlueLightest)
+  static var primaryBgDark = SemanticColorToken(functionalColorToken: .bgBlueDark)
 }
 
 // MARK: PrimaryForeground
 extension SemanticColorToken {
-  static var primaryFgNormal: Self = SemanticColorToken(functionalColorToken: .fgBlueNormal)
-  static var primaryFgLight: Self = SemanticColorToken(functionalColorToken: .fgBlueLight)
-  static var primaryFgDark: Self = SemanticColorToken(functionalColorToken: .fgBlueDark)
+  static var primaryFgNormal = SemanticColorToken(functionalColorToken: .fgBlueNormal)
+  static var primaryFgLight = SemanticColorToken(functionalColorToken: .fgBlueLight)
+  static var primaryFgDark = SemanticColorToken(functionalColorToken: .fgBlueDark)
 }
 
 // MARK: CriticalBackground
 extension SemanticColorToken {
-  static var criticalBgDark: Self = SemanticColorToken(functionalColorToken: .bgRedDark)
-  static var criticalBgNormal: Self = SemanticColorToken(functionalColorToken: .bgRedNormal)
-  static var criticalBgLight: Self = SemanticColorToken(functionalColorToken: .bgRedLight)
-  static var criticalBgLighter: Self = SemanticColorToken(functionalColorToken: .bgRedLighter)
-  static var criticalBgLightest: Self = SemanticColorToken(functionalColorToken: .bgRedLightest)
+  static var criticalBgDark = SemanticColorToken(functionalColorToken: .bgRedDark)
+  static var criticalBgNormal = SemanticColorToken(functionalColorToken: .bgRedNormal)
+  static var criticalBgLight = SemanticColorToken(functionalColorToken: .bgRedLight)
+  static var criticalBgLighter = SemanticColorToken(functionalColorToken: .bgRedLighter)
+  static var criticalBgLightest = SemanticColorToken(functionalColorToken: .bgRedLightest)
 }
 
 // MARK: CriticalForeground
 extension SemanticColorToken {
-  static var criticalFgNormal: Self = SemanticColorToken(functionalColorToken: .fgRedNormal)
-  static var criticalFgLight: Self = SemanticColorToken(functionalColorToken: .fgRedLight)
-  static var criticalFgDark: Self = SemanticColorToken(functionalColorToken: .fgRedDark)
+  static var criticalFgNormal = SemanticColorToken(functionalColorToken: .fgRedNormal)
+  static var criticalFgLight = SemanticColorToken(functionalColorToken: .fgRedLight)
+  static var criticalFgDark = SemanticColorToken(functionalColorToken: .fgRedDark)
 }
 
 // MARK: WarningBackground
 extension SemanticColorToken {
-  static var warningBgDark: Self = SemanticColorToken(functionalColorToken: .bgOrangeDark)
-  static var warningBgNormal: Self = SemanticColorToken(functionalColorToken: .bgOrangeNormal)
-  static var warningBgLight: Self = SemanticColorToken(functionalColorToken: .bgOrangeLight)
-  static var warningBgLighter: Self = SemanticColorToken(functionalColorToken: .bgOrangeLighter)
-  static var warningBgLightest: Self = SemanticColorToken(functionalColorToken: .bgOrangeLightest)
+  static var warningBgDark = SemanticColorToken(functionalColorToken: .bgOrangeDark)
+  static var warningBgNormal = SemanticColorToken(functionalColorToken: .bgOrangeNormal)
+  static var warningBgLight = SemanticColorToken(functionalColorToken: .bgOrangeLight)
+  static var warningBgLighter = SemanticColorToken(functionalColorToken: .bgOrangeLighter)
+  static var warningBgLightest = SemanticColorToken(functionalColorToken: .bgOrangeLightest)
 }
 
 // MARK: WarningForeground
 extension SemanticColorToken {
-  static var warningFgNormal: Self = SemanticColorToken(functionalColorToken: .fgOrangeNormal)
-  static var warningFgLight: Self = SemanticColorToken(functionalColorToken: .fgOrangeLight)
-  static var warningFgDark: Self = SemanticColorToken(functionalColorToken: .fgOrangeDark)
+  static var warningFgNormal = SemanticColorToken(functionalColorToken: .fgOrangeNormal)
+  static var warningFgLight = SemanticColorToken(functionalColorToken: .fgOrangeLight)
+  static var warningFgDark = SemanticColorToken(functionalColorToken: .fgOrangeDark)
 }
 
 // MARK: AccentBackground
 extension SemanticColorToken {
-  static var accentBgDark: Self = SemanticColorToken(functionalColorToken: .bgCobaltDark)
-  static var accentBgNormal: Self = SemanticColorToken(functionalColorToken: .bgCobaltNormal)
-  static var accentBgLight: Self = SemanticColorToken(functionalColorToken: .bgCobaltLight)
-  static var accentBgLighter: Self = SemanticColorToken(functionalColorToken: .bgCobaltLighter)
-  static var accentBgLightest: Self = SemanticColorToken(functionalColorToken: .bgCobaltLightest)
+  static var accentBgDark = SemanticColorToken(functionalColorToken: .bgCobaltDark)
+  static var accentBgNormal = SemanticColorToken(functionalColorToken: .bgCobaltNormal)
+  static var accentBgLight = SemanticColorToken(functionalColorToken: .bgCobaltLight)
+  static var accentBgLighter = SemanticColorToken(functionalColorToken: .bgCobaltLighter)
+  static var accentBgLightest = SemanticColorToken(functionalColorToken: .bgCobaltLightest)
 }
 
 // MARK: AccentForeground
 extension SemanticColorToken {
-  static var accentFgNormal: Self = SemanticColorToken(functionalColorToken: .fgCobaltNormal)
-  static var accentFgLight: Self = SemanticColorToken(functionalColorToken: .fgCobaltLight)
-  static var accentFgDark: Self = SemanticColorToken(functionalColorToken: .fgCobaltDark)
+  static var accentFgNormal = SemanticColorToken(functionalColorToken: .fgCobaltNormal)
+  static var accentFgLight = SemanticColorToken(functionalColorToken: .fgCobaltLight)
+  static var accentFgDark = SemanticColorToken(functionalColorToken: .fgCobaltDark)
 }
 
 // MARK: SuccessForeground
 extension SemanticColorToken {
-  static var successBgDark: Self = SemanticColorToken(functionalColorToken: .bgGreenDark)
-  static var successBgNormal: Self = SemanticColorToken(functionalColorToken: .bgGreenNormal)
-  static var successBgLight: Self = SemanticColorToken(functionalColorToken: .bgGreenLight)
-  static var successBgLighter: Self = SemanticColorToken(functionalColorToken: .bgGreenLighter)
-  static var successBgLightest: Self = SemanticColorToken(functionalColorToken: .bgGreenLightest)
+  static var successBgDark = SemanticColorToken(functionalColorToken: .bgGreenDark)
+  static var successBgNormal = SemanticColorToken(functionalColorToken: .bgGreenNormal)
+  static var successBgLight = SemanticColorToken(functionalColorToken: .bgGreenLight)
+  static var successBgLighter = SemanticColorToken(functionalColorToken: .bgGreenLighter)
+  static var successBgLightest = SemanticColorToken(functionalColorToken: .bgGreenLightest)
 }
 
 // MARK: SuccessForeground
 extension SemanticColorToken {
-  static var successFgNormal: Self = SemanticColorToken(functionalColorToken: .fgGreenNormal)
-  static var successFgLight: Self = SemanticColorToken(functionalColorToken: .fgGreenLight)
-  static var successFgDark: Self = SemanticColorToken(functionalColorToken: .fgGreenDark)
+  static var successFgNormal = SemanticColorToken(functionalColorToken: .fgGreenNormal)
+  static var successFgLight = SemanticColorToken(functionalColorToken: .fgGreenLight)
+  static var successFgDark = SemanticColorToken(functionalColorToken: .fgGreenDark)
 }
