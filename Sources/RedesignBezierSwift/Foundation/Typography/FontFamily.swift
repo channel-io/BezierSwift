@@ -29,18 +29,18 @@ struct FontConvertible {
 
   func font(size: CGFloat) -> Font {
     guard let font = Font(font: self, size: size) else {
-      fatalError("Unable to initialize font '\(name)' (\(family))")
+      fatalError("Unable to initialize font '\(self.name)' (\(self.family))")
     }
     return font
   }
 
   func register() {
-    guard let url = url else { return }
+    guard let url else { return }
     CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
   }
 
   fileprivate var url: URL? {
-    return Bundle.module.url(forResource: path, withExtension: nil)
+    return Bundle.module.url(forResource: self.path, withExtension: nil)
   }
 }
 
