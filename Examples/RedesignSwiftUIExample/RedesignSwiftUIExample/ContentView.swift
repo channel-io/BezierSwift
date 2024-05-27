@@ -12,7 +12,7 @@ struct ContentView: View {
   var body: some View {
     VStack {
       Text("테스트")
-        .applyBezierFontStyle(.bold14)
+        .applyBezierFontStyle(.title1Bold)
     }
     .padding()
   }
