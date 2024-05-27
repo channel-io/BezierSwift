@@ -9,14 +9,9 @@ import UIKit.UIFont
 
 enum FontFamily {
   enum Pretendard {
-    static let bold = FontConvertible(name: "Pretendard-Bold", family: "Pretendard", path: "Pretendard-Bold.otf")
     static let regular = FontConvertible(name: "Pretendard-Regular", family: "Pretendard", path: "Pretendard-Regular.otf")
     static let semiBold = FontConvertible(name: "Pretendard-SemiBold", family: "Pretendard", path: "Pretendard-SemiBold.otf")
-    static let all: [FontConvertible] = [bold, regular, semiBold]
-  }
-  static let allCustomFonts: [FontConvertible] = [Pretendard.all].flatMap { $0 }
-  static func registerAllCustomFonts() {
-    allCustomFonts.forEach { $0.register() }
+    static let bold = FontConvertible(name: "Pretendard-Bold", family: "Pretendard", path: "Pretendard-Bold.otf")
   }
 }
 
@@ -31,11 +26,13 @@ struct FontConvertible {
     guard let font = Font(font: self, size: size) else {
       fatalError("Unable to initialize font '\(self.name)' (\(self.family))")
     }
+    
     return font
   }
 
   func register() {
     guard let url else { return }
+    
     CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
   }
 
