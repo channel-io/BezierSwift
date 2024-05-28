@@ -11,7 +11,8 @@ import RedesignBezierSwift
 struct ContentView: View {
   var body: some View {
     VStack {
-      TestView()
+      Text("테스트")
+        .applyBezierFontStyle(.title1Bold)
     }
     .padding()
   }
