@@ -320,6 +320,7 @@ extension FunctionalColorToken {
   static var bgWhiteAlphaLightest = FunctionalColorToken(lightGlobalColorToken: .white90, darkGlobalColorToken: .grey800_80)
   static var bgWhiteAlphaLighter = FunctionalColorToken(lightGlobalColorToken: .white60, darkGlobalColorToken: .black60)
   static var bgWhiteAlphaLight = FunctionalColorToken(lightGlobalColorToken: .white20, darkGlobalColorToken: .black20)
+  static var bgWhiteAlphaTransparent = FunctionalColorToken(lightGlobalColorToken: .white0, darkGlobalColorToken: .white0)
 }
 
 // MARK: - BackgroundAbsoluteBlack
