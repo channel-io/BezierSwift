@@ -259,6 +259,7 @@ extension BezierColor {
   public static var bgWhiteAlphaLightest: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLightest) }
   public static var bgWhiteAlphaLighter: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLighter) }
   public static var bgWhiteAlphaLight: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLight) }
+  public static var bgWhiteAlphaTransparent: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaTransparent) }
 
   // MARK: BackgroundAbsoluteBlack
   public static var bgAbsoluteBlackDark: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackDark) }
