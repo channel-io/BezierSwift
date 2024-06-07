@@ -10,7 +10,7 @@ import SwiftUI
 extension View {
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    bezierColor: BezierColor
+    bezierColor: BezierColorType
   ) -> some View {
     self.modifier(BezierFontStyle(bezierFont: bezierFont, bezierColor: bezierColor))
   }
@@ -19,9 +19,9 @@ extension View {
 private struct BezierFontStyle: ViewModifier, Themeable {
   @Environment(\.colorScheme) fileprivate var colorScheme
   private let bezierFont: BezierFont
-  private let bezierColor: BezierColor
+  private let bezierColor: BezierColorType
   
-  init(bezierFont: BezierFont, bezierColor: BezierColor) {
+  init(bezierFont: BezierFont, bezierColor: BezierColorType) {
     self.bezierFont = bezierFont
     self.bezierColor = bezierColor
   }

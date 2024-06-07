@@ -17,7 +17,7 @@ public protocol Themeable {
 }
 
 extension Themeable {
-  public func palette(_ bezierColor: BezierColor) -> Color {
+  public func palette(_ bezierColor: BezierColorType) -> Color {
     switch self.colorScheme {
     case .light: return bezierColor.color(for: .light)
     case .dark: return bezierColor.color(for: .dark)

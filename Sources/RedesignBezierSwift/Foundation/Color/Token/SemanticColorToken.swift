@@ -8,94 +8,76 @@
 import UIKit
 import SwiftUI
 
-internal struct SemanticColorToken: BezierColorType {
+public struct SemanticColorToken: BezierColorType {
   let functionalColorToken: FunctionalColorToken
   
-  func color(for bezierTheme: BezierTheme) -> Color {
+  public func color(for bezierTheme: BezierTheme) -> Color {
     return self.functionalColorToken.color(for: bezierTheme)
   }
   
-  func uiColor(for bezierTheme: BezierTheme) -> UIColor {
+  public func uiColor(for bezierTheme: BezierTheme) -> UIColor {
     return self.functionalColorToken.uiColor(for: bezierTheme)
   }
 }
 
-// MARK: PrimaryBackground
-extension SemanticColorToken {
-  static var primaryBgNormal = SemanticColorToken(functionalColorToken: .bgBlueNormal)
-  static var primaryBgLight = SemanticColorToken(functionalColorToken: .bgBlueLight)
-  static var primaryBgLighter = SemanticColorToken(functionalColorToken: .bgBlueLighter)
-  static var primaryBgLightest = SemanticColorToken(functionalColorToken: .bgBlueLightest)
-  static var primaryBgDark = SemanticColorToken(functionalColorToken: .bgBlueDark)
-}
+extension BezierColorType where Self == SemanticColorToken {
+  // MARK: PrimaryBackground
+  public static var primaryBgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgBlueNormal) }
+  public static var primaryBgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgBlueLight) }
+  public static var primaryBgLighter: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgBlueLighter) }
+  public static var primaryBgLightest: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgBlueLightest) }
+  public static var primaryBgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgBlueDark) }
 
-// MARK: PrimaryForeground
-extension SemanticColorToken {
-  static var primaryFgNormal = SemanticColorToken(functionalColorToken: .fgBlueNormal)
-  static var primaryFgLight = SemanticColorToken(functionalColorToken: .fgBlueLight)
-  static var primaryFgDark = SemanticColorToken(functionalColorToken: .fgBlueDark)
-}
+  // MARK: PrimaryForeground
+  public static var primaryFgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgBlueNormal) }
+  public static var primaryFgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgBlueLight) }
+  public static var primaryFgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgBlueDark) }
 
-// MARK: CriticalBackground
-extension SemanticColorToken {
-  static var criticalBgDark = SemanticColorToken(functionalColorToken: .bgRedDark)
-  static var criticalBgNormal = SemanticColorToken(functionalColorToken: .bgRedNormal)
-  static var criticalBgLight = SemanticColorToken(functionalColorToken: .bgRedLight)
-  static var criticalBgLighter = SemanticColorToken(functionalColorToken: .bgRedLighter)
-  static var criticalBgLightest = SemanticColorToken(functionalColorToken: .bgRedLightest)
-}
+  // MARK: CriticalBackground
+  public static var criticalBgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgRedDark) }
+  public static var criticalBgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgRedNormal) }
+  public static var criticalBgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgRedLight) }
+  public static var criticalBgLighter: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgRedLighter) }
+  public static var criticalBgLightest: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgRedLightest) }
 
-// MARK: CriticalForeground
-extension SemanticColorToken {
-  static var criticalFgNormal = SemanticColorToken(functionalColorToken: .fgRedNormal)
-  static var criticalFgLight = SemanticColorToken(functionalColorToken: .fgRedLight)
-  static var criticalFgDark = SemanticColorToken(functionalColorToken: .fgRedDark)
-}
+  // MARK: CriticalForeground
+  public static var criticalFgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgRedNormal) }
+  public static var criticalFgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgRedLight) }
+  public static var criticalFgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgRedDark) }
 
-// MARK: WarningBackground
-extension SemanticColorToken {
-  static var warningBgDark = SemanticColorToken(functionalColorToken: .bgOrangeDark)
-  static var warningBgNormal = SemanticColorToken(functionalColorToken: .bgOrangeNormal)
-  static var warningBgLight = SemanticColorToken(functionalColorToken: .bgOrangeLight)
-  static var warningBgLighter = SemanticColorToken(functionalColorToken: .bgOrangeLighter)
-  static var warningBgLightest = SemanticColorToken(functionalColorToken: .bgOrangeLightest)
-}
+  // MARK: WarningBackground
+  public static var warningBgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgOrangeDark) }
+  public static var warningBgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgOrangeNormal) }
+  public static var warningBgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgOrangeLight) }
+  public static var warningBgLighter: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgOrangeLighter) }
+  public static var warningBgLightest: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgOrangeLightest) }
 
-// MARK: WarningForeground
-extension SemanticColorToken {
-  static var warningFgNormal = SemanticColorToken(functionalColorToken: .fgOrangeNormal)
-  static var warningFgLight = SemanticColorToken(functionalColorToken: .fgOrangeLight)
-  static var warningFgDark = SemanticColorToken(functionalColorToken: .fgOrangeDark)
-}
+  // MARK: WarningForeground
+  public static var warningFgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgOrangeNormal) }
+  public static var warningFgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgOrangeLight) }
+  public static var warningFgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgOrangeDark) }
 
-// MARK: AccentBackground
-extension SemanticColorToken {
-  static var accentBgDark = SemanticColorToken(functionalColorToken: .bgCobaltDark)
-  static var accentBgNormal = SemanticColorToken(functionalColorToken: .bgCobaltNormal)
-  static var accentBgLight = SemanticColorToken(functionalColorToken: .bgCobaltLight)
-  static var accentBgLighter = SemanticColorToken(functionalColorToken: .bgCobaltLighter)
-  static var accentBgLightest = SemanticColorToken(functionalColorToken: .bgCobaltLightest)
-}
+  // MARK: AccentBackground
+  public static var accentBgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgCobaltDark) }
+  public static var accentBgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgCobaltNormal) }
+  public static var accentBgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgCobaltLight) }
+  public static var accentBgLighter: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgCobaltLighter) }
+  public static var accentBgLightest: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgCobaltLightest) }
 
-// MARK: AccentForeground
-extension SemanticColorToken {
-  static var accentFgNormal = SemanticColorToken(functionalColorToken: .fgCobaltNormal)
-  static var accentFgLight = SemanticColorToken(functionalColorToken: .fgCobaltLight)
-  static var accentFgDark = SemanticColorToken(functionalColorToken: .fgCobaltDark)
-}
+  // MARK: AccentForeground
+  public static var accentFgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgCobaltNormal) }
+  public static var accentFgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgCobaltLight) }
+  public static var accentFgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgCobaltDark) }
 
-// MARK: SuccessForeground
-extension SemanticColorToken {
-  static var successBgDark = SemanticColorToken(functionalColorToken: .bgGreenDark)
-  static var successBgNormal = SemanticColorToken(functionalColorToken: .bgGreenNormal)
-  static var successBgLight = SemanticColorToken(functionalColorToken: .bgGreenLight)
-  static var successBgLighter = SemanticColorToken(functionalColorToken: .bgGreenLighter)
-  static var successBgLightest = SemanticColorToken(functionalColorToken: .bgGreenLightest)
-}
+  // MARK: SuccessForeground
+  public static var successBgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgGreenDark) }
+  public static var successBgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgGreenNormal) }
+  public static var successBgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgGreenLight) }
+  public static var successBgLighter: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgGreenLighter) }
+  public static var successBgLightest: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.bgGreenLightest) }
 
-// MARK: SuccessForeground
-extension SemanticColorToken {
-  static var successFgNormal = SemanticColorToken(functionalColorToken: .fgGreenNormal)
-  static var successFgLight = SemanticColorToken(functionalColorToken: .fgGreenLight)
-  static var successFgDark = SemanticColorToken(functionalColorToken: .fgGreenDark)
+  // MARK: SuccessForeground
+  public static var successFgNormal: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgGreenNormal) }
+  public static var successFgLight: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgGreenLight) }
+  public static var successFgDark: SemanticColorToken { SemanticColorToken(functionalColorToken: FunctionalColorToken.fgGreenDark) }
 }
