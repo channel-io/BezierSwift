@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E28212242A4B31BD00018327 /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28212232A4B31BD00018327 /* BezierSwift */; };
+		5C2BD9D42C2163B600FED6F0 /* LegacyBezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2BD9D32C2163B600FED6F0 /* LegacyBezierSwift */; };
 		E28212432A4B3C0900018327 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212422A4B3C0900018327 /* BaseViewController.swift */; };
 		E2C2C3D32A4B2DE700A7E5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C2C3D22A4B2DE700A7E5E6 /* AppDelegate.swift */; };
 		E2C2C3D52A4B2DE700A7E5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C2C3D42A4B2DE700A7E5E6 /* SceneDelegate.swift */; };
@@ -32,7 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E28212242A4B31BD00018327 /* BezierSwift in Frameworks */,
+				5C2BD9D42C2163B600FED6F0 /* LegacyBezierSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +94,7 @@
 			);
 			name = UIKitExample;
 			packageProductDependencies = (
-				E28212232A4B31BD00018327 /* BezierSwift */,
+				5C2BD9D32C2163B600FED6F0 /* LegacyBezierSwift */,
 			);
 			productName = UIKitExample;
 			productReference = E2C2C3CF2A4B2DE700A7E5E6 /* UIKitExample.app */;
@@ -363,9 +363,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E28212232A4B31BD00018327 /* BezierSwift */ = {
+		5C2BD9D32C2163B600FED6F0 /* LegacyBezierSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BezierSwift;
+			productName = LegacyBezierSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

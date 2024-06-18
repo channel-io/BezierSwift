@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BezierSwift
+import LegacyBezierSwift
 
 class BaseViewController: UIViewController, BezierComponentable {
   var colorTheme: BezierColorTheme { .systemBezierColorTheme() }

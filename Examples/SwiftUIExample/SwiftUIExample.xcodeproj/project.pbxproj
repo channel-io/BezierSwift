@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C2BD9D22C2163A700FED6F0 /* LegacyBezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */; };
 		E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
 		E28212362A4B32F800018327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212352A4B32F800018327 /* Assets.xcassets */; };
 		E28212392A4B32F800018327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212382A4B32F800018327 /* Preview Assets.xcassets */; };
-		E28212412A4B331E00018327 /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28212402A4B331E00018327 /* BezierSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E28212412A4B331E00018327 /* BezierSwift in Frameworks */,
+				5C2BD9D22C2163A700FED6F0 /* LegacyBezierSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +105,7 @@
 			);
 			name = SwiftUIExample;
 			packageProductDependencies = (
-				E28212402A4B331E00018327 /* BezierSwift */,
+				5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */,
 			);
 			productName = SwiftUIExample;
 			productReference = E282122E2A4B32F700018327 /* SwiftUIExample.app */;
@@ -366,9 +366,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E28212402A4B331E00018327 /* BezierSwift */ = {
+		5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BezierSwift;
+			productName = LegacyBezierSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BezierSwift
+import LegacyBezierSwift
 
 struct ContentView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme

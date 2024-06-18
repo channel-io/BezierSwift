@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BezierSwift
+import LegacyBezierSwift
 
 final class ViewController: BaseViewController {
   private enum Font {

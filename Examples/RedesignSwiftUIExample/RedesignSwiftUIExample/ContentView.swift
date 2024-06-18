@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import RedesignBezierSwift
+import BezierSwift
 
 struct ContentView: View {
   var body: some View {

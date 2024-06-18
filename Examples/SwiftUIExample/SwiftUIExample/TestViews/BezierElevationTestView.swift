@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LegacyBezierSwift
 
 struct BezierElevationTestView: View {
     var body: some View {
