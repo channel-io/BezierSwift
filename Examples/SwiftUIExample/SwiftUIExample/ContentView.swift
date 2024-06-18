@@ -12,8 +12,13 @@ struct ContentView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
-    Rectangle()
-      .foregroundColor(self.palette(.primaryBgDark))
+    ZStack {
+      Rectangle()
+        .foregroundColor(self.palette(.primaryBgLightest))
+
+      Text("Hello World")
+        .applyBezierFontStyle(.title1Bold, bezierColor: .primaryFgDark)
+    }
   }
 }
 
