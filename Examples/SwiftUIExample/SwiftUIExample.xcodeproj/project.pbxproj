@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C2BD9D22C2163A700FED6F0 /* LegacyBezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */; };
-		E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */; };
+		5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C83DBDE2C21673300B3135B /* BezierSwift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
 		E28212362A4B32F800018327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212352A4B32F800018327 /* Assets.xcassets */; };
@@ -16,7 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierElevationTestView.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		E28212332A4B32F700018327 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,21 +27,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2BD9D22C2163A700FED6F0 /* LegacyBezierSwift in Frameworks */,
+				5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E2789E4B2A737B9300B98B8D /* TestViews */ = {
-			isa = PBXGroup;
-			children = (
-				E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */,
-			);
-			path = TestViews;
-			sourceTree = "<group>";
-		};
 		E28212252A4B32F700018327 = {
 			isa = PBXGroup;
 			children = (
@@ -64,7 +54,6 @@
 		E28212302A4B32F700018327 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
-				E2789E4B2A737B9300B98B8D /* TestViews */,
 				E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */,
 				E28212332A4B32F700018327 /* ContentView.swift */,
 				E28212352A4B32F800018327 /* Assets.xcassets */,
@@ -105,7 +94,7 @@
 			);
 			name = SwiftUIExample;
 			packageProductDependencies = (
-				5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */,
+				5C83DBDE2C21673300B3135B /* BezierSwift */,
 			);
 			productName = SwiftUIExample;
 			productReference = E282122E2A4B32F700018327 /* SwiftUIExample.app */;
@@ -162,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
-				E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,9 +354,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5C2BD9D12C2163A700FED6F0 /* LegacyBezierSwift */ = {
+		5C83DBDE2C21673300B3135B /* BezierSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = LegacyBezierSwift;
+			productName = BezierSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

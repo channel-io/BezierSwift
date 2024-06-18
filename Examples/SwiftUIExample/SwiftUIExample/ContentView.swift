@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import LegacyBezierSwift
+import BezierSwift
 
 struct ContentView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
     Rectangle()
-      .foregroundColor(self.palette(.bgtxtRedDark))
+      .foregroundColor(self.palette(.primaryBgDark))
   }
 }
 
