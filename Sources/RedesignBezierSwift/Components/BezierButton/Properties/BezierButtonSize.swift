@@ -40,7 +40,7 @@ extension BezierButtonSize {
     }
   }
 
-  var textHoritontalPadding: CGFloat {
+  var textHorizontalPadding: CGFloat {
     switch self {
     case .xsmall: return 3
     case .small, .medium: return 4
