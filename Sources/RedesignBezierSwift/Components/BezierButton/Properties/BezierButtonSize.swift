@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum BezierButtonSize {
+public enum BezierButtonSize {
   case xsmall
   case small
   case medium
   case large
   case xlarge
 
-  static func `default`() -> BezierButtonSize {
+  public static func `default`() -> BezierButtonSize {
     return .large
   }
 }
