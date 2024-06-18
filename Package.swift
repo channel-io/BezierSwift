@@ -14,8 +14,8 @@ let package = Package(
       name: "BezierSwift",
       targets: ["BezierSwift"]),
     .library(
-      name: "RedesignBezierSwift",
-      targets: ["RedesignBezierSwift"]),
+      name: "LegacyBezierSwift",
+      targets: ["LegacyBezierSwift"]),
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
@@ -26,17 +26,22 @@ let package = Package(
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     .target(
       name: "BezierSwift",
-      dependencies: []),
-    .target(
-      name: "RedesignBezierSwift",
       dependencies: [],
-      resources: [
-        .process("Resources")
-      ]
+      path: "BezierSwift",
+      sources: ["Sources"],
+      resources: [.process("Resources")]
+    ),
+    .target(
+      name: "LegacyBezierSwift",
+      dependencies: [],
+      path: "BezierSwift",
+      sources: ["Legacy"]
     ),
     .testTarget(
       name: "BezierSwiftTests",
-      dependencies: ["BezierSwift"]),
+      dependencies: ["BezierSwift"],
+      path: "BezierSwiftTests"
+    ),
   ],
   swiftLanguageVersions: [.v5]
 )
