@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "/ruler.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "properties" : {
+     "preserves-vector-representation" : true
+  },
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
