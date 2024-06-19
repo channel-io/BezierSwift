@@ -49,12 +49,13 @@ public struct BezierButtonConfiguration {
     case absoluteWhite
   }
   
-  let text: String
   let variant: Variant
   let color: Color
   let size: Size
-  let prefixContent: PrefixContent?
-  let suffixContent: SuffixContent?
+
+  var text: String
+  var prefixContent: PrefixContent?
+  var suffixContent: SuffixContent?
   var action: Action
   
   // MARK: Text
