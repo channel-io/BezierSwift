@@ -10,14 +10,18 @@ import BezierSwift
 
 struct ContentView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
-  
-  var body: some View {
-    ZStack {
-      Rectangle()
-        .foregroundColor(self.palette(.primaryBgLightest))
+  @State var isUIKitViewControllerShowed: Bool = false
 
-      Text("Hello World")
-        .applyBezierFontStyle(.title1Bold, bezierColor: .primaryFgDark)
+  var body: some View {
+    NavigationView {
+      List {
+        Text("Hello World")
+          .applyBezierFontStyle(.title1Bold, bezierColor: .primaryFgDark)
+        NavigationLink(destination: UIKitExampleView()) {
+          Text("UIKitExampleView")
+            .applyBezierFontStyle(.title1Bold, bezierColor: .primaryFgDark)
+        }
+      }
     }
   }
 }

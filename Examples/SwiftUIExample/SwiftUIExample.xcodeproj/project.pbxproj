@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C83DBDE2C21673300B3135B /* BezierSwift */; };
+		5CE4E8812C22B2E500955523 /* UIKitExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4E8802C22B2E500955523 /* UIKitExampleViewController.swift */; };
+		5CE4E8832C22B40C00955523 /* UIKitExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4E8822C22B40C00955523 /* UIKitExampleView.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
 		E28212362A4B32F800018327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212352A4B32F800018327 /* Assets.xcassets */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5CE4E8802C22B2E500955523 /* UIKitExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExampleViewController.swift; sourceTree = "<group>"; };
+		5CE4E8822C22B40C00955523 /* UIKitExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExampleView.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		E28212332A4B32F700018327 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +38,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CE4E87F2C22B2CE00955523 /* UIKitExampleView */ = {
+			isa = PBXGroup;
+			children = (
+				5CE4E8802C22B2E500955523 /* UIKitExampleViewController.swift */,
+				5CE4E8822C22B40C00955523 /* UIKitExampleView.swift */,
+			);
+			path = UIKitExampleView;
+			sourceTree = "<group>";
+		};
 		E28212252A4B32F700018327 = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +67,7 @@
 		E28212302A4B32F700018327 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				5CE4E87F2C22B2CE00955523 /* UIKitExampleView */,
 				E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */,
 				E28212332A4B32F700018327 /* ContentView.swift */,
 				E28212352A4B32F800018327 /* Assets.xcassets */,
@@ -150,7 +164,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE4E8812C22B2E500955523 /* UIKitExampleViewController.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
+				5CE4E8832C22B40C00955523 /* UIKitExampleView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
