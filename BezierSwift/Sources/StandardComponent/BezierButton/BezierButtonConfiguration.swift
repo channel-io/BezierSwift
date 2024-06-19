@@ -97,8 +97,8 @@ public struct BezierButtonConfiguration {
     }
   }
   
-  // MARK: Content
-  var contentSize: CGSize {
+  // MARK: Affix Content
+  var affixContentSize: CGSize {
     switch self.size {
     case .xsmall, .small: return CGSize(width: 16, height: 16)
     case .medium, .large: return CGSize(width: 20, height: 20)
@@ -106,7 +106,7 @@ public struct BezierButtonConfiguration {
     }
   }
   
-  var contentForegroundColor: BezierColor {
+  var affixContentForegroundColor: BezierColor {
     switch (self.variant, self.color) {
     case (.secondary, .darkGrey), (.tertiary, .darkGrey):
       return .fgBlackDarker
