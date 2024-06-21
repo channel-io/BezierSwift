@@ -21,10 +21,7 @@ class UIKitExampleViewController: UIViewController {
       color: .cobalt,
       size: .xlarge,
       prefixContent: nil,
-      suffixContent: .icon(.chatBubbleAlt),
-      action: { [weak self] in
-        self?.updateButtonClickCount()
-      }
+      suffixContent: .icon(.chatBubbleAlt)
     )
   )
   private lazy var disabledButton = UIBezierButton(
@@ -34,8 +31,17 @@ class UIKitExampleViewController: UIViewController {
       color: .orange,
       size: .xlarge,
       prefixContent: .icon(.all),
-      suffixContent: nil,
-      action: {}
+      suffixContent: nil
+    )
+  )
+  private lazy var loadingButton = UIBezierButton(
+    configuration: BezierButtonConfiguration(
+      text: "Loading",
+      variant: .tertiary,
+      color: .orange,
+      size: .xlarge,
+      prefixContent: .icon(.all),
+      suffixContent: nil
     )
   )
 
@@ -46,6 +52,7 @@ class UIKitExampleViewController: UIViewController {
     self.scrollView.addSubview(self.stackView)
     self.stackView.addArrangedSubview(self.normalButton)
     self.stackView.addArrangedSubview(self.disabledButton)
+    self.stackView.addArrangedSubview(self.loadingButton)
 
     self.scrollView.translatesAutoresizingMaskIntoConstraints = false
     self.stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +64,12 @@ class UIKitExampleViewController: UIViewController {
     self.normalButton.isUserInteractionEnabled = true
     self.normalButton.isEnabled = true
     self.disabledButton.isEnabled = false
+    self.loadingButton.isLoading = true
+
+    self.normalButton.addAction(
+      UIAction { _ in self.updateButtonClickCount() },
+      for: .touchUpInside
+    )
 
     NSLayoutConstraint.activate([
       self.scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -71,13 +84,12 @@ class UIKitExampleViewController: UIViewController {
   }
 
   private func updateButtonClickCount() {
-    guard !self.normalButton.isLoading else { return }
     self.normalButton.isLoading = true
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
       self.buttonClickCount += 1
       self.normalButton.isLoading = false
-      
+
       self.normalButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
     }
   }
