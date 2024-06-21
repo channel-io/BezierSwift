@@ -14,17 +14,28 @@ class UIKitExampleViewController: UIViewController {
 
   private let scrollView = UIScrollView()
   private let stackView = UIStackView()
-  private lazy var bezierButton = UIBezierButton(
+  private lazy var normalButton = UIBezierButton(
     configuration: BezierButtonConfiguration(
       text: "버튼 타이틀",
       variant: .primary,
       color: .cobalt,
       size: .xlarge,
       prefixContent: nil,
-      suffixContent: nil,
+      suffixContent: .icon(.chatBubbleAlt),
       action: { [weak self] in
         self?.updateButtonClickCount()
       }
+    )
+  )
+  private lazy var disabledButton = UIBezierButton(
+    configuration: BezierButtonConfiguration(
+      text: "Disabled",
+      variant: .secondary,
+      color: .orange,
+      size: .xlarge,
+      prefixContent: .icon(.all),
+      suffixContent: nil,
+      action: {}
     )
   )
 
@@ -33,17 +44,19 @@ class UIKitExampleViewController: UIViewController {
 
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.stackView)
-    self.stackView.addArrangedSubview(self.bezierButton)
+    self.stackView.addArrangedSubview(self.normalButton)
+    self.stackView.addArrangedSubview(self.disabledButton)
 
     self.scrollView.translatesAutoresizingMaskIntoConstraints = false
     self.stackView.translatesAutoresizingMaskIntoConstraints = false
     self.stackView.axis = .vertical
     self.stackView.distribution = .fillProportionally
-    self.stackView.alignment = .leading
+    self.stackView.alignment = .center
     self.stackView.spacing = 10
 
-    self.bezierButton.isUserInteractionEnabled = true
-    self.bezierButton.isEnabled = true
+    self.normalButton.isUserInteractionEnabled = true
+    self.normalButton.isEnabled = true
+    self.disabledButton.isEnabled = false
 
     NSLayoutConstraint.activate([
       self.scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -59,6 +72,6 @@ class UIKitExampleViewController: UIViewController {
 
   private func updateButtonClickCount() {
     self.buttonClickCount += 1
-    self.bezierButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
+    self.normalButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
   }
 }
