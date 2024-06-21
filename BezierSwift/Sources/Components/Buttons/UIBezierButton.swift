@@ -123,6 +123,8 @@ extension UIBezierButton {
   }
 
   public func update(prefixContent: BezierButtonConfiguration.PrefixContent?) {
+    self.configuration.prefixContent = prefixContent
+
     let subviews = self.prefixContentView.subviews
     subviews.forEach { subview in
       subview.removeConstraints(subview.constraints)
@@ -148,6 +150,8 @@ extension UIBezierButton {
   }
 
   public func update(suffixContent: BezierButtonConfiguration.SuffixContent?) {
+    self.configuration.suffixContent = suffixContent
+    
     let subviews = self.suffixContentView.subviews
     subviews.forEach { subview in
       subview.removeConstraints(subview.constraints)
