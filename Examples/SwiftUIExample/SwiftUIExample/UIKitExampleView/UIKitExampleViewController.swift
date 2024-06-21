@@ -71,7 +71,14 @@ class UIKitExampleViewController: UIViewController {
   }
 
   private func updateButtonClickCount() {
-    self.buttonClickCount += 1
-    self.normalButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
+    guard !self.normalButton.isLoading else { return }
+    self.normalButton.isLoading = true
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      self.buttonClickCount += 1
+      self.normalButton.isLoading = false
+      
+      self.normalButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
+    }
   }
 }
