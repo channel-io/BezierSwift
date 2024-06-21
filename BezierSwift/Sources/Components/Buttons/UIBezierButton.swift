@@ -80,13 +80,12 @@ public class UIBezierButton: BaseControl {
     self.activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
     self.activityIndicatorView.hidesWhenStopped = true
     self.activityIndicatorView.style = .medium
-
-    self.addAction(
-      UIAction { _ in
-        self.configuration.action()
-      },
-      for: .touchUpInside
-    )
+    switch self.configuration.variant {
+    case .tertiary:
+      self.activityIndicatorView.color = BezierColor.bgBlackDark.uiColor(for: self.theme)
+    default:
+      self.activityIndicatorView.color = BezierColor.bgWhiteNormal.uiColor(for: self.theme)
+    }
   }
 
   override func setLayouts() {
@@ -188,10 +187,12 @@ extension UIBezierButton {
 
   private func updateLoadingView() {
     if self.isLoading {
+      self.isUserInteractionEnabled = false
       self.contentStackView.isHidden = true
       self.activityIndicatorContainerView.isHidden = false
       self.activityIndicatorView.startAnimating()
     } else {
+      self.isUserInteractionEnabled = true
       self.contentStackView.isHidden = false
       self.activityIndicatorContainerView.isHidden = true
       self.activityIndicatorView.stopAnimating()
