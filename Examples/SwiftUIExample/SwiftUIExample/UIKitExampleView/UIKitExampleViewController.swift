@@ -61,8 +61,6 @@ class UIKitExampleViewController: UIViewController {
     self.stackView.alignment = .center
     self.stackView.spacing = 10
 
-    self.normalButton.isUserInteractionEnabled = true
-    self.normalButton.isEnabled = true
     self.disabledButton.isEnabled = false
     self.loadingButton.isLoading = true
 
