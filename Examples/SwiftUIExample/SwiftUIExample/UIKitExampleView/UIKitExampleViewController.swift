@@ -10,16 +10,30 @@ import BezierSwift
 
 class UIKitExampleViewController: UIViewController {
 
+  private var buttonClickCount: Int = 0
+
   private let scrollView = UIScrollView()
   private let stackView = UIStackView()
-  private let label = UILabel()
+  private lazy var bezierButton = UIBezierButton(
+    configuration: BezierButtonConfiguration(
+      text: "버튼 타이틀",
+      variant: .primary,
+      color: .cobalt,
+      size: .xlarge,
+      prefixContent: nil,
+      suffixContent: nil,
+      action: { [weak self] in
+        self?.updateButtonClickCount()
+      }
+    )
+  )
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.stackView)
-    self.stackView.addArrangedSubview(self.label)
+    self.stackView.addArrangedSubview(self.bezierButton)
 
     self.scrollView.translatesAutoresizingMaskIntoConstraints = false
     self.stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +42,8 @@ class UIKitExampleViewController: UIViewController {
     self.stackView.alignment = .leading
     self.stackView.spacing = 10
 
-    self.label.text = "UIKit 예시를 위한 뷰"
+    self.bezierButton.isUserInteractionEnabled = true
+    self.bezierButton.isEnabled = true
 
     NSLayoutConstraint.activate([
       self.scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -40,5 +55,10 @@ class UIKitExampleViewController: UIViewController {
       self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.frameLayoutGuide.trailingAnchor),
       self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.bottomAnchor)
     ])
+  }
+
+  private func updateButtonClickCount() {
+    self.buttonClickCount += 1
+    self.bezierButton.update(text: "버튼 클릭 \(self.buttonClickCount)")
   }
 }
