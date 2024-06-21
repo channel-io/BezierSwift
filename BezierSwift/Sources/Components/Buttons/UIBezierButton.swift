@@ -13,12 +13,20 @@ public class UIBezierButton: BaseControl {
   private let prefixContentView = UIView()
   private let textLabel = UILabel()
   private let suffixContentView = UIView()
+  private let activityIndicatorContainerView = UIView()
+  // TODO: Spinner 구현전까지의 임의 구현으로, Spinner 구현 이후에 대체합니다. - by Finn 2024.06.21
+  private let activityIndicatorView = UIActivityIndicatorView()
 
   private var configuration: BezierButtonConfiguration
 
   public override var isEnabled: Bool {
     didSet {
       self.alpha = self.isEnabled ? 1.0 : 0.4
+    }
+  }
+  public var isLoading: Bool = false {
+    didSet {
+      self.updateLoadingView()
     }
   }
 
@@ -37,9 +45,11 @@ public class UIBezierButton: BaseControl {
 
     // MARK: - View Hierarchy
     self.addSubview(self.contentStackView)
+    self.addSubview(self.activityIndicatorContainerView)
     self.contentStackView.addArrangedSubview(self.prefixContentView)
     self.contentStackView.addArrangedSubview(self.textLabel)
     self.contentStackView.addArrangedSubview(self.suffixContentView)
+    self.activityIndicatorContainerView.addSubview(self.activityIndicatorView)
 
     // MARK: - View Configuration
     self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
@@ -64,6 +74,12 @@ public class UIBezierButton: BaseControl {
 
     self.suffixContentView.translatesAutoresizingMaskIntoConstraints = false
     self.update(suffixContent: self.configuration.suffixContent)
+
+    self.activityIndicatorContainerView.translatesAutoresizingMaskIntoConstraints = false
+    self.activityIndicatorContainerView.isHidden = true
+    self.activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+    self.activityIndicatorView.hidesWhenStopped = true
+    self.activityIndicatorView.style = .medium
 
     self.addAction(
       UIAction { _ in
@@ -90,7 +106,14 @@ public class UIBezierButton: BaseControl {
       self.prefixContentView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
       self.prefixContentView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height),
       self.suffixContentView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
-      self.suffixContentView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height)
+      self.suffixContentView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height),
+      self.activityIndicatorContainerView.centerYAnchor.constraint(equalTo: self.contentStackView.centerYAnchor),
+      self.activityIndicatorContainerView.centerXAnchor.constraint(equalTo: self.contentStackView.centerXAnchor),
+      self.activityIndicatorContainerView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
+      self.activityIndicatorView.centerYAnchor.constraint(equalTo: self.activityIndicatorContainerView.centerYAnchor),
+      self.activityIndicatorView.centerXAnchor.constraint(equalTo: self.activityIndicatorContainerView.centerXAnchor),
+      self.activityIndicatorView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
+      self.activityIndicatorView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height)
     ])
   }
 }
@@ -161,6 +184,18 @@ extension UIBezierButton {
     imageView.contentMode = .scaleAspectFit
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
+  }
+
+  private func updateLoadingView() {
+    if self.isLoading {
+      self.contentStackView.isHidden = true
+      self.activityIndicatorContainerView.isHidden = false
+      self.activityIndicatorView.startAnimating()
+    } else {
+      self.contentStackView.isHidden = false
+      self.activityIndicatorContainerView.isHidden = true
+      self.activityIndicatorView.stopAnimating()
+    }
   }
 }
 
