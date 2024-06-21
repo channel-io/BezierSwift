@@ -16,6 +16,12 @@ public class UIBezierButton: BaseControl {
 
   private var configuration: BezierButtonConfiguration
 
+  public override var isEnabled: Bool {
+    didSet {
+      self.alpha = self.isEnabled ? 1.0 : 0.4
+    }
+  }
+
   public init(configuration: BezierButtonConfiguration) {
     self.configuration = configuration
 
@@ -165,7 +171,7 @@ extension UIBezierButton {
 
     guard self.isEnabled else { return }
 
-    // TODO: 배경에 하이라이트 색상 적용
+    // TODO: 배경에 하이라이트 색상 적용할 것  - by Finn 2024.06.21
   }
 
   public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -173,7 +179,7 @@ extension UIBezierButton {
 
     guard self.isEnabled else { return }
 
-    // TODO: 배경에 일반 색상 적용
+    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
   }
 
   public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -181,6 +187,6 @@ extension UIBezierButton {
 
     guard self.isEnabled else { return }
 
-    // TODO: 배경에 일반 색상 적용
+    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
   }
 }
