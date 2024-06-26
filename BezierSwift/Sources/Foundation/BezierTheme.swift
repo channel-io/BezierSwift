@@ -34,10 +34,6 @@ public protocol UIThemeable {
 
 extension UIView: UIThemeable {
   public var theme: BezierTheme {
-    if UITraitCollection.current.userInterfaceStyle == .dark {
-      return .dark
-    } else {
-      return .light
-    }
+    UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light
   }
 }
