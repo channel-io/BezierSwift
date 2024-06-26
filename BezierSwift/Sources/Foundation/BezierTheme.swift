@@ -12,6 +12,7 @@ public enum BezierTheme {
   case dark
 }
 
+// MARK: - Themeable(SwiftUI)
 public protocol Themeable {
   var colorScheme: ColorScheme { get }
 }
@@ -23,5 +24,16 @@ extension Themeable {
     case .dark: return bezierColor.color(for: .dark)
     @unknown default: return bezierColor.color(for: .light)
     }
+  }
+}
+
+// MARK: - UIThemeable(UIKit)
+public protocol UIThemeable {
+  var theme: BezierTheme { get }
+}
+
+extension UIView: UIThemeable {
+  public var theme: BezierTheme {
+    UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light
   }
 }
