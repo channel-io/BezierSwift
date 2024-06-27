@@ -53,33 +53,24 @@ public class UIBezierButton: BaseControl {
     self.activityIndicatorContainerView.addSubview(self.activityIndicatorView)
 
     // MARK: - View Configuration
-    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
     self.layer.masksToBounds = true
     self.layer.cornerRadius = self.configuration.cornerRadius
-
     self.contentStackView.axis = .horizontal
     self.contentStackView.distribution = .fillProportionally
     self.contentStackView.alignment = .center
     self.contentStackView.spacing = self.configuration.horizontalSpacing
     self.contentStackView.isUserInteractionEnabled = false
-
-    self.textLabel.font = self.configuration.textFont.uiFont
-    self.textLabel.textColor = self.configuration.textColor.uiColor(for: self.theme)
-    self.textLabel.text = self.configuration.text
     self.textLabel.textAlignment = .center
-
-    self.update(prefixContent: self.configuration.prefixContent)
-    self.update(suffixContent: self.configuration.suffixContent)
-
+    self.textLabel.setContentHuggingPriority(.required, for: .horizontal)
+    self.textLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
     self.activityIndicatorContainerView.isHidden = true
     self.activityIndicatorView.hidesWhenStopped = true
     self.activityIndicatorView.style = .medium
-    switch self.configuration.variant {
-    case .tertiary:
-      self.activityIndicatorView.color = BezierColor.bgBlackDark.uiColor(for: self.theme)
-    default:
-      self.activityIndicatorView.color = BezierColor.bgWhiteNormal.uiColor(for: self.theme)
-    }
+
+    self.updateText()
+    self.updatePrefixContent()
+    self.updateSuffixContent()
+    self.updateColor()
   }
 
   override func setLayouts() {
@@ -106,70 +97,116 @@ public class UIBezierButton: BaseControl {
       $0.size.equalTo(self.configuration.affixContentSize)
     }
   }
+
+  public override func updateConstraints() {
+    self.snp.updateConstraints {
+      $0.height.equalTo(self.configuration.height)
+    }
+    self.contentStackView.snp.makeConstraints {
+      $0.directionalHorizontalEdges.equalToSuperview().inset(self.configuration.horizontalPadding)
+    }
+    self.prefixContentView.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
+    self.suffixContentView.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
+    self.activityIndicatorView.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
+
+    super.updateConstraints()
+  }
 }
 
-// MARK: - Update Methods
+// MARK: - Public Methods
 extension UIBezierButton {
-  public func update(text: String) {
-    self.configuration.text = text
-    self.textLabel.text = self.configuration.text
-  }
+  public func update(configuration: (inout BezierButtonConfiguration) -> Void) {
+    let oldConfiguration = self.configuration
+    configuration(&self.configuration)
 
-  public func update(prefixContent: BezierButtonConfiguration.PrefixContent?) {
-    self.configuration.prefixContent = prefixContent
-
-    let subviews = self.prefixContentView.subviews
-    subviews.forEach { subview in
-      subview.removeFromSuperview()
+    if oldConfiguration.size != self.configuration.size {
+      self.updateSize()
     }
-
-    switch prefixContent {
-    case .icon(let icon):
-      self.prefixContentView.isHidden = false
-      let imageView = self.createSubview(for: icon)
-      imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
-      self.prefixContentView.addSubview(imageView)
-      imageView.snp.makeConstraints {
-        $0.directionalEdges.equalToSuperview()
-      }
-
-    case .none:
-      self.prefixContentView.isHidden = true
+    if oldConfiguration.variant != self.configuration.variant || oldConfiguration.color != self.configuration.color {
+      self.updateColor()
     }
-  }
-
-  public func update(suffixContent: BezierButtonConfiguration.SuffixContent?) {
-    self.configuration.suffixContent = suffixContent
-    
-    let subviews = self.suffixContentView.subviews
-    subviews.forEach { subview in
-      subview.removeFromSuperview()
+    if oldConfiguration.text != self.configuration.text {
+      self.updateText()
     }
-
-    switch suffixContent {
-    case .icon(let icon):
-      self.suffixContentView.isHidden = false
-      let imageView = self.createSubview(for: icon)
-      imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
-      self.suffixContentView.addSubview(imageView)
-      imageView.snp.makeConstraints {
-        $0.directionalEdges.equalToSuperview()
-      }
-
-    case .none:
-      self.suffixContentView.isHidden = true
+    if oldConfiguration.prefixContent != self.configuration.prefixContent {
+      self.updatePrefixContent()
+    }
+    if oldConfiguration.suffixContent != self.configuration.suffixContent {
+      self.updateSuffixContent()
     }
   }
 }
 
 // MARK: - Private Methods
 extension UIBezierButton {
-  private func createSubview(for bezierIcon: BezierIcon) -> UIImageView {
+  private func updateText() {
+    self.textLabel.text = self.configuration.text
+  }
+
+  private func updatePrefixContent() {
+    switch self.configuration.prefixContent {
+    case .icon(let icon):
+      self.prefixContentView.isHidden = false
+      self.configureAffixContentView(for: icon, superView: self.prefixContentView)
+
+    case .none:
+      self.prefixContentView.isHidden = true
+    }
+  }
+
+  private func updateSuffixContent() {
+    switch self.configuration.suffixContent {
+    case .icon(let icon):
+      self.suffixContentView.isHidden = false
+      self.configureAffixContentView(for: icon, superView: self.suffixContentView)
+
+    case .none:
+      self.suffixContentView.isHidden = true
+    }
+  }
+
+  private func updateColor() {
+    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
+    self.textLabel.font = self.configuration.textFont.uiFont
+    self.textLabel.textColor = self.configuration.textColor.uiColor(for: self.theme)
+    switch self.configuration.variant {
+    case .tertiary:
+      self.activityIndicatorView.color = BezierColor.bgBlackDark.uiColor(for: self.theme)
+    default:
+      self.activityIndicatorView.color = BezierColor.bgWhiteNormal.uiColor(for: self.theme)
+    }
+  }
+
+  private func updateSize() {
+    self.layer.cornerRadius = self.configuration.cornerRadius
+    self.setNeedsUpdateConstraints()
+  }
+}
+
+// MARK: - Private Methods
+extension UIBezierButton {
+  private func configureAffixContentView(for bezierIcon: BezierIcon, superView: UIView) {
+    let subviews = superView.subviews
+    subviews.forEach { subview in
+      subview.removeFromSuperview()
+    }
+
     let imageView = UIImageView()
     imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
     imageView.image = bezierIcon.uiImage
     imageView.contentMode = .scaleAspectFit
-    return imageView
+
+    superView.addSubview(imageView)
+
+    imageView.snp.makeConstraints {
+      $0.directionalEdges.equalToSuperview()
+    }
   }
 
   private func updateLoadingView() {
