@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public class UIBezierButton: BaseControl {
   // MARK: - View Components
@@ -56,23 +57,18 @@ public class UIBezierButton: BaseControl {
     self.layer.masksToBounds = true
     self.layer.cornerRadius = self.configuration.cornerRadius
 
-    self.contentStackView.translatesAutoresizingMaskIntoConstraints = false
     self.contentStackView.axis = .horizontal
     self.contentStackView.distribution = .fillProportionally
     self.contentStackView.alignment = .center
     self.contentStackView.spacing = self.configuration.horizontalSpacing
     self.contentStackView.isUserInteractionEnabled = false
 
-    self.textLabel.translatesAutoresizingMaskIntoConstraints = false
     self.textLabel.font = self.configuration.textFont.uiFont
     self.textLabel.textColor = self.configuration.textColor.uiColor(for: self.theme)
     self.textLabel.text = self.configuration.text
     self.textLabel.textAlignment = .center
 
-    self.prefixContentView.translatesAutoresizingMaskIntoConstraints = false
     self.update(prefixContent: self.configuration.prefixContent)
-
-    self.suffixContentView.translatesAutoresizingMaskIntoConstraints = false
     self.update(suffixContent: self.configuration.suffixContent)
 
     self.activityIndicatorContainerView.isHidden = true
@@ -89,29 +85,26 @@ public class UIBezierButton: BaseControl {
   override func setLayouts() {
     super.setLayouts()
 
-    NSLayoutConstraint.activate([
-      self.heightAnchor.constraint(equalToConstant: self.configuration.height),
-      self.contentStackView.leadingAnchor.constraint(
-        equalTo: self.leadingAnchor,
-        constant: self.configuration.horizontalPadding
-      ),
-      self.contentStackView.trailingAnchor.constraint(
-        equalTo: self.trailingAnchor,
-        constant: -self.configuration.horizontalPadding
-      ),
-      self.contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.prefixContentView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
-      self.prefixContentView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height),
-      self.suffixContentView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
-      self.suffixContentView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height),
-      self.activityIndicatorContainerView.centerYAnchor.constraint(equalTo: self.contentStackView.centerYAnchor),
-      self.activityIndicatorContainerView.centerXAnchor.constraint(equalTo: self.contentStackView.centerXAnchor),
-      self.activityIndicatorContainerView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
-      self.activityIndicatorView.centerYAnchor.constraint(equalTo: self.activityIndicatorContainerView.centerYAnchor),
-      self.activityIndicatorView.centerXAnchor.constraint(equalTo: self.activityIndicatorContainerView.centerXAnchor),
-      self.activityIndicatorView.widthAnchor.constraint(equalToConstant: self.configuration.affixContentSize.width),
-      self.activityIndicatorView.heightAnchor.constraint(equalToConstant: self.configuration.affixContentSize.height)
-    ])
+    self.snp.makeConstraints {
+      $0.height.equalTo(self.configuration.height)
+    }
+    self.contentStackView.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.directionalHorizontalEdges.equalToSuperview().inset(self.configuration.horizontalPadding)
+    }
+    self.prefixContentView.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
+    self.suffixContentView.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
+    self.activityIndicatorContainerView.snp.makeConstraints {
+      $0.center.width.equalTo(self.contentStackView)
+    }
+    self.activityIndicatorView.snp.makeConstraints {
+      $0.center.equalToSuperview()
+      $0.size.equalTo(self.configuration.affixContentSize)
+    }
   }
 }
 
@@ -127,7 +120,6 @@ extension UIBezierButton {
 
     let subviews = self.prefixContentView.subviews
     subviews.forEach { subview in
-      subview.removeConstraints(subview.constraints)
       subview.removeFromSuperview()
     }
 
@@ -137,12 +129,9 @@ extension UIBezierButton {
       let imageView = self.createSubview(for: icon)
       imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
       self.prefixContentView.addSubview(imageView)
-      NSLayoutConstraint.activate([
-        imageView.leadingAnchor.constraint(equalTo: self.prefixContentView.leadingAnchor),
-        imageView.trailingAnchor.constraint(equalTo: self.prefixContentView.trailingAnchor),
-        imageView.topAnchor.constraint(equalTo: self.prefixContentView.topAnchor),
-        imageView.bottomAnchor.constraint(equalTo: self.prefixContentView.bottomAnchor)
-      ])
+      imageView.snp.makeConstraints {
+        $0.directionalEdges.equalToSuperview()
+      }
 
     case .none:
       self.prefixContentView.isHidden = true
@@ -154,7 +143,6 @@ extension UIBezierButton {
     
     let subviews = self.suffixContentView.subviews
     subviews.forEach { subview in
-      subview.removeConstraints(subview.constraints)
       subview.removeFromSuperview()
     }
 
@@ -164,12 +152,9 @@ extension UIBezierButton {
       let imageView = self.createSubview(for: icon)
       imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
       self.suffixContentView.addSubview(imageView)
-      NSLayoutConstraint.activate([
-        imageView.leadingAnchor.constraint(equalTo: self.suffixContentView.leadingAnchor),
-        imageView.trailingAnchor.constraint(equalTo: self.suffixContentView.trailingAnchor),
-        imageView.topAnchor.constraint(equalTo: self.suffixContentView.topAnchor),
-        imageView.bottomAnchor.constraint(equalTo: self.suffixContentView.bottomAnchor)
-      ])
+      imageView.snp.makeConstraints {
+        $0.directionalEdges.equalToSuperview()
+      }
 
     case .none:
       self.suffixContentView.isHidden = true
@@ -184,7 +169,6 @@ extension UIBezierButton {
     imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
     imageView.image = bezierIcon.uiImage
     imageView.contentMode = .scaleAspectFit
-    imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }
 
