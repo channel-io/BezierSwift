@@ -9,9 +9,6 @@ import Foundation
 
 // - MARK: BezierButtonConfiguration
 public struct BezierButtonConfiguration {
-  // MARK: Variable
-  public typealias Action = () -> Void
-  
   // TODO: avatar, emoji 추가 필요 by Tom 2024.06.18
   public enum PrefixContent {
     case icon(BezierIcon)
@@ -55,7 +52,6 @@ public struct BezierButtonConfiguration {
   let size: Size
   let prefixContent: PrefixContent?
   let suffixContent: SuffixContent?
-  var action: Action
   
   // MARK: Text
   var textFont: BezierFont {
@@ -119,7 +115,7 @@ public struct BezierButtonConfiguration {
     }
   }
   
-  // MARK: Button
+  // MARK: Bezier Button
   var horizontalPadding: CGFloat {
     switch self.size {
     case .xsmall: return 6
@@ -188,14 +184,14 @@ public struct BezierButtonConfiguration {
     }
   }
   
+  // MARK: Initialization
   public init(
     text: String,
     variant: Variant,
     color: Color,
     size: Size = .large,
     prefixContent: PrefixContent? = nil,
-    suffixContent: SuffixContent? = nil,
-    action: @escaping Action
+    suffixContent: SuffixContent? = nil
   ) {
     self.text = text
     self.variant = variant
@@ -203,6 +199,5 @@ public struct BezierButtonConfiguration {
     self.size = size
     self.prefixContent = prefixContent
     self.suffixContent = suffixContent
-    self.action = action
   }
 }
