@@ -556,7 +556,7 @@ public enum BezierIcon: String {
 
 extension BezierIcon {
   public var image: Image {
-    Image(self.rawValue, bundle: Bundle.module).renderingMode(.template)
+    Image(self.rawValue, bundle: Bundle.module).resizable().renderingMode(.template)
   }
 
   public var uiImage: UIImage? {
