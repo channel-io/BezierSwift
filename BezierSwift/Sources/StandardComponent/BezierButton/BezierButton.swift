@@ -67,8 +67,8 @@ public struct BezierButton: View, Themeable {
       color: .blue,
       size: .xsmall,
       prefixContent: .icon(.plus),
-      suffixContent: .icon(.arrowRight),
-      action: {})
+      suffixContent: .icon(.arrowRight)
+    )
   ) {
     
   }
