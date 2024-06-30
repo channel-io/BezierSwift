@@ -8,10 +8,12 @@
 import SwiftUI
 
 private enum Constant {
-  static let delayPoint: Double = 0.5
-  static let maxFillPoint: Double = 0.999
+  static let delayPoint: Double = 0.7
+  static let maxFillPoint: Double = 1.0
   static let animationDuration: Double = 2.2
   static let fullCircle: Double = 360
+  static let minAngle: Double = 1
+  static let maxAngle: Double = 359
 }
 
 public struct BezierSpinner: View, Themeable {
@@ -27,10 +29,10 @@ public struct BezierSpinner: View, Themeable {
   
   public var body: some View {
     ZStack {
-      Ring(configuration: self.configuration)
+      Track(configuration: self.configuration)
         .stroke(self.palette(self.configuration.trackColor), lineWidth: configuration.lineWidth)
       
-      Ring(fillPoint: fillPoint, configuration: self.configuration)
+      Indicator(fillPoint: fillPoint, configuration: self.configuration)
         .stroke(
           self.palette(self.configuration.indicatorColor),
           style: StrokeStyle(lineWidth: configuration.lineWidth, lineCap: .round)
@@ -60,7 +62,7 @@ public struct BezierSpinner: View, Themeable {
   }
 }
 
-private struct Ring: Shape {
+private struct Indicator: Shape {
   var fillPoint: Double
   let configuration: BezierSpinnerConfiguration
   
@@ -76,14 +78,21 @@ private struct Ring: Shape {
   
   func path(in rect: CGRect) -> Path {
     var path = Path()
+    
+    let startAngle = self.fillPoint > Constant.delayPoint
+    ? ((self.fillPoint - Constant.delayPoint) / (1.0 - Constant.delayPoint)) * Constant.fullCircle
+    : .zero
+    
+    let endAngle = Constant.fullCircle * self.fillPoint
+    
     path.addArc(
       center: CGPoint(
         x: self.configuration.spinnerSize.width / 2,
         y: self.configuration.spinnerSize.height / 2
       ),
       radius: self.configuration.spinnerRadius,
-      startAngle: .degrees(self.fillPoint > Constant.delayPoint ? (2 * self.fillPoint) * Constant.fullCircle : .zero),
-      endAngle: .degrees(Constant.fullCircle * self.fillPoint),
+      startAngle: .degrees(min(startAngle, Constant.maxAngle)),
+      endAngle: .degrees(max(endAngle, Constant.minAngle)),
       clockwise: false
     )
     
@@ -91,6 +100,27 @@ private struct Ring: Shape {
   }
 }
 
-#Preview {
-  BezierSpinner(configuration: .init(variant: .primary, size: .medium))
+private struct Track: Shape {
+  let configuration: BezierSpinnerConfiguration
+  
+  init(configuration: BezierSpinnerConfiguration) {
+    self.configuration = configuration
+  }
+  
+  func path(in rect: CGRect) -> Path {
+    var path = Path()
+    
+    path.addArc(
+      center: CGPoint(
+        x: self.configuration.spinnerSize.width / 2,
+        y: self.configuration.spinnerSize.height / 2
+      ),
+      radius: self.configuration.spinnerRadius,
+      startAngle: .degrees(.zero),
+      endAngle: .degrees(Constant.fullCircle),
+      clockwise: false
+    )
+    
+    return path
+  }
 }
