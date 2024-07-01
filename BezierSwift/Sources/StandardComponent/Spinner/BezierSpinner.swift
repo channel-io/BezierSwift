@@ -124,3 +124,7 @@ private struct Track: Shape {
     return path
   }
 }
+
+#Preview {
+  BezierSpinner(configuration: .init(variant: .primary, size: .medium))
+}
