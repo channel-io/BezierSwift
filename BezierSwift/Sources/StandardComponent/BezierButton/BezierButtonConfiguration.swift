@@ -10,12 +10,12 @@ import Foundation
 // - MARK: BezierButtonConfiguration
 public struct BezierButtonConfiguration {
   // TODO: avatar, emoji 추가 필요 by Tom 2024.06.18
-  public enum PrefixContent {
+  public enum PrefixContent: Equatable {
     case icon(BezierIcon)
   }
   
   // TODO: avatar, emoji 추가 필요 by Tom 2024.06.18
-  public enum SuffixContent {
+  public enum SuffixContent: Equatable {
     case icon(BezierIcon)
   }
   
