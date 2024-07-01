@@ -30,12 +30,12 @@ public struct BezierSpinner: View, Themeable {
   public var body: some View {
     ZStack {
       Track(configuration: self.configuration)
-        .stroke(self.palette(self.configuration.trackColor), lineWidth: configuration.lineWidth)
+        .stroke(self.palette(self.configuration.trackColor), lineWidth: self.configuration.lineWidth)
       
-      Indicator(fillPoint: fillPoint, configuration: self.configuration)
+      Indicator(fillPoint: self.fillPoint, configuration: self.configuration)
         .stroke(
           self.palette(self.configuration.indicatorColor),
-          style: StrokeStyle(lineWidth: configuration.lineWidth, lineCap: .round)
+          style: StrokeStyle(lineWidth: self.configuration.lineWidth, lineCap: .round)
         )
         .rotationEffect(.degrees(-90))
         .rotationEffect(Angle(degrees: self.isRotating ? Constant.fullCircle : .zero))
