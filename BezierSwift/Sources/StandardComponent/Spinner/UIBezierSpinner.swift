@@ -88,10 +88,10 @@ public class UIBezierSpinner: BaseView {
     super.setLayouts()
     
     self.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      self.widthAnchor.constraint(equalToConstant: self.configuration.spinnerSize.width),
-      self.heightAnchor.constraint(equalToConstant: self.configuration.spinnerSize.height)
-    ])
+    
+    self.snp.makeConstraints {
+      $0.size.equalTo(self.configuration.spinnerSize)
+    }
   }
   
   private func setAnimation() {
