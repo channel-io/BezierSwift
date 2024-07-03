@@ -12,6 +12,7 @@ public protocol BezierSwiftDelegate: AnyObject {
 }
 
 public final class BezierSwift {
+  // TODO: BezierSwift 용 Config 추가 by Tom 2024.07.04
   public private(set) var currentTheme: BezierTheme = .system
   public static var shared = BezierSwift()
   
