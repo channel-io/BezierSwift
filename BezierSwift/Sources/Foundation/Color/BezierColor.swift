@@ -8,14 +8,22 @@
 import SwiftUI
 import UIKit
 
-public protocol BezierColorType {
-  func color(for bezierTheme: BezierTheme) -> Color
-  func uiColor(for bezierTheme: BezierTheme) -> UIColor
+public protocol ColorToken {
+  var hex: String { get }
 }
 
-public struct BezierColor: BezierColorType {
-  private let original: BezierColorType
+public protocol BezierColorType {
+  var lightColorToken: ColorToken { get }
+  var darkColorToken: ColorToken { get }
+}
 
+public struct BezierColor {
+  private let original: BezierColorType
+  
+  public init(bezierColor: BezierColorType) {
+    self.original = bezierColor
+  }
+  
   private init(functionalColorToken: FunctionalColorToken) {
     self.original = functionalColorToken
   }
@@ -24,12 +32,28 @@ public struct BezierColor: BezierColorType {
     self.original = semanticToken
   }
   
-  public func color(for bezierTheme: BezierTheme) -> Color {
-    return self.original.color(for: bezierTheme)
+  public var color: Color {
+    return Color(self.uiColor)
   }
-
-  public func uiColor(for bezierTheme: BezierTheme) -> UIColor {
-    return self.original.uiColor(for: bezierTheme)
+  
+  public var uiColor: UIColor {
+    return UIColor { traitCollection in
+      switch BezierSwift.shared.currentTheme {
+      case .system:
+        switch traitCollection.userInterfaceStyle {
+        case .light:
+          return UIColor(hex: self.original.lightColorToken.hex)
+        case .dark:
+          return UIColor(hex: self.original.darkColorToken.hex)
+        default:
+          return UIColor(hex: self.original.lightColorToken.hex)
+        }
+      case .light:
+        return UIColor(hex: self.original.lightColorToken.hex)
+      case .dark:
+        return UIColor(hex: self.original.darkColorToken.hex)
+      }
+    }
   }
 }
 

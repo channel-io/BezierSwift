@@ -9,25 +9,12 @@ import UIKit
 import SwiftUI
 
 internal struct FunctionalColorToken: BezierColorType {
-  let lightGlobalColorToken: GlobalColorToken
-  let darkGlobalColorToken: GlobalColorToken
+  let lightColorToken: ColorToken
+  let darkColorToken: ColorToken
   
-  func color(for bezierTheme: BezierTheme) -> Color {
-    switch bezierTheme {
-    case .light:
-      return Color(globalColorToken: self.lightGlobalColorToken)
-    case .dark:
-      return Color(globalColorToken: self.darkGlobalColorToken)
-    }
-  }
-  
-  func uiColor(for bezierTheme: BezierTheme) -> UIColor {
-    switch bezierTheme {
-    case .light:
-      return UIColor(globalColorToken: self.lightGlobalColorToken)
-    case .dark:
-      return UIColor(globalColorToken: self.darkGlobalColorToken)
-    }
+  init(lightGlobalColorToken: GlobalColorToken, darkGlobalColorToken: GlobalColorToken) {
+    self.lightColorToken = lightGlobalColorToken
+    self.darkColorToken = darkGlobalColorToken
   }
 }
 
