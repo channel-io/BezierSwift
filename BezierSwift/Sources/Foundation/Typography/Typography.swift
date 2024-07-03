@@ -16,8 +16,7 @@ extension View {
   }
 }
 
-private struct BezierFontStyle: ViewModifier, Themeable {
-  @Environment(\.colorScheme) fileprivate var colorScheme
+private struct BezierFontStyle: ViewModifier {
   private let bezierFont: BezierFont
   private let bezierColor: BezierColor
   
@@ -29,6 +28,6 @@ private struct BezierFontStyle: ViewModifier, Themeable {
   func body(content: Content) -> some View {
     content
       .font(self.bezierFont.font)
-      .foregroundColor(self.palette(self.bezierColor))
+      .foregroundColor(self.bezierColor.color)
   }
 }
