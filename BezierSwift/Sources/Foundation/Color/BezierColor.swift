@@ -39,20 +39,13 @@ public struct BezierColor {
   
   public var uiColor: UIColor {
     return UIColor { traitCollection in
-      switch BezierSwift.shared.currentTheme {
-      case .system:
-        switch traitCollection.userInterfaceStyle {
-        case .light:
-          return UIColor(hex: self.original.lightColorToken.hex)
-        case .dark:
-          return UIColor(hex: self.original.darkColorToken.hex)
-        default:
-          return UIColor(hex: self.original.lightColorToken.hex)
-        }
+      switch traitCollection.userInterfaceStyle {
       case .light:
         return UIColor(hex: self.original.lightColorToken.hex)
       case .dark:
         return UIColor(hex: self.original.darkColorToken.hex)
+      default:
+        return UIColor(hex: self.original.lightColorToken.hex)
       }
     }
   }
