@@ -8,7 +8,7 @@
 import UIKit
 import BezierSwift
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, BezierSwiftDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   var window: UIWindow?
 
@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, BezierSwiftDelegate {
   }
 }
 
-extension SceneDelegate {
+extension SceneDelegate: BezierSwiftDelegate {
   func windowsForThemeUpdate() -> [UIWindow] {
     guard let window else { return [] }
     
