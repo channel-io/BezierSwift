@@ -34,7 +34,7 @@ public class UIBezierSpinner: BaseView {
     $0.path = path.cgPath
     $0.fillColor = nil
     $0.backgroundColor = nil
-    $0.strokeColor = self.configuration.trackColor.uiColor.cgColor
+    $0.strokeColor = self.configuration.trackColor.cgColor
     $0.lineWidth = self.configuration.lineWidth
     $0.frame = CGRect(origin: .zero, size: self.configuration.spinnerSize)
     
@@ -57,7 +57,7 @@ public class UIBezierSpinner: BaseView {
     $0.lineCap = .round
     $0.fillColor = nil
     $0.backgroundColor = nil
-    $0.strokeColor = self.configuration.indicatorColor.uiColor.cgColor
+    $0.strokeColor = self.configuration.indicatorColor.cgColor
     $0.lineWidth = self.configuration.lineWidth
     $0.frame = CGRect(origin: .zero, size: self.configuration.spinnerSize)
     
@@ -97,8 +97,8 @@ public class UIBezierSpinner: BaseView {
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
     
-    self.indicatorLayer.strokeColor = self.configuration.indicatorColor.uiColor.cgColor
-    self.trackLayer.strokeColor = self.configuration.trackColor.uiColor.cgColor
+    self.indicatorLayer.strokeColor = self.configuration.indicatorColor.cgColor
+    self.trackLayer.strokeColor = self.configuration.trackColor.cgColor
   }
   
   private func setAnimation() {
