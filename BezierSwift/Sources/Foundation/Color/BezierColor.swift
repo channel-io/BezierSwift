@@ -19,18 +19,18 @@ public protocol BezierColorType {
 }
 
 public struct BezierColor {
-  private let original: BezierColorType
+  private let bezierColor: BezierColorType
   
   public init(bezierColor: BezierColorType) {
-    self.original = bezierColor
+    self.bezierColor = bezierColor
   }
   
   private init(functionalColorToken: FunctionalColorToken) {
-    self.original = functionalColorToken
+    self.bezierColor = functionalColorToken
   }
   
   private init(semanticToken: SemanticColorToken) {
-    self.original = semanticToken
+    self.bezierColor = semanticToken
   }
   
   public var color: Color {
@@ -41,11 +41,11 @@ public struct BezierColor {
     return UIColor { traitCollection in
       switch traitCollection.userInterfaceStyle {
       case .light:
-        return UIColor(hex: self.original.lightColorToken.hex)
+        return UIColor(hex: self.bezierColor.lightColorToken.hex)
       case .dark:
-        return UIColor(hex: self.original.darkColorToken.hex)
+        return UIColor(hex: self.bezierColor.darkColorToken.hex)
       default:
-        return UIColor(hex: self.original.lightColorToken.hex)
+        return UIColor(hex: self.bezierColor.lightColorToken.hex)
       }
     }
   }
