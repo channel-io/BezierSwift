@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GlobalColorToken {
+struct GlobalColorToken: ColorToken {
   var hex: String
   
   init(hex: String) {

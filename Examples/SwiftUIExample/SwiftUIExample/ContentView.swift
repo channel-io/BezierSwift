@@ -8,16 +8,11 @@
 import SwiftUI
 import BezierSwift
 
-struct ContentView: View, Themeable {
-  @Environment(\.colorScheme) var colorScheme
-  
+struct ContentView: View {
   var body: some View {
     ZStack {
       Rectangle()
-        .foregroundColor(self.palette(.primaryBgLightest))
-
-      Text("Hello World")
-        .applyBezierFontStyle(.title1Bold, bezierColor: .primaryFgDark)
+        .foregroundColor(BezierColor.primaryBgLightest.color)
     }
   }
 }

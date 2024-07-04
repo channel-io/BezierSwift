@@ -11,12 +11,16 @@ import SwiftUI
 internal struct SemanticColorToken: BezierColorType {
   let functionalColorToken: FunctionalColorToken
   
-  func color(for bezierTheme: BezierTheme) -> Color {
-    return self.functionalColorToken.color(for: bezierTheme)
+  var lightColorToken: ColorToken {
+    self.functionalColorToken.lightColorToken
   }
   
-  func uiColor(for bezierTheme: BezierTheme) -> UIColor {
-    return self.functionalColorToken.uiColor(for: bezierTheme)
+  var darkColorToken: ColorToken {
+    self.functionalColorToken.darkColorToken
+  }
+  
+  init(functionalColorToken: FunctionalColorToken) {
+    self.functionalColorToken = functionalColorToken
   }
 }
 
