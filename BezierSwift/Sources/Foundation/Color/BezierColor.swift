@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 public protocol ColorToken {
+  /// 색상을 나타내는 HEX 문자열 (예: "#FFFFFF", "#FFFFFFFF").
   var hex: String { get }
 }
 
