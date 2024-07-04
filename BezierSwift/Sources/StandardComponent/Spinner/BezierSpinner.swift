@@ -16,7 +16,7 @@ private enum Constant {
   static let maxAngle: Double = 359
 }
 
-public struct BezierSpinner: View, Themeable {
+public struct BezierSpinner: View {
   @Environment(\.colorScheme) public var colorScheme
   @State private var fillPoint = 0.0
   @State private var isRotating = false
@@ -30,11 +30,11 @@ public struct BezierSpinner: View, Themeable {
   public var body: some View {
     ZStack {
       Track(configuration: self.configuration)
-        .stroke(self.palette(self.configuration.trackColor), lineWidth: self.configuration.lineWidth)
+        .stroke(self.configuration.trackColor.color, lineWidth: self.configuration.lineWidth)
       
       Indicator(fillPoint: self.fillPoint, configuration: self.configuration)
         .stroke(
-          self.palette(self.configuration.indicatorColor),
+          self.configuration.indicatorColor.color,
           style: StrokeStyle(lineWidth: self.configuration.lineWidth, lineCap: .round)
         )
         .rotationEffect(.degrees(-90))

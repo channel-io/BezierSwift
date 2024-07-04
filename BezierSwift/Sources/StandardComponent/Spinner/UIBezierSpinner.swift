@@ -34,7 +34,7 @@ public class UIBezierSpinner: BaseView {
     $0.path = path.cgPath
     $0.fillColor = nil
     $0.backgroundColor = nil
-    $0.strokeColor = self.configuration.trackColor.uiColor(for: self.theme).cgColor
+    $0.strokeColor = self.configuration.trackColor.uiColor.cgColor
     $0.lineWidth = self.configuration.lineWidth
     $0.frame = CGRect(origin: .zero, size: self.configuration.spinnerSize)
     
@@ -57,7 +57,7 @@ public class UIBezierSpinner: BaseView {
     $0.lineCap = .round
     $0.fillColor = nil
     $0.backgroundColor = nil
-    $0.strokeColor = self.configuration.indicatorColor.uiColor(for: self.theme).cgColor
+    $0.strokeColor = self.configuration.indicatorColor.uiColor.cgColor
     $0.lineWidth = self.configuration.lineWidth
     $0.frame = CGRect(origin: .zero, size: self.configuration.spinnerSize)
     

@@ -57,7 +57,6 @@ public struct BezierSpinnerConfiguration: Sendable {
     }
   }
   
-  
   public init(
     variant: Variant = .secondary,
     size: Size
