@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  BezierSwift.swift
+//
 //
 //  Created by Tom on 7/3/24.
 //
