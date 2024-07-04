@@ -54,6 +54,7 @@ public struct BezierButton: View {
       .frame(height: self.configuration.height)
     }
     .buttonStyle(BezierButtonStyle(configuration: self.configuration))
+    .applyDisabledStyle()
   }
 }
 
