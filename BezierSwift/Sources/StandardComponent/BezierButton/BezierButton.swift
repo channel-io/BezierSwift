@@ -8,9 +8,7 @@
 
 import SwiftUI
 
-public struct BezierButton: View, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
-  
+public struct BezierButton: View {
   private let configuration: BezierButtonConfiguration
   let action: () -> Void
   
@@ -34,7 +32,7 @@ public struct BezierButton: View, Themeable {
               width: self.configuration.affixContentSize.width,
               height: self.configuration.affixContentSize.height
             )
-            .foregroundColor(self.palette(self.configuration.affixContentForegroundColor))
+            .foregroundColor(self.configuration.affixContentForegroundColor.color)
         case .none: EmptyView()
         }
         
@@ -48,7 +46,7 @@ public struct BezierButton: View, Themeable {
               width: self.configuration.affixContentSize.width,
               height: self.configuration.affixContentSize.height
             )
-            .foregroundColor(self.palette(self.configuration.affixContentForegroundColor))
+            .foregroundColor(self.configuration.affixContentForegroundColor.color)
         case .none: EmptyView()
         }
       }

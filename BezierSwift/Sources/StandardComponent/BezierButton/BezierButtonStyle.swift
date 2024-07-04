@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct BezierButtonStyle: ButtonStyle, Themeable {
-  @Environment(\.colorScheme) public var colorScheme
-  
+struct BezierButtonStyle: ButtonStyle {
   let configuration: BezierButtonConfiguration
   
   init(configuration: BezierButtonConfiguration) {
@@ -21,7 +19,7 @@ struct BezierButtonStyle: ButtonStyle, Themeable {
       .background(
         RoundedRectangle(cornerRadius: self.configuration.cornerRadius, style: .circular)
           .foregroundColor(
-            self.palette(configuration.isPressed ? self.configuration.backgroundColor: .bgRedDark)
+            configuration.isPressed ? self.configuration.backgroundColor.color: self.configuration.backgroundColor.color
           )
       )
   }
