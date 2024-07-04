@@ -49,6 +49,10 @@ public struct BezierColor {
       }
     }
   }
+  
+  public var cgColor: CGColor {
+    return self.uiColor.cgColor
+  }
 }
 
 //MARK: - FunctionalColorToken
