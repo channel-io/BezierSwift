@@ -94,6 +94,13 @@ public class UIBezierSpinner: BaseView {
     }
   }
   
+  public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    
+    self.indicatorLayer.strokeColor = self.configuration.indicatorColor.uiColor.cgColor
+    self.trackLayer.strokeColor = self.configuration.trackColor.uiColor.cgColor
+  }
+  
   private func setAnimation() {
     let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
     rotationAnimation.byValue = Float.pi * 2
