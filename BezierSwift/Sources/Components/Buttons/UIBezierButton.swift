@@ -172,14 +172,14 @@ extension UIBezierButton {
   }
 
   private func updateColor() {
-    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
+    self.backgroundColor = self.configuration.backgroundColor.uiColor
     self.textLabel.font = self.configuration.textFont.uiFont
-    self.textLabel.textColor = self.configuration.textColor.uiColor(for: self.theme)
+    self.textLabel.textColor = self.configuration.textColor.uiColor
     switch self.configuration.variant {
     case .tertiary:
-      self.activityIndicatorView.color = BezierColor.bgBlackDark.uiColor(for: self.theme)
+      self.activityIndicatorView.color = BezierColor.bgBlackDark.uiColor
     default:
-      self.activityIndicatorView.color = BezierColor.bgWhiteNormal.uiColor(for: self.theme)
+      self.activityIndicatorView.color = BezierColor.bgWhiteNormal.uiColor
     }
   }
 
@@ -198,7 +198,7 @@ extension UIBezierButton {
     }
 
     let imageView = UIImageView()
-    imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor(for: self.theme)
+    imageView.tintColor = self.configuration.affixContentForegroundColor.uiColor
     imageView.image = bezierIcon.uiImage
     imageView.contentMode = .scaleAspectFit
 
@@ -239,7 +239,7 @@ extension UIBezierButton {
 
     guard self.isEnabled else { return }
 
-    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
+    self.backgroundColor = self.configuration.backgroundColor.uiColor
   }
 
   public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -247,6 +247,6 @@ extension UIBezierButton {
 
     guard self.isEnabled else { return }
 
-    self.backgroundColor = self.configuration.backgroundColor.uiColor(for: self.theme)
+    self.backgroundColor = self.configuration.backgroundColor.uiColor
   }
 }
