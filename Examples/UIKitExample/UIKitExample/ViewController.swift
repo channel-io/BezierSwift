@@ -22,7 +22,7 @@ final class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    self.view.backgroundColor = BezierColor.bgWhiteNormal.uiColor
     self.view.addSubview(self.bezierButton)
 
     self.bezierButton.snp.makeConstraints {
