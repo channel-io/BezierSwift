@@ -8,14 +8,14 @@
 import Foundation
 
 // - MARK: BezierButtonConfiguration
-public struct BezierButtonConfiguration {
+public struct BezierButtonConfiguration: Equatable {
   // TODO: avatar, emoji 추가 필요 by Tom 2024.06.18
-  public enum PrefixContent {
+  public enum PrefixContent: Equatable {
     case icon(BezierIcon)
   }
   
   // TODO: avatar, emoji 추가 필요 by Tom 2024.06.18
-  public enum SuffixContent {
+  public enum SuffixContent: Equatable {
     case icon(BezierIcon)
   }
   
@@ -46,12 +46,12 @@ public struct BezierButtonConfiguration {
     case absoluteWhite
   }
   
-  let text: String
-  let variant: Variant
-  let color: Color
-  let size: Size
-  let prefixContent: PrefixContent?
-  let suffixContent: SuffixContent?
+  var text: String
+  var variant: Variant
+  var color: Color
+  var size: Size
+  var prefixContent: PrefixContent?
+  var suffixContent: SuffixContent?
   
   // MARK: Text
   var textFont: BezierFont {
