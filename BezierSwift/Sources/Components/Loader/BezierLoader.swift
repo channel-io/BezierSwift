@@ -125,5 +125,5 @@ private struct Track: Shape {
 }
 
 #Preview {
-  BezierLoader(configuration: .init(variant: .primary, size: .medium))
+  BezierLoader(configuration: .init(size: .medium, variant: .primary))
 }
