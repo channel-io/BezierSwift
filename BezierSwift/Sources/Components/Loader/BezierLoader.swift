@@ -17,7 +17,6 @@ private enum Constant {
 }
 
 public struct BezierLoader: View {
-  @Environment(\.colorScheme) public var colorScheme
   @State private var fillPoint = 0.0
   @State private var isRotating = false
   
