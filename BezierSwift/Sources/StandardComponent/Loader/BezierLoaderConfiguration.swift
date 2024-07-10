@@ -1,5 +1,5 @@
 //
-//  BezierSpinnerConfiguration.swift
+//  BezierLoaderConfiguration.swift
 //
 //
 //  Created by Tom on 6/29/24.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-// - MARK: BezierSpinnerConfiguration
-public struct BezierSpinnerConfiguration: Sendable {
-  public enum Variant: Sendable{
+// - MARK: BezierLoaderConfiguration
+public struct BezierLoaderConfiguration: Sendable, Equatable {
+  public enum Variant: Sendable {
     case primary
     case secondary
     case onOverlay
@@ -46,11 +46,11 @@ public struct BezierSpinnerConfiguration: Sendable {
     }
   }
   
-  var spinnerRadius: CGFloat {
-    return (self.spinnerSize.width - self.lineWidth) / 2
+  var loaderRadius: CGFloat {
+    return (self.loaderSize.width - self.lineWidth) / 2
   }
   
-  var spinnerSize: CGSize {
+  var loaderSize: CGSize {
     switch self.size {
     case .small: return CGSize(width: 28, height: 28)
     case .medium: return CGSize(width: 50, height: 50)

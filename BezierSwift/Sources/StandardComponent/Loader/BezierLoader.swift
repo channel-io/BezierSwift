@@ -1,5 +1,5 @@
 //
-//  BezierSpinner.swift
+//  BezierLoader.swift
 //
 //
 //  Created by Tom on 6/29/24.
@@ -8,22 +8,22 @@
 import SwiftUI
 
 private enum Constant {
-  static let delayPoint: Double = 0.7
+  static let delayPoint: Double = 0.8
   static let maxFillPoint: Double = 1.0
-  static let animationDuration: Double = 2.2
+  static let animationDuration: Double = 2.0
   static let fullCircle: Double = 360
   static let minAngle: Double = 1
   static let maxAngle: Double = 359
 }
 
-public struct BezierSpinner: View {
+public struct BezierLoader: View {
   @Environment(\.colorScheme) public var colorScheme
   @State private var fillPoint = 0.0
   @State private var isRotating = false
   
-  private let configuration: BezierSpinnerConfiguration
+  private let configuration: BezierLoaderConfiguration
   
-  public init(configuration: BezierSpinnerConfiguration) {
+  public init(configuration: BezierLoaderConfiguration) {
     self.configuration = configuration
   }
   
@@ -56,22 +56,22 @@ public struct BezierSpinner: View {
         }
     }
     .frame(
-      width: self.configuration.spinnerSize.width,
-      height: self.configuration.spinnerSize.height
+      width: self.configuration.loaderSize.width,
+      height: self.configuration.loaderSize.height
     )
   }
 }
 
 private struct Indicator: Shape {
   var fillPoint: Double
-  let configuration: BezierSpinnerConfiguration
+  let configuration: BezierLoaderConfiguration
   
   var animatableData: Double {
     get { return self.fillPoint }
     set { self.fillPoint = newValue }
   }
   
-  init(fillPoint: Double = 1, configuration: BezierSpinnerConfiguration) {
+  init(fillPoint: Double = 1, configuration: BezierLoaderConfiguration) {
     self.fillPoint = fillPoint
     self.configuration = configuration
   }
@@ -87,10 +87,10 @@ private struct Indicator: Shape {
     
     path.addArc(
       center: CGPoint(
-        x: self.configuration.spinnerSize.width / 2,
-        y: self.configuration.spinnerSize.height / 2
+        x: self.configuration.loaderSize.width / 2,
+        y: self.configuration.loaderSize.height / 2
       ),
-      radius: self.configuration.spinnerRadius,
+      radius: self.configuration.loaderRadius,
       startAngle: .degrees(min(startAngle, Constant.maxAngle)),
       endAngle: .degrees(max(endAngle, Constant.minAngle)),
       clockwise: false
@@ -101,9 +101,9 @@ private struct Indicator: Shape {
 }
 
 private struct Track: Shape {
-  let configuration: BezierSpinnerConfiguration
+  let configuration: BezierLoaderConfiguration
   
-  init(configuration: BezierSpinnerConfiguration) {
+  init(configuration: BezierLoaderConfiguration) {
     self.configuration = configuration
   }
   
@@ -112,10 +112,10 @@ private struct Track: Shape {
     
     path.addArc(
       center: CGPoint(
-        x: self.configuration.spinnerSize.width / 2,
-        y: self.configuration.spinnerSize.height / 2
+        x: self.configuration.loaderSize.width / 2,
+        y: self.configuration.loaderSize.height / 2
       ),
-      radius: self.configuration.spinnerRadius,
+      radius: self.configuration.loaderRadius,
       startAngle: .degrees(.zero),
       endAngle: .degrees(Constant.fullCircle),
       clockwise: false
@@ -126,5 +126,5 @@ private struct Track: Shape {
 }
 
 #Preview {
-  BezierSpinner(configuration: .init(variant: .primary, size: .medium))
+  BezierLoader(configuration: .init(variant: .primary, size: .medium))
 }
