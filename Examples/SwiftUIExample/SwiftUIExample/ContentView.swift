@@ -10,9 +10,18 @@ import BezierSwift
 
 struct ContentView: View {
   var body: some View {
-    ZStack {
-      Rectangle()
-        .foregroundColor(BezierColor.primaryBgLightest.color)
+    NavigationView {
+      List {
+        Section {
+          NavigationLink {
+            BezierButtonExample()
+          } label: {
+            Text("Button")
+          }
+        } header: {
+          Text("Component")
+        }
+      }
     }
   }
 }
