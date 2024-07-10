@@ -9,12 +9,14 @@
 import SwiftUI
 
 public struct BezierButton: View {
+  public typealias Action = () -> Void
+  
   private let configuration: BezierButtonConfiguration
-  let action: () -> Void
+  private let action: Action
   
   public init(
     configuration: BezierButtonConfiguration,
-    action: @escaping () -> Void
+    action: @escaping Action
   ) {
     self.configuration = configuration
     self.action = action
@@ -52,6 +54,7 @@ public struct BezierButton: View {
       }
       .padding(.horizontal, self.configuration.horizontalPadding)
       .frame(height: self.configuration.height)
+      .frame(maxWidth: .infinity, alignment: .center)
     }
     .buttonStyle(BezierButtonStyle(configuration: self.configuration))
     .applyDisabledStyle()
@@ -64,11 +67,11 @@ public struct BezierButton: View {
       text: "Test",
       variant: .primary,
       color: .blue,
-      size: .xsmall,
+      size: .xlarge,
       prefixContent: .icon(.plus),
       suffixContent: .icon(.arrowRight)
     )
   ) {
-    
+    print("BezierButton")
   }
 }
