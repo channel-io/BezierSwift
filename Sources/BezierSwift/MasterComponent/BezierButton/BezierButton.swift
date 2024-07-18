@@ -124,6 +124,7 @@ public enum ButtonColor: String {
   case monochromeLight
   case monochromeDark
   case absoulteWhite
+  case orange
 }
 
 public enum ButtonType: Equatable {
@@ -166,6 +167,8 @@ public enum ButtonType: Equatable {
         return .bgtxtYellowNormal
       case .cobalt:
         return .bgtxtCobaltNormal
+      case .orange:
+        return .bgtxtOrangeNormal
       case .monochrome:
         switch size {
         case .xsmall, .small:
@@ -182,7 +185,7 @@ public enum ButtonType: Equatable {
       }
     case .floating(let color):
       switch color {
-      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite:
+      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
         return .bgtxtAbsoluteWhiteDark
       case .monochrome, .monochromeLight, .monochromeDark:
         return .txtBlackDarkest
@@ -209,6 +212,8 @@ public enum ButtonType: Equatable {
         return .bgtxtYellowNormal
       case .cobalt:
         return .bgtxtCobaltNormal
+      case .orange:
+        return .bgtxtOrangeNormal
       case .monochrome:
         switch size {
         case .xsmall, .small:
@@ -225,7 +230,7 @@ public enum ButtonType: Equatable {
       }
     case .floating(let color):
       switch color {
-      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite:
+      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
         return .bgtxtAbsoluteWhiteDark
       case .monochrome, .monochromeLight, .monochromeDark:
         return .txtBlackDarker
@@ -271,6 +276,13 @@ public enum ButtonType: Equatable {
           return .bgtxtCobaltNormal
         case .pressed:
           return .bgtxtCobaltDark
+        }
+      case .orange:
+        switch state {
+        case .default, .disabled:
+          return .bgtxtOrangeNormal
+        case .pressed:
+          return .bgtxtOrangeDark
         }
       case .monochrome:
         switch state {
@@ -323,6 +335,13 @@ public enum ButtonType: Equatable {
         case .pressed:
           return .bgtxtCobaltLighter
         }
+      case .orange:
+        switch state {
+        case .default, .disabled:
+          return .bgtxtOrangeLightest
+        case .pressed:
+          return .bgtxtOrangeLighter
+        }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
         case .default, .disabled:
@@ -370,6 +389,13 @@ public enum ButtonType: Equatable {
         case .pressed:
           return .bgtxtCobaltLightest
         }
+      case .orange:
+        switch state {
+        case .default, .disabled:
+          return .bgTransparent
+        case .pressed:
+          return .bgtxtOrangeLightest
+        }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
         case .default, .disabled:
@@ -416,6 +442,13 @@ public enum ButtonType: Equatable {
           return .bgtxtCobaltNormal
         case .pressed:
           return .bgtxtCobaltDark
+        }
+      case .orange:
+        switch state {
+        case .default, .disabled:
+          return .bgtxtOrangeNormal
+        case .pressed:
+          return .bgtxtOrangeDark
         }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
