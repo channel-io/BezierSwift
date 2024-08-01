@@ -42,7 +42,7 @@ extension View {
     self.frame(width: length, height: length)
   }
   
-  
+  @ViewBuilder
   func scaleToFit(size: CGSize, scaleBy: ScaleDimension = .width) -> some View {
     ScaleToFitView(size: size, scaleBy: scaleBy) {
       self
