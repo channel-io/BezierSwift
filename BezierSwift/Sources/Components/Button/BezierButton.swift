@@ -78,7 +78,7 @@ public struct BezierButton<
           .applyTintBezierColor(self.configuration.affixContentForegroundColor)
       }
       .padding(.horizontal, self.configuration.horizontalPadding)
-      .frame(height: self.configuration.height)
+      .padding(.vertical, self.configuration.verticalPadding)
       .if(self.isFilled) { view in
         view
           .frame(maxWidth: .infinity, alignment: .center)

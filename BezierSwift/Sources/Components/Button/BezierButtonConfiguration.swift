@@ -119,6 +119,16 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
+  var verticalPadding: CGFloat {
+    switch self.size {
+    case .xsmall: return 2
+    case .small: return 3
+    case .medium: return 8
+    case .large: return 11
+    case .xlarge: return 15
+    }
+  }
+  
   var horizontalSpacing: CGFloat {
     switch self.size {
     case .xsmall: return 3
@@ -135,16 +145,6 @@ public struct BezierButtonConfiguration: Equatable {
     case .medium: return 12
     case .large: return 14
     case .xlarge: return 16
-    }
-  }
-  
-  var height: CGFloat {
-    switch self.size {
-    case .xsmall: return 24
-    case .small: return 32
-    case .medium: return 40
-    case .large: return 48
-    case .xlarge: return 54
     }
   }
   
