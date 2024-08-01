@@ -29,7 +29,6 @@ struct BezierButtonExample: View {
       ) {
         
       }
-      .fixedSize()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(
