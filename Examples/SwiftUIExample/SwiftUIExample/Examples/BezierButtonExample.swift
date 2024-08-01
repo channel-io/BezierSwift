@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
+
 import BezierSwift
 
 struct BezierButtonExample: View {
   @State private var text: String = "BezierButton"
-  @State private var variant: BezierButtonConfiguration.Variant = .primary
+  @State private var variant: BezierButtonConfiguration.Variant = .secondary
   @State private var color: BezierButtonConfiguration.Color = .blue
   @State private var size: BezierButtonConfiguration.Size = .medium
-  @State private var prefixContent: BezierButtonConfiguration.PrefixContent? = nil
-  @State private var suffixContent: BezierButtonConfiguration.SuffixContent? = nil
   
   var body: some View {
     VStack {
@@ -23,10 +22,10 @@ struct BezierButtonExample: View {
           text: self.text,
           variant: self.variant,
           color: self.color,
-          size: self.size,
-          prefixContent: self.prefixContent,
-          suffixContent: self.suffixContent
-        )
+          size: self.size
+        ),
+        prefixContent: BezierIconView(bezierIcon: .ai),
+        suffixContent: BezierIconView(bezierIcon: .ai)
       ) {
         
       }

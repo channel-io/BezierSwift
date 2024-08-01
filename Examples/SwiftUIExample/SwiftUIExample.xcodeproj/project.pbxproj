@@ -15,6 +15,7 @@
 		E28212392A4B32F800018327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212382A4B32F800018327 /* Preview Assets.xcassets */; };
 		E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195E2C365557009B34A2 /* AppDelegate.swift */; };
 		E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195F2C365557009B34A2 /* SceneDelegate.swift */; };
+		E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		E28212382A4B32F800018327 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E28D195E2C365557009B34A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E28D195F2C365557009B34A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierLoaderExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */,
+				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E258E6BE2C3D8D9C00F69680 /* BezierButtonExample.swift in Sources */,
+				E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */,
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
