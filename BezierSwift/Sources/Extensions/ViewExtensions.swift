@@ -33,6 +33,10 @@ extension View {
       `else`(self)
     }
   }
+  
+  func visible(_ isVisible: Bool) -> some View {
+    self.opacity(isVisible ? 1 : 0)
+  }
 }
 
 // MARK: - Frame View Modifier
