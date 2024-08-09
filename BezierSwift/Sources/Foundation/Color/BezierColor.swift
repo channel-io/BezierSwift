@@ -93,9 +93,9 @@ extension BezierColor {
   public static var fgOliveDark: BezierColor { BezierColor(functionalColorToken: .fgOliveDark) }
 
   // MARK: ForegroundYellow
-  public static var fgYellowNormal: BezierColor { BezierColor(functionalColorToken: .fgOliveNormal) }
-  public static var fgYellowLight: BezierColor { BezierColor(functionalColorToken: .fgOliveLight) }
-  public static var fgYellowDark: BezierColor { BezierColor(functionalColorToken: .fgOliveDark) }
+  public static var fgYellowNormal: BezierColor { BezierColor(functionalColorToken: .fgYellowNormal) }
+  public static var fgYellowLight: BezierColor { BezierColor(functionalColorToken: .fgYellowLight) }
+  public static var fgYellowDark: BezierColor { BezierColor(functionalColorToken: .fgYellowDark) }
 
   // MARK: ForegroundPink
   public static var fgPinkNormal: BezierColor { BezierColor(functionalColorToken: .fgPinkNormal) }
