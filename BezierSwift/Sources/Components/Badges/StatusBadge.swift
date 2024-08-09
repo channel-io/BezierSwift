@@ -25,6 +25,7 @@ public struct StatusBadge: View {
       self.icon
         // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
         .frame(width: self.configuration.iconLength, height: self.configuration.iconLength)
+        .foregroundColor(self.configuration.iconColor.color)
     }
     // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
     .frame(width: self.configuration.length, height: self.configuration.length)
@@ -37,10 +38,9 @@ extension StatusBadge {
   private var icon: some View {
     if self.configuration.doNotDisturb {
       BezierIcon.moonFilled.image
-        .foregroundColor(self.configuration.iconColor.color)
     } else {
       Circle()
-        .fill(self.configuration.iconColor.color)
+        .fill()
     }
   }
 }
