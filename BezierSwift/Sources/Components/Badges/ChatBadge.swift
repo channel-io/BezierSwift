@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-private enum Constant {
-  static let backgroundColor: BezierColor = .bgWhiteHighest
-  static let iconColor: BezierColor = .fgBlackDarker
-}
-
 /// ChatBadge는 Avatar와 함께 사용되며 아이콘을 사용해 Root(Avatar)의 상태가 Private임을 알려줍니다.
 struct ChatBadge: View {
   private let configuration: ChatBadgeConfiguration
@@ -24,17 +19,17 @@ struct ChatBadge: View {
 
   public var body: some View {
     ZStack(alignment: .center) {
-      BezierIcon
-        .lock
-        .image
-        .frame(width: self.configuration.iconLength, height: self.configuration.iconLength)
-        .foregroundColor(Constant.iconColor.color)
-    }
-    .frame(width: self.configuration.length, height: self.configuration.length)
-    .background(
       Circle()
-        .foregroundColor(Constant.backgroundColor.color)
-    )
+        .fill(BezierColor.bgWhiteHighest.color)
+
+      BezierIcon.lock.image
+        // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
+        .frame(width: self.configuration.iconLength, height: self.configuration.iconLength)
+        .foregroundColor(BezierColor.fgBlackDarker.color)
+    }
+    // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
+    .frame(width: self.configuration.length, height: self.configuration.length)
+    .compositingGroup()
   }
 }
 

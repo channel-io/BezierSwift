@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-private enum Constant {
-  static let backgroundColor: BezierColor = .bgWhiteHighest
-}
-
 /// StatusBadge는 Avatar와 함께 사용되며 Root(Avatar)의 상태를 아이콘이나 이미지를 사용해 직관적으로 알려줍니다.
 public struct StatusBadge: View {
   private let configuration: StatusBadgeConfiguration
@@ -23,25 +19,24 @@ public struct StatusBadge: View {
 
   public var body: some View {
     ZStack(alignment: .center) {
+      Circle()
+        .fill(BezierColor.bgWhiteHighest.color)
+
       self.icon
-        .frame(
-          width: self.configuration.iconLength,
-          height: self.configuration.iconLength
-        )
+        // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
+        .frame(width: self.configuration.iconLength, height: self.configuration.iconLength)
         .foregroundColor(self.configuration.iconColor.color)
     }
+    // TODO: BezierButton 병합후 View.frame(length:) 로 변경합니다. - by Finn 2024.08.09
     .frame(width: self.configuration.length, height: self.configuration.length)
-    .background(
-      Circle()
-        .foregroundColor(Constant.backgroundColor.color)
-    )
+    .compositingGroup()
   }
 }
 
 extension StatusBadge {
   @ViewBuilder
   private var icon: some View {
-    if self.configuration.isDoNotDisturb {
+    if self.configuration.doNotDisturb {
       BezierIcon.moonFilled.image
     } else {
       Circle()
@@ -50,60 +45,56 @@ extension StatusBadge {
 }
 
 #Preview("Light Mode") {
-  VStack {
-    HStack {
-      VStack {
-        StatusBadge(configuration: .init(isOnline: true, size: .medium, isDoNotDisturb: false))
-        StatusBadge(configuration: .init(isOnline: true, size: .large, isDoNotDisturb: false))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: false, size: .medium, isDoNotDisturb: false))
-        StatusBadge(configuration: .init(isOnline: false, size: .large, isDoNotDisturb: false))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: true, size: .medium, isDoNotDisturb: true))
-        StatusBadge(configuration: .init(isOnline: true, size: .large, isDoNotDisturb: true))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: false, size: .medium, isDoNotDisturb: true))
-        StatusBadge(configuration: .init(isOnline: false, size: .large, isDoNotDisturb: true))
-      }
+  HStack {
+    VStack {
+      StatusBadge(configuration: .init(online: true, size: .medium, doNotDisturb: false))
+      StatusBadge(configuration: .init(online: true, size: .large, doNotDisturb: false))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: false, size: .medium, doNotDisturb: false))
+      StatusBadge(configuration: .init(online: false, size: .large, doNotDisturb: false))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: true, size: .medium, doNotDisturb: true))
+      StatusBadge(configuration: .init(online: true, size: .large, doNotDisturb: true))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: false, size: .medium, doNotDisturb: true))
+      StatusBadge(configuration: .init(online: false, size: .large, doNotDisturb: true))
     }
   }
   .frame(maxWidth: .infinity, maxHeight: .infinity)
   .background(
     Rectangle()
-      .foregroundColor(BezierColor.bgBlackDark.color)
+      .fill(BezierColor.bgBlackDark.color)
   )
   .ignoresSafeArea()
   .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-  VStack {
-    HStack {
-      VStack {
-        StatusBadge(configuration: .init(isOnline: true, size: .medium, isDoNotDisturb: false))
-        StatusBadge(configuration: .init(isOnline: true, size: .large, isDoNotDisturb: false))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: false, size: .medium, isDoNotDisturb: false))
-        StatusBadge(configuration: .init(isOnline: false, size: .large, isDoNotDisturb: false))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: true, size: .medium, isDoNotDisturb: true))
-        StatusBadge(configuration: .init(isOnline: true, size: .large, isDoNotDisturb: true))
-      }
-      VStack {
-        StatusBadge(configuration: .init(isOnline: false, size: .medium, isDoNotDisturb: true))
-        StatusBadge(configuration: .init(isOnline: false, size: .large, isDoNotDisturb: true))
-      }
+  HStack {
+    VStack {
+      StatusBadge(configuration: .init(online: true, size: .medium, doNotDisturb: false))
+      StatusBadge(configuration: .init(online: true, size: .large, doNotDisturb: false))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: false, size: .medium, doNotDisturb: false))
+      StatusBadge(configuration: .init(online: false, size: .large, doNotDisturb: false))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: true, size: .medium, doNotDisturb: true))
+      StatusBadge(configuration: .init(online: true, size: .large, doNotDisturb: true))
+    }
+    VStack {
+      StatusBadge(configuration: .init(online: false, size: .medium, doNotDisturb: true))
+      StatusBadge(configuration: .init(online: false, size: .large, doNotDisturb: true))
     }
   }
   .frame(maxWidth: .infinity, maxHeight: .infinity)
   .background(
     Rectangle()
-      .foregroundColor(BezierColor.bgBlackDark.color)
+      .fill(BezierColor.bgBlackDark.color)
   )
   .ignoresSafeArea()
   .preferredColorScheme(.dark)

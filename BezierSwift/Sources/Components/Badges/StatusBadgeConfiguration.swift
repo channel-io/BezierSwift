@@ -14,9 +14,9 @@ public struct StatusBadgeConfiguration: Sendable, Equatable {
     case medium
   }
 
-  let isOnline: Bool
+  let online: Bool
   let size: Size
-  let isDoNotDisturb: Bool
+  let doNotDisturb: Bool
 
   var length: CGFloat {
     switch self.size {
@@ -28,15 +28,15 @@ public struct StatusBadgeConfiguration: Sendable, Equatable {
   var iconLength: CGFloat {
     switch self.size {
     case .large:
-      return self.isDoNotDisturb ? 16 : 14
+      return self.doNotDisturb ? 16 : 14
     case .medium:
-      return self.isDoNotDisturb ? 10 : 8
+      return self.doNotDisturb ? 10 : 8
     }
   }
 
   var iconColor: BezierColor {
-    guard self.isOnline else {
-      return self.isDoNotDisturb ? .fgYellowNormal : .bgGreyDark
+    guard self.online else {
+      return self.doNotDisturb ? .fgYellowNormal : .bgGreyDark
     }
 
     return .fgGreenNormal
@@ -44,12 +44,12 @@ public struct StatusBadgeConfiguration: Sendable, Equatable {
   
   /// StatusBadge의 사이즈와 아이콘 형태를 결정짓는 configuration 객체를 생성합니다.
   /// - Parameters:
-  ///   - isOnline: StatusBadge와 함께 사용되는 Avatar의 대상이 현재 온라인 상태인지를 표현하는 값입니다.
+  ///   - online: StatusBadge와 함께 사용되는 Avatar의 대상이 현재 온라인 상태인지를 표현하는 값입니다.
   ///   - size: 일반적으로 medium 이 쓰이며, Root(Avatar)가 일정 사이즈 이상인 경우 large를 사용합니다.
-  ///   - isDoNotDisturb: StatusBadge와 함께 사용되는 Avatar의 대상이 Do Not Disturb(방해 금지 모드) 상태인지를 표현하는 값입니다.
-  public init(isOnline: Bool, size: Size, isDoNotDisturb: Bool) {
-    self.isOnline = isOnline
+  ///   - doNotDisturb: StatusBadge와 함께 사용되는 Avatar의 대상이 Do Not Disturb(방해 금지 모드) 상태인지를 표현하는 값입니다.
+  public init(online: Bool, size: Size, doNotDisturb: Bool) {
+    self.online = online
     self.size = size
-    self.isDoNotDisturb = isDoNotDisturb
+    self.doNotDisturb = doNotDisturb
   }
 }
