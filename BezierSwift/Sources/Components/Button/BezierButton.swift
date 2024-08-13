@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-// - MARK: Protocols
-public protocol BezierButtonPrefixContent: View { }
-public protocol BezierButtonSuffixContent: View { }
-
 // - MARK: BezierButton
 /// - Parameters:
 ///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierButtonConfiguration 객체입니다.
@@ -18,14 +14,12 @@ public protocol BezierButtonSuffixContent: View { }
 ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
 ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
-public struct BezierButton<
-  PrefixContent: BezierButtonPrefixContent,
-  SuffixContent: BezierButtonSuffixContent
->: View {
+public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
+  public typealias Configuration = BezierButtonConfiguration
   public typealias Action = () -> Void
   
   // MARK: Properties
-  private let configuration: BezierButtonConfiguration
+  private let configuration: Configuration
   private let prefixContent: PrefixContent
   private let suffixContent: SuffixContent
   private let isFilled: Bool
@@ -34,22 +28,22 @@ public struct BezierButton<
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierButtonConfiguration 객체입니다.
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
+  ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
   ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
   ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
-  ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
-    configuration: BezierButtonConfiguration,
+    configuration: Configuration,
+    isFilled: Bool,
     prefixContent: PrefixContent = EmptyView(),
     suffixContent: SuffixContent = EmptyView(),
-    isFilled: Bool = false,
     action: @escaping Action
   ) {
     self.configuration = configuration
+    self.isFilled = isFilled
     self.prefixContent = prefixContent
     self.suffixContent = suffixContent
-    self.isFilled = isFilled
     self.action = action
   }
   
@@ -59,23 +53,13 @@ public struct BezierButton<
       self.action()
     } label: {
       HStack(spacing: self.configuration.horizontalSpacing) {
-        self.suffixContent
-          .frame(
-            width: self.configuration.affixContentSize.width,
-            height: self.configuration.affixContentSize.height
-          )
-          .applyTintBezierColor(self.configuration.affixContentForegroundColor)
+        self.prefixContent
         
         Text(self.configuration.text)
           .applyBezierFontStyle(self.configuration.textFont, bezierColor: self.configuration.textColor)
           .multilineTextAlignment(.leading)
         
-        self.prefixContent
-          .frame(
-            width: self.configuration.affixContentSize.width,
-            height: self.configuration.affixContentSize.height
-          )
-          .applyTintBezierColor(self.configuration.affixContentForegroundColor)
+        self.suffixContent
       }
       .padding(.horizontal, self.configuration.horizontalPadding)
       .padding(.vertical, self.configuration.verticalPadding)
@@ -94,11 +78,10 @@ public struct BezierButton<
         .overlay(
           BezierLoader(
             configuration: BezierLoaderConfiguration(
-              size: .small,
-              variant: self.configuration.variant == .primary ? .onOverlay : .secondary
+              size: self.configuration.loaderSize,
+              variant: self.configuration.loaderVariant
             )
           )
-          .scaleToFit(size: self.configuration.affixContentSize)
         )
     }
   }
@@ -116,10 +99,6 @@ extension BezierButton {
   }
 }
 
-// - MARK: Affix Content Extensions
-extension EmptyView: BezierButtonPrefixContent { }
-extension EmptyView: BezierButtonSuffixContent { }
-
 // - MARK: Preview
 #Preview {
   BezierButton(
@@ -129,8 +108,15 @@ extension EmptyView: BezierButtonSuffixContent { }
       color: .blue,
       size: .xlarge
     ),
-    prefixContent: BezierIconView(bezierIcon: .all),
-    suffixContent: BezierIconView(bezierIcon: .ios)
+    isFilled: true,
+    prefixContent:
+      BezierIcon.all.image
+        .frame(length: 24)
+        .foregroundColor(BezierColor.fgWhiteNormal.color),
+    suffixContent: 
+      BezierIcon.all.image
+      .frame(length: 24)
+      .foregroundColor(BezierColor.fgWhiteNormal.color)
   ) {
     print("BezierButton")
   }

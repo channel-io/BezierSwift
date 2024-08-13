@@ -10,24 +10,27 @@ import SwiftUI
 import BezierSwift
 
 struct BezierButtonExample: View {
-  @State private var text: String = "BezierButton"
-  @State private var variant: BezierButtonConfiguration.Variant = .secondary
-  @State private var color: BezierButtonConfiguration.Color = .blue
-  @State private var size: BezierButtonConfiguration.Size = .medium
   
   var body: some View {
     VStack {
       BezierButton(
         configuration: BezierButtonConfiguration(
-          text: self.text,
-          variant: self.variant,
-          color: self.color,
-          size: self.size
+          text: "BezierButton",
+          variant: .primary,
+          color: .blue,
+          size: .xlarge
         ),
-        prefixContent: BezierIconView(bezierIcon: .ai),
-        suffixContent: BezierIconView(bezierIcon: .ai)
+        isFilled: true,
+        prefixContent:
+          BezierIcon.ios.image
+            .frame(width: 24, height: 24)
+            .foregroundColor(BezierColor.fgWhiteNormal.color),
+        suffixContent:
+          BezierIcon.android.image
+          .frame(width: 24, height: 24)
+          .foregroundColor(BezierColor.fgWhiteNormal.color)
       ) {
-        
+        print("BezierButton")
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

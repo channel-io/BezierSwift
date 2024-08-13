@@ -9,8 +9,8 @@ import Foundation
 
 // - MARK: BezierButtonConfiguration
 /// - Parameters:
-///   - size: Button은 xsmall, small, medium, large, xlarge 5개의 사이즈를 가질 수 있습니다. medium이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다.
-///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. Primary, Secondary, Tertiary 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 Primary 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
+///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
 ///   - Color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
 public struct BezierButtonConfiguration: Equatable {
   // MARK: Variant
@@ -88,27 +88,6 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
-  var affixContentSize: CGSize {
-    switch self.size {
-    case .xsmall, .small: return CGSize(width: 16, height: 16)
-    case .medium, .large: return CGSize(width: 20, height: 20)
-    case .xlarge: return CGSize(width: 24, height: 24)
-    }
-  }
-  
-  var affixContentForegroundColor: BezierColor {
-    switch (self.variant, self.color) {
-    case (.secondary, .darkGrey), (.tertiary, .darkGrey):
-      return .fgBlackDarker
-    case (.secondary, .lightGrey), (.tertiary, .lightGrey):
-      return .fgBlackDark
-    case (.secondary, .absoluteWhite), (.tertiary, .absoluteWhite):
-      return .fgAbsoluteWhiteLight
-    default:
-      return self.textColor
-    }
-  }
-  
   var horizontalPadding: CGFloat {
     switch self.size {
     case .xsmall: return 6
@@ -177,10 +156,22 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
+  var loaderSize: BezierLoaderConfiguration.Size {
+    switch self.size {
+    case .xsmall, .small: return .xxsmall
+    case .medium, .large: return .xsmall
+    case .xlarge: return .small
+    }
+  }
+  
+  var loaderVariant: BezierLoaderConfiguration.Variant {
+    return self.variant == .primary ? .onOverlay : .secondary
+  }
+  
   // MARK: Initializer
   /// - Parameters:
-  ///   - size: Button은 xsmall, small, medium, large, xlarge 5개의 사이즈를 가질 수 있습니다. medium이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다.
-  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. Primary, Secondary, Tertiary 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 Primary 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+  ///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
+  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
   ///   - Color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
   public init(
     text: String,
@@ -192,22 +183,5 @@ public struct BezierButtonConfiguration: Equatable {
     self.variant = variant
     self.color = color
     self.size = size
-  }
-  
-  // MARK: Initializer
-  /// `size`는 기본값인 `large`로 지정됩니다.
-  /// - Parameters:
-  ///   - size: Button은 xsmall, small, medium, large, xlarge 5개의 사이즈를 가질 수 있습니다. medium이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다.
-  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. Primary, Secondary, Tertiary 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 Primary 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
-  ///   - Color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
-  public init(
-    text: String,
-    variant: Variant,
-    color: Color
-  ) {
-    self.text = text
-    self.variant = variant
-    self.color = color
-    self.size = .large
   }
 }
