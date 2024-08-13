@@ -543,7 +543,6 @@ public enum BezierIcon: String {
   case `weatherSun` = "icon-weather-sun"
   case `weatherThunder` = "icon-weather-thunder"
   case `webhook` = "icon-webhook"
-  case `widget` = "icon-widget"
   case `wifi` = "icon-wifi"
   case `wifiOff` = "icon-wifi-off"
   case `wifiPoor` = "icon-wifi-poor"
