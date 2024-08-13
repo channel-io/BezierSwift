@@ -6,13 +6,29 @@
 //
 
 import SwiftUI
+
 import BezierSwift
 
+// TODO: Bezier Component 로 전환 필요 by Tom 2024.07.31
 struct ContentView: View {
   var body: some View {
-    ZStack {
-      Rectangle()
-        .foregroundColor(BezierColor.primaryBgLightest.color)
+    NavigationView {
+      List {
+        Section {
+          NavigationLink {
+            BezierButtonExample()
+          } label: {
+            Text("Button")
+          }
+          NavigationLink {
+            BezierLoaderExample()
+          } label: {
+            Text("Loader")
+          }
+        } header: {
+          Text("Component")
+        }
+      }
     }
   }
 }
