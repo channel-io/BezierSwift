@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Dispatch
+
+import SDWebImage
 import SDWebImageSwiftUI
 
 private enum Metric {
