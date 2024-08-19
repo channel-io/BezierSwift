@@ -83,6 +83,7 @@ struct BezierDialog: View, Themeable {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(maxWidth: .infinity)
+            .applyBezierCornerRadius(type: .round12)
         }
       }
       .padding(.top, Metric.upperVStackTopPadding)
