@@ -11,7 +11,22 @@ public struct BezierDialogParam {
   var priority: BezierDialogPriority
   var title: String
   var description: String
+  var imageUrl: URL?
   var buttonInfo: BezierDialogButtonInfo?
+  
+  public init(
+    priority: BezierDialogPriority,
+    title: String?,
+    description: String?,
+    imageUrl: URL?,
+    buttonInfo: BezierDialogButtonInfo?
+  ) {
+    self.priority = priority
+    self.title = title ?? ""
+    self.description = description ?? ""
+    self.imageUrl = imageUrl
+    self.buttonInfo = buttonInfo
+  }
   
   public init(
     priority: BezierDialogPriority,

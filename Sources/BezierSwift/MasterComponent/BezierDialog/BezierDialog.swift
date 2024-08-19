@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Dispatch
+import SDWebImageSwiftUI
 
 private enum Metric {
   static let dialogPadding = 16.f
@@ -31,12 +32,14 @@ struct BezierDialog: View, Themeable {
   struct ViewState {
     let title: String
     let description: String
+    let imageUrl: URL?
     let buttons: [BezierButton]
     let buttonAxis: Axis
     
     init(param: BezierDialogParam) {
       self.title = param.title
       self.description = param.description
+      self.imageUrl = param.imageUrl
       
       switch param.buttonInfo {
       case .horizontal(let buttons):
@@ -71,6 +74,13 @@ struct BezierDialog: View, Themeable {
           Text(self.viewState.description)
             .applyBezierFontStyle(.normal14)
             .multilineTextAlignment(.center)
+        }
+        
+        if let imageUrl = self.viewState.imageUrl {
+          WebImage(url: imageUrl)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(maxWidth: .infinity)
         }
       }
       .padding(.top, Metric.upperVStackTopPadding)
