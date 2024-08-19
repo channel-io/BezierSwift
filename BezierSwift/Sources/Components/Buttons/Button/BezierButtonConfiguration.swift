@@ -100,10 +100,10 @@ public struct BezierButtonConfiguration: Equatable {
   
   var verticalPadding: CGFloat {
     switch self.size {
-    case .xsmall: return 2
-    case .small: return 3
-    case .medium: return 8
-    case .large: return 11
+    case .xsmall: return 3
+    case .small: return 7
+    case .medium: return 9
+    case .large: return 12
     case .xlarge: return 15
     }
   }
