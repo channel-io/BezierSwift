@@ -10,40 +10,84 @@ import SwiftUI
 // - MARK: BezierFloatingButton
 /// - Parameters:
 ///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierFloatingButtonConfiguration 객체입니다.
-///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
-///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
-///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
+///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
+///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
-public struct BezierFloatingButton<PrefixContent: View, SuffixContent: View>: View {
+public struct BezierFloatingButton<Prefix: View, Suffix: View>: View {
   public typealias Configuration = BezierFloatingButtonConfiguration
+  public typealias PrefixContent = (Configuration) -> Prefix
+  public typealias SuffixContent = (Configuration) -> Suffix
   public typealias Action = () -> Void
   
   // MARK: Properties
   private let configuration: Configuration
   private let prefixContent: PrefixContent
   private let suffixContent: SuffixContent
-  private let isFilled: Bool
+  private var isFilled: Bool =  false
   private var isLoading: Bool = false
   private let action: Action
   
   // MARK: Initializer
   /// - Parameters:
   ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierFloatingButtonConfiguration` 객체입니다.
-  ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
-  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
-  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 기본값은 `EmptyView`입니다.
+  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    isFilled: Bool,
-    prefixContent: PrefixContent = EmptyView(),
-    suffixContent: SuffixContent = EmptyView(),
+    prefixContent: @escaping PrefixContent,
+    suffixContent: @escaping SuffixContent,
     action: @escaping Action
   ) {
     self.configuration = configuration
-    self.isFilled = isFilled
     self.prefixContent = prefixContent
     self.suffixContent = suffixContent
+    self.action = action
+  }
+  
+  // MARK: Initializer
+  /// - Parameters:
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierFloatingButtonConfiguration` 객체입니다.
+  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
+  public init(
+    configuration: Configuration,
+    prefixContent: @escaping PrefixContent,
+    action: @escaping Action
+  ) where Suffix == EmptyView {
+    self.configuration = configuration
+    self.prefixContent = prefixContent
+    self.suffixContent = { _ in EmptyView() }
+    self.action = action
+  }
+  
+  // MARK: Initializer
+  /// - Parameters:
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierFloatingButtonConfiguration` 객체입니다.
+  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
+  public init(
+    configuration: Configuration,
+    suffixContent: @escaping SuffixContent,
+    action: @escaping Action
+  ) where Prefix == EmptyView {
+    self.configuration = configuration
+    self.prefixContent = { _ in EmptyView() }
+    self.suffixContent = suffixContent
+    self.action = action
+  }
+  
+  // MARK: Initializer
+  /// - Parameters:
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierFloatingButtonConfiguration` 객체입니다.
+  ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
+  public init(
+    configuration: Configuration,
+    action: @escaping Action
+  ) where Prefix == EmptyView, Suffix == EmptyView {
+    self.configuration = configuration
+    self.prefixContent = { _ in EmptyView() }
+    self.suffixContent = { _ in EmptyView() }
     self.action = action
   }
   
@@ -53,13 +97,14 @@ public struct BezierFloatingButton<PrefixContent: View, SuffixContent: View>: Vi
       self.action()
     } label: {
       HStack(spacing: self.configuration.horizontalSpacing) {
-        self.prefixContent
+        self.prefixContent(self.configuration)
         
         Text(self.configuration.text)
           .applyBezierFontStyle(self.configuration.textFont, bezierColor: self.configuration.textColor)
           .multilineTextAlignment(.leading)
+          .lineLimit(1)
         
-        self.suffixContent
+        self.suffixContent(self.configuration)
       }
       .padding(.horizontal, self.configuration.horizontalPadding)
       .padding(.vertical, self.configuration.verticalPadding)
@@ -97,6 +142,14 @@ extension BezierFloatingButton {
     view.isLoading = isLoading
     return view
   }
+  
+  /// - Parameters:
+  ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
+  public func isFilled(_ isFilled: Bool) -> Self {
+    var view = self
+    view.isFilled = isFilled
+    return view
+  }
 }
 
 // - MARK: Preview
@@ -108,15 +161,16 @@ extension BezierFloatingButton {
       color: .blue,
       size: .xlarge
     ),
-    isFilled: false,
-    prefixContent:
-      BezierIcon.all.image
-        .frame(length: 24)
-        .foregroundColor(BezierColor.fgWhiteNormal.color),
-    suffixContent:
-      BezierIcon.all.image
-      .frame(length: 24)
-      .foregroundColor(BezierColor.fgWhiteNormal.color)
+    prefixContent: { configuration in
+      BezierIcon.android.image
+        .frame(length: configuration.affixContentLength)
+        .foregroundColor(configuration.affixContentForegroundColor.color)
+    },
+    suffixContent: { configuration in
+      BezierIcon.ios.image
+        .frame(length: configuration.affixContentLength)
+        .foregroundColor(configuration.affixContentForegroundColor.color)
+    }
   ) {
     print("BezierFloatingButton")
   }

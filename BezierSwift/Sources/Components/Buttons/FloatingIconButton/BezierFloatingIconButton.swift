@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// - MARK: BezierButton
+// - MARK: BezierFloatingIconButton
 /// - Parameters:
-///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierButtonConfiguration 객체입니다.
+///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierFloatingIconButtonConfiguration 객체입니다.
 ///   - content: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
 public struct BezierFloatingIconButton<Content: View>: View {
@@ -25,7 +25,7 @@ public struct BezierFloatingIconButton<Content: View>: View {
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierFloatingIconButtonConfiguration` 객체입니다.
   ///   - content: 버튼의 표시될 내용을 지정하는 뷰입니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(

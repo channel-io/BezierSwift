@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// - MARK: BezierButton
+// - MARK: BezierIconButton
 /// - Parameters:
-///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierButtonConfiguration 객체입니다.
+///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierIconButtonConfiguration 객체입니다.
 ///   - content: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
 public struct BezierIconButton<Content: View>: View {
@@ -18,19 +18,19 @@ public struct BezierIconButton<Content: View>: View {
   
   // MARK: Properties
   private let configuration: Configuration
-  private let content: Content
+  private let content: (Configuration) -> Content
   private var isLoading: Bool = false
   private var dropdown: Bool?
   private let action: Action
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierIconButtonConfiguration` 객체입니다.
   ///   - content: 버튼의 표시될 내용을 지정하는 뷰입니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    content: Content = EmptyView(),
+    content: @escaping (Configuration) -> Content,
     action: @escaping Action
   ) {
     self.configuration = configuration
@@ -46,7 +46,7 @@ public struct BezierIconButton<Content: View>: View {
       HStack(spacing: .zero) {
         Color.clear
           .frame(length: self.configuration.contentLength)
-          .overlay(self.content)
+          .overlay(self.content(self.configuration))
         // TODO: dropdown UI 구현 필요 by Tom, 2024.08.16
         // 피그마에 Dropdown 관련 요소가 부족하여 구현이 어려운 상태입니다.
       }
@@ -99,13 +99,14 @@ extension BezierIconButton {
       variant: .primary,
       color: .blue,
       size: .xlarge,
-      shape: .circle
+      shape: .rectangle
     ),
-    content:
+    content: { configuration in
       BezierIcon.plus.image
-        .frame(length: 24)
-        .foregroundColor(BezierColor.fgWhiteNormal.color)
+        .frame(length: configuration.contentLength)
+        .foregroundColor(configuration.contentForegroundColor.color)
+    }
   ) {
-    print("BezierButton")
+    print("BezierIconButton")
   }
 }

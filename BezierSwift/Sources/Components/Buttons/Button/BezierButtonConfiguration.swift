@@ -88,6 +88,45 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
+  var affixContentLength: CGFloat {
+    switch self.size {
+    case .xsmall, .small: return 16
+    case .medium, .large: return 20
+    case .xlarge: return 24
+    }
+  }
+  
+  var affixContentForegroundColor: BezierColor {
+    switch self.variant {
+    case .primary:
+      switch self.color {
+      case .blue: return .fgAbsoluteWhiteDark
+      case .cobalt: return .fgAbsoluteWhiteDark
+      case .red: return .fgAbsoluteWhiteDark
+      case .orange: return .fgAbsoluteWhiteDark
+      case .green: return .fgAbsoluteWhiteDark
+      case .pink: return .fgAbsoluteWhiteDark
+      case .purple: return .fgAbsoluteWhiteDark
+      case .darkGrey: return .fgWhiteNormal
+      case .lightGrey: return .fgAbsoluteWhiteNormal
+      case .absoluteWhite: return .fgAbsoluteBlackNormal
+      }
+    case .secondary, .tertiary:
+      switch self.color {
+      case .blue: return .primaryFgNormal
+      case .cobalt: return .accentFgNormal
+      case .red: return .criticalFgNormal
+      case .orange: return .warningFgNormal
+      case .green: return .successFgNormal
+      case .pink: return .fgPinkNormal
+      case .purple: return .fgPurpleNormal
+      case .darkGrey: return .fgBlackDarker
+      case .lightGrey: return .fgBlackDark
+      case .absoluteWhite: return .fgAbsoluteWhiteLight
+      }
+    }
+  }
+  
   var horizontalPadding: CGFloat {
     switch self.size {
     case .xsmall: return 6
