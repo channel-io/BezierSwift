@@ -30,7 +30,6 @@ struct BezierCheckboxSource: View {
     .frame(length: 20)
     .padding(.all, 2)
     .compositingGroup()
-    .opacity(self.configuration.sourceOpacity)
   }
 }
 
@@ -38,19 +37,19 @@ struct BezierCheckboxSource: View {
   HStack {
     VStack {
       HStack {
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .green, disabled: false, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .green, disabled: false, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .green, disabled: false, showRequiredAsterisk: false))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .green))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .green))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .green))
       }
       HStack {
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .green, disabled: true, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .green, disabled: true, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .green, disabled: true, showRequiredAsterisk: false))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .green))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .green))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .green))
       }
       HStack {
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: true, color: .green, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .green, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .green, showRequiredAsterisk: false)).opacity(0)
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: true, color: .green))
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .green))
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .green)).opacity(0)
       }
     }
 
@@ -58,19 +57,19 @@ struct BezierCheckboxSource: View {
 
     VStack {
       HStack {
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .blue, disabled: false, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .blue, disabled: false, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .blue, disabled: false, showRequiredAsterisk: false))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .blue))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .blue))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .blue))
       }
       HStack {
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .blue, disabled: true, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .blue, disabled: true, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .blue, disabled: true, showRequiredAsterisk: false))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .unchecked, color: .blue))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .checked, color: .blue))
+        BezierCheckboxSource(configuration: .primary(label: nil, checked: .indeterminate, color: .blue))
       }
       HStack {
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: true, color: .blue, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .blue, showRequiredAsterisk: false))
-        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .blue, showRequiredAsterisk: false)).opacity(0)
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: true, color: .blue))
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .blue))
+        BezierCheckboxSource(configuration: .secondary(label: nil, isChecked: false, color: .blue)).opacity(0)
       }
     }
   }
