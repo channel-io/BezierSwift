@@ -23,7 +23,6 @@ public struct BezierFloatingButton<Prefix: View, Suffix: View>: View {
   private let configuration: Configuration
   private let prefixContent: PrefixContent
   private let suffixContent: SuffixContent
-  private var isFilled: Bool =  false
   private var isLoading: Bool = false
   private let action: Action
   
@@ -108,10 +107,6 @@ public struct BezierFloatingButton<Prefix: View, Suffix: View>: View {
       }
       .padding(.horizontal, self.configuration.horizontalPadding)
       .padding(.vertical, self.configuration.verticalPadding)
-      .if(self.isFilled) { view in
-        view
-          .frame(maxWidth: .infinity, alignment: .center)
-      }
       .contentShape(Rectangle())
       .visible(!self.isLoading)
     }
@@ -140,14 +135,6 @@ extension BezierFloatingButton {
   public func isLoading(_ isLoading: Bool) -> Self {
     var view = self
     view.isLoading = isLoading
-    return view
-  }
-  
-  /// - Parameters:
-  ///   - isFilled: 버튼이 가로 길이를 모두 채울지 여부를 설정합니다. 기본값은 `false`입니다.
-  public func isFilled(_ isFilled: Bool) -> Self {
-    var view = self
-    view.isFilled = isFilled
     return view
   }
 }
