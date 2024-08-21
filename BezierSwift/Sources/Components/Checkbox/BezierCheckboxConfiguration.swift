@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Bezier Checkbox Variants Types
 public enum BezierCheckboxVariant {
   case primary
   case secondary
@@ -23,32 +24,46 @@ public enum BezierCheckboxChecked {
   case indeterminate
 }
 
+public enum BezierCheckboxNested {
+  case none
+  case vertical
+}
+
 // MARK: - BezierCheckboxConfiguration
 public struct BezierCheckboxConfiguration: Equatable {
   public typealias Variant = BezierCheckboxVariant
   public typealias Color = BezierCheckboxColor
   public typealias Checked = BezierCheckboxChecked
+  public typealias Nested = BezierCheckboxNested
 
   // MARK: Properties
   let label: String?
-  let checked: Checked
   let variant: Variant
   let color: Color
-  let disabled: Bool
-  let showRequiredAsterisk: Bool
+  let checked: Checked
+  let nested: Nested
+  let showRequired: Bool
 
-  init(label: String?, variant: Variant, color: Color, checked: Checked, disabled: Bool, showRequiredAsterisk: Bool) {
+  init(
+    label: String?,
+    variant: Variant,
+    color: Color,
+    checked: Checked, 
+    nested: Nested,
+    showRequired: Bool
+  ) {
     self.label = label
     self.variant = variant
     self.color = color
-    self.showRequiredAsterisk = showRequiredAsterisk
 
     if self.variant == .primary {
       self.checked = checked
-      self.disabled = disabled
+      self.showRequired = showRequired
+      self.nested = nested
     } else {
       self.checked = checked != .indeterminate ? checked : .checked
-      self.disabled = false
+      self.showRequired = false
+      self.nested = .none
     }
   }
 }
@@ -86,12 +101,6 @@ extension BezierCheckboxConfiguration {
 
 // MARK: - Properties For CheckboxSource
 extension BezierCheckboxConfiguration {
-  var sourceOpacity: CGFloat {
-    guard self.disabled, self.checked != .unchecked else { return 1 }
-
-    return 0.4
-  }
-
   var sourceBackgroundColor: BezierColor {
     guard self.variant == .primary else { return .bgWhiteAlphaTransparent }
 
@@ -99,12 +108,12 @@ extension BezierCheckboxConfiguration {
     case .checked, .indeterminate:
       return self.color == .blue ? .primaryBgNormal : .bgGreenNormal
     case .unchecked:
-      return self.disabled ? .bgBlackDark : .bgWhiteNormal
+      return .bgWhiteNormal
     }
   }
 
   var sourceNeedStroke: Bool {
-    guard self.variant == .primary, self.checked == .unchecked, !self.disabled else {
+    guard self.variant == .primary, self.checked == .unchecked else {
       return false
     }
 
@@ -152,32 +161,31 @@ extension BezierCheckboxConfiguration {
     label: String?,
     checked: Checked,
     color: Color,
-    disabled: Bool,
-    showRequiredAsterisk: Bool
+    nested: Nested = .none,
+    showRequired: Bool = false
   ) -> BezierCheckboxConfiguration {
     return BezierCheckboxConfiguration(
       label: label,
       variant: .primary,
       color: color,
       checked: checked,
-      disabled: disabled,
-      showRequiredAsterisk: showRequiredAsterisk
+      nested: nested,
+      showRequired: showRequired
     )
   }
 
   public static func secondary(
     label: String?,
     isChecked: Bool,
-    color: Color,
-    showRequiredAsterisk: Bool
+    color: Color
   ) -> BezierCheckboxConfiguration {
     return BezierCheckboxConfiguration(
       label: label,
       variant: .secondary,
       color: color,
       checked: isChecked ? .checked : .unchecked,
-      disabled: false,
-      showRequiredAsterisk: showRequiredAsterisk
+      nested: .none,
+      showRequired: false
     )
   }
 }
