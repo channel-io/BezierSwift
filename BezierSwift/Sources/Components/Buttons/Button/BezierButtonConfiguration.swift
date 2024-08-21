@@ -88,7 +88,7 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
-  var affixContentLength: CGFloat {
+  public var affixContentLength: CGFloat {
     switch self.size {
     case .xsmall, .small: return 16
     case .medium, .large: return 20
@@ -96,7 +96,7 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
-  var affixContentColor: BezierColor {
+  public var affixContentColor: BezierColor {
     switch self.variant {
     case .primary:
       switch self.color {

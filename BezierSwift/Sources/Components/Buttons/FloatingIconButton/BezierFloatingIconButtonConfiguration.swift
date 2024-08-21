@@ -46,7 +46,7 @@ public struct BezierFloatingIconButtonConfiguration: Equatable {
   let color: Color
   let size: Size
   
-  var contentLength: CGFloat {
+  public var contentLength: CGFloat {
     switch self.size {
     case .xsmall: return 16
     case .small, .medium, .large: return 20
@@ -54,7 +54,7 @@ public struct BezierFloatingIconButtonConfiguration: Equatable {
     }
   }
   
-  var contentColor: BezierColor {
+  public var contentColor: BezierColor {
     switch self.variant {
     case .primary:
       switch self.color {
