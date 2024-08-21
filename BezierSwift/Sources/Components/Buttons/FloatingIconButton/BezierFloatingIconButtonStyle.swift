@@ -18,7 +18,7 @@ struct BezierFloatingIconButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .background(
-        Circle()
+        Capsule(style: .circular)
           .foregroundColor(
             configuration.isPressed ? self.configuration.backgroundColor.color: self.configuration.backgroundColor.color
           )
