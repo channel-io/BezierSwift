@@ -102,7 +102,7 @@ extension BezierIconButton {
     content: { configuration in
       BezierIcon.plus.image
         .frame(length: configuration.contentLength)
-        .foregroundColor(configuration.contentForegroundColor.color)
+        .foregroundColor(configuration.contentColor.color)
     }
   ) {
     print("BezierIconButton")

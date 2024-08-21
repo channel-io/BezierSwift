@@ -151,12 +151,12 @@ extension BezierFloatingButton {
     prefixContent: { configuration in
       BezierIcon.android.image
         .frame(length: configuration.affixContentLength)
-        .foregroundColor(configuration.affixContentForegroundColor.color)
+        .foregroundColor(configuration.affixContentColor.color)
     },
     suffixContent: { configuration in
       BezierIcon.ios.image
         .frame(length: configuration.affixContentLength)
-        .foregroundColor(configuration.affixContentForegroundColor.color)
+        .foregroundColor(configuration.affixContentColor.color)
     }
   ) {
     print("BezierFloatingButton")

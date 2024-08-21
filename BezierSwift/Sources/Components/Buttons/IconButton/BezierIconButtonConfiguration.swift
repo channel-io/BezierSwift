@@ -64,7 +64,7 @@ public struct BezierIconButtonConfiguration: Equatable {
     }
   }
   
-  var contentForegroundColor: BezierColor {
+  var contentColor: BezierColor {
     switch self.variant {
     case .primary:
       switch self.color {

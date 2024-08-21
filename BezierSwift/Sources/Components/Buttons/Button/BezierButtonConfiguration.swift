@@ -96,7 +96,7 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
-  var affixContentForegroundColor: BezierColor {
+  var affixContentColor: BezierColor {
     switch self.variant {
     case .primary:
       switch self.color {
