@@ -20,15 +20,16 @@ struct BezierButtonExample: View {
           color: .blue,
           size: .xlarge
         ),
-        isFilled: true,
-        prefixContent:
+        prefixContent: { configuration in
           BezierIcon.ios.image
-            .frame(width: 24, height: 24)
-            .foregroundColor(BezierColor.fgWhiteNormal.color),
-        suffixContent:
+            .frame(width: configuration.affixContentLength, height: configuration.affixContentLength)
+            .foregroundColor(configuration.affixContentColor.color)
+        },
+        suffixContent: { configuration in
           BezierIcon.android.image
-          .frame(width: 24, height: 24)
-          .foregroundColor(BezierColor.fgWhiteNormal.color)
+            .frame(width: configuration.affixContentLength, height: configuration.affixContentLength)
+            .foregroundColor(configuration.affixContentColor.color)
+        }
       ) {
         print("BezierButton")
       }
