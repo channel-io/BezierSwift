@@ -28,7 +28,7 @@ public struct BezierCheckbox: View {
         Spacer()
 
         ZStack(alignment: .bottom) {
-          if self.configuration.showRequiredAsterisk {
+          if self.configuration.showRequired {
             Text("*")
               .font(BezierFont.caption1Regular.font)
               .foregroundColor(BezierColor.fgRedNormal.color)
@@ -45,40 +45,6 @@ public struct BezierCheckbox: View {
 
 #Preview {
   VStack {
-    BezierCheckbox(
-      configuration: .primary(
-        label: "Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox",
-        checked: .checked,
-        color: .blue,
-        disabled: false,
-        showRequiredAsterisk: true
-      )
-    )
-    BezierCheckbox(
-      configuration: .primary(
-        label: "Bezier Checkbox",
-        checked: .unchecked,
-        color: .blue,
-        disabled: false,
-        showRequiredAsterisk: true
-      )
-    )
-    BezierCheckbox(
-      configuration: .secondary(
-        label: "Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox Bezier Checkbox",
-        isChecked: true,
-        color: .blue,
-        showRequiredAsterisk: true
-      )
-    )
-    BezierCheckbox(
-      configuration: .secondary(
-        label: "Bezier Checkbox",
-        isChecked: false,
-        color: .blue,
-        showRequiredAsterisk: true
-      )
-    )
   }
   .padding(.horizontal, 20)
 }
