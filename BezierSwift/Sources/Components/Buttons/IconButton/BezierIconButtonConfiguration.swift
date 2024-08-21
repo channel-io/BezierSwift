@@ -115,7 +115,7 @@ public struct BezierIconButtonConfiguration: Equatable {
       case .large: return 14
       case .xlarge: return 16
       }
-    case .circle: return (self.contentLength + (self.padding * 2)) / 2
+    case .circle: return 0
     }
   }
   

@@ -18,7 +18,14 @@ struct BezierIconButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .background(
-        RoundedRectangle(cornerRadius: self.configuration.cornerRadius, style: .circular)
+        Group {
+          switch self.configuration.shape {
+          case .circle:
+            Capsule(style: .circular)
+          case .rectangle:
+            RoundedRectangle(cornerRadius: self.configuration.cornerRadius, style: .circular)
+          }
+        }
           .foregroundColor(
             configuration.isPressed ? self.configuration.backgroundColor.color: self.configuration.backgroundColor.color
           )

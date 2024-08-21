@@ -44,9 +44,7 @@ public struct BezierIconButton<Content: View>: View {
       self.action()
     } label: {
       HStack(spacing: .zero) {
-        Color.clear
-          .frame(length: self.configuration.contentLength)
-          .overlay(self.content(self.configuration))
+        self.content(self.configuration)
         // TODO: dropdown UI 구현 필요 by Tom, 2024.08.16
         // 피그마에 Dropdown 관련 요소가 부족하여 구현이 어려운 상태입니다.
       }
@@ -99,7 +97,7 @@ extension BezierIconButton {
       variant: .primary,
       color: .blue,
       size: .xlarge,
-      shape: .rectangle
+      shape: .circle
     ),
     content: { configuration in
       BezierIcon.plus.image
