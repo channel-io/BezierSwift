@@ -37,6 +37,7 @@ public struct BezierCheckboxConfiguration: Equatable {
   public typealias Nested = BezierCheckboxNested
 
   // MARK: Properties
+  // TODO: - Min Target을 iOS 15 이상으로 올린 이후에 AttributedString을 적용해 링크 텍스트를 넣을수 있도록 합니다 - by Finn 2024.08.21
   let label: String?
   let variant: Variant
   let color: Color
