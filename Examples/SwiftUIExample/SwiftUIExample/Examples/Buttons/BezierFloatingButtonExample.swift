@@ -1,5 +1,5 @@
 //
-//  BezierFloatingButton.swift
+//  BezierFloatingButtonExample.swift
 //  SwiftUIExample
 //
 //  Created by Tom on 8/21/24.
