@@ -13,16 +13,16 @@ import SwiftUI
 ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
 ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
-public struct BezierButton<Prefix: View, Suffix: View>: View {
+public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
   public typealias Configuration = BezierButtonConfiguration
-  public typealias PrefixContent = (Configuration) -> Prefix
-  public typealias SuffixContent = (Configuration) -> Suffix
+  public typealias PrefixContentBuilder = (Configuration) -> PrefixContent
+  public typealias SuffixContentBuilder = (Configuration) -> SuffixContent
   public typealias Action = () -> Void
   
   // MARK: Properties
   private let configuration: Configuration
-  private let prefixContent: PrefixContent
-  private let suffixContent: SuffixContent
+  private let prefixContent: PrefixContentBuilder
+  private let suffixContent: SuffixContentBuilder
   private var isFilled: Bool =  false
   private var isLoading: Bool = false
   private let action: Action
@@ -35,8 +35,8 @@ public struct BezierButton<Prefix: View, Suffix: View>: View {
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    prefixContent: @escaping PrefixContent,
-    suffixContent: @escaping SuffixContent,
+    prefixContent: @escaping PrefixContentBuilder,
+    suffixContent: @escaping SuffixContentBuilder,
     action: @escaping Action
   ) {
     self.configuration = configuration
@@ -52,9 +52,9 @@ public struct BezierButton<Prefix: View, Suffix: View>: View {
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    prefixContent: @escaping PrefixContent,
+    prefixContent: @escaping PrefixContentBuilder,
     action: @escaping Action
-  ) where Suffix == EmptyView {
+  ) where SuffixContent == EmptyView {
     self.configuration = configuration
     self.prefixContent = prefixContent
     self.suffixContent = { _ in EmptyView() }
@@ -68,9 +68,9 @@ public struct BezierButton<Prefix: View, Suffix: View>: View {
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    suffixContent: @escaping SuffixContent,
+    suffixContent: @escaping SuffixContentBuilder,
     action: @escaping Action
-  ) where Prefix == EmptyView {
+  ) where PrefixContent == EmptyView {
     self.configuration = configuration
     self.prefixContent = { _ in EmptyView() }
     self.suffixContent = suffixContent
@@ -84,7 +84,7 @@ public struct BezierButton<Prefix: View, Suffix: View>: View {
   public init(
     configuration: Configuration,
     action: @escaping Action
-  ) where Prefix == EmptyView, Suffix == EmptyView {
+  ) where PrefixContent == EmptyView, SuffixContent == EmptyView {
     self.configuration = configuration
     self.prefixContent = { _ in EmptyView() }
     self.suffixContent = { _ in EmptyView() }

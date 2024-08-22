@@ -14,11 +14,12 @@ import SwiftUI
 ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
 public struct BezierIconButton<Content: View>: View {
   public typealias Configuration = BezierIconButtonConfiguration
+  public typealias ContentBuilder = (Configuration) -> Content
   public typealias Action = () -> Void
   
   // MARK: Properties
   private let configuration: Configuration
-  private let content: (Configuration) -> Content
+  private let content: ContentBuilder
   private var isLoading: Bool = false
   private var dropdown: Bool?
   private let action: Action
@@ -30,7 +31,7 @@ public struct BezierIconButton<Content: View>: View {
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
     configuration: Configuration,
-    content: @escaping (Configuration) -> Content,
+    content: @escaping ContentBuilder,
     action: @escaping Action
   ) {
     self.configuration = configuration
