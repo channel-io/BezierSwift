@@ -88,6 +88,22 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
+  var textHorizontalPadding: CGFloat {
+    switch self.size {
+    case .xsmall: return 3
+    case .small, .medium: return 4
+    case .large: return 5
+    case .xlarge: return 6
+    }
+  }
+  
+  var textVerticalPadding: CGFloat {
+    switch self.size {
+    case .xsmall, .medium, .xlarge: return 0
+    case .small, .large: return 1
+    }
+  }
+  
   public var affixContentLength: CGFloat {
     switch self.size {
     case .xsmall, .small: return 16
@@ -140,19 +156,10 @@ public struct BezierButtonConfiguration: Equatable {
   var verticalPadding: CGFloat {
     switch self.size {
     case .xsmall: return 3
-    case .small: return 7
+    case .small: return 6
     case .medium: return 9
-    case .large: return 12
+    case .large: return 11
     case .xlarge: return 15
-    }
-  }
-  
-  var horizontalSpacing: CGFloat {
-    switch self.size {
-    case .xsmall: return 3
-    case .small, .medium: return 4
-    case .large: return 5
-    case .xlarge: return 6
     }
   }
   

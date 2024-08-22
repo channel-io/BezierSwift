@@ -95,13 +95,15 @@ public struct BezierFloatingButton<PrefixContent: View, SuffixContent: View>: Vi
     Button {
       self.action()
     } label: {
-      HStack(spacing: self.configuration.horizontalSpacing) {
+      HStack(spacing: .zero) {
         self.prefixContent(self.configuration)
         
         Text(self.configuration.text)
           .applyBezierFontStyle(self.configuration.textFont, bezierColor: self.configuration.textColor)
           .multilineTextAlignment(.leading)
           .lineLimit(1)
+          .padding(.horizontal, self.configuration.textHorizontalPadding)
+          .padding(.vertical, self.configuration.textVerticalPadding)
         
         self.suffixContent(self.configuration)
       }

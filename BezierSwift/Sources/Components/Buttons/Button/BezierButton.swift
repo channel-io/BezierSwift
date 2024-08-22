@@ -96,12 +96,14 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
     Button {
       self.action()
     } label: {
-      HStack(spacing: self.configuration.horizontalSpacing) {
+      HStack(spacing: .zero) {
         self.prefixContent(self.configuration)
         
         Text(self.configuration.text)
           .applyBezierFontStyle(self.configuration.textFont, bezierColor: self.configuration.textColor)
           .multilineTextAlignment(.leading)
+          .padding(.horizontal, self.configuration.textHorizontalPadding)
+          .padding(.vertical, self.configuration.textVerticalPadding)
         
         self.suffixContent(self.configuration)
       }
