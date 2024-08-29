@@ -3,6 +3,7 @@ import SwiftUI
 public enum BezierIcon: String {
   case `ai` = "icon-ai"
   case `aiOff` = "icon-ai-off"
+  case `alf` = "icon-alf"
   case `all` = "icon-all"
   case `android` = "icon-android"
   case `api` = "icon-api"
@@ -50,6 +51,7 @@ public enum BezierIcon: String {
   case `bearFilled` = "icon-bear-filled"
   case `beta` = "icon-beta"
   case `block` = "icon-block"
+  case `blockSmall` = "icon-block-small"
   case `bluetooth` = "icon-bluetooth"
   case `bold` = "icon-bold"
   case `book` = "icon-book"
