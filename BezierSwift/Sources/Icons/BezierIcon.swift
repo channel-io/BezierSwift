@@ -311,6 +311,8 @@ public enum BezierIcon: String {
   case `lab` = "icon-lab"
   case `landline` = "icon-landline"
   case `laptop` = "icon-laptop"
+  case `legacyChannel` = "icon-legacy-channel"
+  case `legacyChannelFilled` = "icon-legacy-channel-filled"
   case `lightbulb` = "icon-lightbulb"
   case `lightning` = "icon-lightning"
   case `lightningFilled` = "icon-lightning-filled"
