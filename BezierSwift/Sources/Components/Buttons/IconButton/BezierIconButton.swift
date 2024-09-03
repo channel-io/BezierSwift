@@ -21,7 +21,7 @@ public struct BezierIconButton<Content: View>: View {
   private let configuration: Configuration
   private let content: ContentBuilder
   private var isLoading: Bool = false
-  private var dropdown: Bool?
+  private var dropdown: Bool = false
   private let action: Action
   
   // MARK: Initializer
@@ -46,8 +46,11 @@ public struct BezierIconButton<Content: View>: View {
     } label: {
       HStack(spacing: .zero) {
         self.content(self.configuration)
-        // TODO: dropdown UI 구현 필요 by Tom, 2024.08.16
-        // 피그마에 Dropdown 관련 요소가 부족하여 구현이 어려운 상태입니다.
+        if self.dropdown {
+          BezierIcon.chevronSmallDown.image
+            .foregroundColor(self.configuration.dropdownColor.color)
+            .frame(length: self.configuration.dropdownLength)
+        }
       }
       .padding(self.configuration.padding)
       .contentShape(Rectangle())
@@ -83,7 +86,7 @@ extension BezierIconButton {
   
   /// 드랍다운 등의 인터렉션을 표현하기 위해 사용됩니다. 따라서 chevron 으로 아이콘이 고정되어 있습니다.
   /// - Parameters:
-  ///   - dropdown: 드랍다운 등의 인터렉션을 표현하기 위해 사용되는 Bool 값입니다. `true` or `false` 로 설정하면 Dropdown UI가 보입니다.
+  ///   - dropdown: 드랍다운 등의 인터렉션을 표현하기 위해 사용되는 Bool 값입니다. `true` 로 설정하면 Dropdown UI가 보입니다.
   public func dropdown(_ dropdown: Bool) -> Self {
     var view = self
     view.dropdown = dropdown

@@ -95,6 +95,26 @@ public struct BezierIconButtonConfiguration: Equatable {
     }
   }
   
+  public var dropdownLength: CGFloat {
+    return self.contentLength
+  }
+  
+  public var dropdownColor: BezierColor {
+    switch self.variant {
+    case .primary:
+      switch self.color {
+      case .absoluteWhite: return .fgAbsoluteBlackLight
+      default: return .fgAbsoluteWhiteLight
+      }
+    case .secondary, .tertiary:
+      switch self.color {
+      case .darkGrey, .lightGrey: return .fgBlackDark
+      case .absoluteWhite: return .fgAbsoluteWhiteLight
+      default: return self.contentColor
+      }
+    }
+  }
+  
   var padding: CGFloat {
     switch self.size {
     case .xsmall: return 4
