@@ -97,6 +97,7 @@ public struct BezierButtonConfiguration: Equatable {
     }
   }
   
+  // TODO: 새 폰트의 LineHeight 체크 후 VerticalPadding 정의 필요 by Tom 2024.09.03
   var textVerticalPadding: CGFloat {
     switch self.size {
     case .xsmall, .medium, .xlarge: return 0
