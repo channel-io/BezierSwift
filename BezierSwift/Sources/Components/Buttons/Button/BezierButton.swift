@@ -8,19 +8,46 @@
 import SwiftUI
 
 // - MARK: BezierButton
-/// - Parameters:
-///   - configuration: 버튼의 스타일과 모양을 정의하는 BezierButtonConfiguration 객체입니다.
-///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
-///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
-///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
 public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
-  public typealias Configuration = BezierButtonConfiguration
-  public typealias PrefixContentBuilder = (Configuration) -> PrefixContent
-  public typealias SuffixContentBuilder = (Configuration) -> SuffixContent
+  public typealias PrefixContentBuilder = (_ length: CGFloat, _ color: BezierColor) -> PrefixContent
+  public typealias SuffixContentBuilder = (_ length: CGFloat, _ color: BezierColor) -> SuffixContent
   public typealias Action = () -> Void
   
+  // MARK: Variant
+  public enum Variant {
+    case primary
+    case secondary
+    case tertiary
+  }
+  
+  // MARK: Size
+  public enum Size {
+    case xsmall
+    case small
+    case medium
+    case large
+    case xlarge
+  }
+  
+  // MARK: Color
+  public enum Color {
+    case blue
+    case cobalt
+    case red
+    case orange
+    case green
+    case pink
+    case purple
+    case darkGrey
+    case lightGrey
+    case absoluteWhite
+  }
+  
   // MARK: Properties
-  private let configuration: Configuration
+  private let text: String
+  private let variant: Variant
+  private let color: Color
+  private let size: Size
   private let prefixContent: PrefixContentBuilder
   private let suffixContent: SuffixContentBuilder
   private var isFilled: Bool =  false
@@ -29,17 +56,26 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
-  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
-  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - text: 버튼에 표시될 텍스트를 지정합니다.
+  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+  ///   - color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
+  ///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
+  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다. 디자인 가이드로 `length` 와 `color` 를 제공합니다.
+  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 디자인 가이드로 `length` 와 `color` 를 제공합니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
-    configuration: Configuration,
+    text: String,
+    variant: Variant,
+    color: Color,
+    size: Size = .large,
     prefixContent: @escaping PrefixContentBuilder,
     suffixContent: @escaping SuffixContentBuilder,
     action: @escaping Action
   ) {
-    self.configuration = configuration
+    self.text = text
+    self.variant = variant
+    self.color = color
+    self.size = size
     self.prefixContent = prefixContent
     self.suffixContent = suffixContent
     self.action = action
@@ -47,47 +83,74 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
-  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - text: 버튼에 표시될 텍스트를 지정합니다.
+  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+  ///   - color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
+  ///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
+  ///   - prefixContent: 버튼의 앞부분에 표시될 내용을 지정하는 뷰입니다. 디자인 가이드로 `length` 와 `color` 를 제공합니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
-    configuration: Configuration,
+    text: String,
+    variant: Variant,
+    color: Color,
+    size: Size = .large,
     prefixContent: @escaping PrefixContentBuilder,
     action: @escaping Action
   ) where SuffixContent == EmptyView {
-    self.configuration = configuration
+    self.text = text
+    self.variant = variant
+    self.color = color
+    self.size = size
     self.prefixContent = prefixContent
-    self.suffixContent = { _ in EmptyView() }
+    self.suffixContent = { _, _ in EmptyView() }
     self.action = action
   }
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
-  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다.
+  ///   - text: 버튼에 표시될 텍스트를 지정합니다.
+  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+  ///   - color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
+  ///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
+  ///   - suffixContent: 버튼의 뒷부분에 표시될 내용을 지정하는 뷰입니다. 디자인 가이드로 `length` 와 `color` 를 제공합니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
-    configuration: Configuration,
+    text: String,
+    variant: Variant,
+    color: Color,
+    size: Size = .large,
     suffixContent: @escaping SuffixContentBuilder,
     action: @escaping Action
   ) where PrefixContent == EmptyView {
-    self.configuration = configuration
-    self.prefixContent = { _ in EmptyView() }
+    self.text = text
+    self.variant = variant
+    self.color = color
+    self.size = size
+    self.prefixContent = { _, _ in EmptyView() }
     self.suffixContent = suffixContent
     self.action = action
   }
   
   // MARK: Initializer
   /// - Parameters:
-  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierButtonConfiguration` 객체입니다.
+  ///   - text: 버튼에 표시될 텍스트를 지정합니다.
+  ///   - variant: 스타일에는 위계와 형태가 모두 포함됩니다. `primary`, `secondary`, `tertiary` 는 위계를 나타내는 표현으로 적힌 순서로 낮아집니다. 화면 내에서 액션의 중요도에 따라 버튼의 Hierachy를 다르게 사용합니다. 또한 `primary` 는 가장 중요한 버튼에 사용합니다. 일반적으로 한 화면에서 1개 사용을 권장하며, 너무 많이 사용하지 않도록 해주세요.
+  ///   - color: Semantic 그룹에 속하는 모든 컬러를 사용할 수 있습니다.
+  ///   - size: Button은 `xsmall`, `small`, `medium`,` large`, `xlarge` 5개의 사이즈를 가질 수 있습니다. `medium`이 가장 보편적으로 사용되며, 페이지 내의 중요도와 시각적 균형에 맞게 적절하게 사용합니다. 기본값은 `large` 입니다.
   ///   - action: 버튼이 눌렸을 때 실행될 클로저입니다.
   public init(
-    configuration: Configuration,
+    text: String,
+    variant: Variant,
+    color: Color,
+    size: Size = .large,
     action: @escaping Action
   ) where PrefixContent == EmptyView, SuffixContent == EmptyView {
-    self.configuration = configuration
-    self.prefixContent = { _ in EmptyView() }
-    self.suffixContent = { _ in EmptyView() }
+    self.text = text
+    self.variant = variant
+    self.color = color
+    self.size = size
+    self.prefixContent = { _, _ in EmptyView() }
+    self.suffixContent = { _, _ in EmptyView() }
     self.action = action
   }
   
@@ -97,18 +160,18 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
       self.action()
     } label: {
       HStack(spacing: .zero) {
-        self.prefixContent(self.configuration)
+        self.prefixContent(self.affixContentLength, self.affixContentColor)
         
-        Text(self.configuration.text)
-          .applyBezierFontStyle(self.configuration.textFont, bezierColor: self.configuration.textColor)
+        Text(self.text)
+          .applyBezierFontStyle(self.textFont, bezierColor: self.textColor)
           .multilineTextAlignment(.leading)
-          .padding(.horizontal, self.configuration.textHorizontalPadding)
-          .padding(.vertical, self.configuration.textVerticalPadding)
+          .padding(.horizontal, self.textHorizontalPadding)
+          .padding(.vertical, self.textVerticalPadding)
         
-        self.suffixContent(self.configuration)
+        self.suffixContent(self.affixContentLength, self.affixContentColor)
       }
-      .padding(.horizontal, self.configuration.horizontalPadding)
-      .padding(.vertical, self.configuration.verticalPadding)
+      .padding(.horizontal, self.horizontalPadding)
+      .padding(.vertical, self.verticalPadding)
       .if(self.isFilled) { view in
         view
           .frame(maxWidth: .infinity, alignment: .center)
@@ -116,7 +179,7 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
       .contentShape(Rectangle())
       .visible(!self.isLoading)
     }
-    .buttonStyle(BezierButtonStyle(configuration: self.configuration))
+    .buttonStyle(BezierButtonStyle(cornerRadius: self.cornerRadius, backgroundColor: self.backgroundColor))
     .applyDisabledStyle()
     .disabled(self.isLoading)
     .if(self.isLoading) { view in
@@ -124,12 +187,181 @@ public struct BezierButton<PrefixContent: View, SuffixContent: View>: View {
         .overlay(
           BezierLoader(
             configuration: BezierLoaderConfiguration(
-              size: self.configuration.loaderSize,
-              variant: self.configuration.loaderVariant
+              size: self.loaderSize,
+              variant: self.loaderVariant
             )
           )
         )
     }
+  }
+}
+
+// - MARK: Style
+extension BezierButton {
+  private var textFont: BezierFont {
+    switch self.size {
+    case .xsmall: return .caption2SemiBold
+    case .small: return .caption1SemiBold
+    case .medium: return .body2SemiBold
+    case .large: return .body1SemiBold
+    case .xlarge: return .title2SemiBold
+    }
+  }
+  
+  private var textColor: BezierColor {
+    guard self.variant != .primary else {
+      return self.color == .absoluteWhite ? .fgAbsoluteBlackNormal : .fgAbsoluteWhiteDark
+    }
+    
+    switch self.color {
+    case .blue:
+      return .primaryFgNormal
+    case .cobalt:
+      return .fgCobaltNormal
+    case .red:
+      return .fgRedNormal
+    case .orange:
+      return .warningFgNormal
+    case .green:
+      return .successFgNormal
+    case .pink:
+      return .fgPinkNormal
+    case .purple:
+      return .fgPurpleNormal
+    case .darkGrey:
+      return .fgBlackDarkest
+    case .lightGrey:
+      return .fgBlackDarker
+    case .absoluteWhite:
+      return .fgAbsoluteWhiteNormal
+    }
+  }
+  
+  private var textHorizontalPadding: CGFloat {
+    switch self.size {
+    case .xsmall: return 3
+    case .small, .medium: return 4
+    case .large: return 5
+    case .xlarge: return 6
+    }
+  }
+  
+  // TODO: 새 폰트의 LineHeight 체크 후 VerticalPadding 정의 필요 by Tom 2024.09.03
+  private var textVerticalPadding: CGFloat {
+    switch self.size {
+    case .xsmall, .medium, .xlarge: return 0
+    case .small, .large: return 1
+    }
+  }
+  
+  private var affixContentLength: CGFloat {
+    switch self.size {
+    case .xsmall, .small: return 16
+    case .medium, .large: return 20
+    case .xlarge: return 24
+    }
+  }
+  
+  private var affixContentColor: BezierColor {
+    switch self.variant {
+    case .primary:
+      switch self.color {
+      case .blue: return .fgAbsoluteWhiteDark
+      case .cobalt: return .fgAbsoluteWhiteDark
+      case .red: return .fgAbsoluteWhiteDark
+      case .orange: return .fgAbsoluteWhiteDark
+      case .green: return .fgAbsoluteWhiteDark
+      case .pink: return .fgAbsoluteWhiteDark
+      case .purple: return .fgAbsoluteWhiteDark
+      case .darkGrey: return .fgWhiteNormal
+      case .lightGrey: return .fgAbsoluteWhiteNormal
+      case .absoluteWhite: return .fgAbsoluteBlackNormal
+      }
+    case .secondary, .tertiary:
+      switch self.color {
+      case .blue: return .primaryFgNormal
+      case .cobalt: return .accentFgNormal
+      case .red: return .criticalFgNormal
+      case .orange: return .warningFgNormal
+      case .green: return .successFgNormal
+      case .pink: return .fgPinkNormal
+      case .purple: return .fgPurpleNormal
+      case .darkGrey: return .fgBlackDarker
+      case .lightGrey: return .fgBlackDark
+      case .absoluteWhite: return .fgAbsoluteWhiteLight
+      }
+    }
+  }
+  
+  private var horizontalPadding: CGFloat {
+    switch self.size {
+    case .xsmall: return 6
+    case .small: return 8
+    case .medium: return 12
+    case .large: return 14
+    case .xlarge: return 16
+    }
+  }
+  
+  private var verticalPadding: CGFloat {
+    switch self.size {
+    case .xsmall: return 3
+    case .small: return 6
+    case .medium: return 9
+    case .large: return 11
+    case .xlarge: return 15
+    }
+  }
+  
+  private var cornerRadius: CGFloat {
+    switch self.size {
+    case .xsmall: return 8
+    case .small: return 10
+    case .medium: return 12
+    case .large: return 14
+    case .xlarge: return 16
+    }
+  }
+  
+  private var backgroundColor: BezierColor {
+    guard self.variant != .tertiary else { return .bgWhiteAlphaTransparent }
+    
+    let isPrimary = self.variant == .primary
+    
+    switch self.color {
+    case .blue:
+      return isPrimary ? .primaryBgNormal : .primaryBgLightest
+    case .cobalt:
+      return isPrimary ? .accentBgNormal : .accentBgLightest
+    case .red:
+      return isPrimary ? .criticalBgNormal : .criticalBgLightest
+    case .green:
+      return isPrimary ? .successBgNormal : .successBgLightest
+    case .orange:
+      return isPrimary ? .warningBgNormal : .warningBgLightest
+    case .pink:
+      return isPrimary ? .bgPinkNormal : .bgPinkLightest
+    case .purple:
+      return isPrimary ? .bgPurpleNormal : .bgPurpleLightest
+    case .darkGrey:
+      return isPrimary ? .bgGreyDarkest : .bgBlackLighter
+    case .lightGrey:
+      return isPrimary ? .bgBlackDark : .bgBlackLighter
+    case .absoluteWhite:
+      return isPrimary ? .bgAbsoluteWhiteDark : .bgAbsoluteWhiteLightest
+    }
+  }
+  
+  private var loaderSize: BezierLoaderConfiguration.Size {
+    switch self.size {
+    case .xsmall, .small: return .xxsmall
+    case .medium, .large: return .xsmall
+    case .xlarge: return .small
+    }
+  }
+  
+  private var loaderVariant: BezierLoaderConfiguration.Variant {
+    return self.variant == .primary ? .onOverlay : .secondary
   }
 }
 
@@ -156,21 +388,19 @@ extension BezierButton {
 // - MARK: Preview
 #Preview {
   BezierButton(
-    configuration: BezierButtonConfiguration(
-      text: "Test",
-      variant: .primary,
-      color: .blue,
-      size: .xlarge
-    ),
-    prefixContent: { configuration in
+    text: "Test",
+    variant: .primary,
+    color: .blue,
+    size: .xlarge,
+    prefixContent: { length, color in
       BezierIcon.android.image
-        .frame(length: configuration.affixContentLength)
-        .foregroundColor(configuration.affixContentColor.color)
+        .frame(length: length)
+        .foregroundColor(color.color)
     },
-    suffixContent: { configuration in
+    suffixContent: { length, color in
       BezierIcon.ios.image
-        .frame(length: configuration.affixContentLength)
-        .foregroundColor(configuration.affixContentColor.color)
+        .frame(length: length)
+        .foregroundColor(color.color)
     }
   ) {
     print("BezierButton")

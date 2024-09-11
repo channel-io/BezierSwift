@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct BezierIconButtonStyle: ButtonStyle {
-  let configuration: BezierIconButtonConfiguration
+struct BezierIconButtonStyle<Content: View>: ButtonStyle {
+  let shape: BezierIconButton<Content>.Shape
+  let cornerRadius: CGFloat
+  let backgroundColor: BezierColor
   
-  init(configuration: BezierIconButtonConfiguration) {
-    self.configuration = configuration
+  init(shape: BezierIconButton<Content>.Shape, cornerRadius: CGFloat, backgroundColor: BezierColor) {
+    self.shape = shape
+    self.cornerRadius = cornerRadius
+    self.backgroundColor = backgroundColor
   }
   
   // TODO: Pressed Color 논의가 끝나지 않은 상태라 이번 PR에서 제외합니다. by Tom 2024.08.02
@@ -19,15 +23,15 @@ struct BezierIconButtonStyle: ButtonStyle {
     configuration.label
       .background(
         Group {
-          switch self.configuration.shape {
+          switch self.shape {
           case .circle:
             Capsule(style: .circular)
           case .rectangle:
-            RoundedRectangle(cornerRadius: self.configuration.cornerRadius, style: .circular)
+            RoundedRectangle(cornerRadius: self.cornerRadius, style: .circular)
           }
         }
           .foregroundColor(
-            configuration.isPressed ? self.configuration.backgroundColor.color: self.configuration.backgroundColor.color
+            configuration.isPressed ? self.backgroundColor.color: self.backgroundColor.color
           )
       )
   }

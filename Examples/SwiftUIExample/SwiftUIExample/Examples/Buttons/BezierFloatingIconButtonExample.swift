@@ -14,15 +14,13 @@ struct BezierFloatingIconButtonExample: View {
   var body: some View {
     VStack {
       BezierFloatingIconButton(
-        configuration: BezierFloatingIconButtonConfiguration(
-          variant: .primary,
-          color: .blue,
-          size: .xlarge
-        ),
-        content: { configuration in
+        variant: .primary,
+        color: .blue,
+        size: .xlarge,
+        content: { length, color in
           BezierIcon.ios.image
-            .frame(width: configuration.contentLength, height: configuration.contentLength)
-            .foregroundColor(configuration.contentColor.color)
+            .frame(width: length, height: length)
+            .foregroundColor(color.color)
         }
       ) {
         print("BezierFloatingIconButton")

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct BezierFloatingIconButtonStyle: ButtonStyle {
-  let configuration: BezierFloatingIconButtonConfiguration
+  let backgroundColor: BezierColor
   
-  init(configuration: BezierFloatingIconButtonConfiguration) {
-    self.configuration = configuration
+  init(backgroundColor: BezierColor) {
+    self.backgroundColor = backgroundColor
   }
   
   // TODO: Pressed Color 논의가 끝나지 않은 상태라 이번 PR에서 제외합니다. by Tom 2024.08.02
@@ -20,7 +20,7 @@ struct BezierFloatingIconButtonStyle: ButtonStyle {
       .background(
         Capsule(style: .circular)
           .foregroundColor(
-            configuration.isPressed ? self.configuration.backgroundColor.color: self.configuration.backgroundColor.color
+            configuration.isPressed ? self.backgroundColor.color: self.backgroundColor.color
           )
       )
       .applyBezierShadow(.shadow2)
