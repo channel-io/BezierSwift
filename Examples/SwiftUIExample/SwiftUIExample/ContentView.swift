@@ -25,6 +25,15 @@ struct ContentView: View {
         }
         Section {
           NavigationLink {
+            BezierAvatarExample()
+          } label: {
+            Text("Avatar")
+          }
+        } header: {
+          Text("Navigation")
+        }
+        Section {
+          NavigationLink {
             BezierButtonExample()
           } label: {
             Text("Button")
