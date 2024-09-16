@@ -59,9 +59,10 @@ public struct BezierProgressBar: View {
           .frame(height: self.height)
           .frame(minWidth: self.minWidth)
           .frame(
-            width: (proxy.size.width + self.minWidth) * min(self.progress, Constant.maxProgress),
+            width: (proxy.size.width) * min(self.progress, Constant.maxProgress),
             alignment: .leading
           )
+          .animation(self.animation, value: self.progress)
       }
     }
   }
@@ -94,6 +95,10 @@ extension BezierProgressBar {
   
   private var minWidth: CGFloat {
     self.progress.isZero ? 0 : self.height
+  }
+  
+  private var animation: Animation {
+    Animation.timingCurve(0.24, 0.1, 0.24, 1.0, duration: 1.0)
   }
 }
 
