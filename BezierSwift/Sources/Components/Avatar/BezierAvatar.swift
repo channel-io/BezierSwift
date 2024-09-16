@@ -83,6 +83,7 @@ public struct BezierAvatar: View {
           .padding([.bottom, .trailing], self.badgePadding),
         alignment: .bottomTrailing
       )
+      .compositingGroup()
   }
 }
 
