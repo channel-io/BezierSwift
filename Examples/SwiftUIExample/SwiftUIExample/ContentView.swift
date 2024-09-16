@@ -29,6 +29,12 @@ struct ContentView: View {
           } label: {
             Text("Avatar")
           }
+          
+          NavigationLink {
+            BezierAvatarGroupExample()
+          } label: {
+            Text("AvatarGroup")
+          }
         } header: {
           Text("Navigation")
         }
