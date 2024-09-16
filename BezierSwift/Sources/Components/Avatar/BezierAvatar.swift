@@ -188,5 +188,5 @@ extension BezierAvatar {
 }
 
 #Preview {
-  BezierAvatar(image: .url(URL(string: "")), size: .pt120)
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt120)
 }

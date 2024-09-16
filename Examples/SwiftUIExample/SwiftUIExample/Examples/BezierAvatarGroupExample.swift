@@ -13,13 +13,13 @@ struct BezierAvatarGroupExample: View {
   var body: some View {
     BezierAvatarGroup(
       images: [
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300")),
-        .url(URL(string: "https://picsum.photos/200/300"))
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300")),
+        .avatar(url: URL(string: "https://picsum.photos/200/300"))
       ],
       type: .stack,
       ellipsisType: .icon
