@@ -10,9 +10,12 @@ import SwiftUI
 import BezierSwift
 
 struct BezierAvatarExample: View {
-  
   var body: some View {
-    BezierAvatar(url: URL(string: ""), badge: .chat)
+    BezierAvatar(
+      image: .url(URL(string: "https://picsum.photos/200/300")),
+      size: .pt48,
+      badge: .chat
+    )
   }
 }
 
