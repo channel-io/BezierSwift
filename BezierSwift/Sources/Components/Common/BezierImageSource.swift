@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 public enum BezierImageSource: View {
   case image(Image)
-  case url(URL?, fallback: Image = BezierImage.fallback.image)
+  case url(URL?, fallback: Image?)
   
   public var body: some View {
     switch self {
@@ -27,10 +27,20 @@ public enum BezierImageSource: View {
           image
             .resizable()
         case .failure:
-          fallback
-            .resizable()
+          if let fallback {
+            fallback
+              .resizable()
+          } else {
+            EmptyView()
+          }
         }
       }
     }
+  }
+}
+
+extension BezierImageSource {
+  public static func avatar(url: URL?, fallback: Image? = BezierImage.fallback.image) -> Self {
+    return .url(url, fallback: fallback)
   }
 }
