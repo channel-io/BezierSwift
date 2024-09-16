@@ -1,17 +1,15 @@
 //
 //  BezierAvatar.swift
-//  
+//
 //
 //  Created by Tom on 9/3/24.
 //
 
 import SwiftUI
 
-import SDWebImageSwiftUI
-
-public struct BezierAvatar<Content: View>: View {
-  public typealias ContentBuilder = () -> Content
-  
+// - MARK: BezierAvatar
+public struct BezierAvatar: View {
+  // MARK: Size
   public enum Size {
     case pt16
     case pt20
@@ -25,60 +23,55 @@ public struct BezierAvatar<Content: View>: View {
     case pt120
   }
   
+  // MARK: Badge
   public enum Badge {
     case chat
     case status(online: Bool, doNotDisturb: Bool)
-    case integration(appImage: Image)
+    case integration(source: BezierImageSource)
   }
   
-  let size: Size
-  let badge: Badge?
-  let outlineBorder: Bool
-  var ellipsis: Bool = false
+  // MARK: Properties
+  private let image: BezierImageSource
+  private let size: Size
+  private let badge: Badge?
+  private var outlineBorder: Bool = false
+  private var ellipsis: Bool = false
   
-  private let content: ContentBuilder
-  
+  // MARK: Initializer
+  /// - Parameters:
+  ///   - image: 아바타는 사용자가 업로드한 이미지를 표현합니다. 이미지가 없을 경우 `fallback` 이미지를 표현합니다.
+  ///   - size: 아바타의 사이즈는 `16pt`, `20pt`, `24pt`, `30pt`, `36pt`, `42pt`, `48pt`, `72pt`, `90pt`, `120pt` 로 총 10개 사이즈를 가집니다. 주변 요소와의 균형감, 아바타 요소의 중요도에 따라 적절한 사이즈를 선택합니다.
+  ///     - 아바타의 경우 예외적으로 semantic name 이 아닌, raw 한 수치 그대로 사용합니다.
+  ///   - badge: 아바타에는 관련된 사람의 상태를 나타내는 현재 상태 배지가 포함될 수 있습니다.
+  ///     - chat (public / private)
+  ///     - status (on / off)
+  ///     - integration (연동앱)
+  ///       - integration은 특정 사이즈에서만 허용합니다 (`24pt`, `42pt`, `48pt`)
   public init(
+    image: BezierImageSource,
     size: Size = .pt24,
-    badge: Badge?,
-    outlineBorder: Bool = false,
-    @ViewBuilder content: @escaping ContentBuilder
+    badge: Badge? = nil
   ) {
+    self.image = image
     self.size = size
     self.badge = badge
-    self.outlineBorder = outlineBorder
-    self.content = content
   }
   
-  public init(
-    url: URL?,
-    size: Size = .pt24,
-    badge: Badge?,
-    outlineBorder: Bool = false,
-    fallback: Image = BezierImage.fallback.image
-  ) where Content == WebImage<_ConditionalContent<_ConditionalContent<Color, Image>, Image>> {
-    self.size = size
-    self.badge = badge
-    self.outlineBorder = outlineBorder
-    self.content = {
-      WebImage(url: url) { result in
-        switch result {
-        case .empty:
-          BezierColor.bgWhiteAlphaTransparent.color
-        case .success(let image):
-          image
-            .resizable()
-        case .failure:
-          fallback
-            .resizable()
-        }
-      }
-    }
-  }
-  
+  // MARK: Body
   public var body: some View {
-    self.content()
+    self.image
       .scaledToFill()
+      .if(self.ellipsis) { view in
+        view
+          .overlay(
+            ZStack {
+              BezierColor.dimBlackLight.color
+              BezierIcon.more.image
+                .frame(length: self.ellipsisIconLength)
+                .foregroundColor(BezierColor.fgAbsoluteWhiteDark.color)
+            }
+          )
+      }
       .frame(length: self.length)
       .clipShape(BezierAvatarShape())
       .background(
@@ -93,6 +86,7 @@ public struct BezierAvatar<Content: View>: View {
   }
 }
 
+// - MARK: Style
 extension BezierAvatar {
   private var length: CGFloat {
     switch self.size {
@@ -123,15 +117,14 @@ extension BezierAvatar {
       BezierChatBadge(size: self.chatBadgeSize)
     case .status(let online, let doNotDisturb):
       BezierStatusBadge(online: online, size: self.statusBadgeSize, doNotDisturb: doNotDisturb)
-    case .integration(let appImage):
+    case .integration(let source):
       switch self.size {
       case .pt24, .pt42, .pt48:
-        appImage
-          .resizable()
+        source
           .frame(length: self.integrationBadgeLength)
           .clipShape(BezierAvatarShape())
         
-      default: 
+      default:
         EmptyView()
       }
     case .none:
@@ -169,8 +162,31 @@ extension BezierAvatar {
     case .pt72, .pt90, .pt120: return 2
     }
   }
+  
+  private var ellipsisIconLength: CGFloat {
+    return 24
+  }
+}
+
+// - MARK: Extensions
+extension BezierAvatar {
+  /// - Parameters:
+  ///   - outlineBorder: 아바타의 바깥으로 배경과 구분할 수 있도록 Outline Border white/highest 를 추가할 수 있습니다. 바깥 영역과 아바타의 구분이 필요한 경우, 아웃라인 보더를 사용할 수 있습니다. 아바타 그룹에서 주로 사용됩니다.
+  public func outlineBorder(_ outlineBorder: Bool) -> Self {
+    var view = self
+    view.outlineBorder = outlineBorder
+    return view
+  }
+  
+  /// - Parameters:
+  ///   - ellipsis: 아바타의 개수가 여러개일 때 N개 이상부터 생략되어 표기되는데 이때 생략되었음을 표현하기 위해 사용됩니다.
+  public func ellipsis(_ ellipsis: Bool) -> Self {
+    var view = self
+    view.ellipsis = ellipsis
+    return view
+  }
 }
 
 #Preview {
-  BezierAvatar(url: .none, size: .pt120, badge: .chat)
+  BezierAvatar(image: .url(URL(string: "")), size: .pt120)
 }
