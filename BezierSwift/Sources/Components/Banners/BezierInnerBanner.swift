@@ -18,9 +18,9 @@ private enum Metric {
   static let iconTopPadding: CGFloat = 6
   static let iconLegnth: CGFloat = 20
   
-  static let titleVStackSpacing: CGFloat = 4
-  static let titleVerticalPadding: CGFloat = 5
-  static let titleTrailingPadding: CGFloat = 6
+  static let contentVStackSpacing: CGFloat = 4
+  static let contentVerticalPadding: CGFloat = 5
+  static let contentTrailingPadding: CGFloat = 6
   
   static let buttonIconLenght: CGFloat = 20
   static let buttonIconPadding: CGFloat = 6
@@ -81,7 +81,7 @@ public struct BezierInnerBanner: View {
         .padding(.top, Metric.iconTopPadding)
         .foregroundColor(self.foregroundColor.color)
       
-      VStack(alignment: .leading, spacing: Metric.titleVStackSpacing) {
+      VStack(alignment: .leading, spacing: Metric.contentVStackSpacing) {
         if let title {
           Text(title)
             .applyBezierFontStyle(.body2SemiBold, bezierColor: self.foregroundColor)
@@ -89,8 +89,8 @@ public struct BezierInnerBanner: View {
         Text(self.description)
           .applyBezierFontStyle(.body2Regular, bezierColor: self.foregroundColor)
       }
-      .padding(.vertical, Metric.titleVerticalPadding)
-      .padding(.trailing, Metric.titleTrailingPadding)
+      .padding(.vertical, Metric.contentVerticalPadding)
+      .padding(.trailing, Metric.contentTrailingPadding)
       .frame(maxWidth: .infinity, alignment: .leading)
       
       self.actionButton
