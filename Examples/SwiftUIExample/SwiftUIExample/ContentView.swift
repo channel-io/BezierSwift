@@ -25,6 +25,25 @@ struct ContentView: View {
         }
         Section {
           NavigationLink {
+            BezierInnerBannerExample()
+          } label: {
+            Text("InnerBanner")
+          }
+          NavigationLink {
+            BezierFloatingBannerExample()
+          } label: {
+            Text("FloatingBanner")
+          }
+          NavigationLink {
+            BezierCardBannerExample()
+          } label: {
+            Text("CardBanner")
+          }
+        } header: {
+          Text("Feedback")
+        }
+        Section {
+          NavigationLink {
             BezierAvatarExample()
           } label: {
             Text("Avatar")
