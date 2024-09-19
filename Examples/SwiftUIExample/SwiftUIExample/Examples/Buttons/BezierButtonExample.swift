@@ -14,21 +14,20 @@ struct BezierButtonExample: View {
   var body: some View {
     VStack {
       BezierButton(
-        configuration: BezierButtonConfiguration(
-          text: "BezierButton",
-          variant: .primary,
-          color: .blue,
-          size: .xlarge
-        ),
-        isFilled: true,
-        prefixContent:
+        text: "BezierButton",
+        variant: .primary,
+        color: .blue,
+        size: .xlarge,
+        prefixContent: { length, color in
           BezierIcon.ios.image
-            .frame(width: 24, height: 24)
-            .foregroundColor(BezierColor.fgWhiteNormal.color),
-        suffixContent:
+            .frame(width: length, height: length)
+            .foregroundColor(color.color)
+        },
+        suffixContent: { length, color in
           BezierIcon.android.image
-          .frame(width: 24, height: 24)
-          .foregroundColor(BezierColor.fgWhiteNormal.color)
+            .frame(width: length, height: length)
+            .foregroundColor(color.color)
+        }
       ) {
         print("BezierButton")
       }
