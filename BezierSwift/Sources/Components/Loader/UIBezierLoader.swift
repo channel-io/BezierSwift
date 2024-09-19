@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  UIBezierLoader.swift
+//
 //
 //  Created by Tom on 8/1/24.
 //
@@ -13,7 +13,7 @@ private enum Constant {
   static let strokeEndDuration: Double = 1.5
 }
 
-// MARK: - BezierSpinner
+// - MARK: UIBezierLoader
 public class UIBezierLoader: UIView {
   private let configuration: BezierLoaderConfiguration
   
@@ -69,6 +69,9 @@ public class UIBezierLoader: UIView {
     return $0
   }(CAShapeLayer())
   
+  // MARK: Initializer
+  /// - Parameters:
+  ///   - configuration: 버튼의 스타일과 모양을 정의하는 `BezierLoaderConfiguration` 객체입니다.
   public init(configuration: BezierLoaderConfiguration) {
     self.configuration = configuration
     
@@ -88,14 +91,14 @@ public class UIBezierLoader: UIView {
   }
   
   // MARK: - View Cycles
-  func initialize() {
+  private func initialize() {
     self.layer.addSublayer(self.indicatorLayer)
     self.layer.addSublayer(self.trackLayer)
     
     self.setAnimation()
   }
   
-  func setLayouts() {
+  private func setLayouts() {
     self.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([

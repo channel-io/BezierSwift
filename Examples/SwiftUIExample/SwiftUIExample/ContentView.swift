@@ -16,17 +16,56 @@ struct ContentView: View {
       List {
         Section {
           NavigationLink {
+            BezierLoaderExample()
+          } label: {
+            Text("Loader")
+          }
+          NavigationLink {
+            BezierProgressBarExample()
+          } label: {
+            Text("ProgressBar")
+          }
+        } header: {
+          Text("Status")
+        }
+        Section {
+          NavigationLink {
+            BezierAvatarExample()
+          } label: {
+            Text("Avatar")
+          }
+          
+          NavigationLink {
+            BezierAvatarGroupExample()
+          } label: {
+            Text("AvatarGroup")
+          }
+        } header: {
+          Text("Navigation")
+        }
+        Section {
+          NavigationLink {
             BezierButtonExample()
           } label: {
             Text("Button")
           }
           NavigationLink {
-            BezierLoaderExample()
+            BezierIconButtonExample()
           } label: {
-            Text("Loader")
+            Text("IconButton")
+          }
+          NavigationLink {
+            BezierFloatingButtonExample()
+          } label: {
+            Text("FloatingButton")
+          }
+          NavigationLink {
+            BezierFloatingIconButtonExample()
+          } label: {
+            Text("FloatingIconButton")
           }
         } header: {
-          Text("Component")
+          Text("Action")
         }
       }
     }
