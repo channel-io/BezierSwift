@@ -309,6 +309,10 @@ extension BezierColor {
   public static var shadowSmall: BezierColor { BezierColor(functionalColorToken: .shadowSmall) }
   public static var shadowBase: BezierColor { BezierColor(functionalColorToken: .shadowBase) }
   public static var shadowBaseInner: BezierColor { BezierColor(functionalColorToken: .shadowBaseInner) }
+  
+  // MARK: Dim
+  public static var dimBlackNormal: BezierColor { BezierColor(functionalColorToken: .dimBlackNormal) }
+  public static var dimBlackLight: BezierColor { BezierColor(functionalColorToken: .dimBlackLight) }
 }
 
 //MARK: - SemanticColorToken

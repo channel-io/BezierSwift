@@ -344,3 +344,9 @@ extension FunctionalColorToken {
   static var shadowBase = FunctionalColorToken(lightGlobalColorToken: .black5, darkGlobalColorToken: .black8)
   static var shadowBaseInner = FunctionalColorToken(lightGlobalColorToken: .white12, darkGlobalColorToken: .white8)
 }
+
+// MARK: - Dim
+extension FunctionalColorToken {
+  static var dimBlackNormal = FunctionalColorToken(lightGlobalColorToken: .black40, darkGlobalColorToken: .black60)
+  static var dimBlackLight = FunctionalColorToken(lightGlobalColorToken: .black20, darkGlobalColorToken: .black40)
+}

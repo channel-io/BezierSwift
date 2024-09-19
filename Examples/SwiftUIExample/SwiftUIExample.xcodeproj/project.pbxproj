@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C83DBDE2C21673300B3135B /* BezierSwift */; };
+		E220176D2C75D67900578E64 /* BezierIconButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220176C2C75D67900578E64 /* BezierIconButtonExample.swift */; };
+		E22017702C75E09900578E64 /* BezierFloatingButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220176F2C75E09900578E64 /* BezierFloatingButtonExample.swift */; };
+		E22017722C75E0A400578E64 /* BezierFloatingIconButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22017712C75E0A400578E64 /* BezierFloatingIconButtonExample.swift */; };
 		E258E6BE2C3D8D9C00F69680 /* BezierButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
@@ -15,10 +18,18 @@
 		E28212392A4B32F800018327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212382A4B32F800018327 /* Preview Assets.xcassets */; };
 		E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195E2C365557009B34A2 /* AppDelegate.swift */; };
 		E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195F2C365557009B34A2 /* SceneDelegate.swift */; };
+		E2A392B72C958A540015FA6F /* BezierAvatarExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */; };
+		E2A392B92C98169D0015FA6F /* BezierAvatarGroupExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */; };
+		E2E5FAC92C9B265D00533C4A /* BezierInnerBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FAC82C9B265D00533C4A /* BezierInnerBannerExample.swift */; };
+		E2E5FACB2C9B266700533C4A /* BezierFloatingBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FACA2C9B266700533C4A /* BezierFloatingBannerExample.swift */; };
+		E2E5FACD2C9B267000533C4A /* BezierCardBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */; };
 		E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E220176C2C75D67900578E64 /* BezierIconButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierIconButtonExample.swift; sourceTree = "<group>"; };
+		E220176F2C75E09900578E64 /* BezierFloatingButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingButtonExample.swift; sourceTree = "<group>"; };
+		E22017712C75E0A400578E64 /* BezierFloatingIconButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingIconButtonExample.swift; sourceTree = "<group>"; };
 		E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierButtonExample.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
@@ -27,6 +38,11 @@
 		E28212382A4B32F800018327 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E28D195E2C365557009B34A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E28D195F2C365557009B34A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarExample.swift; sourceTree = "<group>"; };
+		E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarGroupExample.swift; sourceTree = "<group>"; };
+		E2E5FAC82C9B265D00533C4A /* BezierInnerBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierInnerBannerExample.swift; sourceTree = "<group>"; };
+		E2E5FACA2C9B266700533C4A /* BezierFloatingBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingBannerExample.swift; sourceTree = "<group>"; };
+		E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCardBannerExample.swift; sourceTree = "<group>"; };
 		E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierLoaderExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,11 +58,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E258E6BA2C3D8AAC00F69680 /* Examples */ = {
+		E220176E2C75D6E500578E64 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */,
+				E220176C2C75D67900578E64 /* BezierIconButtonExample.swift */,
+				E220176F2C75E09900578E64 /* BezierFloatingButtonExample.swift */,
+				E22017712C75E0A400578E64 /* BezierFloatingIconButtonExample.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		E258E6BA2C3D8AAC00F69680 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				E2E5FAC72C9B263D00533C4A /* Banner */,
+				E220176E2C75D6E500578E64 /* Buttons */,
 				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
+				E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */,
+				E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -95,6 +125,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2E5FAC72C9B263D00533C4A /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				E2E5FAC82C9B265D00533C4A /* BezierInnerBannerExample.swift */,
+				E2E5FACA2C9B266700533C4A /* BezierFloatingBannerExample.swift */,
+				E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */,
+			);
+			path = Banner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,10 +212,18 @@
 			files = (
 				E258E6BE2C3D8D9C00F69680 /* BezierButtonExample.swift in Sources */,
 				E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */,
+				E2A392B92C98169D0015FA6F /* BezierAvatarGroupExample.swift in Sources */,
+				E22017722C75E0A400578E64 /* BezierFloatingIconButtonExample.swift in Sources */,
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
+				E2E5FACD2C9B267000533C4A /* BezierCardBannerExample.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 				E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */,
+				E2E5FAC92C9B265D00533C4A /* BezierInnerBannerExample.swift in Sources */,
+				E22017702C75E09900578E64 /* BezierFloatingButtonExample.swift in Sources */,
+				E2A392B72C958A540015FA6F /* BezierAvatarExample.swift in Sources */,
+				E2E5FACB2C9B266700533C4A /* BezierFloatingBannerExample.swift in Sources */,
+				E220176D2C75D67900578E64 /* BezierIconButtonExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
