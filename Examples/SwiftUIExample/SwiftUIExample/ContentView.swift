@@ -20,6 +20,11 @@ struct ContentView: View {
           } label: {
             Text("Loader")
           }
+          NavigationLink {
+            BezierEmojiExample()
+          } label: {
+            Text("Emoji")
+          }
         } header: {
           Text("Status")
         }
