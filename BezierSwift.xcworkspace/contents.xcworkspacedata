@@ -5,9 +5,6 @@
       location = "group:">
    </FileRef>
    <FileRef
-      location = "group:Examples/UIKitExample/UIKitExample.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Examples/SwiftUIExample/SwiftUIExample.xcodeproj">
    </FileRef>
 </Workspace>
