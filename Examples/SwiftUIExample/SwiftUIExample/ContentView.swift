@@ -25,6 +25,11 @@ struct ContentView: View {
           } label: {
             Text("ProgressBar")
           }
+          NavigationLink {
+            BezierEmojiExample()
+          } label: {
+            Text("Emoji")
+          }
         } header: {
           Text("Status")
         }
