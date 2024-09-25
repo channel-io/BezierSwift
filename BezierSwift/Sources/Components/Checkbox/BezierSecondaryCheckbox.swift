@@ -15,22 +15,32 @@ private enum Metric {
 
 // MARK: - BezierSecondaryCheckbox
 public struct BezierSecondaryCheckbox: View {
-  public typealias Configuration = BezierSecondaryCheckboxConfiguration
+  public typealias Color = BezierCheckboxColor
 
-  private let configuration: Configuration
+  private let label: String?
+  private let color: Color
+  private let checked: Bool
 
-  public init(configuration: Configuration) {
-    self.configuration = configuration
+  public init(label: String?, color: Color, checked: Bool) {
+    self.label = label
+    self.color = color
+    self.checked = checked
   }
 
   public var body: some View {
     HStack(alignment: .top, spacing: 0) {
       ZStack(alignment: .center) {
-        BezierCheckboxSource(configuration: self.configuration)
+        BezierCheckboxSource(
+          needStroke: false,
+          icon: .checkBold,
+          strokeColor: .bgWhiteAlphaTransparent,
+          backgroundColor: .bgWhiteAlphaTransparent,
+          iconColor: self.sourceIconColor
+        )
       }
       .frame(length: Metric.minHeight)
 
-      Text(self.configuration.label ?? "")
+      Text(self.label ?? "")
         .font(BezierFont.caption1Regular.font)
         .lineLimit(nil)
         .padding(.vertical, Metric.labelTop)
@@ -43,12 +53,20 @@ public struct BezierSecondaryCheckbox: View {
   }
 }
 
+extension BezierSecondaryCheckbox {
+  private var sourceIconColor: BezierColor {
+    if self.checked {
+      return self.color == .blue ? .primaryBgNormal : .fgGreenNormal
+    } else {
+      return .fgBlackDark
+    }
+  }
+}
+
 #Preview {
   BezierSecondaryCheckbox(
-    configuration: .init(
-      label: "hello",
-      color: .green,
-      checked: true
-    )
+    label: "hello",
+    color: .green,
+    checked: true
   )
 }
