@@ -13,6 +13,7 @@ private enum Metric {
   static let labelTop: CGFloat = 11
 }
 
+/// 최소 1가지 이상의 옵션을 선택 또는 해제할 수 있는 컨트롤 컴포넌트로, 일반적으로 사용하는 체크박스 아이템입니다.
 // MARK: - BezierPrimaryCheckbox
 public struct BezierPrimaryCheckbox<Nested: View>: View {
   public typealias Color = BezierCheckboxColor
@@ -25,7 +26,14 @@ public struct BezierPrimaryCheckbox<Nested: View>: View {
   private let checked: Checked
   private let showRequired: Bool
   private let nestedBuilder: NestedBuilder
-
+  
+  /// Nested가 존재하는 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 텍스트를 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다. checked, unchecked, indeterminate를 지정할 수 있습니다.
+  ///   - showRequired: * 표시(Asterisk)를 사용해서 필수 항목임을 표현할지 지정합니다.
+  ///   - nestedBuilder: 체크박스의 하위 영역에 표시될 내용을 지정하는 뷰를 생성합니다.
   public init(
     label: String?,
     color: Color,
@@ -40,6 +48,12 @@ public struct BezierPrimaryCheckbox<Nested: View>: View {
     self.nestedBuilder = nestedBuilder
   }
 
+  /// Nested가 없는 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 텍스트를 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다. checked, unchecked, indeterminate를 지정할 수 있습니다.
+  ///   - showRequired: * 표시(Asterisk)를 사용해서 필수 항목임을 표현할지 지정합니다.
   public init(
     label: String?,
     color: Color,
