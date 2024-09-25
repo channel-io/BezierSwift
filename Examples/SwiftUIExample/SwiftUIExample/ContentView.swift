@@ -20,6 +20,11 @@ struct ContentView: View {
           } label: {
             Text("Loader")
           }
+          NavigationLink {
+            BezierCheckboxExample()
+          } label: {
+            Text("Checkbox")
+          }
         } header: {
           Text("Status")
         }
