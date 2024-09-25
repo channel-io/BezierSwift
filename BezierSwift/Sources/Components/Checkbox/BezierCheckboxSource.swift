@@ -8,24 +8,42 @@
 import SwiftUI
 
 struct BezierCheckboxSource: View {
-  let configuration: BezierCheckboxSourceConfiguration
+  private let needStroke: Bool
+  private let icon: BezierIcon?
+  private let strokeColor: BezierColor
+  private let backgroundColor: BezierColor
+  private let iconColor: BezierColor
+
+  init(
+    needStroke: Bool,
+    icon: BezierIcon?,
+    strokeColor: BezierColor,
+    backgroundColor: BezierColor,
+    iconColor: BezierColor
+  ) {
+    self.needStroke = needStroke
+    self.icon = icon
+    self.strokeColor = strokeColor
+    self.backgroundColor = backgroundColor
+    self.iconColor = iconColor
+  }
 
   var body: some View {
     ZStack(alignment: .center) {
-      if self.configuration.sourceNeedStroke {
+      if self.needStroke {
         Circle()
-          .fill(self.configuration.sourceStrokeColor.color)
+          .fill(self.strokeColor.color)
       }
 
       Circle()
-        .fill(self.configuration.sourceBackgroundColor.color)
-        .if(self.configuration.sourceNeedStroke) {
+        .fill(self.backgroundColor.color)
+        .if(self.needStroke) {
           $0.padding(.all, 2)
         }
 
-      self.configuration.sourceIcon?.image
+      self.icon?.image
         .frame(length: 16)
-        .foregroundColor(self.configuration.sourceIconColor.color)
+        .foregroundColor(self.iconColor.color)
     }
     .frame(length: 20)
     .padding(.all, 2)
