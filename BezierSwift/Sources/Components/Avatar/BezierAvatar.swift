@@ -74,10 +74,13 @@ public struct BezierAvatar: View {
       }
       .frame(length: self.length)
       .clipShape(BezierAvatarShape())
-      .background(
-        BezierAvatarShape()
-          .stroke(BezierColor.surfaceNormal.color, lineWidth: self.borderWidth * 2)
-      )
+      .if(self.outlineBorder) { view in
+        view
+          .background(
+            BezierAvatarShape()
+              .stroke(BezierColor.surfaceNormal.color, lineWidth: self.borderWidth * 2)
+          )
+      }
       .overlay(
         self.badgeContent
           .padding([.bottom, .trailing], self.badgePadding),
@@ -124,6 +127,10 @@ extension BezierAvatar {
         source
           .frame(length: self.integrationBadgeLength)
           .clipShape(BezierAvatarShape())
+          .background(
+            BezierAvatarShape()
+              .stroke(BezierColor.surfaceNormal.color, lineWidth: self.borderWidth * 2)
+          )
         
       default:
         EmptyView()

@@ -14,7 +14,7 @@ struct BezierAvatarExample: View {
     BezierAvatar(
       image: .avatar(url: URL(string: "https://picsum.photos/200/300")),
       size: .pt48,
-      badge: .chat
+      badge: .integration(source: .url(URL(string: "https://picsum.photos/200/300"), fallback: nil))
     )
   }
 }
