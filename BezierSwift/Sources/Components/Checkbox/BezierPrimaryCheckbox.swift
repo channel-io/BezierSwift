@@ -15,7 +15,7 @@ private enum Metric {
 
 /// 최소 1가지 이상의 옵션을 선택 또는 해제할 수 있는 컨트롤 컴포넌트로, 일반적으로 사용하는 체크박스 아이템입니다.
 // MARK: - BezierPrimaryCheckbox
-public struct BezierPrimaryCheckbox<Nested: View>: View {
+public struct BezierPrimaryCheckbox<Nested>: View where Nested: View {
   public typealias Color = BezierCheckboxColor
   public typealias Checked = BezierCheckboxChecked
   public typealias NestedBuilder = () -> Nested
@@ -39,7 +39,7 @@ public struct BezierPrimaryCheckbox<Nested: View>: View {
     color: Color,
     checked: Checked,
     showRequired: Bool,
-    nestedBuilder: @escaping NestedBuilder
+    @ViewBuilder nestedBuilder: @escaping NestedBuilder
   ) {
     self.label = label
     self.color = color
@@ -97,8 +97,9 @@ public struct BezierPrimaryCheckbox<Nested: View>: View {
         .padding(.vertical, Metric.labelTop)
       }
 
-      self.nestedBuilder()
-        .padding(.leading, Metric.minHeight)
+      VStack(alignment: .leading, spacing: 0) {
+        self.nestedBuilder()
+      }.padding(.leading, Metric.minHeight)
     }
     .frame(minHeight: Metric.minHeight)
     .compositingGroup()
