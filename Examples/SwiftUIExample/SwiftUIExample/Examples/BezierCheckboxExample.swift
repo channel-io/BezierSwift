@@ -13,21 +13,40 @@ struct BezierCheckboxExample: View {
   var body: some View {
     VStack {
       BezierPrimaryCheckbox(
-        label: "Hello",
+        label: "Blue Has Nested Indeterminate",
         color: .blue,
         checked: .indeterminate,
         showRequired: true
       ) {
-        BezierSecondaryCheckbox(
-          label: "Secondary",
-          color: .blue,
-          checked: false
-        )
+        VStack {
+          BezierSecondaryCheckbox(
+            label: "Secondary",
+            color: .blue,
+            checked: false
+          )
+          BezierSecondaryCheckbox(
+            label: "Secondary",
+            color: .green,
+            checked: true
+          )
+        }
       }
       BezierPrimaryCheckbox(
-        label: "Hello",
+        label: "Green No Nested Indeterminate",
         color: .green,
         checked: .indeterminate,
+        showRequired: true
+      )
+      BezierPrimaryCheckbox(
+        label: "Blue No Nested Checked",
+        color: .blue,
+        checked: .checked,
+        showRequired: false
+      )
+      BezierPrimaryCheckbox(
+        label: "Green No Nested Unchecked",
+        color: .green,
+        checked: .unchecked,
         showRequired: true
       )
     }
