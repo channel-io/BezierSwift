@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C699E5D2CA3F2D20051F9E2 /* BezierCheckboxExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */; };
 		5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C83DBDE2C21673300B3135B /* BezierSwift */; };
 		E258E6BE2C3D8D9C00F69680 /* BezierButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCheckboxExample.swift; sourceTree = "<group>"; };
 		E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierButtonExample.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			children = (
 				E258E6BD2C3D8D9C00F69680 /* BezierButtonExample.swift */,
 				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
+				5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
+				5C699E5D2CA3F2D20051F9E2 /* BezierCheckboxExample.swift in Sources */,
 				E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
