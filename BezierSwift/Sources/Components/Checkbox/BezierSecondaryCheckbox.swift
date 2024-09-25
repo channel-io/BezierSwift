@@ -13,6 +13,7 @@ private enum Metric {
   static let labelTop: CGFloat = 9
 }
 
+/// 최소 1가지 이상의 옵션을 선택 또는 해제할 수 있는 컨트롤 컴포넌트입니다. 위계상 primary 에 속할 때만 사용해야하며 단독으로 사용할 수 없고, Indent 되어 표시됩니다.
 // MARK: - BezierSecondaryCheckbox
 public struct BezierSecondaryCheckbox: View {
   public typealias Color = BezierCheckboxColor
@@ -20,7 +21,12 @@ public struct BezierSecondaryCheckbox: View {
   private let label: String?
   private let color: Color
   private let checked: Bool
-
+  
+  /// BezierPrimaryCheckbox의 하위(Nested)에 추가될 수 있는 서브 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 텍스트를 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다.
   public init(label: String?, color: Color, checked: Bool) {
     self.label = label
     self.color = color
