@@ -23,10 +23,10 @@ extension GlobalColorToken {
   static var blue400_30: GlobalColorToken { GlobalColorToken(hex: "#6D6AFC4D") }
   static var blue400_20: GlobalColorToken { GlobalColorToken(hex: "#6D6AFC33") }
   static var blue400_10: GlobalColorToken { GlobalColorToken(hex: "#6D6AFC1A") }
-  static var blue300: GlobalColorToken { GlobalColorToken(hex: "#84A5FF") }
-  static var blue300_45: GlobalColorToken { GlobalColorToken(hex: "#84A5FF73") }
-  static var blue300_30: GlobalColorToken { GlobalColorToken(hex: "#84A5FF4D") }
-  static var blue300_15: GlobalColorToken { GlobalColorToken(hex: "#84A5FF26") }
+  static var blue300: GlobalColorToken { GlobalColorToken(hex: "#7D9EFA") }
+  static var blue300_45: GlobalColorToken { GlobalColorToken(hex: "#7D9EFA73") }
+  static var blue300_30: GlobalColorToken { GlobalColorToken(hex: "#7D9EFA4D") }
+  static var blue300_15: GlobalColorToken { GlobalColorToken(hex: "#7D9EFA26") }
   static var blue200: GlobalColorToken { GlobalColorToken(hex: "#96B7FF") }
   static var blue100: GlobalColorToken { GlobalColorToken(hex: "#A9C6FF") }
 }
@@ -39,12 +39,12 @@ extension GlobalColorToken {
   static var cobalt400_30: GlobalColorToken { GlobalColorToken(hex: "#5093E54D") }
   static var cobalt400_20: GlobalColorToken { GlobalColorToken(hex: "#5093E533") }
   static var cobalt400_10: GlobalColorToken { GlobalColorToken(hex: "#5093E51A") }
-  static var cobalt300: GlobalColorToken { GlobalColorToken(hex: "#7DC2FA") }
-  static var cobalt300_45: GlobalColorToken { GlobalColorToken(hex: "#7DC2FA73") }
-  static var cobalt300_30: GlobalColorToken { GlobalColorToken(hex: "#7DC2FA4D") }
-  static var cobalt300_15: GlobalColorToken { GlobalColorToken(hex: "#7DC2FA26") }
-  static var cobalt200: GlobalColorToken { GlobalColorToken(hex: "#9AD1FF") }
-  static var cobalt100: GlobalColorToken { GlobalColorToken(hex: "#AFDAFF") }
+  static var cobalt300: GlobalColorToken { GlobalColorToken(hex: "#71B9F5") }
+  static var cobalt300_45: GlobalColorToken { GlobalColorToken(hex: "#71B9F573") }
+  static var cobalt300_30: GlobalColorToken { GlobalColorToken(hex: "#71B9F54D") }
+  static var cobalt300_15: GlobalColorToken { GlobalColorToken(hex: "#71B9F526") }
+  static var cobalt200: GlobalColorToken { GlobalColorToken(hex: "#8DCAFC") }
+  static var cobalt100: GlobalColorToken { GlobalColorToken(hex: "#A1D5FF") }
 }
 
 // MARK: - Green
@@ -55,11 +55,11 @@ extension GlobalColorToken {
   static var green400_30: GlobalColorToken { GlobalColorToken(hex: "#40AD674D") }
   static var green400_20: GlobalColorToken { GlobalColorToken(hex: "#40AD6733") }
   static var green400_10: GlobalColorToken { GlobalColorToken(hex: "#40AD671A") }
-  static var green300: GlobalColorToken { GlobalColorToken(hex: "#7AD890") }
-  static var green300_45: GlobalColorToken { GlobalColorToken(hex: "#7AD89073") }
-  static var green300_30: GlobalColorToken { GlobalColorToken(hex: "#7AD8904D") }
-  static var green300_15: GlobalColorToken { GlobalColorToken(hex: "#7AD89026") }
-  static var green200: GlobalColorToken { GlobalColorToken(hex: "#91E5A4") }
+  static var green300: GlobalColorToken { GlobalColorToken(hex: "#68CC7F") }
+  static var green300_45: GlobalColorToken { GlobalColorToken(hex: "#68CC7F73") }
+  static var green300_30: GlobalColorToken { GlobalColorToken(hex: "#68CC7F4D") }
+  static var green300_15: GlobalColorToken { GlobalColorToken(hex: "#68CC7F26") }
+  static var green200: GlobalColorToken { GlobalColorToken(hex: "#84E09A") }
   static var green100: GlobalColorToken { GlobalColorToken(hex: "#A4ECB3") }
 }
 
@@ -91,7 +91,7 @@ extension GlobalColorToken {
   static var orange300_45: GlobalColorToken { GlobalColorToken(hex: "#FFA15E73") }
   static var orange300_30: GlobalColorToken { GlobalColorToken(hex: "#FFA15E4D") }
   static var orange300_15: GlobalColorToken { GlobalColorToken(hex: "#FFA15E26") }
-  static var orange200: GlobalColorToken { GlobalColorToken(hex: "#FFB77D") }
+  static var orange200: GlobalColorToken { GlobalColorToken(hex: "#FFB070") }
   static var orange100: GlobalColorToken { GlobalColorToken(hex: "#FFC38F") }
 }
 
