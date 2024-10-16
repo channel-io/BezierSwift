@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C699E5D2CA3F2D20051F9E2 /* BezierCheckboxExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */; };
 		5C83DBDF2C21673300B3135B /* BezierSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C83DBDE2C21673300B3135B /* BezierSwift */; };
 		E220176D2C75D67900578E64 /* BezierIconButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220176C2C75D67900578E64 /* BezierIconButtonExample.swift */; };
 		E22017702C75E09900578E64 /* BezierFloatingButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220176F2C75E09900578E64 /* BezierFloatingButtonExample.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCheckboxExample.swift; sourceTree = "<group>"; };
 		E220176C2C75D67900578E64 /* BezierIconButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierIconButtonExample.swift; sourceTree = "<group>"; };
 		E220176F2C75E09900578E64 /* BezierFloatingButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingButtonExample.swift; sourceTree = "<group>"; };
 		E22017712C75E0A400578E64 /* BezierFloatingIconButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingIconButtonExample.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			children = (
 				E220176E2C75D6E500578E64 /* Buttons */,
 				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
+				5C699E5C2CA3F2D20051F9E2 /* BezierCheckboxExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
+				5C699E5D2CA3F2D20051F9E2 /* BezierCheckboxExample.swift in Sources */,
 				E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */,
 				E22017702C75E09900578E64 /* BezierFloatingButtonExample.swift in Sources */,
 				E220176D2C75D67900578E64 /* BezierIconButtonExample.swift in Sources */,
