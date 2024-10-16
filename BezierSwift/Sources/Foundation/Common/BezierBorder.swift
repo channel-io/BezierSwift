@@ -48,24 +48,24 @@ private struct BezierBorder<Content: View, BorderShape: Shape, BorderStyle: Shap
   
   var body: some View {
     self.content
-      .bezierOverlay {
+      .overlay {
         switch self.alignment {
         case .inner:
           self.shape
             .stroke(self.style, lineWidth: self.lineWidth * 2)
-            .mask(self.shape)
+            .mask { self.shape }
           
         case .outer:
           self.shape
             .stroke(self.style, lineWidth: self.lineWidth * 2)
-            .mask(
+            .mask {
               Rectangle()
                 .inset(by: -self.lineWidth)
-                .overlay(
-                  shape
+                .overlay {
+                  self.shape
                     .blendMode(.destinationOut)
-                )
-            )
+                }
+            }
           
         case .center:
           self.shape
@@ -77,10 +77,10 @@ private struct BezierBorder<Content: View, BorderShape: Shape, BorderStyle: Shap
 
 #Preview("Inner") {
   RoundedRectangle(cornerRadius: 20)
-    .fill(.yellow)
+    .fill(BezierColor.bgYellowNormal.color)
     .applyBezierBorder(
       shape: RoundedRectangle(cornerRadius: 20),
-      style: .red.opacity(0.4),
+      style: BezierColor.bgRedNormal.color.opacity(0.4),
       lineWidth: 6,
       alignment: .inner
     )
@@ -89,10 +89,10 @@ private struct BezierBorder<Content: View, BorderShape: Shape, BorderStyle: Shap
 
 #Preview("Outer") {
   RoundedRectangle(cornerRadius: 20)
-    .fill(.yellow)
+    .fill(BezierColor.bgYellowNormal.color)
     .applyBezierBorder(
       shape: RoundedRectangle(cornerRadius: 20),
-      style: .red.opacity(0.4),
+      style: BezierColor.bgRedNormal.color.opacity(0.4),
       lineWidth: 6,
       alignment: .outer
     )
@@ -101,10 +101,10 @@ private struct BezierBorder<Content: View, BorderShape: Shape, BorderStyle: Shap
 
 #Preview("Center") {
   RoundedRectangle(cornerRadius: 20)
-    .fill(.yellow)
+    .fill(BezierColor.bgYellowNormal.color)
     .applyBezierBorder(
       shape: RoundedRectangle(cornerRadius: 20),
-      style: .red.opacity(0.4),
+      style: BezierColor.bgRedNormal.color.opacity(0.4),
       lineWidth: 6,
       alignment: .center
     )
