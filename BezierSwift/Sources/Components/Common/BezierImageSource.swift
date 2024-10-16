@@ -31,7 +31,7 @@ public enum BezierImageSource: View {
             fallback
               .resizable()
           } else {
-            EmptyView()
+            Color.clear
           }
         }
       }
