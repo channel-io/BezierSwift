@@ -110,14 +110,18 @@ extension BezierAvatarGroup {
   }
 }
 
-#Preview {
+#Preview("Stack + Icon") {
   BezierAvatarGroup(
-    images: [
-      .avatar(url: URL(string: "")),
-      .avatar(url: URL(string: "")),
-      .avatar(url: URL(string: ""))
-    ],
+    images: Array(repeating: .avatar(url: URL(string: "")), count: 10),
     type: .stack,
+    ellipsisType: .icon
+  )
+}
+
+#Preview("Spread + Count") {
+  BezierAvatarGroup(
+    images: Array(repeating: .avatar(url: URL(string: "")), count: 10),
+    type: .spread,
     ellipsisType: .count
   )
 }
