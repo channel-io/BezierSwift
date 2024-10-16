@@ -18,7 +18,7 @@ private enum Metric {
 public struct BezierSecondaryCheckbox: View {
   public typealias Color = BezierCheckboxColor
 
-  private let label: String?
+  private let label: AttributedString?
   private let color: Color
   private let checked: Bool
   
@@ -28,6 +28,21 @@ public struct BezierSecondaryCheckbox: View {
   ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
   ///   - checked: 체크박스의 체크 상태를 지정합니다.
   public init(label: String?, color: Color, checked: Bool) {
+    if let label {
+      self.label = AttributedString(label)
+    } else {
+      self.label = nil
+    }
+    self.color = color
+    self.checked = checked
+  }
+  
+  /// BezierPrimaryCheckbox의 하위(Nested)에 추가될 수 있는 서브 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 AttributedString를 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다.
+  public init(label: AttributedString?, color: Color, checked: Bool) {
     self.label = label
     self.color = color
     self.checked = checked
