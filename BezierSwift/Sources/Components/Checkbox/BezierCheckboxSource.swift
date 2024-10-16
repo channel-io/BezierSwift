@@ -29,17 +29,15 @@ struct BezierCheckboxSource: View {
   }
 
   var body: some View {
-    ZStack(alignment: .center) {
-      if self.needStroke {
-        Circle()
-          .fill(self.strokeColor.color)
-      }
-
+    ZStack {
       Circle()
         .fill(self.backgroundColor.color)
-        .if(self.needStroke) {
-          $0.padding(.all, 2)
-        }
+        .applyBezierBorder(
+          shape: Circle(),
+          style: self.strokeColor.color,
+          lineWidth: 2,
+          alignment: .inner
+        )
 
       self.icon?.image
         .frame(length: 16)
