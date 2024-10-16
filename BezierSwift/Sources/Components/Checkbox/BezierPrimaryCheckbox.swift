@@ -22,8 +22,7 @@ public struct BezierPrimaryCheckbox<Nested>: View where Nested: View {
 
   @Environment(\.isEnabled) var isEnabled
 
-  // TODO: - Min Target을 iOS 15 이상으로 올린 이후에 AttributedString을 적용해 링크 텍스트를 넣을수 있도록 합니다 - by Finn 2024.08.21
-  private let label: String?
+  private let label: AttributedString?
   private let color: Color
   private let checked: Checked
   private let showRequired: Bool
@@ -43,7 +42,11 @@ public struct BezierPrimaryCheckbox<Nested>: View where Nested: View {
     showRequired: Bool,
     @ViewBuilder nestedBuilder: @escaping NestedBuilder
   ) {
-    self.label = label
+    if let label {
+      self.label = AttributedString(label)
+    } else {
+      self.label = nil
+    }
     self.color = color
     self.checked = checked
     self.showRequired = showRequired
@@ -58,6 +61,50 @@ public struct BezierPrimaryCheckbox<Nested>: View where Nested: View {
   ///   - showRequired: * 표시(Asterisk)를 사용해서 필수 항목임을 표현할지 지정합니다.
   public init(
     label: String?,
+    color: Color,
+    checked: Checked,
+    showRequired: Bool
+  ) where Nested == EmptyView {
+    if let label {
+      self.label = AttributedString(label)
+    } else {
+      self.label = nil
+    }
+    self.color = color
+    self.checked = checked
+    self.showRequired = showRequired
+    self.nestedBuilder = { EmptyView() }
+  }
+  
+  /// Nested가 존재하는 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 AttributedString을 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다. checked, unchecked, indeterminate를 지정할 수 있습니다.
+  ///   - showRequired: * 표시(Asterisk)를 사용해서 필수 항목임을 표현할지 지정합니다.
+  ///   - nestedBuilder: 체크박스의 하위 영역에 표시될 내용을 지정하는 뷰를 생성합니다.
+  public init(
+    label: AttributedString?,
+    color: Color,
+    checked: Checked,
+    showRequired: Bool,
+    @ViewBuilder nestedBuilder: @escaping NestedBuilder
+  ) {
+    self.label = label
+    self.color = color
+    self.checked = checked
+    self.showRequired = showRequired
+    self.nestedBuilder = nestedBuilder
+  }
+
+  /// Nested가 없는 체크박스를 생성합니다.
+  /// - Parameters:
+  ///   - label: 체크박스에 함께 표기될 AttributedString을 지정합니다.
+  ///   - color: 체크박스 소스가 표기될 색상을 지정합니다. blue와 green을 지정할 수 있습니다.
+  ///   - checked: 체크박스의 체크 상태를 지정합니다. checked, unchecked, indeterminate를 지정할 수 있습니다.
+  ///   - showRequired: * 표시(Asterisk)를 사용해서 필수 항목임을 표현할지 지정합니다.
+  public init(
+    label: AttributedString?,
     color: Color,
     checked: Checked,
     showRequired: Bool
