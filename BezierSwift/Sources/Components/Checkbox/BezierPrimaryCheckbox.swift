@@ -20,6 +20,8 @@ public struct BezierPrimaryCheckbox<Nested>: View where Nested: View {
   public typealias Checked = BezierCheckboxChecked
   public typealias NestedBuilder = () -> Nested
 
+  @Environment(\.isEnabled) var isEnabled
+
   // TODO: - Min Target을 iOS 15 이상으로 올린 이후에 AttributedString을 적용해 링크 텍스트를 넣을수 있도록 합니다 - by Finn 2024.08.21
   private let label: String?
   private let color: Color
@@ -113,12 +115,12 @@ extension BezierPrimaryCheckbox {
     case .checked, .indeterminate:
       return self.color == .blue ? .primaryBgNormal : .bgGreenNormal
     case .unchecked:
-      return .bgWhiteNormal
+      return self.isEnabled ? .bgWhiteNormal : .bgBlackDark
     }
   }
 
   private var sourceNeedStroke: Bool {
-    return self.checked == .unchecked
+    return self.checked == .unchecked && self.isEnabled
   }
 
   private var sourceStrokeColor: BezierColor {
