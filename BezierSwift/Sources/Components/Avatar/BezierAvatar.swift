@@ -202,6 +202,18 @@ extension BezierAvatar {
   }
 }
 
-#Preview {
-  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt24)
+#Preview("Default") {
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt42)
+}
+
+#Preview("Chat") {
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt42, badge: .chat)
+}
+
+#Preview("Status") {
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt42, badge: .status(online: true, doNotDisturb: false))
+}
+
+#Preview("Integration") {
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt42, badge: .integration(source: .url(URL(string: ""), fallback: nil)))
 }
