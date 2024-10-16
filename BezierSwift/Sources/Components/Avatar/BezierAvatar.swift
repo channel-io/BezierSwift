@@ -128,11 +128,15 @@ extension BezierAvatar {
       switch self.size {
       case .pt24, .pt42, .pt48:
         source
+          .scaledToFill()
+          .background(BezierColor.bgWhiteNormal.color)
           .frame(length: self.integrationBadgeLength)
           .clipShape(BezierAvatarShape())
-          .background(
-            BezierAvatarShape()
-              .stroke(BezierColor.surfaceNormal.color, lineWidth: self.borderWidth * 2)
+          .applyBezierBorder(
+            shape: BezierAvatarShape(),
+            style: BezierColor.surfaceNormal.color,
+            lineWidth: self.borderWidth,
+            alignment: .outer
           )
         
       default:
