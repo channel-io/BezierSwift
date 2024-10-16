@@ -61,31 +61,34 @@ public struct BezierAvatar: View {
   public var body: some View {
     self.image
       .scaledToFill()
-      .if(self.ellipsis) { view in
-        view
-          .overlay(
-            ZStack {
-              BezierColor.dimBlackLight.color
-              BezierIcon.more.image
-                .frame(length: self.ellipsisIconLength)
-                .foregroundColor(BezierColor.fgAbsoluteWhiteDark.color)
-            }
-          )
+      .background(BezierColor.bgWhiteNormal.color)
+      .overlay {
+        if self.ellipsis {
+          ZStack {
+            BezierColor.dimBlackLight.color
+            BezierIcon.more.image
+              .frame(length: self.ellipsisIconLength)
+              .foregroundColor(BezierColor.fgAbsoluteWhiteDark.color)
+          }
+        }
       }
       .frame(length: self.length)
       .clipShape(BezierAvatarShape())
-      .if(self.outlineBorder) { view in
-        view
-          .background(
-            BezierAvatarShape()
-              .stroke(BezierColor.surfaceNormal.color, lineWidth: self.borderWidth * 2)
-          )
+      .overlay {
+        if self.outlineBorder {
+          Color.clear
+            .applyBezierBorder(
+              shape: BezierAvatarShape(),
+              style: BezierColor.surfaceNormal.color,
+              lineWidth: self.borderWidth,
+              alignment: .outer
+            )
+        }
       }
-      .overlay(
+      .overlay(alignment: .bottomTrailing) {
         self.badgeContent
-          .padding([.bottom, .trailing], self.badgePadding),
-        alignment: .bottomTrailing
-      )
+          .padding([.bottom, .trailing], self.badgePadding)
+      }
       .compositingGroup()
   }
 }
@@ -196,5 +199,5 @@ extension BezierAvatar {
 }
 
 #Preview {
-  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt120)
+  BezierAvatar(image: .avatar(url: URL(string: "")), size: .pt24)
 }
