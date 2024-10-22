@@ -18,6 +18,8 @@
 		E28212392A4B32F800018327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28212382A4B32F800018327 /* Preview Assets.xcassets */; };
 		E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195E2C365557009B34A2 /* AppDelegate.swift */; };
 		E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D195F2C365557009B34A2 /* SceneDelegate.swift */; };
+		E2A392B72C958A540015FA6F /* BezierAvatarExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */; };
+		E2A392B92C98169D0015FA6F /* BezierAvatarGroupExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */; };
 		E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		E28212382A4B32F800018327 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E28D195E2C365557009B34A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E28D195F2C365557009B34A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarExample.swift; sourceTree = "<group>"; };
+		E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarGroupExample.swift; sourceTree = "<group>"; };
 		E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierLoaderExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +68,8 @@
 			children = (
 				E220176E2C75D6E500578E64 /* Buttons */,
 				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
+				E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */,
+				E2A392B82C98169D0015FA6F /* BezierAvatarGroupExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -189,12 +195,14 @@
 			files = (
 				E258E6BE2C3D8D9C00F69680 /* BezierButtonExample.swift in Sources */,
 				E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */,
+				E2A392B92C98169D0015FA6F /* BezierAvatarGroupExample.swift in Sources */,
 				E22017722C75E0A400578E64 /* BezierFloatingIconButtonExample.swift in Sources */,
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 				E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */,
 				E22017702C75E09900578E64 /* BezierFloatingButtonExample.swift in Sources */,
+				E2A392B72C958A540015FA6F /* BezierAvatarExample.swift in Sources */,
 				E220176D2C75D67900578E64 /* BezierIconButtonExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
