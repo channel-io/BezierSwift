@@ -76,13 +76,12 @@ public struct BezierAvatar: View {
       .clipShape(BezierAvatarShape())
       .overlay {
         if self.outlineBorder {
-          Color.clear
-            .applyBezierBorder(
-              shape: BezierAvatarShape(),
-              style: BezierColor.surfaceNormal.color,
-              lineWidth: self.borderWidth,
-              alignment: .outer
-            )
+          BorderView(
+            shape: BezierAvatarShape(),
+            style: BezierColor.surfaceNormal.color,
+            lineWidth: self.borderWidth,
+            alignment: .outer
+          )
         }
       }
       .overlay(alignment: .bottomTrailing) {
@@ -132,7 +131,7 @@ extension BezierAvatar {
           .background(BezierColor.bgWhiteNormal.color)
           .frame(length: self.integrationBadgeLength)
           .clipShape(BezierAvatarShape())
-          .applyBezierBorder(
+          .applyBorder(
             shape: BezierAvatarShape(),
             style: BezierColor.surfaceNormal.color,
             lineWidth: self.borderWidth,
