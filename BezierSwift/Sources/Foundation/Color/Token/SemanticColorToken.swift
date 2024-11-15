@@ -35,6 +35,7 @@ extension SemanticColorToken {
   static var primaryBgLighter = SemanticColorToken(functionalColorToken: .bgBlueLighter)
   static var primaryBgLightest = SemanticColorToken(functionalColorToken: .bgBlueLightest)
   static var primaryBgDark = SemanticColorToken(functionalColorToken: .bgBlueDark)
+  static var primaryBgTransparent = SemanticColorToken(functionalColorToken: .bgBlueTransparent)
 }
 
 // MARK: PrimaryForeground
@@ -51,6 +52,7 @@ extension SemanticColorToken {
   static var criticalBgLight = SemanticColorToken(functionalColorToken: .bgRedLight)
   static var criticalBgLighter = SemanticColorToken(functionalColorToken: .bgRedLighter)
   static var criticalBgLightest = SemanticColorToken(functionalColorToken: .bgRedLightest)
+  static var criticalBgTransparent = SemanticColorToken(functionalColorToken: .bgRedTransparent)
 }
 
 // MARK: CriticalForeground
@@ -67,6 +69,7 @@ extension SemanticColorToken {
   static var warningBgLight = SemanticColorToken(functionalColorToken: .bgOrangeLight)
   static var warningBgLighter = SemanticColorToken(functionalColorToken: .bgOrangeLighter)
   static var warningBgLightest = SemanticColorToken(functionalColorToken: .bgOrangeLightest)
+  static var warningBgTransparent = SemanticColorToken(functionalColorToken: .bgOrangeTransparent)
 }
 
 // MARK: WarningForeground
@@ -83,6 +86,7 @@ extension SemanticColorToken {
   static var accentBgLight = SemanticColorToken(functionalColorToken: .bgCobaltLight)
   static var accentBgLighter = SemanticColorToken(functionalColorToken: .bgCobaltLighter)
   static var accentBgLightest = SemanticColorToken(functionalColorToken: .bgCobaltLightest)
+  static var accentBgTransparent = SemanticColorToken(functionalColorToken: .bgCobaltTransparent)
 }
 
 // MARK: AccentForeground
@@ -99,6 +103,7 @@ extension SemanticColorToken {
   static var successBgLight = SemanticColorToken(functionalColorToken: .bgGreenLight)
   static var successBgLighter = SemanticColorToken(functionalColorToken: .bgGreenLighter)
   static var successBgLightest = SemanticColorToken(functionalColorToken: .bgGreenLightest)
+  static var successBgTransparent = SemanticColorToken(functionalColorToken: .bgGreenTransparent)
 }
 
 // MARK: SuccessForeground

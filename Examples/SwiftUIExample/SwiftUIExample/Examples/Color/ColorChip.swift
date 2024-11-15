@@ -25,6 +25,7 @@ struct ColorChip: View {
         
       } label: {
         Color.clear
+          .contentShape(Rectangle())
       }
       .buttonStyle(ColorChipStyle(backgroundColor: self.bezierColor))
       .frame(width: 100, height: 100)

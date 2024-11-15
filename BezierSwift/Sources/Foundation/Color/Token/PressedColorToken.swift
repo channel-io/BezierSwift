@@ -154,6 +154,7 @@ extension PressedColorToken {
   static var bgBlueDark = PressedColorToken(lightColorHex: "#4B42D5", darkColorHex: "#8280FC")
   static var bgBlueShadeLighter = PressedColorToken(lightColorHex: "#6165D94D", darkColorHex: "#4E569D66")
   static var bgBlueShadeNormal = PressedColorToken(lightColorHex: "#6165D9", darkColorHex: "#4E569D")
+  static var bgBlueTransparent = PressedColorToken(lightColorHex: "#6D6AFC1A", darkColorHex: "#7D9EFA1A")
 }
 
 // MARK: - BackgroundCobalt
@@ -165,6 +166,7 @@ extension PressedColorToken {
   static var bgCobaltDark = PressedColorToken(lightColorHex: "#3268C4", darkColorHex: "#5F9EEC")
   static var bgCobaltShadeLighter = PressedColorToken(lightColorHex: "#47A2E24D", darkColorHex: "#4C6A9966")
   static var bgCobaltShadeNormal = PressedColorToken(lightColorHex: "#47A2E2", darkColorHex: "#4C6A99")
+  static var bgCobaltTransparent = PressedColorToken(lightColorHex: "#5093E51A", darkColorHex: "#71B9F51A")
 }
 
 // MARK: - BackgroundRed
@@ -176,6 +178,7 @@ extension PressedColorToken {
   static var bgRedDark = PressedColorToken(lightColorHex: "#AB3940", darkColorHex: "#EC6B6B")
   static var bgRedShadeLighter = PressedColorToken(lightColorHex: "#D758614D", darkColorHex: "#A5434A66")
   static var bgRedShadeNormal = PressedColorToken(lightColorHex: "#D75861", darkColorHex: "#A5434A")
+  static var bgRedTransparent = PressedColorToken(lightColorHex: "#E55C5C1A", darkColorHex: "#FF8C8C1A")
 }
 
 // MARK: - BackgroundOrange
@@ -187,6 +190,7 @@ extension PressedColorToken {
   static var bgOrangeDark = PressedColorToken(lightColorHex: "#B15C0F", darkColorHex: "#EE8A39")
   static var bgOrangeShadeLighter = PressedColorToken(lightColorHex: "#D9813A4D", darkColorHex: "#9E643566")
   static var bgOrangeShadeNormal = PressedColorToken(lightColorHex: "#D9813A", darkColorHex: "#9E6435")
+  static var bgOrangeTransparent = PressedColorToken(lightColorHex: "#E67F2B1A", darkColorHex: "#FFA15E1A")
 }
 
 // MARK: - BackgroundGreen
@@ -198,6 +202,7 @@ extension PressedColorToken {
   static var bgGreenDark = PressedColorToken(lightColorHex: "#347B5A", darkColorHex: "#41C16F")
   static var bgGreenShadeLighter = PressedColorToken(lightColorHex: "#5AA4734D", darkColorHex: "#4F8D6766")
   static var bgGreenShadeNormal = PressedColorToken(lightColorHex: "#5AA473", darkColorHex: "#4F8D67")
+  static var bgGreenTransparent = PressedColorToken(lightColorHex: "#40AD671A", darkColorHex: "#68CC7F1A")
 }
 
 // MARK: - BackgroundTeal
@@ -209,6 +214,7 @@ extension PressedColorToken {
   static var bgTealDark = PressedColorToken(lightColorHex: "#06848B", darkColorHex: "#0AC6C0")
   static var bgTealShadeLighter = PressedColorToken(lightColorHex: "#539B984D", darkColorHex: "#49839066")
   static var bgTealShadeNormal = PressedColorToken(lightColorHex: "#539B98", darkColorHex: "#498390")
+  static var bgTealTransparent = PressedColorToken(lightColorHex: "#09B2AC1A", darkColorHex: "#40D3C51A")
 }
 
 // MARK: - BackgroundOlive
@@ -220,6 +226,7 @@ extension PressedColorToken {
   static var bgOliveDark = PressedColorToken(lightColorHex: "#70751C", darkColorHex: "#C1CA0C")
   static var bgOliveShadeLighter = PressedColorToken(lightColorHex: "#969A514D", darkColorHex: "#86893A66")
   static var bgOliveShadeNormal = PressedColorToken(lightColorHex: "#969A51", darkColorHex: "#86893A")
+  static var bgOliveTransparent = PressedColorToken(lightColorHex: "#A9B1101A", darkColorHex: "#C8D6301A")
 }
 
 // MARK: - BackgroundYellow
@@ -231,6 +238,7 @@ extension PressedColorToken {
   static var bgYellowDark = PressedColorToken(lightColorHex: "#B58500", darkColorHex: "#F9B917")
   static var bgYellowShadeLighter = PressedColorToken(lightColorHex: "#E2A52D4D", darkColorHex: "#927A2666")
   static var bgYellowShadeNormal = PressedColorToken(lightColorHex: "#E2A52D", darkColorHex: "#927A26")
+  static var bgYellowTransparent = PressedColorToken(lightColorHex: "#", darkColorHex: "#")
 }
 
 // MARK: - BackgroundPink
@@ -242,6 +250,7 @@ extension PressedColorToken {
   static var bgPinkDark = PressedColorToken(lightColorHex: "#A03591", darkColorHex: "#DF58BF")
   static var bgPinkShadeLighter = PressedColorToken(lightColorHex: "#CB5BB04D", darkColorHex: "#99428566")
   static var bgPinkShadeNormal = PressedColorToken(lightColorHex: "#CB5BB0", darkColorHex: "#994285")
+  static var bgPinkTransparent = PressedColorToken(lightColorHex: "#D64BB51A", darkColorHex: "#EC6FD31A")
 }
 
 // MARK: - BackgroundPurple
@@ -253,6 +262,7 @@ extension PressedColorToken {
   static var bgPurpleDark = PressedColorToken(lightColorHex: "#6135A6", darkColorHex: "#9A66EE")
   static var bgPurpleShadeLighter = PressedColorToken(lightColorHex: "#905EDE4D", darkColorHex: "#64489066")
   static var bgPurpleShadeNormal = PressedColorToken(lightColorHex: "#905EDE", darkColorHex: "#644890")
+  static var bgPurpleTransparent = PressedColorToken(lightColorHex: "#8E57E71A", darkColorHex: "#B184FF1A")
 }
 
 // MARK: - BackgroundNavy
@@ -264,6 +274,7 @@ extension PressedColorToken {
   static var bgNavyDark = PressedColorToken(lightColorHex: "#34377C", darkColorHex: "#4353BF")
   static var bgNavyShadeLighter = PressedColorToken(lightColorHex: "#5761A54D", darkColorHex: "#3B416766")
   static var bgNavyShadeNormal = PressedColorToken(lightColorHex: "#5761A5", darkColorHex: "#3B4167")
+  static var bgNavyTransparent = PressedColorToken(lightColorHex: "#424FAB1A", darkColorHex: "#7683D31A")
 }
 
 // MARK: - BackgroundGrey
@@ -274,6 +285,7 @@ extension PressedColorToken {
   static var bgGreyLight = PressedColorToken(lightColorHex: "#DEDEE0", darkColorHex: "#505253")
   static var bgGreyLighter = PressedColorToken(lightColorHex: "#E5E5E8", darkColorHex: "#3B3C3F")
   static var bgGreyLightest = PressedColorToken(lightColorHex: "#EAEAEA", darkColorHex: "#343538")
+  static var bgGreyTransparent = PressedColorToken(lightColorHex: "#2424280D", darkColorHex: "#FFFFFF0D")
 }
 
 // MARK: - BackgroundGreyAlpha
@@ -318,6 +330,7 @@ extension PressedColorToken {
   static var bgAbsoluteBlackLight = PressedColorToken(lightColorHex: "#1C1C1C99", darkColorHex: "#0A0A0A99")
   static var bgAbsoluteBlackLighter = PressedColorToken(lightColorHex: "#1C1C1C66", darkColorHex: "#0A0A0A66")
   static var bgAbsoluteBlackLightest = PressedColorToken(lightColorHex: "#1C1C1C4D", darkColorHex: "#0A0A0A4D")
+  static var bgAbsoluteBlackTransparent = PressedColorToken(lightColorHex: "#0000000D", darkColorHex: "#0000000D")
 }
 
 // MARK: - BackgroundAbsoluteWhite
@@ -327,6 +340,7 @@ extension PressedColorToken {
   static var bgAbsoluteWhiteLight = PressedColorToken(lightColorHex: "#EDEDED99", darkColorHex: "#EDEDED99")
   static var bgAbsoluteWhiteLighter = PressedColorToken(lightColorHex: "#EDEDED66", darkColorHex: "#EDEDED66")
   static var bgAbsoluteWhiteLightest = PressedColorToken(lightColorHex: "#EDEDED4D", darkColorHex: "#EDEDED4D")
+  static var bgAbsoluteWhiteTransparent = PressedColorToken(lightColorHex: "#FFFFFF0D", darkColorHex: "#FFFFFF0D")
 }
 
 // MARK: - Surface

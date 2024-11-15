@@ -117,6 +117,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgBlueDark", BezierColor.bgBlueDark)
         ColorChip(title: "bgBlueShadeLighter", BezierColor.bgBlueShadeLighter)
         ColorChip(title: "bgBlueShadeNormal", BezierColor.bgBlueShadeNormal)
+        ColorChip(title: "bgBlueTransparent", BezierColor.bgBlueTransparent)
         
         Text("BackgroundCobalt").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgCobaltNormal", BezierColor.bgCobaltNormal)
@@ -126,6 +127,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgCobaltDark", BezierColor.bgCobaltDark)
         ColorChip(title: "bgCobaltShadeLighter", BezierColor.bgCobaltShadeLighter)
         ColorChip(title: "bgCobaltShadeNormal", BezierColor.bgCobaltShadeNormal)
+        ColorChip(title: "bgCobaltTransparent", BezierColor.bgCobaltTransparent)
 
         Text("BackgroundRed").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgRedNormal", BezierColor.bgRedNormal)
@@ -135,6 +137,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgRedDark", BezierColor.bgRedDark)
         ColorChip(title: "bgRedShadeLighter", BezierColor.bgRedShadeLighter)
         ColorChip(title: "bgRedShadeNormal", BezierColor.bgRedShadeNormal)
+        ColorChip(title: "bgRedTransparent", BezierColor.bgRedTransparent)
 
         Text("BackgroundOrange").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgOrangeNormal", BezierColor.bgOrangeNormal)
@@ -144,6 +147,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgOrangeDark", BezierColor.bgOrangeDark)
         ColorChip(title: "bgOrangeShadeLighter", BezierColor.bgOrangeShadeLighter)
         ColorChip(title: "bgOrangeShadeNormal", BezierColor.bgOrangeShadeNormal)
+        ColorChip(title: "bgOrangeTransparent", BezierColor.bgOrangeTransparent)
 
         Text("BackgroundGreen").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgGreenNormal", BezierColor.bgGreenNormal)
@@ -153,6 +157,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgGreenDark", BezierColor.bgGreenDark)
         ColorChip(title: "bgGreenShadeLighter", BezierColor.bgGreenShadeLighter)
         ColorChip(title: "bgGreenShadeNormal", BezierColor.bgGreenShadeNormal)
+        ColorChip(title: "bgGreenTransparent", BezierColor.bgGreenTransparent)
 
         Text("BackgroundTeal").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgTealNormal", BezierColor.bgTealNormal)
@@ -162,6 +167,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgTealDark", BezierColor.bgTealDark)
         ColorChip(title: "bgTealShadeLighter", BezierColor.bgTealShadeLighter)
         ColorChip(title: "bgTealShadeNormal", BezierColor.bgTealShadeNormal)
+        ColorChip(title: "bgTealTransparent", BezierColor.bgTealTransparent)
 
         Text("BackgroundOlive").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgOliveNormal", BezierColor.bgOliveNormal)
@@ -171,6 +177,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgOliveDark", BezierColor.bgOliveDark)
         ColorChip(title: "bgOliveShadeLighter", BezierColor.bgOliveShadeLighter)
         ColorChip(title: "bgOliveShadeNormal", BezierColor.bgOliveShadeNormal)
+        ColorChip(title: "bgOliveTransparent", BezierColor.bgOliveTransparent)
 
         Text("BackgroundYellow").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgYellowNormal", BezierColor.bgYellowNormal)
@@ -180,6 +187,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgYellowDark", BezierColor.bgYellowDark)
         ColorChip(title: "bgYellowShadeLighter", BezierColor.bgYellowShadeLighter)
         ColorChip(title: "bgYellowShadeNormal", BezierColor.bgYellowShadeNormal)
+        ColorChip(title: "bgYellowTransparent", BezierColor.bgYellowTransparent)
 
         Text("BackgroundPink").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgPinkNormal", BezierColor.bgPinkNormal)
@@ -189,6 +197,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgPinkDark", BezierColor.bgPinkDark)
         ColorChip(title: "bgPinkShadeLighter", BezierColor.bgPinkShadeLighter)
         ColorChip(title: "bgPinkShadeNormal", BezierColor.bgPinkShadeNormal)
+        ColorChip(title: "bgPinkTransparent", BezierColor.bgPinkTransparent)
 
         Text("BackgroundPurple").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgPurpleNormal", BezierColor.bgPurpleNormal)
@@ -198,6 +207,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgPurpleDark", BezierColor.bgPurpleDark)
         ColorChip(title: "bgPurpleShadeLighter", BezierColor.bgPurpleShadeLighter)
         ColorChip(title: "bgPurpleShadeNormal", BezierColor.bgPurpleShadeNormal)
+        ColorChip(title: "bgPurpleTransparent", BezierColor.bgPurpleTransparent)
 
         Text("BackgroundNavy").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgNavyNormal", BezierColor.bgNavyNormal)
@@ -207,6 +217,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgNavyDark", BezierColor.bgNavyDark)
         ColorChip(title: "bgNavyShadeLighter", BezierColor.bgNavyShadeLighter)
         ColorChip(title: "bgNavyShadeNormal", BezierColor.bgNavyShadeNormal)
+        ColorChip(title: "bgNavyTransparent", BezierColor.bgNavyTransparent)
 
         Text("BackgroundGrey").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgGreyDarkest", BezierColor.bgGreyDarkest)
@@ -215,6 +226,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgGreyLight", BezierColor.bgGreyLight)
         ColorChip(title: "bgGreyLighter", BezierColor.bgGreyLighter)
         ColorChip(title: "bgGreyLightest", BezierColor.bgGreyLightest)
+        ColorChip(title: "bgGreyTransparent", BezierColor.bgGreyTransparent)
 
         Text("BackgroundGreyAlpha").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgGreyAlphaDarkest", BezierColor.bgGreyAlphaDarkest)
@@ -229,11 +241,13 @@ struct BezierColorExample: View {
         ColorChip(title: "bgBlackLight", BezierColor.bgBlackLight)
         ColorChip(title: "bgBlackLighter", BezierColor.bgBlackLighter)
         ColorChip(title: "bgBlackLightest", BezierColor.bgBlackLightest)
+        ColorChip(title: "bgBlackTransparent", BezierColor.bgBlackTransparent)
 
         Text("BackgroundWhite").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgWhiteHighest", BezierColor.bgWhiteHighest)
         ColorChip(title: "bgWhiteHigher", BezierColor.bgWhiteHigher)
         ColorChip(title: "bgWhiteNormal", BezierColor.bgWhiteNormal)
+        ColorChip(title: "bgWhiteTransparent", BezierColor.bgWhiteTransparent)
 
         Text("BackgroundWhiteAlpha").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgWhiteAlphaLightest", BezierColor.bgWhiteAlphaLightest)
@@ -247,6 +261,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgAbsoluteBlackLight", BezierColor.bgAbsoluteBlackLight)
         ColorChip(title: "bgAbsoluteBlackLighter", BezierColor.bgAbsoluteBlackLighter)
         ColorChip(title: "bgAbsoluteBlackLightest", BezierColor.bgAbsoluteBlackLightest)
+        ColorChip(title: "bgAbsoluteBlackTransparent", BezierColor.bgAbsoluteBlackTransparent)
 
         Text("BackgroundAbsoluteWhite").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "bgAbsoluteWhiteDark", BezierColor.bgAbsoluteWhiteDark)
@@ -254,6 +269,7 @@ struct BezierColorExample: View {
         ColorChip(title: "bgAbsoluteWhiteLight", BezierColor.bgAbsoluteWhiteLight)
         ColorChip(title: "bgAbsoluteWhiteLighter", BezierColor.bgAbsoluteWhiteLighter)
         ColorChip(title: "bgAbsoluteWhiteLightest", BezierColor.bgAbsoluteWhiteLightest)
+        ColorChip(title: "bgAbsoluteWhiteTransparent", BezierColor.bgAbsoluteWhiteTransparent)
         
         Text("Surface").applyBezierFontStyle(.title1Bold, bezierColor: .fgBlackDarker)
         ColorChip(title: "surfaceLowest", BezierColor.surfaceLowest)

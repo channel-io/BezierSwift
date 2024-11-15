@@ -161,6 +161,7 @@ extension FunctionalColorToken {
   static var bgBlueDark = FunctionalColorToken(lightGlobalColorToken: .blue500, darkGlobalColorToken: .blue400, pressedColorToken: PressedColorToken.bgBlueDark)
   static var bgBlueShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeBlue400_20, darkGlobalColorToken: .shadeBlue600_40, pressedColorToken: PressedColorToken.bgBlueShadeLighter)
   static var bgBlueShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeBlue400, darkGlobalColorToken: .shadeBlue600, pressedColorToken: PressedColorToken.bgBlueShadeNormal)
+  static var bgBlueTransparent = FunctionalColorToken(lightGlobalColorToken: .blue400_0, darkGlobalColorToken: .blue300_0, pressedColorToken: PressedColorToken.bgBlueTransparent)
 }
 
 // MARK: - BackgroundCobalt
@@ -172,6 +173,7 @@ extension FunctionalColorToken {
   static var bgCobaltDark = FunctionalColorToken(lightGlobalColorToken: .cobalt500, darkGlobalColorToken: .cobalt400, pressedColorToken: PressedColorToken.bgCobaltDark)
   static var bgCobaltShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeCobalt400_20, darkGlobalColorToken: .shadeCobalt600_40, pressedColorToken: PressedColorToken.bgCobaltShadeLighter)
   static var bgCobaltShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeCobalt400, darkGlobalColorToken: .shadeCobalt600, pressedColorToken: PressedColorToken.bgCobaltShadeNormal)
+  static var bgCobaltTransparent = FunctionalColorToken(lightGlobalColorToken: .cobalt400_0, darkGlobalColorToken: .cobalt300_0, pressedColorToken: PressedColorToken.bgCobaltTransparent)
 }
 
 // MARK: - BackgroundRed
@@ -183,6 +185,7 @@ extension FunctionalColorToken {
   static var bgRedDark = FunctionalColorToken(lightGlobalColorToken: .red500, darkGlobalColorToken: .red400, pressedColorToken: PressedColorToken.bgRedDark)
   static var bgRedShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeRed400_20, darkGlobalColorToken: .shadeRed600_40, pressedColorToken: PressedColorToken.bgRedShadeLighter)
   static var bgRedShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeRed400, darkGlobalColorToken: .shadeRed600, pressedColorToken: PressedColorToken.bgRedShadeNormal)
+  static var bgRedTransparent = FunctionalColorToken(lightGlobalColorToken: .red400_0, darkGlobalColorToken: .red300_0, pressedColorToken: PressedColorToken.bgRedTransparent)
 }
 
 // MARK: - BackgroundOrange
@@ -194,6 +197,7 @@ extension FunctionalColorToken {
   static var bgOrangeDark = FunctionalColorToken(lightGlobalColorToken: .orange500, darkGlobalColorToken: .orange400, pressedColorToken: PressedColorToken.bgOrangeDark)
   static var bgOrangeShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeOrange400_20, darkGlobalColorToken: .shadeOrange600_40, pressedColorToken: PressedColorToken.bgOrangeShadeLighter)
   static var bgOrangeShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeOrange400, darkGlobalColorToken: .shadeOrange600, pressedColorToken: PressedColorToken.bgOrangeShadeNormal)
+  static var bgOrangeTransparent = FunctionalColorToken(lightGlobalColorToken: .orange400_0, darkGlobalColorToken: .orange300_0, pressedColorToken: PressedColorToken.bgOrangeTransparent)
 }
 
 // MARK: - BackgroundGreen
@@ -205,6 +209,7 @@ extension FunctionalColorToken {
   static var bgGreenDark = FunctionalColorToken(lightGlobalColorToken: .green500, darkGlobalColorToken: .green400, pressedColorToken: PressedColorToken.bgGreenDark)
   static var bgGreenShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeGreen400_20, darkGlobalColorToken: .shadeGreen600_40, pressedColorToken: PressedColorToken.bgGreenShadeLighter)
   static var bgGreenShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeGreen400, darkGlobalColorToken: .shadeGreen600, pressedColorToken: PressedColorToken.bgGreenShadeNormal)
+  static var bgGreenTransparent = FunctionalColorToken(lightGlobalColorToken: .green400_0, darkGlobalColorToken: .green300_0, pressedColorToken: PressedColorToken.bgGreenTransparent)
 }
 
 // MARK: - BackgroundTeal
@@ -216,6 +221,7 @@ extension FunctionalColorToken {
   static var bgTealDark = FunctionalColorToken(lightGlobalColorToken: .teal500, darkGlobalColorToken: .teal400, pressedColorToken: PressedColorToken.bgTealDark)
   static var bgTealShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeTeal400_20, darkGlobalColorToken: .shadeTeal600_40, pressedColorToken: PressedColorToken.bgTealShadeLighter)
   static var bgTealShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeTeal400, darkGlobalColorToken: .shadeTeal600, pressedColorToken: PressedColorToken.bgTealShadeNormal)
+  static var bgTealTransparent = FunctionalColorToken(lightGlobalColorToken: .teal400_0, darkGlobalColorToken: .teal300_0, pressedColorToken: PressedColorToken.bgTealTransparent)
 }
 
 // MARK: - BackgroundOlive
@@ -227,6 +233,7 @@ extension FunctionalColorToken {
   static var bgOliveDark = FunctionalColorToken(lightGlobalColorToken: .olive500, darkGlobalColorToken: .olive400, pressedColorToken: PressedColorToken.bgOliveDark)
   static var bgOliveShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeOlive400_20, darkGlobalColorToken: .shadeOlive600_40, pressedColorToken: PressedColorToken.bgOliveShadeLighter)
   static var bgOliveShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeOlive400, darkGlobalColorToken: .shadeOlive600, pressedColorToken: PressedColorToken.bgOliveShadeNormal)
+  static var bgOliveTransparent = FunctionalColorToken(lightGlobalColorToken: .olive400_0, darkGlobalColorToken: .olive300_0, pressedColorToken: PressedColorToken.bgOliveTransparent)
 }
 
 // MARK: - BackgroundYellow
@@ -238,6 +245,7 @@ extension FunctionalColorToken {
   static var bgYellowDark = FunctionalColorToken(lightGlobalColorToken: .yellow500, darkGlobalColorToken: .yellow400, pressedColorToken: PressedColorToken.bgYellowDark)
   static var bgYellowShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeYellow400_20, darkGlobalColorToken: .shadeYellow600_40, pressedColorToken: PressedColorToken.bgYellowShadeLighter)
   static var bgYellowShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeYellow400, darkGlobalColorToken: .shadeYellow600, pressedColorToken: PressedColorToken.bgYellowShadeNormal)
+  static var bgYellowTransparent = FunctionalColorToken(lightGlobalColorToken: .yellow400_0, darkGlobalColorToken: .yellow300_0, pressedColorToken: PressedColorToken.bgYellowTransparent)
 }
 
 // MARK: - BackgroundPink
@@ -249,6 +257,7 @@ extension FunctionalColorToken {
   static var bgPinkDark = FunctionalColorToken(lightGlobalColorToken: .pink500, darkGlobalColorToken: .pink400, pressedColorToken: PressedColorToken.bgPinkDark)
   static var bgPinkShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadePink400_20, darkGlobalColorToken: .shadePink600_40, pressedColorToken: PressedColorToken.bgPinkShadeLighter)
   static var bgPinkShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadePink400, darkGlobalColorToken: .shadePink600, pressedColorToken: PressedColorToken.bgPinkShadeNormal)
+  static var bgPinkTransparent = FunctionalColorToken(lightGlobalColorToken: .pink400_0, darkGlobalColorToken: .pink300_0, pressedColorToken: PressedColorToken.bgPinkTransparent)
 }
 
 // MARK: - BackgroundPurple
@@ -260,6 +269,7 @@ extension FunctionalColorToken {
   static var bgPurpleDark = FunctionalColorToken(lightGlobalColorToken: .purple500, darkGlobalColorToken: .purple400, pressedColorToken: PressedColorToken.bgPurpleDark)
   static var bgPurpleShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadePurple400_20, darkGlobalColorToken: .shadePurple600_40, pressedColorToken: PressedColorToken.bgPurpleShadeLighter)
   static var bgPurpleShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadePurple400, darkGlobalColorToken: .shadePurple600, pressedColorToken: PressedColorToken.bgPurpleShadeNormal)
+  static var bgPurpleTransparent = FunctionalColorToken(lightGlobalColorToken: .purple400_0, darkGlobalColorToken: .purple300_0, pressedColorToken: PressedColorToken.bgPurpleTransparent)
 }
 
 // MARK: - BackgroundNavy
@@ -271,6 +281,7 @@ extension FunctionalColorToken {
   static var bgNavyDark = FunctionalColorToken(lightGlobalColorToken: .navy500, darkGlobalColorToken: .navy400, pressedColorToken: PressedColorToken.bgNavyDark)
   static var bgNavyShadeLighter = FunctionalColorToken(lightGlobalColorToken: .shadeNavy400_20, darkGlobalColorToken: .shadeNavy600_40, pressedColorToken: PressedColorToken.bgNavyShadeLighter)
   static var bgNavyShadeNormal = FunctionalColorToken(lightGlobalColorToken: .shadeNavy400, darkGlobalColorToken: .shadeNavy600, pressedColorToken: PressedColorToken.bgNavyShadeNormal)
+  static var bgNavyTransparent = FunctionalColorToken(lightGlobalColorToken: .navy400_0, darkGlobalColorToken: .navy300_0, pressedColorToken: PressedColorToken.bgNavyTransparent)
 }
 
 // MARK: - BackgroundGrey
@@ -281,6 +292,7 @@ extension FunctionalColorToken {
   static var bgGreyLight = FunctionalColorToken(lightGlobalColorToken: .grey200, darkGlobalColorToken: .grey700, pressedColorToken: PressedColorToken.bgGreyLight)
   static var bgGreyLighter = FunctionalColorToken(lightGlobalColorToken: .grey100, darkGlobalColorToken: .grey800, pressedColorToken: PressedColorToken.bgGreyLighter)
   static var bgGreyLightest = FunctionalColorToken(lightGlobalColorToken: .grey50, darkGlobalColorToken: .grey850, pressedColorToken: PressedColorToken.bgGreyLightest)
+  static var bgGreyTransparent = FunctionalColorToken(lightGlobalColorToken: .grey900_0, darkGlobalColorToken: .white_0, pressedColorToken: PressedColorToken.bgGreyTransparent)
 }
 
 // MARK: - BackgroundGreyAlpha
@@ -325,6 +337,7 @@ extension FunctionalColorToken {
   static var bgAbsoluteBlackLight = FunctionalColorToken(lightGlobalColorToken: .black_60, darkGlobalColorToken: .black_60, pressedColorToken: PressedColorToken.bgAbsoluteBlackLight)
   static var bgAbsoluteBlackLighter = FunctionalColorToken(lightGlobalColorToken: .black_40, darkGlobalColorToken: .black_40, pressedColorToken: PressedColorToken.bgAbsoluteBlackLighter)
   static var bgAbsoluteBlackLightest = FunctionalColorToken(lightGlobalColorToken: .black_20, darkGlobalColorToken: .black_20, pressedColorToken: PressedColorToken.bgAbsoluteBlackLightest)
+  static var bgAbsoluteBlackTransparent = FunctionalColorToken(lightGlobalColorToken: .black_0, darkGlobalColorToken: .black_0, pressedColorToken: PressedColorToken.bgAbsoluteBlackTransparent)
 }
 
 // MARK: - BackgroundAbsoluteWhite
@@ -334,6 +347,7 @@ extension FunctionalColorToken {
   static var bgAbsoluteWhiteLight = FunctionalColorToken(lightGlobalColorToken: .white_60, darkGlobalColorToken: .white_60, pressedColorToken: PressedColorToken.bgAbsoluteWhiteLight)
   static var bgAbsoluteWhiteLighter = FunctionalColorToken(lightGlobalColorToken: .white_40, darkGlobalColorToken: .white_40, pressedColorToken: PressedColorToken.bgAbsoluteWhiteLighter)
   static var bgAbsoluteWhiteLightest = FunctionalColorToken(lightGlobalColorToken: .white_20, darkGlobalColorToken: .white_20, pressedColorToken: PressedColorToken.bgAbsoluteWhiteLightest)
+  static var bgAbsoluteWhiteTransparent = FunctionalColorToken(lightGlobalColorToken: .white_0, darkGlobalColorToken: .white_0, pressedColorToken: PressedColorToken.bgAbsoluteWhiteTransparent)
 }
 
 // MARK: - Surface
