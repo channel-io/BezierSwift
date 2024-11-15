@@ -31,7 +31,7 @@ struct BezierIconButtonStyle<Content: View>: ButtonStyle {
           }
         }
           .foregroundColor(
-            configuration.isPressed ? self.backgroundColor.color: self.backgroundColor.color
+            configuration.isPressed ? self.backgroundColor.pressedColor: self.backgroundColor.color
           )
       )
   }
