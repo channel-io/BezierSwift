@@ -207,31 +207,67 @@ extension BezierIconButton {
   }
   
   private var backgroundColor: BezierColor {
-    guard self.variant != .tertiary else { return .bgWhiteAlphaTransparent }
-    
-    let isPrimary = self.variant == .primary
-    
     switch self.color {
     case .blue:
-      return isPrimary ? .primaryBgNormal : .primaryBgLightest
+      switch self.variant {
+      case .primary: return .primaryBgNormal
+      case .secondary: return .primaryBgLightest
+      case .tertiary: return .primaryBgTransparent
+      }
     case .cobalt:
-      return isPrimary ? .accentBgNormal : .accentBgLightest
+      switch self.variant {
+      case .primary: return .accentBgNormal
+      case .secondary: return .accentBgLightest
+      case .tertiary: return .accentBgTransparent
+      }
     case .red:
-      return isPrimary ? .criticalBgNormal : .criticalBgLightest
+      switch self.variant {
+      case .primary: return .criticalBgNormal
+      case .secondary: return .criticalBgLightest
+      case .tertiary: return .criticalBgTransparent
+      }
     case .green:
-      return isPrimary ? .successBgNormal : .successBgLightest
+      switch self.variant {
+      case .primary: return .successBgNormal
+      case .secondary: return .successBgLightest
+      case .tertiary: return .successBgTransparent
+      }
     case .orange:
-      return isPrimary ? .warningBgNormal : .warningBgLightest
+      switch self.variant {
+      case .primary: return .warningBgNormal
+      case .secondary: return .warningBgLightest
+      case .tertiary: return .warningBgTransparent
+      }
     case .pink:
-      return isPrimary ? .bgPinkNormal : .bgPinkLightest
+      switch self.variant {
+      case .primary: return .bgPinkNormal
+      case .secondary: return .bgPinkLightest
+      case .tertiary: return .bgPinkTransparent
+      }
     case .purple:
-      return isPrimary ? .bgPurpleNormal : .bgPurpleLightest
+      switch self.variant {
+      case .primary: return .bgPurpleNormal
+      case .secondary: return .bgPurpleLightest
+      case .tertiary: return .bgPurpleTransparent
+      }
     case .darkGrey:
-      return isPrimary ? .bgGreyDarkest : .bgBlackLighter
+      switch self.variant {
+      case .primary: return .bgGreyDarkest
+      case .secondary: return .bgBlackLighter
+      case .tertiary: return .bgGreyTransparent
+      }
     case .lightGrey:
-      return isPrimary ? .bgBlackDark : .bgBlackLighter
+      switch self.variant {
+      case .primary: return .bgBlackDark
+      case .secondary: return .bgBlackLighter
+      case .tertiary: return .bgBlackTransparent
+      }
     case .absoluteWhite:
-      return isPrimary ? .bgAbsoluteWhiteDark : .bgAbsoluteWhiteLightest
+      switch self.variant {
+      case .primary: return .bgAbsoluteWhiteDark
+      case .secondary: return .bgAbsoluteWhiteLightest
+      case .tertiary: return .bgAbsoluteWhiteTransparent
+      }
     }
   }
   
