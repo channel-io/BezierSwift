@@ -25,6 +25,8 @@
 		E2E5FAC92C9B265D00533C4A /* BezierInnerBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FAC82C9B265D00533C4A /* BezierInnerBannerExample.swift */; };
 		E2E5FACB2C9B266700533C4A /* BezierFloatingBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FACA2C9B266700533C4A /* BezierFloatingBannerExample.swift */; };
 		E2E5FACD2C9B267000533C4A /* BezierCardBannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */; };
+		E2B6EAB72CE618B100C6FE7D /* ColorChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6EAB62CE618B100C6FE7D /* ColorChip.swift */; };
+		E2B6EAB82CE61A4900C6FE7D /* BezierColorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6EAB52CE6188400C6FE7D /* BezierColorExample.swift */; };
 		E2EF05FC2C5A4CDC00C57676 /* BezierLoaderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		E2E5FAC82C9B265D00533C4A /* BezierInnerBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierInnerBannerExample.swift; sourceTree = "<group>"; };
 		E2E5FACA2C9B266700533C4A /* BezierFloatingBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierFloatingBannerExample.swift; sourceTree = "<group>"; };
 		E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCardBannerExample.swift; sourceTree = "<group>"; };
+		E2B6EAB52CE6188400C6FE7D /* BezierColorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierColorExample.swift; sourceTree = "<group>"; };
+		E2B6EAB62CE618B100C6FE7D /* ColorChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChip.swift; sourceTree = "<group>"; };
 		E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierLoaderExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E5FAC72C9B263D00533C4A /* Banner */,
+				E2B6EAB42CE6188000C6FE7D /* Color */,
 				E220176E2C75D6E500578E64 /* Buttons */,
 				E2EF05FB2C5A4CDC00C57676 /* BezierLoaderExample.swift */,
 				E2A392B62C958A540015FA6F /* BezierAvatarExample.swift */,
@@ -141,6 +146,15 @@
 				E2E5FACC2C9B267000533C4A /* BezierCardBannerExample.swift */,
 			);
 			path = Banner;
+      sourceTree = "<group>";
+    };
+		E2B6EAB42CE6188000C6FE7D /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				E2B6EAB52CE6188400C6FE7D /* BezierColorExample.swift */,
+				E2B6EAB62CE618B100C6FE7D /* ColorChip.swift */,
+			);
+			path = Color;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +238,8 @@
 				E255DE992C9C824E00102219 /* BezierEmojiExample.swift in Sources */,
 				E28D19602C365557009B34A2 /* AppDelegate.swift in Sources */,
 				E2E5FACD2C9B267000533C4A /* BezierCardBannerExample.swift in Sources */,
+				E2B6EAB72CE618B100C6FE7D /* ColorChip.swift in Sources */,
+				E2B6EAB82CE61A4900C6FE7D /* BezierColorExample.swift in Sources */,
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 				E28D19612C365557009B34A2 /* SceneDelegate.swift in Sources */,
