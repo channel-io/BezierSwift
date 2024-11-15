@@ -8,14 +8,22 @@
 import SwiftUI
 import UIKit
 
-public protocol ColorToken {
+public protocol ColorTokenType {
   /// 색상을 나타내는 HEX 문자열 (예: "#FFFFFF", "#FFFFFFFF").
   var hex: String { get }
 }
 
+public protocol ThemeableColorTokenType {
+  /// 색상을 나타내는 HEX 문자열 (예: "#FFFFFF", "#FFFFFFFF").
+  var lightColorHex: String { get }
+  /// 색상을 나타내는 HEX 문자열 (예: "#FFFFFF", "#FFFFFFFF").
+  var darkColorHex: String { get }
+}
+
 public protocol BezierColorType {
-  var lightColorToken: ColorToken { get }
-  var darkColorToken: ColorToken { get }
+  var lightColorToken: ColorTokenType { get }
+  var darkColorToken: ColorTokenType { get }
+  var pressedColorToken: ThemeableColorTokenType { get }
 }
 
 public struct BezierColor {
@@ -37,6 +45,10 @@ public struct BezierColor {
     return Color(self.uiColor)
   }
   
+  public var pressedColor: Color {
+    return Color(self.pressedUiColor)
+  }
+  
   public var uiColor: UIColor {
     return UIColor { traitCollection in
       switch traitCollection.userInterfaceStyle {
@@ -50,8 +62,25 @@ public struct BezierColor {
     }
   }
   
+  public var pressedUiColor: UIColor {
+    return UIColor { traitCollection in
+      switch traitCollection.userInterfaceStyle {
+      case .light:
+        return UIColor(hex: self.bezierColor.pressedColorToken.lightColorHex)
+      case .dark:
+        return UIColor(hex: self.bezierColor.pressedColorToken.darkColorHex)
+      default:
+        return UIColor(hex: self.bezierColor.pressedColorToken.lightColorHex)
+      }
+    }
+  }
+  
   public var cgColor: CGColor {
     return self.uiColor.cgColor
+  }
+  
+  public var pressedCgColor: CGColor {
+    return self.pressedUiColor.cgColor
   }
 }
 
@@ -157,7 +186,7 @@ extension BezierColor {
   public static var bgBlueLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueLighter) }
   public static var bgBlueLightest: BezierColor { BezierColor(functionalColorToken: .bgBlueLightest) }
   public static var bgBlueDark: BezierColor { BezierColor(functionalColorToken: .bgBlueDark) }
-  public static var bgBlueShadeLight: BezierColor { BezierColor(functionalColorToken: .bgBlueShadeLight) }
+  public static var bgBlueShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueShadeLighter) }
   public static var bgBlueShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgBlueShadeNormal) }
 
   // MARK: BackgroundCobalt
@@ -166,7 +195,7 @@ extension BezierColor {
   public static var bgCobaltLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltLighter) }
   public static var bgCobaltLightest: BezierColor { BezierColor(functionalColorToken: .bgCobaltLightest) }
   public static var bgCobaltDark: BezierColor { BezierColor(functionalColorToken: .bgCobaltDark) }
-  public static var bgCobaltShadeLight: BezierColor { BezierColor(functionalColorToken: .bgCobaltShadeLight) }
+  public static var bgCobaltShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltShadeLighter) }
   public static var bgCobaltShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgCobaltShadeNormal) }
 
   // MARK: BackgroundRed
@@ -175,7 +204,7 @@ extension BezierColor {
   public static var bgRedLighter: BezierColor { BezierColor(functionalColorToken: .bgRedLighter) }
   public static var bgRedLightest: BezierColor { BezierColor(functionalColorToken: .bgRedLightest) }
   public static var bgRedDark: BezierColor { BezierColor(functionalColorToken: .bgRedDark) }
-  public static var bgRedShadeLight: BezierColor { BezierColor(functionalColorToken: .bgRedShadeLight) }
+  public static var bgRedShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgRedShadeLighter) }
   public static var bgRedShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgRedShadeNormal) }
 
   // MARK: BackgroundOrange
@@ -184,7 +213,7 @@ extension BezierColor {
   public static var bgOrangeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeLighter) }
   public static var bgOrangeLightest: BezierColor { BezierColor(functionalColorToken: .bgOrangeLightest) }
   public static var bgOrangeDark: BezierColor { BezierColor(functionalColorToken: .bgOrangeDark) }
-  public static var bgOrangeShadeLight: BezierColor { BezierColor(functionalColorToken: .bgOrangeShadeLight) }
+  public static var bgOrangeShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeShadeLighter) }
   public static var bgOrangeShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgOrangeShadeNormal) }
 
   // MARK: BackgroundGreen
@@ -193,7 +222,7 @@ extension BezierColor {
   public static var bgGreenLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenLighter) }
   public static var bgGreenLightest: BezierColor { BezierColor(functionalColorToken: .bgGreenLightest) }
   public static var bgGreenDark: BezierColor { BezierColor(functionalColorToken: .bgGreenDark) }
-  public static var bgGreenShadeLight: BezierColor { BezierColor(functionalColorToken: .bgGreenShadeLight) }
+  public static var bgGreenShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenShadeLighter) }
   public static var bgGreenShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgGreenShadeNormal) }
 
   // MARK: BackgroundTeal
@@ -202,7 +231,7 @@ extension BezierColor {
   public static var bgTealLighter: BezierColor { BezierColor(functionalColorToken: .bgTealLighter) }
   public static var bgTealLightest: BezierColor { BezierColor(functionalColorToken: .bgTealLightest) }
   public static var bgTealDark: BezierColor { BezierColor(functionalColorToken: .bgTealDark) }
-  public static var bgTealShadeLight: BezierColor { BezierColor(functionalColorToken: .bgTealShadeLight) }
+  public static var bgTealShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgTealShadeLighter) }
   public static var bgTealShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgTealShadeNormal) }
 
   // MARK: BackgroundOlive
@@ -211,7 +240,7 @@ extension BezierColor {
   public static var bgOliveLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveLighter) }
   public static var bgOliveLightest: BezierColor { BezierColor(functionalColorToken: .bgOliveLightest) }
   public static var bgOliveDark: BezierColor { BezierColor(functionalColorToken: .bgOliveDark) }
-  public static var bgOliveShadeLight: BezierColor { BezierColor(functionalColorToken: .bgOliveShadeLight) }
+  public static var bgOliveShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveShadeLighter) }
   public static var bgOliveShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgOliveShadeNormal) }
 
   // MARK: BackgroundYellow
@@ -220,7 +249,7 @@ extension BezierColor {
   public static var bgYellowLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowLighter) }
   public static var bgYellowLightest: BezierColor { BezierColor(functionalColorToken: .bgYellowLightest) }
   public static var bgYellowDark: BezierColor { BezierColor(functionalColorToken: .bgYellowDark) }
-  public static var bgYellowShadeLight: BezierColor { BezierColor(functionalColorToken: .bgYellowShadeLight) }
+  public static var bgYellowShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowShadeLighter) }
   public static var bgYellowShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgYellowShadeNormal) }
 
   // MARK: BackgroundPink
@@ -229,7 +258,7 @@ extension BezierColor {
   public static var bgPinkLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkLighter) }
   public static var bgPinkLightest: BezierColor { BezierColor(functionalColorToken: .bgPinkLightest) }
   public static var bgPinkDark: BezierColor { BezierColor(functionalColorToken: .bgPinkDark) }
-  public static var bgPinkShadeLight: BezierColor { BezierColor(functionalColorToken: .bgPinkShadeLight) }
+  public static var bgPinkShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkShadeLighter) }
   public static var bgPinkShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgPinkShadeNormal) }
 
   // MARK: BackgroundPurple
@@ -238,7 +267,7 @@ extension BezierColor {
   public static var bgPurpleLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleLighter) }
   public static var bgPurpleLightest: BezierColor { BezierColor(functionalColorToken: .bgPurpleLightest) }
   public static var bgPurpleDark: BezierColor { BezierColor(functionalColorToken: .bgPurpleDark) }
-  public static var bgPurpleShadeLight: BezierColor { BezierColor(functionalColorToken: .bgPurpleShadeLight) }
+  public static var bgPurpleShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleShadeLighter) }
   public static var bgPurpleShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgPurpleShadeNormal) }
 
   // MARK: - BackgroundNavy
@@ -247,7 +276,7 @@ extension BezierColor {
   public static var bgNavyLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyLighter) }
   public static var bgNavyLightest: BezierColor { BezierColor(functionalColorToken: .bgNavyLightest) }
   public static var bgNavyDark: BezierColor { BezierColor(functionalColorToken: .bgNavyDark) }
-  public static var bgNavyShadeLight: BezierColor { BezierColor(functionalColorToken: .bgNavyShadeLight) }
+  public static var bgNavyShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyShadeLighter) }
   public static var bgNavyShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgNavyShadeNormal) }
 
   // MARK: BackgroundGrey
@@ -365,7 +394,7 @@ extension BezierColor {
   public static var accentFgLight: BezierColor { BezierColor(semanticToken: .accentFgLight) }
   public static var accentFgDark: BezierColor { BezierColor(semanticToken: .accentFgDark) }
 
-  // MARK: SuccessForeground
+  // MARK: SuccessBackground
   public static var successBgDark: BezierColor { BezierColor(semanticToken: .successBgDark) }
   public static var successBgNormal: BezierColor { BezierColor(semanticToken: .successBgNormal) }
   public static var successBgLight: BezierColor { BezierColor(semanticToken: .successBgLight) }

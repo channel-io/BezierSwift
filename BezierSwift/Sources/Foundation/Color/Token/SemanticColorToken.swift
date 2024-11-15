@@ -11,12 +11,16 @@ import SwiftUI
 internal struct SemanticColorToken: BezierColorType {
   let functionalColorToken: FunctionalColorToken
   
-  var lightColorToken: ColorToken {
+  var lightColorToken: ColorTokenType {
     self.functionalColorToken.lightColorToken
   }
   
-  var darkColorToken: ColorToken {
+  var darkColorToken: ColorTokenType {
     self.functionalColorToken.darkColorToken
+  }
+  
+  var pressedColorToken: ThemeableColorTokenType {
+    self.functionalColorToken.pressedColorToken
   }
   
   init(functionalColorToken: FunctionalColorToken) {
