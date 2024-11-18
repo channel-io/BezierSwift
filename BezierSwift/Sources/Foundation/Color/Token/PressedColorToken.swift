@@ -238,7 +238,7 @@ extension PressedColorToken {
   static var bgYellowDark = PressedColorToken(lightColorHex: "#B58500", darkColorHex: "#F9B917")
   static var bgYellowShadeLighter = PressedColorToken(lightColorHex: "#E2A52D4D", darkColorHex: "#927A2666")
   static var bgYellowShadeNormal = PressedColorToken(lightColorHex: "#E2A52D", darkColorHex: "#927A26")
-  static var bgYellowTransparent = PressedColorToken(lightColorHex: "#", darkColorHex: "#")
+  static var bgYellowTransparent = PressedColorToken(lightColorHex: "#EDAE0D1A", darkColorHex: "#F9C8351A")
 }
 
 // MARK: - BackgroundPink
@@ -312,6 +312,7 @@ extension PressedColorToken {
   static var bgWhiteHighest = PressedColorToken(lightColorHex: "#EDEDED", darkColorHex: "#505253")
   static var bgWhiteHigher = PressedColorToken(lightColorHex: "#EDEDED", darkColorHex: "#3B3C3F")
   static var bgWhiteNormal = PressedColorToken(lightColorHex: "#EDEDED", darkColorHex: "#2E2E33")
+  // TODO: bgWhiteTransparent의 darkColorHex 가 달라서 체크 요청 함. 확인 후 변경 필요 by Tom 2024.11.18
   static var bgWhiteTransparent = PressedColorToken(lightColorHex: "#FFFFFF0D", darkColorHex: "#")
 }
 
