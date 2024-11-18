@@ -722,3 +722,13 @@ extension BezierColor {
   @available(*, deprecated, renamed: "bgNavyDark", message: "Use `bgNavyDark` instead.")
   public static var bgtxtNavyDark: BezierColor { BezierColor(functionalColorToken: .bgNavyDark) }
 }
+
+@_spi(Private) public extension BezierColor {
+  var lightColorTokenHex: String {
+    self.bezierColor.lightColorToken.hex
+  }
+  
+  var darkColorTokenHex: String {
+    self.bezierColor.darkColorToken.hex
+  }
+}

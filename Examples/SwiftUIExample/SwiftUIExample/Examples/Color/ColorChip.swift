@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-import BezierSwift
+@_spi(Private) import BezierSwift
 
 struct ColorChip: View {
   private let title: String
@@ -30,10 +30,18 @@ struct ColorChip: View {
       .buttonStyle(ColorChipStyle(backgroundColor: self.bezierColor))
       .frame(width: 100, height: 100)
       
-      Text(self.title)
-        .applyBezierFontStyle(.title3Bold, bezierColor: .fgBlackDarker)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .padding(.top, 8)
+      VStack(alignment: .leading, spacing: 8) {
+        Text(self.title)
+          .applyBezierFontStyle(.title3Bold, bezierColor: .fgBlackDarker)
+        
+        Text("Light Color Token: " + self.bezierColor.darkColorTokenHex)
+          .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+        
+        Text("Dark Color Token: " + self.bezierColor.darkColorTokenHex)
+          .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+      .padding(.top, 8)
     }
   }
 }
