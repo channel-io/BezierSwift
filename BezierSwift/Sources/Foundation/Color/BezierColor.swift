@@ -723,7 +723,7 @@ extension BezierColor {
   public static var bgtxtNavyDark: BezierColor { BezierColor(functionalColorToken: .bgNavyDark) }
 }
 
-@_spi(Private) public extension BezierColor {
+@_spi(color) public extension BezierColor {
   var lightColorTokenHex: String {
     self.bezierColor.lightColorToken.hex
   }

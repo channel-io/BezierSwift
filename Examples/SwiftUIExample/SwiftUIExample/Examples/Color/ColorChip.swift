@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-@_spi(Private) import BezierSwift
+@_spi(color) import BezierSwift
 
 struct ColorChip: View {
   private let title: String
   private var bezierColor: BezierColor
   @State private var isPressed: Bool = false
+  
+  @Environment(\.colorScheme) private var colorScheme
   
   init(title: String, _ bezierColor: BezierColor) {
     self.title = title
@@ -34,11 +36,17 @@ struct ColorChip: View {
         Text(self.title)
           .applyBezierFontStyle(.title3Bold, bezierColor: .fgBlackDarker)
         
-        Text("Light Color Token: " + self.bezierColor.darkColorTokenHex)
-          .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
-        
-        Text("Dark Color Token: " + self.bezierColor.darkColorTokenHex)
-          .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+        switch self.colorScheme {
+        case .light:
+          Text(self.bezierColor.lightColorTokenHex)
+            .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+        case .dark:
+          Text(self.bezierColor.darkColorTokenHex)
+            .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+        @unknown default:
+          Text(self.bezierColor.lightColorTokenHex)
+            .applyBezierFontStyle(.body1Regular, bezierColor: .fgBlackDarker)
+        }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
       .padding(.top, 8)
