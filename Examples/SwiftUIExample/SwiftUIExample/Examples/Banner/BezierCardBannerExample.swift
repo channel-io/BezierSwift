@@ -11,13 +11,16 @@ import BezierSwift
 
 struct BezierCardBannerExample: View {
   var body: some View {
-    BezierCardBanner(
-      icon: .info,
-      description: "description",
-      actionType: .chevronIcon {
-        print("BezierFloatingBanner")
-      }
-    )
+    VStack {
+      BezierCardBanner(
+        icon: .info,
+        description: "description",
+        actionType: .chevronIcon {
+          print("BezierFloatingBanner")
+        }
+      )
+    }
+    .padding(.horizontal, 20)
   }
 }
 

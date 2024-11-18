@@ -11,15 +11,18 @@ import BezierSwift
 
 struct BezierInnerBannerExample: View {
   var body: some View {
-    BezierInnerBanner(
-      sematic: .error,
-      icon: .android,
-      title: "Title text (optional)",
-      description: "description",
-      actionType: .chevronIcon {
-        print("BezierInnerBanner")
-      }
-    )
+    VStack {
+      BezierInnerBanner(
+        sematic: .error,
+        icon: .android,
+        title: "Title text (optional)",
+        description: "description",
+        actionType: .chevronIcon {
+          print("BezierInnerBanner")
+        }
+      )
+    }
+    .padding(.horizontal, 20)
   }
 }
 
