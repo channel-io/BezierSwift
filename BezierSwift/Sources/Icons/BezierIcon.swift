@@ -282,6 +282,7 @@ public enum BezierIcon: String {
   case `history` = "icon-history"
   case `home` = "icon-home"
   case `homeFilled` = "icon-home-filled"
+  case `hospital` = "icon-hospital"
   case `hourglass1` = "icon-hourglass-1"
   case `hourglass2` = "icon-hourglass-2"
   case `hourglass3` = "icon-hourglass-3"
