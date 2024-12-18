@@ -378,7 +378,7 @@ extension BezierColor {
   public static var successFgDark: BezierColor { BezierColor(semanticToken: .successFgDark) }
 }
 
-// MARK: - Legacy SemanticColor Support
+// MARK: - Bezier V1 SemanticColor Support
 extension BezierColor {
   // MARK: - Background
   @available(*, deprecated, renamed: "bgWhiteAlphaTransparent", message: "Use `bgWhiteAlphaTransparent` instead.")
@@ -389,49 +389,13 @@ extension BezierColor {
   
   @available(*, deprecated, renamed: "bgWhiteHigher", message: "Use `bgWhiteHigher` instead.")
   public static var bgWhiteLow: BezierColor { BezierColor(functionalColorToken: .bgWhiteHigher) }
-  
-//  @available(*, deprecated, renamed: "bgWhiteNormal", message: "Use `bgWhiteNormal` instead.")
-//  public static var bgWhiteNormal: BezierColor { BezierColor(functionalColorToken: .bgWhiteNormal) }
-  
+
   @available(*, deprecated, renamed: "bgWhiteAlphaLighter", message: "Use `bgWhiteAlphaLighter` instead.")
   public static var bgWhiteDimDark: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLighter) }
   
   @available(*, deprecated, renamed: "bgWhiteAlphaLight", message: "Use `bgWhiteAlphaLight` instead.")
   public static var bgWhiteDimLight: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLight) }
-  
-//  @available(*, deprecated, renamed: "bgBlackDark", message: "Use `bgBlackDark` instead.")
-//  public static var bgBlackDark: BezierColor { BezierColor(functionalColorToken: .bgBlackDark) }
-  
-//  @available(*, deprecated, renamed: "bgBlackDarker", message: "Use `bgBlackDarker` instead.")
-//  public static var bgBlackDarker: BezierColor { BezierColor(functionalColorToken: .bgBlackDarker) }
-  
-//  @available(*, deprecated, renamed: "bgBlackDarkest", message: "Use `bgBlackDarkest` instead.")
-//  public static var bgBlackDarkest: BezierColor { BezierColor(functionalColorToken: .bgBlackDarkest) }
-  
-//  @available(*, deprecated, renamed: "bgBlackLight", message: "Use `bgBlackLight` instead.")
-//  public static var bgBlackLight: BezierColor { BezierColor(functionalColorToken: .bgBlackLight) }
-  
-//  @available(*, deprecated, renamed: "bgBlackLighter", message: "Use `bgBlackLighter` instead.")
-//  public static var bgBlackLighter: BezierColor { BezierColor(functionalColorToken: .bgBlackLighter) }
-  
-//  @available(*, deprecated, renamed: "bgBlackLightest", message: "Use `bgBlackLightest` instead.")
-//  public static var bgBlackLightest: BezierColor { BezierColor(functionalColorToken: .bgBlackLightest) }
-  
-//  @available(*, deprecated, renamed: "bgGreyDarkest", message: "Use `bgGreyDarkest` instead.")
-//  public static var bgGreyDarkest: BezierColor { BezierColor(functionalColorToken: .bgGreyDarkest) }
-  
-//  @available(*, deprecated, renamed: "bgGreyDark", message: "Use `bgGreyDark` instead.")
-//  public static var bgGreyDark: BezierColor { BezierColor(functionalColorToken: .bgGreyDark) }
-  
-//  @available(*, deprecated, renamed: "bgGreyLight", message: "Use `bgGreyLight` instead.")
-//  public static var bgGreyLight: BezierColor { BezierColor(functionalColorToken: .bgGreyLight) }
-  
-//  @available(*, deprecated, renamed: "bgGreyLighter", message: "Use `bgGreyLighter` instead.")
-//  public static var bgGreyLighter: BezierColor { BezierColor(functionalColorToken: .bgGreyLighter) }
-  
-//  @available(*, deprecated, renamed: "bgGreyLightest", message: "Use `bgGreyLightest` instead.")
-//  public static var bgGreyLightest: BezierColor { BezierColor(functionalColorToken: .bgGreyLightest) }
-  
+
   @available(*, deprecated, renamed: "bgGreyAlphaLight", message: "Use `bgGreyAlphaLight` instead.")
   public static var bgGreyDimLightest: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaLight) }
   
