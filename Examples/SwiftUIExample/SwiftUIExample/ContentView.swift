@@ -16,6 +16,15 @@ struct ContentView: View {
       List {
         Section {
           NavigationLink {
+            BezierColorExample()
+          } label: {
+            Text("Color")
+          }
+        } header: {
+          Text("Foundation")
+        }
+        Section {
+          NavigationLink {
             BezierLoaderExample()
           } label: {
             Text("Loader")

@@ -22,7 +22,7 @@ struct BezierButtonStyle: ButtonStyle {
       .background(
         RoundedRectangle(cornerRadius: self.cornerRadius, style: .circular)
           .foregroundColor(
-            configuration.isPressed ? self.backgroundColor.color: self.backgroundColor.color
+            configuration.isPressed ? self.backgroundColor.pressedColor: self.backgroundColor.color
           )
       )
   }
