@@ -20,6 +20,11 @@ struct ContentView: View {
           } label: {
             Text("Loader")
           }
+          NavigationLink {
+            BezierProgressBarExample()
+          } label: {
+            Text("ProgressBar")
+          }
         } header: {
           Text("Status")
         }
