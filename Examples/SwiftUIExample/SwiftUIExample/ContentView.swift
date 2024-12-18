@@ -30,6 +30,11 @@ struct ContentView: View {
             Text("Loader")
           }
           NavigationLink {
+            BezierCheckboxExample()
+          } label: {
+            Text("Checkbox")
+          }
+          NavigationLink {
             BezierProgressBarExample()
           } label: {
             Text("ProgressBar")
