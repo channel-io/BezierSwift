@@ -16,6 +16,15 @@ struct ContentView: View {
       List {
         Section {
           NavigationLink {
+            BezierColorExample()
+          } label: {
+            Text("Color")
+          }
+        } header: {
+          Text("Foundation")
+        }
+        Section {
+          NavigationLink {
             BezierLoaderExample()
           } label: {
             Text("Loader")
@@ -25,8 +34,37 @@ struct ContentView: View {
           } label: {
             Text("Checkbox")
           }
+          NavigationLink {
+            BezierProgressBarExample()
+          } label: {
+            Text("ProgressBar")
+          }
+          NavigationLink {
+            BezierEmojiExample()
+          } label: {
+            Text("Emoji")
+          }
         } header: {
           Text("Status")
+        }
+        Section {
+          NavigationLink {
+            BezierInnerBannerExample()
+          } label: {
+            Text("InnerBanner")
+          }
+          NavigationLink {
+            BezierFloatingBannerExample()
+          } label: {
+            Text("FloatingBanner")
+          }
+          NavigationLink {
+            BezierCardBannerExample()
+          } label: {
+            Text("CardBanner")
+          }
+        } header: {
+          Text("Feedback")
         }
         Section {
           NavigationLink {

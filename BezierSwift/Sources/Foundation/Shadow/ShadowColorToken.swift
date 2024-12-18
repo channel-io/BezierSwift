@@ -28,10 +28,10 @@ struct ShadowColorToken {
 }
 
 extension ShadowColorToken {
-  static var xlarge = ShadowColorToken(globalColorToken: .black30)
-  static var large = ShadowColorToken(globalColorToken: .black22)
-  static var medium = ShadowColorToken(globalColorToken: .black15)
-  static var small = ShadowColorToken(globalColorToken: .black8)
-  static var base = ShadowColorToken(globalColorToken: .black5)
-  static var baseInner = ShadowColorToken(globalColorToken: .white12)
+  static var xlarge = ShadowColorToken(globalColorToken: .black_30)
+  static var large = ShadowColorToken(globalColorToken: .black_22)
+  static var medium = ShadowColorToken(globalColorToken: .black_15)
+  static var small = ShadowColorToken(globalColorToken: .black_8)
+  static var base = ShadowColorToken(globalColorToken: .black_5)
+  static var baseInner = ShadowColorToken(globalColorToken: .white_12)
 }

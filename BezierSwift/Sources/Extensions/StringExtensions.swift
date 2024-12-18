@@ -41,4 +41,11 @@ extension String {
     
     return (red: 1, green: 1, blue: 1, alpha: 1)
   }
+  
+  func percentEncode() -> String? {
+    let unreserved = ":-._~/?#"
+    let allowed = NSMutableCharacterSet.alphanumeric()
+    allowed.addCharacters(in: unreserved)
+    return self.addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)
+  }
 }

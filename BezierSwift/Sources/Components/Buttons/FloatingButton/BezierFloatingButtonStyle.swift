@@ -20,7 +20,7 @@ struct BezierFloatingButtonStyle: ButtonStyle {
       .background(
         Capsule(style: .circular)
           .foregroundColor(
-            configuration.isPressed ? self.backgroundColor.color: self.backgroundColor.color
+            configuration.isPressed ? self.backgroundColor.pressedColor: self.backgroundColor.color
           )
       )
       .applyBezierShadow(.shadow2)
