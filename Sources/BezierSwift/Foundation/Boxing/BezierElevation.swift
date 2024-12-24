@@ -15,14 +15,14 @@ public enum BezierElevation {
   case mEv5
   case mEv6
 
-  var rawValue: (semanticColor: SemanticColor, x: CGFloat, y: CGFloat, blur: CGFloat) {
+  var rawValue: (bezierColor: BezierColor, x: CGFloat, y: CGFloat, blur: CGFloat) {
     switch self {
-    case .mEv1: return (.shdwMedium, 0, 1, 4)
-    case .mEv2: return (.shdwMedium, 0, 2, 6)
-    case .mEv3: return (.shdwLarge, 0, 4, 20)
-    case .mEv4: return (.shdwXlarge, 0, 4, 24)
-    case .mEv5: return (.shdwXlarge, 0, 6, 40)
-    case .mEv6: return (.shdwXlarge, 0, 12, 60)
+    case .mEv1: return (.shadowMedium, 0, 1, 4)
+    case .mEv2: return (.shadowMedium, 0, 2, 6)
+    case .mEv3: return (.shadowLarge, 0, 4, 20)
+    case .mEv4: return (.shadowXlarge, 0, 4, 24)
+    case .mEv5: return (.shadowXlarge, 0, 6, 40)
+    case .mEv6: return (.shadowXlarge, 0, 12, 60)
     }
   }
 }
@@ -33,9 +33,7 @@ extension View {
   }
 }
 
-private struct BezierElevationView: ViewModifier, Themeable {
-  @Environment(\.colorScheme) var colorScheme
-  
+private struct BezierElevationView: ViewModifier {
   let elevation: BezierElevation
   
   init(_ elevation: BezierElevation) {
@@ -47,7 +45,7 @@ private struct BezierElevationView: ViewModifier, Themeable {
     
     content
       .shadow(
-        color: self.palette(elevationRawValue.semanticColor),
+        color: elevationRawValue.bezierColor.color,
         radius: elevationRawValue.blur,
         x: elevationRawValue.x,
         y: elevationRawValue.y

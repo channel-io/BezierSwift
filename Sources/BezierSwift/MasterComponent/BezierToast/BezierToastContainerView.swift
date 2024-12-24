@@ -11,8 +11,7 @@ private enum Metric {
   static let topPadding = CGFloat(5)
 }
 
-struct BezierToastContainerView: View, Themeable {
-  @Environment(\.colorScheme) var colorScheme
+struct BezierToastContainerView: View {
   @StateObject private var viewModel: BezierToastViewModel
   
   init(viewModel: BezierToastViewModel) {

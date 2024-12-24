@@ -24,8 +24,7 @@ private enum Constant {
   static let disappearDelay = CGFloat(3.0)
 }
 
-struct BezierToast: View, Themeable {
-  @Environment(\.colorScheme) var colorScheme
+struct BezierToast: View {
   @EnvironmentObject private var viewModel: BezierToastViewModel
   
   private let param: BezierToastParam
@@ -46,19 +45,19 @@ struct BezierToast: View, Themeable {
               .scaledToFit()
               .frame(width: leftItem.length, height: leftItem.length)
               .padding(.top, leftItem.top)
-              .foregroundColor(self.palette(color))
+              .foregroundColor(color.color)
           }
         }
         
         Text(self.param.title)
-          .applyBezierFontStyle(.bold14, semanticColor: .bgtxtAbsoluteWhiteDark)
+          .applyBezierFontStyle(.bold14, bezierColor: .bgtxtAbsoluteWhiteDark)
           .lineLimit(Constant.textLineLimit)
           .padding(.vertical, Metric.textTopPadding)
       }
       .padding(.vertical, Metric.contentHStackVerticalPadding)
       .padding(.horizontal, Metric.contentHStackHorizontalPadding)
     }
-    .background(self.palette(.bgBlackDarker))
+    .background(BezierColor.bgBlackDarker.color)
     .applyBlurEffect()
     .applyBezierCornerRadius(type: .round20)
     .frame(maxWidth: Constant.contentMaxWidth)

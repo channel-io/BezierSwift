@@ -44,11 +44,10 @@ extension String {
   }
   
   func applyBezierTagFont(
-    _ component: BezierComponentable,
     normalFont: BezierFont,
-    normalColor: SemanticColor,
+    normalColor: BezierColor,
     boldFont: BezierFont,
-    boldColor: SemanticColor,
+    boldColor: BezierColor,
     underlineStyle: NSUnderlineStyle = .single,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
@@ -69,7 +68,7 @@ extension String {
     }
     
     let normalAttributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: normalColor.palette(component),
+      .foregroundColor: normalColor.uiColor,
       .font: normalFont.font,
       .kern: normalFont.letterSpacing,
       .paragraphStyle: normalParagraphStyle,
@@ -77,7 +76,7 @@ extension String {
     ]
     
     let boldAttributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: boldColor.palette(component),
+      .foregroundColor: boldColor.uiColor,
       .font: boldFont.font,
       .kern: boldFont.letterSpacing,
       .paragraphStyle: blodParagraphStyle,
@@ -160,5 +159,41 @@ extension String {
   
   func replace(_ target: String, withString: String) -> String {
     return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
+  }
+}
+
+extension String {
+  func toRGBA() -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+    
+    if self.hasPrefix("#") {
+      let start = self.index(self.startIndex, offsetBy: 1)
+      let hexColor = String(self[start...])
+      
+      if hexColor.count == 6 || hexColor.count == 8 {
+        let scanner = Scanner(string: hexColor)
+        var hexNumber: UInt64 = 0
+        
+        if scanner.scanHexInt64(&hexNumber) {
+          if hexColor.count == 8 {
+            // RGBA 형태
+            return (
+              red: CGFloat((hexNumber & 0xFF000000) >> 24) / 255,
+              green: CGFloat((hexNumber & 0x00FF0000) >> 16) / 255,
+              blue: CGFloat((hexNumber & 0x0000FF00) >> 8) / 255,
+              alpha: CGFloat(hexNumber & 0x000000FF) / 255
+            )
+          } else if hexColor.count == 6 {
+            return (
+              red: CGFloat((hexNumber & 0xFF0000) >> 16) / 255,
+              green: CGFloat((hexNumber & 0x00FF00) >> 8) / 255,
+              blue: CGFloat(hexNumber & 0x0000FF) / 255,
+              alpha: 1
+            )
+          }
+        }
+      }
+    }
+    
+    return (red: 1, green: 1, blue: 1, alpha: 1)
   }
 }
