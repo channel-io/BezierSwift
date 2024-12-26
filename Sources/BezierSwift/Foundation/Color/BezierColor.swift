@@ -84,7 +84,12 @@ public struct BezierColor {
   }
 }
 
-extension BezierColor: Equatable {
+extension BezierColor: Hashable {
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(self.bezierColor.lightColorToken.hex)
+    hasher.combine(self.bezierColor.darkColorToken.hex)
+  }
+  
   public static func == (lhs: BezierColor, rhs: BezierColor) -> Bool {
     lhs.bezierColor.lightColorToken.hex == rhs.bezierColor.lightColorToken.hex
     && lhs.bezierColor.darkColorToken.hex == rhs.bezierColor.darkColorToken.hex
