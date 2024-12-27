@@ -559,10 +559,10 @@ extension BezierColor {
   public static var bdrWhite: BezierColor { BezierColor(functionalColorToken: .bgWhiteHighest) }
   
   // MARK: - Appendix, Blue
-  @available(*, deprecated, message: "Use `fgBlueLightest` for icon and text colors, and `bgBlueLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgBlueLightest", message: "Use `bgBlueLightest` instead.")
   public static var bgtxtBlueLightest: BezierColor { BezierColor(functionalColorToken: .bgBlueLightest) }
   
-  @available(*, deprecated, message: "Use `fgBlueLighter` for icon and text colors, and `bgBlueLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgBlueLighter", message: "Use `bgBlueLighter` instead.")
   public static var bgtxtBlueLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueLighter) }
   
   @available(*, deprecated, message: "Use `fgBlueLight` for icon and text colors, and `bgBlueLight` for background color instead.")
@@ -575,10 +575,10 @@ extension BezierColor {
   public static var bgtxtBlueDark: BezierColor { BezierColor(functionalColorToken: .bgBlueDark) }
   
   // MARK: - Appendix, Cobalt
-  @available(*, deprecated, message: "Use `fgCobaltLightest` for icon and text colors, and `bgCobaltLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgCobaltLightest", message: "Use `bgCobaltLightest` instead.")
   public static var bgtxtCobaltLightest: BezierColor { BezierColor(functionalColorToken: .bgCobaltLightest) }
   
-  @available(*, deprecated, message: "Use `fgCobaltLighter` for icon and text colors, and `bgCobaltLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgCobaltLighter", message: "Use `bgCobaltLighter` instead.")
   public static var bgtxtCobaltLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltLighter) }
   
   @available(*, deprecated, message: "Use `fgCobaltLight` for icon and text colors, and `bgCobaltLight` for background color instead.")
@@ -591,10 +591,10 @@ extension BezierColor {
   public static var bgtxtCobaltDark: BezierColor { BezierColor(functionalColorToken: .bgCobaltDark) }
   
   // MARK: - Appendix, Teal
-  @available(*, deprecated, message: "Use `fgTealLightest` for icon and text colors, and `bgTealLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgTealLightest", message: "Use `bgTealLightest` instead.")
   public static var bgtxtTealLightest: BezierColor { BezierColor(functionalColorToken: .bgTealLightest) }
   
-  @available(*, deprecated, message: "Use `fgTealLighter` for icon and text colors, and `bgTealLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgTealLighter", message: "Use `bgTealLighter` instead.")
   public static var bgtxtTealLighter: BezierColor { BezierColor(functionalColorToken: .bgTealLighter) }
   
   @available(*, deprecated, message: "Use `fgTealLight` for icon and text colors, and `bgTealLight` for background color instead.")
@@ -607,10 +607,10 @@ extension BezierColor {
   public static var bgtxtTealDark: BezierColor { BezierColor(functionalColorToken: .bgTealDark) }
   
   // MARK: - Appendix, Green
-  @available(*, deprecated, message: "Use `fgGreenLightest` for icon and text colors, and `bgGreenLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgGreenLightest", message: "Use `bgGreenLightest` instead.")
   public static var bgtxtGreenLightest: BezierColor { BezierColor(functionalColorToken: .bgGreenLightest) }
   
-  @available(*, deprecated, message: "Use `fgGreenLighter` for icon and text colors, and `bgGreenLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgGreenLighter", message: "Use `bgGreenLighter` instead.")
   public static var bgtxtGreenLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenLighter) }
   
   @available(*, deprecated, message: "Use `fgGreenLight` for icon and text colors, and `bgGreenLight` for background color instead.")
@@ -623,10 +623,10 @@ extension BezierColor {
   public static var bgtxtGreenDark: BezierColor { BezierColor(functionalColorToken: .bgGreenDark) }
   
   // MARK: - Appendix, Olive
-  @available(*, deprecated, message: "Use `fgOliveLightest` for icon and text colors, and `bgOliveLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgOliveLightest", message: "Use `bgOliveLightest` instead.")
   public static var bgtxtOliveLightest: BezierColor { BezierColor(functionalColorToken: .bgOliveLightest) }
   
-  @available(*, deprecated, message: "Use `fgOliveLighter` for icon and text colors, and `bgOliveLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgOliveLighter", message: "Use `bgOliveLighter` instead.")
   public static var bgtxtOliveLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveLighter) }
   
   @available(*, deprecated, message: "Use `fgOliveLight` for icon and text colors, and `bgOliveLight` for background color instead.")
@@ -639,10 +639,10 @@ extension BezierColor {
   public static var bgtxtOliveDark: BezierColor { BezierColor(functionalColorToken: .bgOliveDark) }
   
   // MARK: - Appendix, Yellow
-  @available(*, deprecated, message: "Use `fgYellowLightest` for icon and text colors, and `bgYellowLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgYellowLightest", message: "Use `bgYellowLightest` instead.")
   public static var bgtxtYellowLightest: BezierColor { BezierColor(functionalColorToken: .bgYellowLightest) }
   
-  @available(*, deprecated, message: "Use `fgYellowLighter` for icon and text colors, and `bgYellowLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgYellowLighter", message: "Use `bgYellowLighter` instead.")
   public static var bgtxtYellowLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowLighter) }
   
   @available(*, deprecated, message: "Use `fgYellowLight` for icon and text colors, and `bgYellowLight` for background color instead.")
@@ -655,10 +655,10 @@ extension BezierColor {
   public static var bgtxtYellowDark: BezierColor { BezierColor(functionalColorToken: .bgYellowDark) }
   
   // MARK: - Appendix, Orange
-  @available(*, deprecated, message: "Use `fgOrangeLightest` for icon and text colors, and `bgOrangeLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgOrangeLightest", message: "Use `bgOrangeLightest` instead.")
   public static var bgtxtOrangeLightest: BezierColor { BezierColor(functionalColorToken: .bgOrangeLightest) }
   
-  @available(*, deprecated, message: "Use `fgOrangeLighter` for icon and text colors, and `bgOrangeLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgOrangeLighter", message: "Use `bgOrangeLighter` instead.")
   public static var bgtxtOrangeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeLighter) }
   
   @available(*, deprecated, message: "Use `fgOrangeLight` for icon and text colors, and `bgOrangeLight` for background color instead.")
@@ -671,10 +671,10 @@ extension BezierColor {
   public static var bgtxtOrangeDark: BezierColor { BezierColor(functionalColorToken: .bgOrangeDark) }
   
   // MARK: - Appendix, Red
-  @available(*, deprecated, message: "Use `fgRedLightest` for icon and text colors, and `bgRedLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgRedLightest", message: "Use `bgRedLightest` instead.")
   public static var bgtxtRedLightest: BezierColor { BezierColor(functionalColorToken: .bgRedLightest) }
   
-  @available(*, deprecated, message: "Use `fgRedLighter` for icon and text colors, and `bgRedLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgRedLighter", message: "Use `bgRedLighter` instead.")
   public static var bgtxtRedLighter: BezierColor { BezierColor(functionalColorToken: .bgRedLighter) }
   
   @available(*, deprecated, message: "Use `fgRedLight` for icon and text colors, and `bgRedLight` for background color instead.")
@@ -687,10 +687,10 @@ extension BezierColor {
   public static var bgtxtRedDark: BezierColor { BezierColor(functionalColorToken: .bgRedDark) }
   
   // MARK: - Appendix, Pink
-  @available(*, deprecated, message: "Use `fgPinkLightest` for icon and text colors, and `bgPinkLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgPinkLightest", message: "Use `bgPinkLightest` instead.")
   public static var bgtxtPinkLightest: BezierColor { BezierColor(functionalColorToken: .bgPinkLightest) }
   
-  @available(*, deprecated, message: "Use `fgPinkLighter` for icon and text colors, and `bgPinkLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgPinkLighter", message: "Use `bgPinkLighter` instead.")
   public static var bgtxtPinkLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkLighter) }
   
   @available(*, deprecated, message: "Use `fgPinkLight` for icon and text colors, and `bgPinkLight` for background color instead.")
@@ -703,10 +703,10 @@ extension BezierColor {
   public static var bgtxtPinkDark: BezierColor { BezierColor(functionalColorToken: .bgPinkDark) }
   
   // MARK: - Appendix, Purple
-  @available(*, deprecated, message: "Use `fgPurpleLightest` for icon and text colors, and `bgPurpleLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgPurpleLightest", message: "Use `bgPurpleLightest` instead.")
   public static var bgtxtPurpleLightest: BezierColor { BezierColor(functionalColorToken: .bgPurpleLightest) }
   
-  @available(*, deprecated, message: "Use `fgPurpleLighter` for icon and text colors, and `bgPurpleLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgPurpleLighter", message: "Use `bgPurpleLighter` instead.")
   public static var bgtxtPurpleLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleLighter) }
   
   @available(*, deprecated, message: "Use `fgPurpleLight` for icon and text colors, and `bgPurpleLight` for background color instead.")
@@ -719,10 +719,10 @@ extension BezierColor {
   public static var bgtxtPurpleDark: BezierColor { BezierColor(functionalColorToken: .bgPurpleDark) }
   
   // MARK: - Appendix, Navy
-  @available(*, deprecated, message: "Use `fgNavyLightest` for icon and text colors, and `bgNavyLightest` for background color instead.")
+  @available(*, deprecated, renamed: "bgNavyLightest", message: "Use `bgNavyLightest` instead.")
   public static var bgtxtNavyLightest: BezierColor { BezierColor(functionalColorToken: .bgNavyLightest) }
   
-  @available(*, deprecated, message: "Use `fgNavyLighter` for icon and text colors, and `bgNavyLighter` for background color instead.")
+  @available(*, deprecated, renamed: "bgNavyLighter", message: "Use `bgNavyLighter` instead.")
   public static var bgtxtNavyLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyLighter) }
   
   @available(*, deprecated, message: "Use `fgNavyLight` for icon and text colors, and `bgNavyLight` for background color instead.")
