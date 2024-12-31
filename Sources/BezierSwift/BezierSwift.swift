@@ -7,6 +7,10 @@
 
 import UIKit
 
+public protocol BezierSwiftDelegate: AnyObject {
+  func windowsForThemeUpdate() -> [UIWindow]
+}
+
 public final class BezierSwift {
   public struct Config {
     fileprivate let hideKeyboardOnDialogDisplay: Bool
@@ -16,16 +20,19 @@ public final class BezierSwift {
     }
   }
   
-  static let shared = BezierSwift()
-  
-  private init() { }
+  public static let shared = BezierSwift()
+  public weak var delegate: BezierSwiftDelegate?
   
   let toastViewModel = BezierToastViewModel()
   let dialogViewModel = BezierDialogViewModel()
+  var config = Config()
+  public private(set) var currentTheme: BezierTheme = .system
   
   weak var bezierWindow: BezierWindow?
+  
   var allowHitTest: Bool { self.dialogViewModel.item.isNotNil }
-  var config = Config()
+  
+  private init() { }
   
   fileprivate func hideKeyboard() {
     // NOTE: BezierDialog update 시 firstResponder 전달이 안돼서 키보드가 닫히지 않는 문제가 있습니다.
@@ -103,5 +110,18 @@ extension BezierSwift {
   
   public static func dismissDialog() {
     BezierSwift.shared.dialogViewModel.dismiss()
+  }
+}
+
+extension BezierSwift {
+  public static func applyTheme(_ theme: BezierTheme) {
+    guard BezierSwift.shared.currentTheme != theme else { return }
+    
+    BezierSwift.shared.currentTheme = theme
+    BezierSwift.shared.bezierWindow?.overrideUserInterfaceStyle = theme.userInterfaceStyle
+    
+    BezierSwift.shared.delegate?.windowsForThemeUpdate().forEach { window in
+      window.overrideUserInterfaceStyle = theme.userInterfaceStyle
+    }
   }
 }
