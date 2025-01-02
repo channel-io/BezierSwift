@@ -41,6 +41,9 @@ public enum BezierTheme: BezierThemeCompatible {
   
   // MARK: appearance
   // 현재 테마의 BezierAppearance 반환. 시스템 모드인 경우 실제 스타일을 기반으로 BezierAppearance를 반환합니다.
+  // NOTE: `UIUserInterfaceStyle.unspecified`는 특정하지 않은 기본 system 테마입니다.
+  // overrideUserInterfaceStyle 을 통해 override 하지 않은 상태로 os의 light dark 와 관계 없이 unspecified 가 기본 설정입니다.
+  // 다만, 현재 userInterfaceStyle 을 요청할 경우 실제로 보이는 테마 값을 반환합니다.
   public var appearance: BezierAppearance {
     switch self {
     case .light: return .light
