@@ -9,13 +9,12 @@ import UIKit
 import BezierSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-  
-  var window: UIWindow?
+  weak var windowScene: UIWindowScene?
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = scene as? UIWindowScene else { return }
     
-    self.window = windowScene.windows.first { $0.isKeyWindow }
+    self.windowScene = windowScene
     
     BezierSwift.shared.delegate = self
   }
@@ -23,8 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate: BezierSwiftDelegate {
   func windowsForThemeUpdate() -> [UIWindow] {
-    guard let window else { return [] }
-    
-    return [window]
+    self.windowScene?.windows ?? []
   }
 }
