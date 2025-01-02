@@ -99,640 +99,640 @@ extension BezierColor: Hashable {
 //MARK: - FunctionalColorToken
 extension BezierColor {
   // MARK: ForegroundBlue
-  public static var fgBlueNormal: BezierColor { BezierColor(functionalColorToken: .fgBlueNormal) }
-  public static var fgBlueLight: BezierColor { BezierColor(functionalColorToken: .fgBlueLight) }
-  public static var fgBlueDark: BezierColor { BezierColor(functionalColorToken: .fgBlueDark) }
+  public static let fgBlueNormal = BezierColor(functionalColorToken: .fgBlueNormal)
+  public static let fgBlueLight = BezierColor(functionalColorToken: .fgBlueLight)
+  public static let fgBlueDark = BezierColor(functionalColorToken: .fgBlueDark)
 
   // MARK: ForegroundCobalt
-  public static var fgCobaltNormal: BezierColor { BezierColor(functionalColorToken: .fgCobaltNormal) }
-  public static var fgCobaltLight: BezierColor { BezierColor(functionalColorToken: .fgCobaltLight) }
-  public static var fgCobaltDark: BezierColor { BezierColor(functionalColorToken: .fgCobaltDark) }
+  public static let fgCobaltNormal = BezierColor(functionalColorToken: .fgCobaltNormal)
+  public static let fgCobaltLight = BezierColor(functionalColorToken: .fgCobaltLight)
+  public static let fgCobaltDark = BezierColor(functionalColorToken: .fgCobaltDark)
 
   // MARK: ForegroundRed
-  public static var fgRedNormal: BezierColor { BezierColor(functionalColorToken: .fgRedNormal) }
-  public static var fgRedLight: BezierColor { BezierColor(functionalColorToken: .fgRedLight) }
-  public static var fgRedDark: BezierColor { BezierColor(functionalColorToken: .fgRedDark) }
+  public static let fgRedNormal = BezierColor(functionalColorToken: .fgRedNormal)
+  public static let fgRedLight = BezierColor(functionalColorToken: .fgRedLight)
+  public static let fgRedDark = BezierColor(functionalColorToken: .fgRedDark)
 
   // MARK: ForegroundOrange
-  public static var fgOrangeNormal: BezierColor { BezierColor(functionalColorToken: .fgOrangeNormal) }
-  public static var fgOrangeLight: BezierColor { BezierColor(functionalColorToken: .fgOrangeLight) }
-  public static var fgOrangeDark: BezierColor { BezierColor(functionalColorToken: .fgOrangeDark) }
+  public static let fgOrangeNormal = BezierColor(functionalColorToken: .fgOrangeNormal)
+  public static let fgOrangeLight = BezierColor(functionalColorToken: .fgOrangeLight)
+  public static let fgOrangeDark = BezierColor(functionalColorToken: .fgOrangeDark)
 
   // MARK: ForegroundGreen
-  public static var fgGreenNormal: BezierColor { BezierColor(functionalColorToken: .fgGreenNormal) }
-  public static var fgGreenLight: BezierColor { BezierColor(functionalColorToken: .fgGreenLight) }
-  public static var fgGreenDark: BezierColor { BezierColor(functionalColorToken: .fgGreenDark) }
+  public static let fgGreenNormal = BezierColor(functionalColorToken: .fgGreenNormal)
+  public static let fgGreenLight = BezierColor(functionalColorToken: .fgGreenLight)
+  public static let fgGreenDark = BezierColor(functionalColorToken: .fgGreenDark)
 
   // MARK: ForegroundTeal
-  public static var fgTealNormal: BezierColor { BezierColor(functionalColorToken: .fgTealNormal) }
-  public static var fgTealLight: BezierColor { BezierColor(functionalColorToken: .fgTealLight) }
-  public static var fgTealDark: BezierColor { BezierColor(functionalColorToken: .fgTealDark) }
+  public static let fgTealNormal = BezierColor(functionalColorToken: .fgTealNormal)
+  public static let fgTealLight = BezierColor(functionalColorToken: .fgTealLight)
+  public static let fgTealDark = BezierColor(functionalColorToken: .fgTealDark)
 
   // MARK: ForegroundOlive
-  public static var fgOliveNormal: BezierColor { BezierColor(functionalColorToken: .fgOliveNormal) }
-  public static var fgOliveLight: BezierColor { BezierColor(functionalColorToken: .fgOliveLight) }
-  public static var fgOliveDark: BezierColor { BezierColor(functionalColorToken: .fgOliveDark) }
+  public static let fgOliveNormal = BezierColor(functionalColorToken: .fgOliveNormal)
+  public static let fgOliveLight = BezierColor(functionalColorToken: .fgOliveLight)
+  public static let fgOliveDark = BezierColor(functionalColorToken: .fgOliveDark)
 
   // MARK: ForegroundYellow
-  public static var fgYellowNormal: BezierColor { BezierColor(functionalColorToken: .fgYellowNormal) }
-  public static var fgYellowLight: BezierColor { BezierColor(functionalColorToken: .fgYellowLight) }
-  public static var fgYellowDark: BezierColor { BezierColor(functionalColorToken: .fgYellowDark) }
+  public static let fgYellowNormal = BezierColor(functionalColorToken: .fgYellowNormal)
+  public static let fgYellowLight = BezierColor(functionalColorToken: .fgYellowLight)
+  public static let fgYellowDark = BezierColor(functionalColorToken: .fgYellowDark)
 
   // MARK: ForegroundPink
-  public static var fgPinkNormal: BezierColor { BezierColor(functionalColorToken: .fgPinkNormal) }
-  public static var fgPinkLight: BezierColor { BezierColor(functionalColorToken: .fgPinkLight) }
-  public static var fgPinkDark: BezierColor { BezierColor(functionalColorToken: .fgPinkDark) }
+  public static let fgPinkNormal = BezierColor(functionalColorToken: .fgPinkNormal)
+  public static let fgPinkLight = BezierColor(functionalColorToken: .fgPinkLight)
+  public static let fgPinkDark = BezierColor(functionalColorToken: .fgPinkDark)
 
   // MARK: ForegroundPurple
-  public static var fgPurpleNormal: BezierColor { BezierColor(functionalColorToken: .fgPurpleNormal) }
-  public static var fgPurpleLight: BezierColor { BezierColor(functionalColorToken: .fgPurpleLight) }
-  public static var fgPurpleDark: BezierColor { BezierColor(functionalColorToken: .fgPurpleDark) }
+  public static let fgPurpleNormal = BezierColor(functionalColorToken: .fgPurpleNormal)
+  public static let fgPurpleLight = BezierColor(functionalColorToken: .fgPurpleLight)
+  public static let fgPurpleDark = BezierColor(functionalColorToken: .fgPurpleDark)
 
   // MARK: ForegroundNavy
-  public static var fgNavyNormal: BezierColor { BezierColor(functionalColorToken: .fgNavyNormal) }
-  public static var fgNavyLight: BezierColor { BezierColor(functionalColorToken: .fgNavyLight) }
-  public static var fgNavyDark: BezierColor { BezierColor(functionalColorToken: .fgNavyDark) }
+  public static let fgNavyNormal = BezierColor(functionalColorToken: .fgNavyNormal)
+  public static let fgNavyLight = BezierColor(functionalColorToken: .fgNavyLight)
+  public static let fgNavyDark = BezierColor(functionalColorToken: .fgNavyDark)
 
   // MARK: ForegroundGrey
-  public static var fgGreyDarkest: BezierColor { BezierColor(functionalColorToken: .fgGreyDarkest) }
-  public static var fgGreyDark: BezierColor { BezierColor(functionalColorToken: .fgGreyDark) }
-  public static var fgGreyNormal: BezierColor { BezierColor(functionalColorToken: .fgGreyNormal) }
-  public static var fgGreyLight: BezierColor { BezierColor(functionalColorToken: .fgGreyLight) }
-  public static var fgGreyLighter: BezierColor { BezierColor(functionalColorToken: .fgGreyLighter) }
-  public static var fgGreyLightest: BezierColor { BezierColor(functionalColorToken: .fgGreyLightest) }
+  public static let fgGreyDarkest = BezierColor(functionalColorToken: .fgGreyDarkest)
+  public static let fgGreyDark = BezierColor(functionalColorToken: .fgGreyDark)
+  public static let fgGreyNormal = BezierColor(functionalColorToken: .fgGreyNormal)
+  public static let fgGreyLight = BezierColor(functionalColorToken: .fgGreyLight)
+  public static let fgGreyLighter = BezierColor(functionalColorToken: .fgGreyLighter)
+  public static let fgGreyLightest = BezierColor(functionalColorToken: .fgGreyLightest)
 
   // MARK: ForegroundGreyAlpha
-  public static var fgGreyAlphaDarkest: BezierColor { BezierColor(functionalColorToken: .fgGreyAlphaDarkest) }
-  public static var fgGreyAlphaDarker: BezierColor { BezierColor(functionalColorToken: .fgGreyAlphaDarker) }
-  public static var fgGreyAlphaDark: BezierColor { BezierColor(functionalColorToken: .fgGreyAlphaDark) }
-  public static var fgGreyAlphaLight: BezierColor { BezierColor(functionalColorToken: .fgGreyAlphaLight) }
+  public static let fgGreyAlphaDarkest = BezierColor(functionalColorToken: .fgGreyAlphaDarkest)
+  public static let fgGreyAlphaDarker = BezierColor(functionalColorToken: .fgGreyAlphaDarker)
+  public static let fgGreyAlphaDark = BezierColor(functionalColorToken: .fgGreyAlphaDark)
+  public static let fgGreyAlphaLight = BezierColor(functionalColorToken: .fgGreyAlphaLight)
 
   // MARK: ForegroundWhite
-  public static var fgWhiteNormal: BezierColor { BezierColor(functionalColorToken: .fgWhiteNormal) }
+  public static let fgWhiteNormal = BezierColor(functionalColorToken: .fgWhiteNormal)
 
   // MARK: ForegroundBlack
-  public static var fgBlackLightest: BezierColor { BezierColor(functionalColorToken: .fgBlackLightest) }
-  public static var fgBlackLight: BezierColor { BezierColor(functionalColorToken: .fgBlackLight) }
-  public static var fgBlackDark: BezierColor { BezierColor(functionalColorToken: .fgBlackDark) }
-  public static var fgBlackDarker: BezierColor { BezierColor(functionalColorToken: .fgBlackDarker) }
-  public static var fgBlackDarkest: BezierColor { BezierColor(functionalColorToken: .fgBlackDarkest) }
-  public static var fgBlackPure: BezierColor { BezierColor(functionalColorToken: .fgBlackPure) }
+  public static let fgBlackLightest = BezierColor(functionalColorToken: .fgBlackLightest)
+  public static let fgBlackLight = BezierColor(functionalColorToken: .fgBlackLight)
+  public static let fgBlackDark = BezierColor(functionalColorToken: .fgBlackDark)
+  public static let fgBlackDarker = BezierColor(functionalColorToken: .fgBlackDarker)
+  public static let fgBlackDarkest = BezierColor(functionalColorToken: .fgBlackDarkest)
+  public static let fgBlackPure = BezierColor(functionalColorToken: .fgBlackPure)
 
   // MARK: ForegroundAbsoluteWhite
-  public static var fgAbsoluteWhiteLightest: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteWhiteLightest) }
-  public static var fgAbsoluteWhiteLighter: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteWhiteLighter) }
-  public static var fgAbsoluteWhiteLight: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteWhiteLight) }
-  public static var fgAbsoluteWhiteNormal: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteWhiteNormal) }
-  public static var fgAbsoluteWhiteDark: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteWhiteDark) }
+  public static let fgAbsoluteWhiteLightest = BezierColor(functionalColorToken: .fgAbsoluteWhiteLightest)
+  public static let fgAbsoluteWhiteLighter = BezierColor(functionalColorToken: .fgAbsoluteWhiteLighter)
+  public static let fgAbsoluteWhiteLight = BezierColor(functionalColorToken: .fgAbsoluteWhiteLight)
+  public static let fgAbsoluteWhiteNormal = BezierColor(functionalColorToken: .fgAbsoluteWhiteNormal)
+  public static let fgAbsoluteWhiteDark = BezierColor(functionalColorToken: .fgAbsoluteWhiteDark)
 
   // MARK: ForegroundAbsoluteBlack
-  public static var fgAbsoluteBlackLightest: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteBlackLightest) }
-  public static var fgAbsoluteBlackLighter: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteBlackLighter) }
-  public static var fgAbsoluteBlackLight: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteBlackLight) }
-  public static var fgAbsoluteBlackNormal: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteBlackNormal) }
-  public static var fgAbsoluteBlackDark: BezierColor { BezierColor(functionalColorToken: .fgAbsoluteBlackDark) }
+  public static let fgAbsoluteBlackLightest = BezierColor(functionalColorToken: .fgAbsoluteBlackLightest)
+  public static let fgAbsoluteBlackLighter = BezierColor(functionalColorToken: .fgAbsoluteBlackLighter)
+  public static let fgAbsoluteBlackLight = BezierColor(functionalColorToken: .fgAbsoluteBlackLight)
+  public static let fgAbsoluteBlackNormal = BezierColor(functionalColorToken: .fgAbsoluteBlackNormal)
+  public static let fgAbsoluteBlackDark = BezierColor(functionalColorToken: .fgAbsoluteBlackDark)
 
   // MARK: BackgroundBlue
-  public static var bgBlueNormal: BezierColor { BezierColor(functionalColorToken: .bgBlueNormal) }
-  public static var bgBlueLight: BezierColor { BezierColor(functionalColorToken: .bgBlueLight) }
-  public static var bgBlueLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueLighter) }
-  public static var bgBlueLightest: BezierColor { BezierColor(functionalColorToken: .bgBlueLightest) }
-  public static var bgBlueDark: BezierColor { BezierColor(functionalColorToken: .bgBlueDark) }
-  public static var bgBlueShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueShadeLighter) }
-  public static var bgBlueShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgBlueShadeNormal) }
-  public static var bgBlueTransparent: BezierColor { BezierColor(functionalColorToken: .bgBlueTransparent) }
+  public static let bgBlueNormal = BezierColor(functionalColorToken: .bgBlueNormal)
+  public static let bgBlueLight = BezierColor(functionalColorToken: .bgBlueLight)
+  public static let bgBlueLighter = BezierColor(functionalColorToken: .bgBlueLighter)
+  public static let bgBlueLightest = BezierColor(functionalColorToken: .bgBlueLightest)
+  public static let bgBlueDark = BezierColor(functionalColorToken: .bgBlueDark)
+  public static let bgBlueShadeLighter = BezierColor(functionalColorToken: .bgBlueShadeLighter)
+  public static let bgBlueShadeNormal = BezierColor(functionalColorToken: .bgBlueShadeNormal)
+  public static let bgBlueTransparent = BezierColor(functionalColorToken: .bgBlueTransparent)
 
   // MARK: BackgroundCobalt
-  public static var bgCobaltNormal: BezierColor { BezierColor(functionalColorToken: .bgCobaltNormal) }
-  public static var bgCobaltLight: BezierColor { BezierColor(functionalColorToken: .bgCobaltLight) }
-  public static var bgCobaltLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltLighter) }
-  public static var bgCobaltLightest: BezierColor { BezierColor(functionalColorToken: .bgCobaltLightest) }
-  public static var bgCobaltDark: BezierColor { BezierColor(functionalColorToken: .bgCobaltDark) }
-  public static var bgCobaltShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltShadeLighter) }
-  public static var bgCobaltShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgCobaltShadeNormal) }
-  public static var bgCobaltTransparent: BezierColor { BezierColor(functionalColorToken: .bgCobaltTransparent) }
+  public static let bgCobaltNormal = BezierColor(functionalColorToken: .bgCobaltNormal)
+  public static let bgCobaltLight = BezierColor(functionalColorToken: .bgCobaltLight)
+  public static let bgCobaltLighter = BezierColor(functionalColorToken: .bgCobaltLighter)
+  public static let bgCobaltLightest = BezierColor(functionalColorToken: .bgCobaltLightest)
+  public static let bgCobaltDark = BezierColor(functionalColorToken: .bgCobaltDark)
+  public static let bgCobaltShadeLighter = BezierColor(functionalColorToken: .bgCobaltShadeLighter)
+  public static let bgCobaltShadeNormal = BezierColor(functionalColorToken: .bgCobaltShadeNormal)
+  public static let bgCobaltTransparent = BezierColor(functionalColorToken: .bgCobaltTransparent)
 
   // MARK: BackgroundRed
-  public static var bgRedNormal: BezierColor { BezierColor(functionalColorToken: .bgRedNormal) }
-  public static var bgRedLight: BezierColor { BezierColor(functionalColorToken: .bgRedLight) }
-  public static var bgRedLighter: BezierColor { BezierColor(functionalColorToken: .bgRedLighter) }
-  public static var bgRedLightest: BezierColor { BezierColor(functionalColorToken: .bgRedLightest) }
-  public static var bgRedDark: BezierColor { BezierColor(functionalColorToken: .bgRedDark) }
-  public static var bgRedShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgRedShadeLighter) }
-  public static var bgRedShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgRedShadeNormal) }
-  public static var bgRedTransparent: BezierColor { BezierColor(functionalColorToken: .bgRedTransparent) }
+  public static let bgRedNormal = BezierColor(functionalColorToken: .bgRedNormal)
+  public static let bgRedLight = BezierColor(functionalColorToken: .bgRedLight)
+  public static let bgRedLighter = BezierColor(functionalColorToken: .bgRedLighter)
+  public static let bgRedLightest = BezierColor(functionalColorToken: .bgRedLightest)
+  public static let bgRedDark = BezierColor(functionalColorToken: .bgRedDark)
+  public static let bgRedShadeLighter = BezierColor(functionalColorToken: .bgRedShadeLighter)
+  public static let bgRedShadeNormal = BezierColor(functionalColorToken: .bgRedShadeNormal)
+  public static let bgRedTransparent = BezierColor(functionalColorToken: .bgRedTransparent)
 
   // MARK: BackgroundOrange
-  public static var bgOrangeNormal: BezierColor { BezierColor(functionalColorToken: .bgOrangeNormal) }
-  public static var bgOrangeLight: BezierColor { BezierColor(functionalColorToken: .bgOrangeLight) }
-  public static var bgOrangeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeLighter) }
-  public static var bgOrangeLightest: BezierColor { BezierColor(functionalColorToken: .bgOrangeLightest) }
-  public static var bgOrangeDark: BezierColor { BezierColor(functionalColorToken: .bgOrangeDark) }
-  public static var bgOrangeShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeShadeLighter) }
-  public static var bgOrangeShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgOrangeShadeNormal) }
-  public static var bgOrangeTransparent: BezierColor { BezierColor(functionalColorToken: .bgOrangeTransparent) }
+  public static let bgOrangeNormal = BezierColor(functionalColorToken: .bgOrangeNormal)
+  public static let bgOrangeLight = BezierColor(functionalColorToken: .bgOrangeLight)
+  public static let bgOrangeLighter = BezierColor(functionalColorToken: .bgOrangeLighter)
+  public static let bgOrangeLightest = BezierColor(functionalColorToken: .bgOrangeLightest)
+  public static let bgOrangeDark = BezierColor(functionalColorToken: .bgOrangeDark)
+  public static let bgOrangeShadeLighter = BezierColor(functionalColorToken: .bgOrangeShadeLighter)
+  public static let bgOrangeShadeNormal = BezierColor(functionalColorToken: .bgOrangeShadeNormal)
+  public static let bgOrangeTransparent = BezierColor(functionalColorToken: .bgOrangeTransparent)
 
   // MARK: BackgroundGreen
-  public static var bgGreenNormal: BezierColor { BezierColor(functionalColorToken: .bgGreenNormal) }
-  public static var bgGreenLight: BezierColor { BezierColor(functionalColorToken: .bgGreenLight) }
-  public static var bgGreenLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenLighter) }
-  public static var bgGreenLightest: BezierColor { BezierColor(functionalColorToken: .bgGreenLightest) }
-  public static var bgGreenDark: BezierColor { BezierColor(functionalColorToken: .bgGreenDark) }
-  public static var bgGreenShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenShadeLighter) }
-  public static var bgGreenShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgGreenShadeNormal) }
-  public static var bgGreenTransparent: BezierColor { BezierColor(functionalColorToken: .bgGreenTransparent) }
+  public static let bgGreenNormal = BezierColor(functionalColorToken: .bgGreenNormal)
+  public static let bgGreenLight = BezierColor(functionalColorToken: .bgGreenLight)
+  public static let bgGreenLighter = BezierColor(functionalColorToken: .bgGreenLighter)
+  public static let bgGreenLightest = BezierColor(functionalColorToken: .bgGreenLightest)
+  public static let bgGreenDark = BezierColor(functionalColorToken: .bgGreenDark)
+  public static let bgGreenShadeLighter = BezierColor(functionalColorToken: .bgGreenShadeLighter)
+  public static let bgGreenShadeNormal = BezierColor(functionalColorToken: .bgGreenShadeNormal)
+  public static let bgGreenTransparent = BezierColor(functionalColorToken: .bgGreenTransparent)
 
   // MARK: BackgroundTeal
-  public static var bgTealNormal: BezierColor { BezierColor(functionalColorToken: .bgTealNormal) }
-  public static var bgTealLight: BezierColor { BezierColor(functionalColorToken: .bgTealLight) }
-  public static var bgTealLighter: BezierColor { BezierColor(functionalColorToken: .bgTealLighter) }
-  public static var bgTealLightest: BezierColor { BezierColor(functionalColorToken: .bgTealLightest) }
-  public static var bgTealDark: BezierColor { BezierColor(functionalColorToken: .bgTealDark) }
-  public static var bgTealShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgTealShadeLighter) }
-  public static var bgTealShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgTealShadeNormal) }
-  public static var bgTealTransparent: BezierColor { BezierColor(functionalColorToken: .bgTealTransparent) }
+  public static let bgTealNormal = BezierColor(functionalColorToken: .bgTealNormal)
+  public static let bgTealLight = BezierColor(functionalColorToken: .bgTealLight)
+  public static let bgTealLighter = BezierColor(functionalColorToken: .bgTealLighter)
+  public static let bgTealLightest = BezierColor(functionalColorToken: .bgTealLightest)
+  public static let bgTealDark = BezierColor(functionalColorToken: .bgTealDark)
+  public static let bgTealShadeLighter = BezierColor(functionalColorToken: .bgTealShadeLighter)
+  public static let bgTealShadeNormal = BezierColor(functionalColorToken: .bgTealShadeNormal)
+  public static let bgTealTransparent = BezierColor(functionalColorToken: .bgTealTransparent)
 
   // MARK: BackgroundOlive
-  public static var bgOliveNormal: BezierColor { BezierColor(functionalColorToken: .bgOliveNormal) }
-  public static var bgOliveLight: BezierColor { BezierColor(functionalColorToken: .bgOliveLight) }
-  public static var bgOliveLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveLighter) }
-  public static var bgOliveLightest: BezierColor { BezierColor(functionalColorToken: .bgOliveLightest) }
-  public static var bgOliveDark: BezierColor { BezierColor(functionalColorToken: .bgOliveDark) }
-  public static var bgOliveShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveShadeLighter) }
-  public static var bgOliveShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgOliveShadeNormal) }
-  public static var bgOliveTransparent: BezierColor { BezierColor(functionalColorToken: .bgOliveTransparent) }
+  public static let bgOliveNormal = BezierColor(functionalColorToken: .bgOliveNormal)
+  public static let bgOliveLight = BezierColor(functionalColorToken: .bgOliveLight)
+  public static let bgOliveLighter = BezierColor(functionalColorToken: .bgOliveLighter)
+  public static let bgOliveLightest = BezierColor(functionalColorToken: .bgOliveLightest)
+  public static let bgOliveDark = BezierColor(functionalColorToken: .bgOliveDark)
+  public static let bgOliveShadeLighter = BezierColor(functionalColorToken: .bgOliveShadeLighter)
+  public static let bgOliveShadeNormal = BezierColor(functionalColorToken: .bgOliveShadeNormal)
+  public static let bgOliveTransparent = BezierColor(functionalColorToken: .bgOliveTransparent)
 
   // MARK: BackgroundYellow
-  public static var bgYellowNormal: BezierColor { BezierColor(functionalColorToken: .bgYellowNormal) }
-  public static var bgYellowLight: BezierColor { BezierColor(functionalColorToken: .bgYellowLight) }
-  public static var bgYellowLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowLighter) }
-  public static var bgYellowLightest: BezierColor { BezierColor(functionalColorToken: .bgYellowLightest) }
-  public static var bgYellowDark: BezierColor { BezierColor(functionalColorToken: .bgYellowDark) }
-  public static var bgYellowShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowShadeLighter) }
-  public static var bgYellowShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgYellowShadeNormal) }
-  public static var bgYellowTransparent: BezierColor { BezierColor(functionalColorToken: .bgYellowTransparent) }
+  public static let bgYellowNormal = BezierColor(functionalColorToken: .bgYellowNormal)
+  public static let bgYellowLight = BezierColor(functionalColorToken: .bgYellowLight)
+  public static let bgYellowLighter = BezierColor(functionalColorToken: .bgYellowLighter)
+  public static let bgYellowLightest = BezierColor(functionalColorToken: .bgYellowLightest)
+  public static let bgYellowDark = BezierColor(functionalColorToken: .bgYellowDark)
+  public static let bgYellowShadeLighter = BezierColor(functionalColorToken: .bgYellowShadeLighter)
+  public static let bgYellowShadeNormal = BezierColor(functionalColorToken: .bgYellowShadeNormal)
+  public static let bgYellowTransparent = BezierColor(functionalColorToken: .bgYellowTransparent)
 
   // MARK: BackgroundPink
-  public static var bgPinkNormal: BezierColor { BezierColor(functionalColorToken: .bgPinkNormal) }
-  public static var bgPinkLight: BezierColor { BezierColor(functionalColorToken: .bgPinkLight) }
-  public static var bgPinkLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkLighter) }
-  public static var bgPinkLightest: BezierColor { BezierColor(functionalColorToken: .bgPinkLightest) }
-  public static var bgPinkDark: BezierColor { BezierColor(functionalColorToken: .bgPinkDark) }
-  public static var bgPinkShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkShadeLighter) }
-  public static var bgPinkShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgPinkShadeNormal) }
-  public static var bgPinkTransparent: BezierColor { BezierColor(functionalColorToken: .bgPinkTransparent) }
+  public static let bgPinkNormal = BezierColor(functionalColorToken: .bgPinkNormal)
+  public static let bgPinkLight = BezierColor(functionalColorToken: .bgPinkLight)
+  public static let bgPinkLighter = BezierColor(functionalColorToken: .bgPinkLighter)
+  public static let bgPinkLightest = BezierColor(functionalColorToken: .bgPinkLightest)
+  public static let bgPinkDark = BezierColor(functionalColorToken: .bgPinkDark)
+  public static let bgPinkShadeLighter = BezierColor(functionalColorToken: .bgPinkShadeLighter)
+  public static let bgPinkShadeNormal = BezierColor(functionalColorToken: .bgPinkShadeNormal)
+  public static let bgPinkTransparent = BezierColor(functionalColorToken: .bgPinkTransparent)
 
   // MARK: BackgroundPurple
-  public static var bgPurpleNormal: BezierColor { BezierColor(functionalColorToken: .bgPurpleNormal) }
-  public static var bgPurpleLight: BezierColor { BezierColor(functionalColorToken: .bgPurpleLight) }
-  public static var bgPurpleLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleLighter) }
-  public static var bgPurpleLightest: BezierColor { BezierColor(functionalColorToken: .bgPurpleLightest) }
-  public static var bgPurpleDark: BezierColor { BezierColor(functionalColorToken: .bgPurpleDark) }
-  public static var bgPurpleShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleShadeLighter) }
-  public static var bgPurpleShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgPurpleShadeNormal) }
-  public static var bgPurpleTransparent: BezierColor { BezierColor(functionalColorToken: .bgPurpleTransparent) }
+  public static let bgPurpleNormal = BezierColor(functionalColorToken: .bgPurpleNormal)
+  public static let bgPurpleLight = BezierColor(functionalColorToken: .bgPurpleLight)
+  public static let bgPurpleLighter = BezierColor(functionalColorToken: .bgPurpleLighter)
+  public static let bgPurpleLightest = BezierColor(functionalColorToken: .bgPurpleLightest)
+  public static let bgPurpleDark = BezierColor(functionalColorToken: .bgPurpleDark)
+  public static let bgPurpleShadeLighter = BezierColor(functionalColorToken: .bgPurpleShadeLighter)
+  public static let bgPurpleShadeNormal = BezierColor(functionalColorToken: .bgPurpleShadeNormal)
+  public static let bgPurpleTransparent = BezierColor(functionalColorToken: .bgPurpleTransparent)
 
   // MARK: - BackgroundNavy
-  public static var bgNavyNormal: BezierColor { BezierColor(functionalColorToken: .bgNavyNormal) }
-  public static var bgNavyLight: BezierColor { BezierColor(functionalColorToken: .bgNavyLight) }
-  public static var bgNavyLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyLighter) }
-  public static var bgNavyLightest: BezierColor { BezierColor(functionalColorToken: .bgNavyLightest) }
-  public static var bgNavyDark: BezierColor { BezierColor(functionalColorToken: .bgNavyDark) }
-  public static var bgNavyShadeLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyShadeLighter) }
-  public static var bgNavyShadeNormal: BezierColor { BezierColor(functionalColorToken: .bgNavyShadeNormal) }
-  public static var bgNavyTransparent: BezierColor { BezierColor(functionalColorToken: .bgNavyTransparent) }
+  public static let bgNavyNormal = BezierColor(functionalColorToken: .bgNavyNormal)
+  public static let bgNavyLight = BezierColor(functionalColorToken: .bgNavyLight)
+  public static let bgNavyLighter = BezierColor(functionalColorToken: .bgNavyLighter)
+  public static let bgNavyLightest = BezierColor(functionalColorToken: .bgNavyLightest)
+  public static let bgNavyDark = BezierColor(functionalColorToken: .bgNavyDark)
+  public static let bgNavyShadeLighter = BezierColor(functionalColorToken: .bgNavyShadeLighter)
+  public static let bgNavyShadeNormal = BezierColor(functionalColorToken: .bgNavyShadeNormal)
+  public static let bgNavyTransparent = BezierColor(functionalColorToken: .bgNavyTransparent)
 
   // MARK: BackgroundGrey
-  public static var bgGreyDarkest: BezierColor { BezierColor(functionalColorToken: .bgGreyDarkest) }
-  public static var bgGreyDark: BezierColor { BezierColor(functionalColorToken: .bgGreyDark) }
-  public static var bgGreyNormal: BezierColor { BezierColor(functionalColorToken: .bgGreyNormal) }
-  public static var bgGreyLight: BezierColor { BezierColor(functionalColorToken: .bgGreyLight) }
-  public static var bgGreyLighter: BezierColor { BezierColor(functionalColorToken: .bgGreyLighter) }
-  public static var bgGreyLightest: BezierColor { BezierColor(functionalColorToken: .bgGreyLightest) }
-  public static var bgGreyTransparent: BezierColor { BezierColor(functionalColorToken: .bgGreyTransparent) }
+  public static let bgGreyDarkest = BezierColor(functionalColorToken: .bgGreyDarkest)
+  public static let bgGreyDark = BezierColor(functionalColorToken: .bgGreyDark)
+  public static let bgGreyNormal = BezierColor(functionalColorToken: .bgGreyNormal)
+  public static let bgGreyLight = BezierColor(functionalColorToken: .bgGreyLight)
+  public static let bgGreyLighter = BezierColor(functionalColorToken: .bgGreyLighter)
+  public static let bgGreyLightest = BezierColor(functionalColorToken: .bgGreyLightest)
+  public static let bgGreyTransparent = BezierColor(functionalColorToken: .bgGreyTransparent)
 
   // MARK: BackgroundGreyAlpha
-  public static var bgGreyAlphaDarkest: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDarkest) }
-  public static var bgGreyAlphaDarker: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDarker) }
-  public static var bgGreyAlphaDark: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDark) }
-  public static var bgGreyAlphaLight: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaLight) }
+  public static let bgGreyAlphaDarkest = BezierColor(functionalColorToken: .bgGreyAlphaDarkest)
+  public static let bgGreyAlphaDarker = BezierColor(functionalColorToken: .bgGreyAlphaDarker)
+  public static let bgGreyAlphaDark = BezierColor(functionalColorToken: .bgGreyAlphaDark)
+  public static let bgGreyAlphaLight = BezierColor(functionalColorToken: .bgGreyAlphaLight)
 
   // MARK: BackgroundBlack
-  public static var bgBlackDarkest: BezierColor { BezierColor(functionalColorToken: .bgBlackDarkest) }
-  public static var bgBlackDarker: BezierColor { BezierColor(functionalColorToken: .bgBlackDarker) }
-  public static var bgBlackDark: BezierColor { BezierColor(functionalColorToken: .bgBlackDark) }
-  public static var bgBlackLight: BezierColor { BezierColor(functionalColorToken: .bgBlackLight) }
-  public static var bgBlackLighter: BezierColor { BezierColor(functionalColorToken: .bgBlackLighter) }
-  public static var bgBlackLightest: BezierColor { BezierColor(functionalColorToken: .bgBlackLightest) }
-  public static var bgBlackTransparent: BezierColor { BezierColor(functionalColorToken: .bgBlackTransparent) }
+  public static let bgBlackDarkest = BezierColor(functionalColorToken: .bgBlackDarkest)
+  public static let bgBlackDarker = BezierColor(functionalColorToken: .bgBlackDarker)
+  public static let bgBlackDark = BezierColor(functionalColorToken: .bgBlackDark)
+  public static let bgBlackLight = BezierColor(functionalColorToken: .bgBlackLight)
+  public static let bgBlackLighter = BezierColor(functionalColorToken: .bgBlackLighter)
+  public static let bgBlackLightest = BezierColor(functionalColorToken: .bgBlackLightest)
+  public static let bgBlackTransparent = BezierColor(functionalColorToken: .bgBlackTransparent)
 
   // MARK: BackgroundWhite
-  public static var bgWhiteHighest: BezierColor { BezierColor(functionalColorToken: .bgWhiteHighest) }
-  public static var bgWhiteHigher: BezierColor { BezierColor(functionalColorToken: .bgWhiteHigher) }
-  public static var bgWhiteNormal: BezierColor { BezierColor(functionalColorToken: .bgWhiteNormal) }
-  public static var bgWhiteTransparent: BezierColor { BezierColor(functionalColorToken: .bgWhiteTransparent) }
+  public static let bgWhiteHighest = BezierColor(functionalColorToken: .bgWhiteHighest)
+  public static let bgWhiteHigher = BezierColor(functionalColorToken: .bgWhiteHigher)
+  public static let bgWhiteNormal = BezierColor(functionalColorToken: .bgWhiteNormal)
+  public static let bgWhiteTransparent = BezierColor(functionalColorToken: .bgWhiteTransparent)
 
   // MARK: BackgroundWhiteAlpha
-  public static var bgWhiteAlphaLightest: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLightest) }
-  public static var bgWhiteAlphaLighter: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLighter) }
-  public static var bgWhiteAlphaLight: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLight) }
-  public static var bgWhiteAlphaTransparent: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaTransparent) }
+  public static let bgWhiteAlphaLightest = BezierColor(functionalColorToken: .bgWhiteAlphaLightest)
+  public static let bgWhiteAlphaLighter = BezierColor(functionalColorToken: .bgWhiteAlphaLighter)
+  public static let bgWhiteAlphaLight = BezierColor(functionalColorToken: .bgWhiteAlphaLight)
+  public static let bgWhiteAlphaTransparent = BezierColor(functionalColorToken: .bgWhiteAlphaTransparent)
 
   // MARK: BackgroundAbsoluteBlack
-  public static var bgAbsoluteBlackDark: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackDark) }
-  public static var bgAbsoluteBlackNormal: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackNormal) }
-  public static var bgAbsoluteBlackLight: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLight) }
-  public static var bgAbsoluteBlackLighter: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLighter) }
-  public static var bgAbsoluteBlackLightest: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLightest) }
-  public static var bgAbsoluteBlackTransparent: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackTransparent) }
+  public static let bgAbsoluteBlackDark = BezierColor(functionalColorToken: .bgAbsoluteBlackDark)
+  public static let bgAbsoluteBlackNormal = BezierColor(functionalColorToken: .bgAbsoluteBlackNormal)
+  public static let bgAbsoluteBlackLight = BezierColor(functionalColorToken: .bgAbsoluteBlackLight)
+  public static let bgAbsoluteBlackLighter = BezierColor(functionalColorToken: .bgAbsoluteBlackLighter)
+  public static let bgAbsoluteBlackLightest = BezierColor(functionalColorToken: .bgAbsoluteBlackLightest)
+  public static let bgAbsoluteBlackTransparent = BezierColor(functionalColorToken: .bgAbsoluteBlackTransparent)
 
   // MARK: BackgroundAbsoluteWhite
-  public static var bgAbsoluteWhiteDark: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteDark) }
-  public static var bgAbsoluteWhiteNormal: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteNormal) }
-  public static var bgAbsoluteWhiteLight: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLight) }
-  public static var bgAbsoluteWhiteLighter: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLighter) }
-  public static var bgAbsoluteWhiteLightest: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLightest) }
-  public static var bgAbsoluteWhiteTransparent: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteTransparent) }
+  public static let bgAbsoluteWhiteDark = BezierColor(functionalColorToken: .bgAbsoluteWhiteDark)
+  public static let bgAbsoluteWhiteNormal = BezierColor(functionalColorToken: .bgAbsoluteWhiteNormal)
+  public static let bgAbsoluteWhiteLight = BezierColor(functionalColorToken: .bgAbsoluteWhiteLight)
+  public static let bgAbsoluteWhiteLighter = BezierColor(functionalColorToken: .bgAbsoluteWhiteLighter)
+  public static let bgAbsoluteWhiteLightest = BezierColor(functionalColorToken: .bgAbsoluteWhiteLightest)
+  public static let bgAbsoluteWhiteTransparent = BezierColor(functionalColorToken: .bgAbsoluteWhiteTransparent)
 
   // MARK: Surface
-  public static var surfaceLowest: BezierColor { BezierColor(functionalColorToken: .surfaceLowest) }
-  public static var surfaceLower: BezierColor { BezierColor(functionalColorToken: .surfaceLower) }
-  public static var surfaceNormal: BezierColor { BezierColor(functionalColorToken: .surfaceNormal) }
+  public static let surfaceLowest = BezierColor(functionalColorToken: .surfaceLowest)
+  public static let surfaceLower = BezierColor(functionalColorToken: .surfaceLower)
+  public static let surfaceNormal = BezierColor(functionalColorToken: .surfaceNormal)
 
   // MARK: Shadow
-  public static var shadowXlarge: BezierColor { BezierColor(functionalColorToken: .shadowXlarge) }
-  public static var shadowLarge: BezierColor { BezierColor(functionalColorToken: .shadowLarge) }
-  public static var shadowMedium: BezierColor { BezierColor(functionalColorToken: .shadowMedium) }
-  public static var shadowSmall: BezierColor { BezierColor(functionalColorToken: .shadowSmall) }
-  public static var shadowBase: BezierColor { BezierColor(functionalColorToken: .shadowBase) }
-  public static var shadowBaseInner: BezierColor { BezierColor(functionalColorToken: .shadowBaseInner) }
+  public static let shadowXlarge = BezierColor(functionalColorToken: .shadowXlarge)
+  public static let shadowLarge = BezierColor(functionalColorToken: .shadowLarge)
+  public static let shadowMedium = BezierColor(functionalColorToken: .shadowMedium)
+  public static let shadowSmall = BezierColor(functionalColorToken: .shadowSmall)
+  public static let shadowBase = BezierColor(functionalColorToken: .shadowBase)
+  public static let shadowBaseInner = BezierColor(functionalColorToken: .shadowBaseInner)
   
   // MARK: Dim
-  public static var dimBlackNormal: BezierColor { BezierColor(functionalColorToken: .dimBlackNormal) }
-  public static var dimBlackLight: BezierColor { BezierColor(functionalColorToken: .dimBlackLight) }
+  public static let dimBlackNormal = BezierColor(functionalColorToken: .dimBlackNormal)
+  public static let dimBlackLight = BezierColor(functionalColorToken: .dimBlackLight)
 }
 
 //MARK: - SemanticColorToken
 extension BezierColor {
   // MARK: PrimaryBackground
-  public static var primaryBgNormal: BezierColor { BezierColor(semanticToken: .primaryBgNormal) }
-  public static var primaryBgLight: BezierColor { BezierColor(semanticToken: .primaryBgLight) }
-  public static var primaryBgLighter: BezierColor { BezierColor(semanticToken: .primaryBgLighter) }
-  public static var primaryBgLightest: BezierColor { BezierColor(semanticToken: .primaryBgLightest) }
-  public static var primaryBgDark: BezierColor { BezierColor(semanticToken: .primaryBgDark) }
-  public static var primaryBgTransparent: BezierColor { BezierColor(semanticToken: .primaryBgTransparent) }
+  public static let primaryBgNormal = BezierColor(semanticToken: .primaryBgNormal)
+  public static let primaryBgLight = BezierColor(semanticToken: .primaryBgLight)
+  public static let primaryBgLighter = BezierColor(semanticToken: .primaryBgLighter)
+  public static let primaryBgLightest = BezierColor(semanticToken: .primaryBgLightest)
+  public static let primaryBgDark = BezierColor(semanticToken: .primaryBgDark)
+  public static let primaryBgTransparent = BezierColor(semanticToken: .primaryBgTransparent)
 
   // MARK: PrimaryForeground
-  public static var primaryFgNormal: BezierColor { BezierColor(semanticToken: .primaryFgNormal) }
-  public static var primaryFgLight: BezierColor { BezierColor(semanticToken: .primaryFgLight) }
-  public static var primaryFgDark: BezierColor { BezierColor(semanticToken: .primaryFgDark) }
+  public static let primaryFgNormal = BezierColor(semanticToken: .primaryFgNormal)
+  public static let primaryFgLight = BezierColor(semanticToken: .primaryFgLight)
+  public static let primaryFgDark = BezierColor(semanticToken: .primaryFgDark)
 
   // MARK: CriticalBackground
-  public static var criticalBgDark: BezierColor { BezierColor(semanticToken: .criticalBgDark) }
-  public static var criticalBgNormal: BezierColor { BezierColor(semanticToken: .criticalBgNormal) }
-  public static var criticalBgLight: BezierColor { BezierColor(semanticToken: .criticalBgLight) }
-  public static var criticalBgLighter: BezierColor { BezierColor(semanticToken: .criticalBgLighter) }
-  public static var criticalBgLightest: BezierColor { BezierColor(semanticToken: .criticalBgLightest) }
-  public static var criticalBgTransparent: BezierColor { BezierColor(semanticToken: .criticalBgTransparent) }
+  public static let criticalBgDark = BezierColor(semanticToken: .criticalBgDark)
+  public static let criticalBgNormal = BezierColor(semanticToken: .criticalBgNormal)
+  public static let criticalBgLight = BezierColor(semanticToken: .criticalBgLight)
+  public static let criticalBgLighter = BezierColor(semanticToken: .criticalBgLighter)
+  public static let criticalBgLightest = BezierColor(semanticToken: .criticalBgLightest)
+  public static let criticalBgTransparent = BezierColor(semanticToken: .criticalBgTransparent)
 
   // MARK: CriticalForeground
-  public static var criticalFgNormal: BezierColor { BezierColor(semanticToken: .criticalFgNormal) }
-  public static var criticalFgLight: BezierColor { BezierColor(semanticToken: .criticalFgLight) }
-  public static var criticalFgDark: BezierColor { BezierColor(semanticToken: .criticalFgDark) }
+  public static let criticalFgNormal = BezierColor(semanticToken: .criticalFgNormal)
+  public static let criticalFgLight = BezierColor(semanticToken: .criticalFgLight)
+  public static let criticalFgDark = BezierColor(semanticToken: .criticalFgDark)
 
   // MARK: WarningBackground
-  public static var warningBgDark: BezierColor { BezierColor(semanticToken: .warningBgDark) }
-  public static var warningBgNormal: BezierColor { BezierColor(semanticToken: .warningBgNormal) }
-  public static var warningBgLight: BezierColor { BezierColor(semanticToken: .warningBgLight) }
-  public static var warningBgLighter: BezierColor { BezierColor(semanticToken: .warningBgLighter) }
-  public static var warningBgLightest: BezierColor { BezierColor(semanticToken: .warningBgLightest) }
-  public static var warningBgTransparent: BezierColor { BezierColor(semanticToken: .warningBgTransparent) }
+  public static let warningBgDark = BezierColor(semanticToken: .warningBgDark)
+  public static let warningBgNormal = BezierColor(semanticToken: .warningBgNormal)
+  public static let warningBgLight = BezierColor(semanticToken: .warningBgLight)
+  public static let warningBgLighter = BezierColor(semanticToken: .warningBgLighter)
+  public static let warningBgLightest = BezierColor(semanticToken: .warningBgLightest)
+  public static let warningBgTransparent = BezierColor(semanticToken: .warningBgTransparent)
 
   // MARK: WarningForeground
-  public static var warningFgNormal: BezierColor { BezierColor(semanticToken: .warningFgNormal) }
-  public static var warningFgLight: BezierColor { BezierColor(semanticToken: .warningFgLight) }
-  public static var warningFgDark: BezierColor { BezierColor(semanticToken: .warningFgDark) }
+  public static let warningFgNormal = BezierColor(semanticToken: .warningFgNormal)
+  public static let warningFgLight = BezierColor(semanticToken: .warningFgLight)
+  public static let warningFgDark = BezierColor(semanticToken: .warningFgDark)
 
   // MARK: AccentBackground
-  public static var accentBgDark: BezierColor { BezierColor(semanticToken: .accentBgDark) }
-  public static var accentBgNormal: BezierColor { BezierColor(semanticToken: .accentBgNormal) }
-  public static var accentBgLight: BezierColor { BezierColor(semanticToken: .accentBgLight) }
-  public static var accentBgLighter: BezierColor { BezierColor(semanticToken: .accentBgLighter) }
-  public static var accentBgLightest: BezierColor { BezierColor(semanticToken: .accentBgLightest) }
-  public static var accentBgTransparent: BezierColor { BezierColor(semanticToken: .accentBgTransparent) }
+  public static let accentBgDark = BezierColor(semanticToken: .accentBgDark)
+  public static let accentBgNormal = BezierColor(semanticToken: .accentBgNormal)
+  public static let accentBgLight = BezierColor(semanticToken: .accentBgLight)
+  public static let accentBgLighter = BezierColor(semanticToken: .accentBgLighter)
+  public static let accentBgLightest = BezierColor(semanticToken: .accentBgLightest)
+  public static let accentBgTransparent = BezierColor(semanticToken: .accentBgTransparent)
 
   // MARK: AccentForeground
-  public static var accentFgNormal: BezierColor { BezierColor(semanticToken: .accentFgNormal) }
-  public static var accentFgLight: BezierColor { BezierColor(semanticToken: .accentFgLight) }
-  public static var accentFgDark: BezierColor { BezierColor(semanticToken: .accentFgDark) }
+  public static let accentFgNormal = BezierColor(semanticToken: .accentFgNormal)
+  public static let accentFgLight = BezierColor(semanticToken: .accentFgLight)
+  public static let accentFgDark = BezierColor(semanticToken: .accentFgDark)
 
   // MARK: SuccessBackground
-  public static var successBgDark: BezierColor { BezierColor(semanticToken: .successBgDark) }
-  public static var successBgNormal: BezierColor { BezierColor(semanticToken: .successBgNormal) }
-  public static var successBgLight: BezierColor { BezierColor(semanticToken: .successBgLight) }
-  public static var successBgLighter: BezierColor { BezierColor(semanticToken: .successBgLighter) }
-  public static var successBgLightest: BezierColor { BezierColor(semanticToken: .successBgLightest) }
-  public static var successBgTransparent: BezierColor { BezierColor(semanticToken: .successBgTransparent) }
+  public static let successBgDark = BezierColor(semanticToken: .successBgDark)
+  public static let successBgNormal = BezierColor(semanticToken: .successBgNormal)
+  public static let successBgLight = BezierColor(semanticToken: .successBgLight)
+  public static let successBgLighter = BezierColor(semanticToken: .successBgLighter)
+  public static let successBgLightest = BezierColor(semanticToken: .successBgLightest)
+  public static let successBgTransparent = BezierColor(semanticToken: .successBgTransparent)
 
   // MARK: SuccessForeground
-  public static var successFgNormal: BezierColor { BezierColor(semanticToken: .successFgNormal) }
-  public static var successFgLight: BezierColor { BezierColor(semanticToken: .successFgLight) }
-  public static var successFgDark: BezierColor { BezierColor(semanticToken: .successFgDark) }
+  public static let successFgNormal = BezierColor(semanticToken: .successFgNormal)
+  public static let successFgLight = BezierColor(semanticToken: .successFgLight)
+  public static let successFgDark = BezierColor(semanticToken: .successFgDark)
 }
 
 // MARK: - Bezier V1 SemanticColor Support
 extension BezierColor {
   // MARK: - Background
   @available(*, deprecated, renamed: "bgWhiteAlphaTransparent", message: "Use `bgWhiteAlphaTransparent` instead.")
-  public static var bgTransparent: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaTransparent) }
+  public static let bgTransparent = BezierColor(functionalColorToken: .bgWhiteAlphaTransparent)
   
   @available(*, deprecated, renamed: "bgWhiteHighest", message: "Use `bgWhiteHighest` instead.")
-  public static var bgWhiteHigh: BezierColor { BezierColor(functionalColorToken: .bgWhiteHighest) }
+  public static let bgWhiteHigh = BezierColor(functionalColorToken: .bgWhiteHighest)
   
   @available(*, deprecated, renamed: "bgWhiteHigher", message: "Use `bgWhiteHigher` instead.")
-  public static var bgWhiteLow: BezierColor { BezierColor(functionalColorToken: .bgWhiteHigher) }
+  public static let bgWhiteLow = BezierColor(functionalColorToken: .bgWhiteHigher)
 
   @available(*, deprecated, renamed: "bgWhiteAlphaLighter", message: "Use `bgWhiteAlphaLighter` instead.")
-  public static var bgWhiteDimDark: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLighter) }
+  public static let bgWhiteDimDark = BezierColor(functionalColorToken: .bgWhiteAlphaLighter)
   
   @available(*, deprecated, renamed: "bgWhiteAlphaLight", message: "Use `bgWhiteAlphaLight` instead.")
-  public static var bgWhiteDimLight: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLight) }
+  public static let bgWhiteDimLight = BezierColor(functionalColorToken: .bgWhiteAlphaLight)
 
   @available(*, deprecated, renamed: "bgGreyAlphaLight", message: "Use `bgGreyAlphaLight` instead.")
-  public static var bgGreyDimLightest: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaLight) }
+  public static let bgGreyDimLightest = BezierColor(functionalColorToken: .bgGreyAlphaLight)
   
   @available(*, deprecated, renamed: "bgGreyAlphaDarkest", message: "Use `bgGreyAlphaDarkest` instead.")
-  public static var bgGnb: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDarkest) }
+  public static let bgGnb = BezierColor(functionalColorToken: .bgGreyAlphaDarkest)
   
   @available(*, deprecated, renamed: "bgGreyAlphaDark", message: "Use `bgGreyAlphaDark` instead.")
-  public static var bgNavi: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDark) }
+  public static let bgNavi = BezierColor(functionalColorToken: .bgGreyAlphaDark)
   
   @available(*, deprecated, renamed: "bgWhiteAlphaLightest", message: "Use `bgWhiteAlphaLightest` instead.")
-  public static var bgHeaderFloat: BezierColor { BezierColor(functionalColorToken: .bgWhiteAlphaLightest) }
+  public static let bgHeaderFloat = BezierColor(functionalColorToken: .bgWhiteAlphaLightest)
   
   @available(*, deprecated, renamed: "bgWhiteHigher", message: "Use `bgWhiteHigher` instead.")
-  public static var bgHeader: BezierColor { BezierColor(functionalColorToken: .bgWhiteHigher) }
+  public static let bgHeader = BezierColor(functionalColorToken: .bgWhiteHigher)
   
   @available(*, deprecated, renamed: "bgGreyAlphaDarker", message: "Use `bgGreyAlphaDarker` instead.")
-  public static var bgLounge: BezierColor { BezierColor(functionalColorToken: .bgGreyAlphaDarker) }
+  public static let bgLounge = BezierColor(functionalColorToken: .bgGreyAlphaDarker)
   
   // MARK: - Text
   @available(*, deprecated, renamed: "fgBlackDarkest", message: "Use `fgBlackDarkest` instead.")
-  public static var txtBlackDarkest: BezierColor { BezierColor(functionalColorToken: .fgBlackDarkest) }
+  public static let txtBlackDarkest = BezierColor(functionalColorToken: .fgBlackDarkest)
   
   @available(*, deprecated, renamed: "fgBlackDarker", message: "Use `fgBlackDarker` instead.")
-  public static var txtBlackDarker: BezierColor { BezierColor(functionalColorToken: .fgBlackDarker) }
+  public static let txtBlackDarker = BezierColor(functionalColorToken: .fgBlackDarker)
   
   @available(*, deprecated, renamed: "fgBlackDark", message: "Use `fgBlackDark` instead.")
-  public static var txtBlackDark: BezierColor { BezierColor(functionalColorToken: .fgBlackDark) }
+  public static let txtBlackDark = BezierColor(functionalColorToken: .fgBlackDark)
   
   @available(*, deprecated, renamed: "fgWhiteNormal", message: "Use `fgWhiteNormal` instead.")
-  public static var txtWhiteNormal: BezierColor { BezierColor(functionalColorToken: .fgWhiteNormal) }
+  public static let txtWhiteNormal = BezierColor(functionalColorToken: .fgWhiteNormal)
   
   @available(*, deprecated, renamed: "fgBlackPure", message: "Use `fgBlackPure` instead.")
-  public static var txtBlackPure: BezierColor { BezierColor(functionalColorToken: .fgBlackPure) }
+  public static let txtBlackPure = BezierColor(functionalColorToken: .fgBlackPure)
   
   // MARK: - Background & Text - Absolute
   @available(*, deprecated, message: "Use `fgAbsoluteBlackDark` for icon and text colors, and `bgAbsoluteBlackDark` for background color instead.")
-  public static var bgtxtAbsoluteBlackDark: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackDark) }
+  public static let bgtxtAbsoluteBlackDark = BezierColor(functionalColorToken: .bgAbsoluteBlackDark)
   
   @available(*, deprecated, message: "Use `fgAbsoluteBlackNormal` for icon and text colors, and `bgAbsoluteBlackNormal` for background color instead.")
-  public static var bgtxtAbsoluteBlackNormal: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackNormal) }
+  public static let bgtxtAbsoluteBlackNormal = BezierColor(functionalColorToken: .bgAbsoluteBlackNormal)
   
   @available(*, deprecated, message: "Use `fgAbsoluteBlackLight` for icon and text colors, and `bgAbsoluteBlackLight` for background color instead.")
-  public static var bgtxtAbsoluteBlackLight: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLight) }
+  public static let bgtxtAbsoluteBlackLight = BezierColor(functionalColorToken: .bgAbsoluteBlackLight)
   
   @available(*, deprecated, message: "Use `fgAbsoluteBlackLighter` for icon and text colors, and `bgAbsoluteBlackLighter` for background color instead.")
-  public static var bgtxtAbsoluteBlackLighter: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLighter) }
+  public static let bgtxtAbsoluteBlackLighter = BezierColor(functionalColorToken: .bgAbsoluteBlackLighter)
   
   @available(*, deprecated, message: "Use `fgAbsoluteBlackLightest` for icon and text colors, and `bgAbsoluteBlackLightest` for background color instead.")
-  public static var bgtxtAbsoluteBlackLightest: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteBlackLightest) }
+  public static let bgtxtAbsoluteBlackLightest = BezierColor(functionalColorToken: .bgAbsoluteBlackLightest)
   
   @available(*, deprecated, message: "Use `fgAbsoluteWhiteDark` for icon and text colors, and `bgAbsoluteWhiteDark` for background color instead.")
-  public static var bgtxtAbsoluteWhiteDark: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteDark) }
+  public static let bgtxtAbsoluteWhiteDark = BezierColor(functionalColorToken: .bgAbsoluteWhiteDark)
   
   @available(*, deprecated, message: "Use `fgAbsoluteWhiteNormal` for icon and text colors, and `bgAbsoluteWhiteNormal` for background color instead.")
-  public static var bgtxtAbsoluteWhiteNormal: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteNormal) }
+  public static let bgtxtAbsoluteWhiteNormal = BezierColor(functionalColorToken: .bgAbsoluteWhiteNormal)
   
   @available(*, deprecated, message: "Use `fgAbsoluteWhiteLight` for icon and text colors, and `bgAbsoluteWhiteLight` for background color instead.")
-  public static var bgtxtAbsoluteWhiteLight: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLight) }
+  public static let bgtxtAbsoluteWhiteLight = BezierColor(functionalColorToken: .bgAbsoluteWhiteLight)
   
   @available(*, deprecated, message: "Use `fgAbsoluteWhiteLighter` for icon and text colors, and `bgAbsoluteWhiteLighter` for background color instead.")
-  public static var bgtxtAbsoluteWhiteLighter: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLighter) }
+  public static let bgtxtAbsoluteWhiteLighter = BezierColor(functionalColorToken: .bgAbsoluteWhiteLighter)
   
   @available(*, deprecated, message: "Use `fgAbsoluteWhiteLightest` for icon and text colors, and `bgAbsoluteWhiteLightest` for background color instead.")
-  public static var bgtxtAbsoluteWhiteLightest: BezierColor { BezierColor(functionalColorToken: .bgAbsoluteWhiteLightest) }
+  public static let bgtxtAbsoluteWhiteLightest = BezierColor(functionalColorToken: .bgAbsoluteWhiteLightest)
   
   // MARK: - Shadow for elevation
   @available(*, deprecated, renamed: "shadowXlarge", message: "Use `shadowXlarge` instead.")
-  public static var shdwXlarge: BezierColor { BezierColor(functionalColorToken: .shadowXlarge) }
+  public static let shdwXlarge = BezierColor(functionalColorToken: .shadowXlarge)
   
   @available(*, deprecated, renamed: "shadowLarge", message: "Use `shadowLarge` instead.")
-  public static var shdwLarge: BezierColor { BezierColor(functionalColorToken: .shadowLarge) }
+  public static let shdwLarge = BezierColor(functionalColorToken: .shadowLarge)
   
   @available(*, deprecated, renamed: "shadowMedium", message: "Use `shadowMedium` instead.")
-  public static var shdwMedium: BezierColor { BezierColor(functionalColorToken: .shadowMedium) }
+  public static let shdwMedium = BezierColor(functionalColorToken: .shadowMedium)
   
   @available(*, deprecated, renamed: "shadowSmall", message: "Use `shadowSmall` instead.")
-  public static var shdwSmall: BezierColor { BezierColor(functionalColorToken: .shadowSmall) }
+  public static let shdwSmall = BezierColor(functionalColorToken: .shadowSmall)
   
   @available(*, deprecated, renamed: "shadowBase", message: "Use `shadowBase` instead.")
-  public static var shdwBase: BezierColor { BezierColor(functionalColorToken: .shadowBase) }
+  public static let shdwBase = BezierColor(functionalColorToken: .shadowBase)
   
   @available(*, deprecated, renamed: "shadowBaseInner", message: "Use `shadowBaseInner` instead.")
-  public static var shdwBaseInner: BezierColor { BezierColor(functionalColorToken: .shadowBaseInner) }
+  public static let shdwBaseInner = BezierColor(functionalColorToken: .shadowBaseInner)
   
   // MARK: - Border & Divider
   @available(*, deprecated, renamed: "bgBlackDark", message: "Use `bgBlackDark` instead.")
-  public static var bdrBlackDark: BezierColor { BezierColor(functionalColorToken: .bgBlackDark) }
+  public static let bdrBlackDark = BezierColor(functionalColorToken: .bgBlackDark)
   
   @available(*, deprecated, renamed: "bgBlackLight", message: "Use `bgBlackLight` instead.")
-  public static var bdrBlackLight: BezierColor { BezierColor(functionalColorToken: .bgBlackLight) }
+  public static let bdrBlackLight = BezierColor(functionalColorToken: .bgBlackLight)
   
   @available(*, deprecated, renamed: "bgBlackLightest", message: "Use `bgBlackLightest` instead.")
-  public static var bdrBlackLightest: BezierColor { BezierColor(functionalColorToken: .bgBlackLightest) }
+  public static let bdrBlackLightest = BezierColor(functionalColorToken: .bgBlackLightest)
   
   @available(*, deprecated, renamed: "bgGreyLight", message: "Use `bgGreyLight` instead.")
-  public static var bdrGreyLight: BezierColor { BezierColor(functionalColorToken: .bgGreyLight) }
+  public static let bdrGreyLight = BezierColor(functionalColorToken: .bgGreyLight)
   
   @available(*, deprecated, renamed: "bgWhiteHighest", message: "Use `bgWhiteHighest` instead.")
-  public static var bdrWhite: BezierColor { BezierColor(functionalColorToken: .bgWhiteHighest) }
+  public static let bdrWhite = BezierColor(functionalColorToken: .bgWhiteHighest)
   
   // MARK: - Appendix, Blue
   @available(*, deprecated, renamed: "bgBlueLightest", message: "Use `bgBlueLightest` instead.")
-  public static var bgtxtBlueLightest: BezierColor { BezierColor(functionalColorToken: .bgBlueLightest) }
+  public static let bgtxtBlueLightest = BezierColor(functionalColorToken: .bgBlueLightest)
   
   @available(*, deprecated, renamed: "bgBlueLighter", message: "Use `bgBlueLighter` instead.")
-  public static var bgtxtBlueLighter: BezierColor { BezierColor(functionalColorToken: .bgBlueLighter) }
+  public static let bgtxtBlueLighter = BezierColor(functionalColorToken: .bgBlueLighter)
   
   @available(*, deprecated, message: "Use `fgBlueLight` for icon and text colors, and `bgBlueLight` for background color instead.")
-  public static var bgtxtBlueLight: BezierColor { BezierColor(functionalColorToken: .bgBlueLight) }
+  public static let bgtxtBlueLight = BezierColor(functionalColorToken: .bgBlueLight)
   
   @available(*, deprecated, message: "Use `fgBlueNormal` for icon and text colors, and `bgBlueNormal` for background color instead.")
-  public static var bgtxtBlueNormal: BezierColor { BezierColor(functionalColorToken: .bgBlueNormal) }
+  public static let bgtxtBlueNormal = BezierColor(functionalColorToken: .bgBlueNormal)
   
   @available(*, deprecated, message: "Use `fgBlueDark` for icon and text colors, and `bgBlueDark` for background color instead.")
-  public static var bgtxtBlueDark: BezierColor { BezierColor(functionalColorToken: .bgBlueDark) }
+  public static let bgtxtBlueDark = BezierColor(functionalColorToken: .bgBlueDark)
   
   // MARK: - Appendix, Cobalt
   @available(*, deprecated, renamed: "bgCobaltLightest", message: "Use `bgCobaltLightest` instead.")
-  public static var bgtxtCobaltLightest: BezierColor { BezierColor(functionalColorToken: .bgCobaltLightest) }
+  public static let bgtxtCobaltLightest = BezierColor(functionalColorToken: .bgCobaltLightest)
   
   @available(*, deprecated, renamed: "bgCobaltLighter", message: "Use `bgCobaltLighter` instead.")
-  public static var bgtxtCobaltLighter: BezierColor { BezierColor(functionalColorToken: .bgCobaltLighter) }
+  public static let bgtxtCobaltLighter = BezierColor(functionalColorToken: .bgCobaltLighter)
   
   @available(*, deprecated, message: "Use `fgCobaltLight` for icon and text colors, and `bgCobaltLight` for background color instead.")
-  public static var bgtxtCobaltLight: BezierColor { BezierColor(functionalColorToken: .bgCobaltLight) }
+  public static let bgtxtCobaltLight = BezierColor(functionalColorToken: .bgCobaltLight)
   
   @available(*, deprecated, message: "Use `fgCobaltNormal` for icon and text colors, and `bgCobaltNormal` for background color instead.")
-  public static var bgtxtCobaltNormal: BezierColor { BezierColor(functionalColorToken: .bgCobaltNormal) }
+  public static let bgtxtCobaltNormal = BezierColor(functionalColorToken: .bgCobaltNormal)
   
   @available(*, deprecated, message: "Use `fgCobaltDark` for icon and text colors, and `bgCobaltDark` for background color instead.")
-  public static var bgtxtCobaltDark: BezierColor { BezierColor(functionalColorToken: .bgCobaltDark) }
+  public static let bgtxtCobaltDark = BezierColor(functionalColorToken: .bgCobaltDark)
   
   // MARK: - Appendix, Teal
   @available(*, deprecated, renamed: "bgTealLightest", message: "Use `bgTealLightest` instead.")
-  public static var bgtxtTealLightest: BezierColor { BezierColor(functionalColorToken: .bgTealLightest) }
+  public static let bgtxtTealLightest = BezierColor(functionalColorToken: .bgTealLightest)
   
   @available(*, deprecated, renamed: "bgTealLighter", message: "Use `bgTealLighter` instead.")
-  public static var bgtxtTealLighter: BezierColor { BezierColor(functionalColorToken: .bgTealLighter) }
+  public static let bgtxtTealLighter = BezierColor(functionalColorToken: .bgTealLighter)
   
   @available(*, deprecated, message: "Use `fgTealLight` for icon and text colors, and `bgTealLight` for background color instead.")
-  public static var bgtxtTealLight: BezierColor { BezierColor(functionalColorToken: .bgTealLight) }
+  public static let bgtxtTealLight = BezierColor(functionalColorToken: .bgTealLight)
   
   @available(*, deprecated, message: "Use `fgTealNormal` for icon and text colors, and `bgTealNormal` for background color instead.")
-  public static var bgtxtTealNormal: BezierColor { BezierColor(functionalColorToken: .bgTealNormal) }
+  public static let bgtxtTealNormal = BezierColor(functionalColorToken: .bgTealNormal)
   
   @available(*, deprecated, message: "Use `fgTealDark` for icon and text colors, and `bgTealDark` for background color instead.")
-  public static var bgtxtTealDark: BezierColor { BezierColor(functionalColorToken: .bgTealDark) }
+  public static let bgtxtTealDark = BezierColor(functionalColorToken: .bgTealDark)
   
   // MARK: - Appendix, Green
   @available(*, deprecated, renamed: "bgGreenLightest", message: "Use `bgGreenLightest` instead.")
-  public static var bgtxtGreenLightest: BezierColor { BezierColor(functionalColorToken: .bgGreenLightest) }
+  public static let bgtxtGreenLightest = BezierColor(functionalColorToken: .bgGreenLightest)
   
   @available(*, deprecated, renamed: "bgGreenLighter", message: "Use `bgGreenLighter` instead.")
-  public static var bgtxtGreenLighter: BezierColor { BezierColor(functionalColorToken: .bgGreenLighter) }
+  public static let bgtxtGreenLighter = BezierColor(functionalColorToken: .bgGreenLighter)
   
   @available(*, deprecated, message: "Use `fgGreenLight` for icon and text colors, and `bgGreenLight` for background color instead.")
-  public static var bgtxtGreenLight: BezierColor { BezierColor(functionalColorToken: .bgGreenLight) }
+  public static let bgtxtGreenLight = BezierColor(functionalColorToken: .bgGreenLight)
   
   @available(*, deprecated, message: "Use `fgGreenNormal` for icon and text colors, and `bgGreenNormal` for background color instead.")
-  public static var bgtxtGreenNormal: BezierColor { BezierColor(functionalColorToken: .bgGreenNormal) }
+  public static let bgtxtGreenNormal = BezierColor(functionalColorToken: .bgGreenNormal)
   
   @available(*, deprecated, message: "Use `fgGreenDark` for icon and text colors, and `bgGreenDark` for background color instead.")
-  public static var bgtxtGreenDark: BezierColor { BezierColor(functionalColorToken: .bgGreenDark) }
+  public static let bgtxtGreenDark = BezierColor(functionalColorToken: .bgGreenDark)
   
   // MARK: - Appendix, Olive
   @available(*, deprecated, renamed: "bgOliveLightest", message: "Use `bgOliveLightest` instead.")
-  public static var bgtxtOliveLightest: BezierColor { BezierColor(functionalColorToken: .bgOliveLightest) }
+  public static let bgtxtOliveLightest = BezierColor(functionalColorToken: .bgOliveLightest)
   
   @available(*, deprecated, renamed: "bgOliveLighter", message: "Use `bgOliveLighter` instead.")
-  public static var bgtxtOliveLighter: BezierColor { BezierColor(functionalColorToken: .bgOliveLighter) }
+  public static let bgtxtOliveLighter = BezierColor(functionalColorToken: .bgOliveLighter)
   
   @available(*, deprecated, message: "Use `fgOliveLight` for icon and text colors, and `bgOliveLight` for background color instead.")
-  public static var bgtxtOliveLight: BezierColor { BezierColor(functionalColorToken: .bgOliveLight) }
+  public static let bgtxtOliveLight = BezierColor(functionalColorToken: .bgOliveLight)
   
   @available(*, deprecated, message: "Use `fgOliveNormal` for icon and text colors, and `bgOliveNormal` for background color instead.")
-  public static var bgtxtOliveNormal: BezierColor { BezierColor(functionalColorToken: .bgOliveNormal) }
+  public static let bgtxtOliveNormal = BezierColor(functionalColorToken: .bgOliveNormal)
   
   @available(*, deprecated, message: "Use `fgOliveDark` for icon and text colors, and `bgOliveDark` for background color instead.")
-  public static var bgtxtOliveDark: BezierColor { BezierColor(functionalColorToken: .bgOliveDark) }
+  public static let bgtxtOliveDark = BezierColor(functionalColorToken: .bgOliveDark)
   
   // MARK: - Appendix, Yellow
   @available(*, deprecated, renamed: "bgYellowLightest", message: "Use `bgYellowLightest` instead.")
-  public static var bgtxtYellowLightest: BezierColor { BezierColor(functionalColorToken: .bgYellowLightest) }
+  public static let bgtxtYellowLightest = BezierColor(functionalColorToken: .bgYellowLightest)
   
   @available(*, deprecated, renamed: "bgYellowLighter", message: "Use `bgYellowLighter` instead.")
-  public static var bgtxtYellowLighter: BezierColor { BezierColor(functionalColorToken: .bgYellowLighter) }
+  public static let bgtxtYellowLighter = BezierColor(functionalColorToken: .bgYellowLighter)
   
   @available(*, deprecated, message: "Use `fgYellowLight` for icon and text colors, and `bgYellowLight` for background color instead.")
-  public static var bgtxtYellowLight: BezierColor { BezierColor(functionalColorToken: .bgYellowLight) }
+  public static let bgtxtYellowLight = BezierColor(functionalColorToken: .bgYellowLight)
   
   @available(*, deprecated, message: "Use `fgYellowNormal` for icon and text colors, and `bgYellowNormal` for background color instead.")
-  public static var bgtxtYellowNormal: BezierColor { BezierColor(functionalColorToken: .bgYellowNormal) }
+  public static let bgtxtYellowNormal = BezierColor(functionalColorToken: .bgYellowNormal)
   
   @available(*, deprecated, message: "Use `fgYellowDark` for icon and text colors, and `bgYellowDark` for background color instead.")
-  public static var bgtxtYellowDark: BezierColor { BezierColor(functionalColorToken: .bgYellowDark) }
+  public static let bgtxtYellowDark = BezierColor(functionalColorToken: .bgYellowDark)
   
   // MARK: - Appendix, Orange
   @available(*, deprecated, renamed: "bgOrangeLightest", message: "Use `bgOrangeLightest` instead.")
-  public static var bgtxtOrangeLightest: BezierColor { BezierColor(functionalColorToken: .bgOrangeLightest) }
+  public static let bgtxtOrangeLightest = BezierColor(functionalColorToken: .bgOrangeLightest)
   
   @available(*, deprecated, renamed: "bgOrangeLighter", message: "Use `bgOrangeLighter` instead.")
-  public static var bgtxtOrangeLighter: BezierColor { BezierColor(functionalColorToken: .bgOrangeLighter) }
+  public static let bgtxtOrangeLighter = BezierColor(functionalColorToken: .bgOrangeLighter)
   
   @available(*, deprecated, message: "Use `fgOrangeLight` for icon and text colors, and `bgOrangeLight` for background color instead.")
-  public static var bgtxtOrangeLight: BezierColor { BezierColor(functionalColorToken: .bgOrangeLight) }
+  public static let bgtxtOrangeLight = BezierColor(functionalColorToken: .bgOrangeLight)
   
   @available(*, deprecated, message: "Use `fgOrangeNormal` for icon and text colors, and `bgOrangeNormal` for background color instead.")
-  public static var bgtxtOrangeNormal: BezierColor { BezierColor(functionalColorToken: .bgOrangeNormal) }
+  public static let bgtxtOrangeNormal = BezierColor(functionalColorToken: .bgOrangeNormal)
   
   @available(*, deprecated, message: "Use `fgOrangeDark` for icon and text colors, and `bgOrangeDark` for background color instead.")
-  public static var bgtxtOrangeDark: BezierColor { BezierColor(functionalColorToken: .bgOrangeDark) }
+  public static let bgtxtOrangeDark = BezierColor(functionalColorToken: .bgOrangeDark)
   
   // MARK: - Appendix, Red
   @available(*, deprecated, renamed: "bgRedLightest", message: "Use `bgRedLightest` instead.")
-  public static var bgtxtRedLightest: BezierColor { BezierColor(functionalColorToken: .bgRedLightest) }
+  public static let bgtxtRedLightest = BezierColor(functionalColorToken: .bgRedLightest)
   
   @available(*, deprecated, renamed: "bgRedLighter", message: "Use `bgRedLighter` instead.")
-  public static var bgtxtRedLighter: BezierColor { BezierColor(functionalColorToken: .bgRedLighter) }
+  public static let bgtxtRedLighter = BezierColor(functionalColorToken: .bgRedLighter)
   
   @available(*, deprecated, message: "Use `fgRedLight` for icon and text colors, and `bgRedLight` for background color instead.")
-  public static var bgtxtRedLight: BezierColor { BezierColor(functionalColorToken: .bgRedLight) }
+  public static let bgtxtRedLight = BezierColor(functionalColorToken: .bgRedLight)
   
   @available(*, deprecated, message: "Use `fgRedNormal` for icon and text colors, and `bgRedNormal` for background color instead.")
-  public static var bgtxtRedNormal: BezierColor { BezierColor(functionalColorToken: .bgRedNormal) }
+  public static let bgtxtRedNormal = BezierColor(functionalColorToken: .bgRedNormal)
   
   @available(*, deprecated, message: "Use `fgRedDark` for icon and text colors, and `bgRedDark` for background color instead.")
-  public static var bgtxtRedDark: BezierColor { BezierColor(functionalColorToken: .bgRedDark) }
+  public static let bgtxtRedDark = BezierColor(functionalColorToken: .bgRedDark)
   
   // MARK: - Appendix, Pink
   @available(*, deprecated, renamed: "bgPinkLightest", message: "Use `bgPinkLightest` instead.")
-  public static var bgtxtPinkLightest: BezierColor { BezierColor(functionalColorToken: .bgPinkLightest) }
+  public static let bgtxtPinkLightest = BezierColor(functionalColorToken: .bgPinkLightest)
   
   @available(*, deprecated, renamed: "bgPinkLighter", message: "Use `bgPinkLighter` instead.")
-  public static var bgtxtPinkLighter: BezierColor { BezierColor(functionalColorToken: .bgPinkLighter) }
+  public static let bgtxtPinkLighter = BezierColor(functionalColorToken: .bgPinkLighter)
   
   @available(*, deprecated, message: "Use `fgPinkLight` for icon and text colors, and `bgPinkLight` for background color instead.")
-  public static var bgtxtPinkLight: BezierColor { BezierColor(functionalColorToken: .bgPinkLight) }
+  public static let bgtxtPinkLight = BezierColor(functionalColorToken: .bgPinkLight)
   
   @available(*, deprecated, message: "Use `fgPinkNormal` for icon and text colors, and `bgPinkNormal` for background color instead.")
-  public static var bgtxtPinkNormal: BezierColor { BezierColor(functionalColorToken: .bgPinkNormal) }
+  public static let bgtxtPinkNormal = BezierColor(functionalColorToken: .bgPinkNormal)
   
   @available(*, deprecated, message: "Use `fgPinkDark` for icon and text colors, and `bgPinkDark` for background color instead.")
-  public static var bgtxtPinkDark: BezierColor { BezierColor(functionalColorToken: .bgPinkDark) }
+  public static let bgtxtPinkDark = BezierColor(functionalColorToken: .bgPinkDark)
   
   // MARK: - Appendix, Purple
   @available(*, deprecated, renamed: "bgPurpleLightest", message: "Use `bgPurpleLightest` instead.")
-  public static var bgtxtPurpleLightest: BezierColor { BezierColor(functionalColorToken: .bgPurpleLightest) }
+  public static let bgtxtPurpleLightest = BezierColor(functionalColorToken: .bgPurpleLightest)
   
   @available(*, deprecated, renamed: "bgPurpleLighter", message: "Use `bgPurpleLighter` instead.")
-  public static var bgtxtPurpleLighter: BezierColor { BezierColor(functionalColorToken: .bgPurpleLighter) }
+  public static let bgtxtPurpleLighter = BezierColor(functionalColorToken: .bgPurpleLighter)
   
   @available(*, deprecated, message: "Use `fgPurpleLight` for icon and text colors, and `bgPurpleLight` for background color instead.")
-  public static var bgtxtPurpleLight: BezierColor { BezierColor(functionalColorToken: .bgPurpleLight) }
+  public static let bgtxtPurpleLight = BezierColor(functionalColorToken: .bgPurpleLight)
   
   @available(*, deprecated, message: "Use `fgPurpleNormal` for icon and text colors, and `bgPurpleNormal` for background color instead.")
-  public static var bgtxtPurpleNormal: BezierColor { BezierColor(functionalColorToken: .bgPurpleNormal) }
+  public static let bgtxtPurpleNormal = BezierColor(functionalColorToken: .bgPurpleNormal)
   
   @available(*, deprecated, message: "Use `fgPurpleDark` for icon and text colors, and `bgPurpleDark` for background color instead.")
-  public static var bgtxtPurpleDark: BezierColor { BezierColor(functionalColorToken: .bgPurpleDark) }
+  public static let bgtxtPurpleDark = BezierColor(functionalColorToken: .bgPurpleDark)
   
   // MARK: - Appendix, Navy
   @available(*, deprecated, renamed: "bgNavyLightest", message: "Use `bgNavyLightest` instead.")
-  public static var bgtxtNavyLightest: BezierColor { BezierColor(functionalColorToken: .bgNavyLightest) }
+  public static let bgtxtNavyLightest = BezierColor(functionalColorToken: .bgNavyLightest)
   
   @available(*, deprecated, renamed: "bgNavyLighter", message: "Use `bgNavyLighter` instead.")
-  public static var bgtxtNavyLighter: BezierColor { BezierColor(functionalColorToken: .bgNavyLighter) }
+  public static let bgtxtNavyLighter = BezierColor(functionalColorToken: .bgNavyLighter)
   
   @available(*, deprecated, message: "Use `fgNavyLight` for icon and text colors, and `bgNavyLight` for background color instead.")
-  public static var bgtxtNavyLight: BezierColor { BezierColor(functionalColorToken: .bgNavyLight) }
+  public static let bgtxtNavyLight = BezierColor(functionalColorToken: .bgNavyLight)
   
   @available(*, deprecated, message: "Use `fgNavyNormal` for icon and text colors, and `bgNavyNormal` for background color instead.")
-  public static var bgtxtNavyNormal: BezierColor { BezierColor(functionalColorToken: .bgNavyNormal) }
+  public static let bgtxtNavyNormal = BezierColor(functionalColorToken: .bgNavyNormal)
   
   @available(*, deprecated, message: "Use `fgNavyDark` for icon and text colors, and `bgNavyDark` for background color instead.")
-  public static var bgtxtNavyDark: BezierColor { BezierColor(functionalColorToken: .bgNavyDark) }
+  public static let bgtxtNavyDark = BezierColor(functionalColorToken: .bgNavyDark)
 }
 
 @_spi(color) public extension BezierColor {
