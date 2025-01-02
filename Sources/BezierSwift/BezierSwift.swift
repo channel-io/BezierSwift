@@ -20,15 +20,33 @@ public final class BezierSwift {
     }
   }
   
-  public static let shared = BezierSwift()
-  public weak var delegate: BezierSwiftDelegate?
+  static let shared = BezierSwift()
   
   let toastViewModel = BezierToastViewModel()
   let dialogViewModel = BezierDialogViewModel()
   var config = Config()
-  public private(set) var currentTheme: BezierTheme = .system
   
   weak var bezierWindow: BezierWindow?
+  
+  private weak var _delegate: BezierSwiftDelegate?
+  public static var delegate: BezierSwiftDelegate? {
+    get {
+      return BezierSwift.shared._delegate
+    }
+    set {
+      BezierSwift.shared._delegate = newValue
+    }
+  }
+  
+  private var _theme: BezierTheme? = .system
+  public private(set) static var theme: BezierTheme? {
+    get {
+      return BezierSwift.shared._theme
+    }
+    set {
+      BezierSwift.shared._theme = newValue
+    }
+  }
   
   var allowHitTest: Bool { self.dialogViewModel.item.isNotNil }
   
@@ -115,12 +133,12 @@ extension BezierSwift {
 
 extension BezierSwift {
   public static func applyTheme(_ theme: BezierTheme) {
-    guard BezierSwift.shared.currentTheme != theme else { return }
+    guard BezierSwift.theme != theme else { return }
     
-    BezierSwift.shared.currentTheme = theme
+    BezierSwift.theme = theme
     BezierSwift.shared.bezierWindow?.overrideUserInterfaceStyle = theme.userInterfaceStyle
     
-    BezierSwift.shared.delegate?.windowsForThemeUpdate().forEach { window in
+    BezierSwift.delegate?.windowsForThemeUpdate().forEach { window in
       window.overrideUserInterfaceStyle = theme.userInterfaceStyle
     }
   }

@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     self.windowScene = windowScene
     
-    BezierSwift.shared.delegate = self
+    BezierSwift.delegate = self
   }
 }
 
