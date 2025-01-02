@@ -50,7 +50,7 @@ struct BezierToast: View {
         }
         
         Text(self.param.title)
-          .applyBezierFontStyle(.bold14, bezierColor: .bgtxtAbsoluteWhiteDark)
+          .applyBezierFontStyle(.bold14, bezierColor: .fgAbsoluteWhiteDark)
           .lineLimit(Constant.textLineLimit)
           .padding(.vertical, Metric.textTopPadding)
       }
