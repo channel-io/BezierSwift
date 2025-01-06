@@ -38,8 +38,8 @@ public final class BezierSwift {
     }
   }
   
-  private var _theme: BezierTheme? = .system
-  public private(set) static var theme: BezierTheme? {
+  private var _theme: BezierTheme = .system
+  public private(set) static var theme: BezierTheme {
     get {
       return BezierSwift.shared._theme
     }
