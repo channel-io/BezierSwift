@@ -9,22 +9,18 @@ import SwiftUI
 
 extension BezierFont {
   public func attributedString(
-    _ component: BezierComponentable,
     text: String,
-    semanticColor: SemanticColor = .txtBlackDarkest,
+    bezierColor: BezierColor = .fgBlackDarkest,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping,
     hasTagProperty: Bool = false
   ) -> NSAttributedString {
-    let color = semanticColor.palette(component)
-    
     guard !hasTagProperty else {
       return text.applyBezierTagFont(
-        component,
         normalFont: self,
-        normalColor: semanticColor,
+        normalColor: bezierColor,
         boldFont: self.getPairedBoldFont,
-        boldColor: semanticColor,
+        boldColor: bezierColor,
         alignment: alignment,
         lineBreakMode: lineBreakMode
       )
@@ -33,7 +29,7 @@ extension BezierFont {
     return text.applyBezierFont(
       height: self.lineHeight,
       font: self.uiFont,
-      color: color,
+      color: bezierColor.uiColor,
       letterSpacing: self.letterSpacing,
       alignment: alignment,
       lineBreakMode: lineBreakMode
@@ -44,24 +40,12 @@ extension BezierFont {
 extension View {
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    semanticColor: SemanticColor = .txtBlackDarkest
+    bezierColor: BezierColor = .fgBlackDarkest
   ) -> some View {
-    self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
-  }
-}
-
-private struct BezierFontStyle: ViewModifier, Themeable {
-  @Environment(\.colorScheme) var colorScheme
-  
-  let bezierFont: BezierFont
-  let semanticColor: SemanticColor
-  
-  func body(content: Content) -> some View {
-    content
+    self
       .font(bezierFont.font)
       .lineSpacing(bezierFont.lineSpacing)
       .padding(.vertical, bezierFont.verticalPadding)
-      .foregroundColor(self.palette(self.semanticColor))
+      .foregroundColor(bezierColor.color)
   }
 }
-

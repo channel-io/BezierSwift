@@ -23,7 +23,7 @@ public enum BezierToastLeftItem: Equatable {
   // TODO: 추후 이모지 지원 작업하기
   // by woody 2003.31
   // case emoji(name: String)
-  case icon(image: Image, color: SemanticColor)
+  case icon(image: Image, color: BezierColor)
 
   var length: CGFloat { return 20 }
   var top: CGFloat { return 3 }
@@ -31,9 +31,7 @@ public enum BezierToastLeftItem: Equatable {
   public static func == (lhs: BezierToastLeftItem, rhs: BezierToastLeftItem) -> Bool {
     switch (lhs, rhs) {
     case (.icon(let lhsImage, let lhsColor), .icon(let rhsImage, let rhsColor)):
-      return lhsImage == rhsImage
-      && lhsColor.light == rhsColor.light
-      && lhsColor.dark == rhsColor.dark
+      return lhsImage == rhsImage && lhsColor == rhsColor
     }
   }
 }

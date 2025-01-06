@@ -8,12 +8,12 @@
 import SwiftUI
 import BezierSwift
 
-struct ContentView: View, Themeable {
+struct ContentView: View {
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
     Rectangle()
-      .foregroundColor(self.palette(.bgtxtRedDark))
+      .fill(BezierColor.bgRedDark.color)
   }
 }
 

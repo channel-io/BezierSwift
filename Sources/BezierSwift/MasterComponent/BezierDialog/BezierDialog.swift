@@ -25,9 +25,7 @@ private enum Constant {
   static let maxVerticalButtonCount = 4
 }
 
-struct BezierDialog: View, Themeable {
-  @Environment(\.colorScheme) var colorScheme
-  
+struct BezierDialog: View {
   struct ViewState {
     let title: String
     let description: String
@@ -98,7 +96,7 @@ struct BezierDialog: View, Themeable {
     }
     .padding(.all, Metric.dialogPadding)
     .frame(maxWidth: Metric.dialogMaxWidth)
-    .background(self.palette(.bgWhiteHigh))
+    .background(BezierColor.bgWhiteHighest.color)
     .applyBezierCornerRadius(type: .round16)
     .applyBezierElevation(.mEv3)
   }

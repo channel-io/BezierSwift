@@ -16,8 +16,7 @@ private enum ZIndex {
   static let dialog = 2.0
 }
 
-struct BezierDialogContainerView: View, Themeable {
-  @Environment(\.colorScheme) var colorScheme
+struct BezierDialogContainerView: View {
   @StateObject private var viewModel: BezierDialogViewModel
   
   init(viewModel: BezierDialogViewModel) {
@@ -27,7 +26,7 @@ struct BezierDialogContainerView: View, Themeable {
   var body: some View {
     ZStack {
       if self.viewModel.item.isNotNil {
-        self.palette(.bgtxtAbsoluteBlackLighter)
+        BezierColor.bgAbsoluteBlackLighter.color
           .ignoresSafeArea()
           .zIndex(ZIndex.dim)
       }
