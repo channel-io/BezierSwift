@@ -27,11 +27,27 @@ final class BezierWindow: UIWindow {
   }
   
   override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    let hitView = super.hitTest(point, with: event)
+    guard
+      BezierSwift.shared.allowHitTest,
+      let hitView = super.hitTest(point, with: event),
+      let rootView = rootViewController?.view
+    else { return nil }
     
-    guard BezierSwift.shared.allowHitTest else { return nil }
-    
-    return (hitView == self || self.rootViewController?.view == hitView) ? nil : hitView
+    // NOTE: iOS 18, Xcode 16 이상 버전을 사용할 때, hitTest 결과가 다르게 나옵니다.
+    // view -> subView 로 이어지는 hitTest 플로우가 역으로 다시 UIHostingViewController 의 hitTest로 가는 상황이 생깁니다.
+    // https://forums.developer.apple.com/forums/thread/762292
+    // by Tom 25.01.08
+    if #available(iOS 18, *) {
+      for subview in rootView.subviews.reversed() {
+        let convertedPoint = subview.convert(point, from: rootView)
+        if subview.hitTest(convertedPoint, with: event) != nil {
+          return hitView
+        }
+      }
+      return nil
+    } else {
+      return (hitView == self || rootView == hitView) ? nil : hitView
+    }
   }
 }
 
