@@ -413,6 +413,7 @@ public enum BezierIcon: String {
   case `power` = "icon-power"
   case `print` = "icon-print"
   case `profile` = "icon-profile"
+  case `puzzle` = "icon-puzzle"
   case `qrCode` = "icon-qr-code"
   case `quote` = "icon-quote"
   case `radioFilled` = "icon-radio-filled"
