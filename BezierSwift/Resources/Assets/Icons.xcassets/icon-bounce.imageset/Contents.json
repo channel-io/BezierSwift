@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "bounce.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "properties" : {
+     "preserves-vector-representation" : true
+  },
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
