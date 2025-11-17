@@ -309,6 +309,7 @@ public enum BezierIcon: String {
   case `info` = "icon-info"
   case `infoFilled` = "icon-info-filled"
   case `instagram` = "icon-instagram"
+  case `intersect` = "icon-intersect"
   case `intoPage` = "icon-into-page"
   case `intoPageAlt` = "icon-into-page-alt"
   case `invert` = "icon-invert"
