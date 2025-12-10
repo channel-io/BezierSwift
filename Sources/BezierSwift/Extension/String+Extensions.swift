@@ -53,47 +53,35 @@ extension String {
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
   ) -> NSAttributedString {
-    let normalParagraphStyle = NSMutableParagraphStyle()
-    normalParagraphStyle.lineBreakMode = lineBreakMode
-    normalParagraphStyle.minimumLineHeight = normalFont.lineHeight
-    normalParagraphStyle.alignment = alignment
-    
-    let blodParagraphStyle = NSMutableParagraphStyle()
-    blodParagraphStyle.lineBreakMode = lineBreakMode
-    blodParagraphStyle.minimumLineHeight = boldFont.lineHeight
-    blodParagraphStyle.alignment = alignment
-    
-    if lineBreakMode == .byWordWrapping {
-      normalParagraphStyle.lineBreakStrategy = .hangulWordPriority
-      blodParagraphStyle.lineBreakStrategy = .hangulWordPriority
-    }
-    
-    let normalAttributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: normalColor.palette(component),
-      .font: normalFont.font,
-      .kern: normalFont.letterSpacing,
-      .paragraphStyle: normalParagraphStyle,
-      .baselineOffset: (normalParagraphStyle.minimumLineHeight - normalFont.uiFont.lineHeight) / 4
-    ]
-    
-    let boldAttributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: boldColor.palette(component),
-      .font: boldFont.font,
-      .kern: boldFont.letterSpacing,
-      .paragraphStyle: blodParagraphStyle,
-      .baselineOffset: (blodParagraphStyle.minimumLineHeight - boldFont.uiFont.lineHeight) / 4
-    ]
-    
-    let underlineAttributes: [NSAttributedString.Key: Any] = [
-      .underlineStyle: underlineStyle.rawValue
-    ]
-    
-    return self.attributes(
-      normalAttributes,
-      tagAttributes: [
-        .bold: boldAttributes,
-        .underline: underlineAttributes
-      ]
+    return self.applyBezierTagFont(
+      normalFont: normalFont,
+      normalColor: normalColor.palette(component),
+      boldFont: boldFont,
+      boldColor: normalColor.palette(component),
+      underlineStyle: underlineStyle,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  func applyBezierTagFont(
+    _ component: BezierComponentable,
+    normalFont: BezierFont,
+    normalColor: SemanticColorToken,
+    boldFont: BezierFont,
+    boldColor: SemanticColorToken,
+    underlineStyle: NSUnderlineStyle = .single,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    return self.applyBezierTagFont(
+      normalFont: normalFont,
+      normalColor: normalColor.palette(component),
+      boldFont: boldFont,
+      boldColor: boldColor.palette(component),
+      underlineStyle: underlineStyle,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
     )
   }
   
@@ -160,5 +148,60 @@ extension String {
   
   func replace(_ target: String, withString: String) -> String {
     return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
+  }
+}
+
+extension String {
+  private func applyBezierTagFont(
+    normalFont: BezierFont,
+    normalColor: UIColor,
+    boldFont: BezierFont,
+    boldColor: UIColor,
+    underlineStyle: NSUnderlineStyle,
+    alignment: NSTextAlignment,
+    lineBreakMode: NSLineBreakMode
+  ) -> NSAttributedString {
+    let normalParagraphStyle = NSMutableParagraphStyle()
+    normalParagraphStyle.lineBreakMode = lineBreakMode
+    normalParagraphStyle.minimumLineHeight = normalFont.lineHeight
+    normalParagraphStyle.alignment = alignment
+    
+    let blodParagraphStyle = NSMutableParagraphStyle()
+    blodParagraphStyle.lineBreakMode = lineBreakMode
+    blodParagraphStyle.minimumLineHeight = boldFont.lineHeight
+    blodParagraphStyle.alignment = alignment
+    
+    if lineBreakMode == .byWordWrapping {
+      normalParagraphStyle.lineBreakStrategy = .hangulWordPriority
+      blodParagraphStyle.lineBreakStrategy = .hangulWordPriority
+    }
+    
+    let normalAttributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: normalColor,
+      .font: normalFont.font,
+      .kern: normalFont.letterSpacing,
+      .paragraphStyle: normalParagraphStyle,
+      .baselineOffset: (normalParagraphStyle.minimumLineHeight - normalFont.uiFont.lineHeight) / 4
+    ]
+    
+    let boldAttributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: boldColor,
+      .font: boldFont.font,
+      .kern: boldFont.letterSpacing,
+      .paragraphStyle: blodParagraphStyle,
+      .baselineOffset: (blodParagraphStyle.minimumLineHeight - boldFont.uiFont.lineHeight) / 4
+    ]
+    
+    let underlineAttributes: [NSAttributedString.Key: Any] = [
+      .underlineStyle: underlineStyle.rawValue
+    ]
+    
+    return self.attributes(
+      normalAttributes,
+      tagAttributes: [
+        .bold: boldAttributes,
+        .underline: underlineAttributes
+      ]
+    )
   }
 }
