@@ -19,4 +19,12 @@ extension Themeable {
     @unknown default: return semanticColor.light.color
     }
   }
+  
+  public func palette(_ semancitColor: SemanticColorToken, isInverted: Bool = false) -> Color {
+    switch self.colorScheme {
+    case .light: return isInverted ? semancitColor.dark.color : semancitColor.light.color
+    case .dark: return isInverted ? semancitColor.light.color : semancitColor.dark.color
+    @unknown default: return semanticColor.light.color
+    }
+  }
 }
