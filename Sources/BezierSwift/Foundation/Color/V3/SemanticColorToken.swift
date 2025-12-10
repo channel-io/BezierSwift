@@ -190,11 +190,13 @@ public enum SemanticColorToken {
   case textWarning
 }
 
-extension SemanticColorToken {
-  typealias PaletteSet = (light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
-
+extension SemanticColorToken: SemanticColorProtocol {
   public var light: ColorComponentsWithAlpha { self.paletteSet.light }
   public var dark: ColorComponentsWithAlpha { self.paletteSet.dark }
+}
+
+extension SemanticColorToken {
+  typealias PaletteSet = (light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
 
   private var paletteSet: PaletteSet {
     switch self {
@@ -559,32 +561,6 @@ extension SemanticColorToken {
       return (light: GlobalColorToken.green400.value, dark: GlobalColorToken.green300.value)
     case .textWarning:
       return (light: GlobalColorToken.orange400.value, dark: GlobalColorToken.orange300.value)
-    }
-  }
-}
-
-extension SemanticColorToken {
-  public func palette(_ component: BezierComponentable) -> UIColor {
-    UIColor { [weak component] _ in
-      let component = component ?? TempBezierComponent()
-      let colorTheme = component.colorTheme
-      let componentTheme = component.componentTheme
-      switch componentTheme {
-      case .normal:
-        switch colorTheme {
-        case .light:
-          return paletteSet.light.uiColor
-        case .dark:
-          return paletteSet.dark.uiColor
-        }
-      case .inverted:
-        switch colorTheme {
-        case .light:
-          return paletteSet.dark.uiColor
-        case .dark:
-          return paletteSet.light.uiColor
-        }
-      }
     }
   }
 }
