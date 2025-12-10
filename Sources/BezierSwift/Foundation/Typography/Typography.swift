@@ -76,16 +76,23 @@ extension BezierFont {
 extension View {
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    semanticColor: SemanticColor = .txtBlackDarkest
+    semanticColor: SemanticColor
   ) -> some View {
-    self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
+    self.applyBezierFontStyle(bezierFont, semanticColor)
   }
   
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    semanticColorToken: SemanticColorToken = .textNeutral
+    semanticColorToken: SemanticColorToken
   ) -> some View {
-    self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColorToken))
+    self.applyBezierFontStyle(bezierFont, semanticColorToken)
+  }
+  
+  public func applyBezierFontStyle(
+    _ bezierFont: BezierFont,
+    _ semanticColor: SemanticColorProtocol = SemanticColorToken.textNeutral
+  ) -> some View {
+    self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
   }
 }
 
