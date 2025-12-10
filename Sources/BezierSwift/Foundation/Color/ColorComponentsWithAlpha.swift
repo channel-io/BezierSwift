@@ -5,6 +5,9 @@
 //  Created by 구본욱 on 12/10/25.
 //
 
+import SwiftUI
+import UIKit
+
 fileprivate extension Color {
   init(r: Double, g: Double, b: Double, alpha: Double) {
     self = Color(red: r / 255, green: g / 255, blue: b / 255, opacity: alpha)
