@@ -20,10 +20,10 @@ extension Themeable {
     }
   }
   
-  public func palette(_ semancitColor: SemanticColorToken, isInverted: Bool = false) -> Color {
+  public func palette(_ semanticColor: SemanticColorToken, isInverted: Bool = false) -> Color {
     switch self.colorScheme {
-    case .light: return isInverted ? semancitColor.dark.color : semancitColor.light.color
-    case .dark: return isInverted ? semancitColor.light.color : semancitColor.dark.color
+    case .light: return isInverted ? semanticColor.dark.color : semanticColor.light.color
+    case .dark: return isInverted ? semanticColor.light.color : semanticColor.dark.color
     @unknown default: return semanticColor.light.color
     }
   }
