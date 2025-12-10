@@ -51,7 +51,7 @@ struct BezierToast: View, Themeable {
         }
         
         Text(self.param.title)
-          .applyBezierFontStyle(.bold14, semanticColor: .bgtxtAbsoluteWhiteDark)
+          .applyBezierFontStyle(.bold14, semanticColorToken: .textAbsoluteWhite)
           .lineLimit(Constant.textLineLimit)
           .padding(.vertical, Metric.textTopPadding)
       }
