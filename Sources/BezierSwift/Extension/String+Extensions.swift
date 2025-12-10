@@ -57,7 +57,7 @@ extension String {
       normalFont: normalFont,
       normalColor: normalColor.palette(component),
       boldFont: boldFont,
-      boldColor: normalColor.palette(component),
+      boldColor: boldColor.palette(component),
       underlineStyle: underlineStyle,
       alignment: alignment,
       lineBreakMode: lineBreakMode
