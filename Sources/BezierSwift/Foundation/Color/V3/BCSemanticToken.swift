@@ -449,7 +449,7 @@ extension BCSemanticToken {
     case .fillWarningLighter:
       return (light: BCGlobalToken.orange400_10.value, dark: BCGlobalToken.orange300_18.value)
     case .fillWarningTransparent:
-      return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300_0.value)
+      return (light: BCGlobalToken.orange400_0.value, dark: BCGlobalToken.orange300_0.value)
 
     // MARK: - Fill Grey
     case .fillGrey:
