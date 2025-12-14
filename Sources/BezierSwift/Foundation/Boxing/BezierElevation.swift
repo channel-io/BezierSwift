@@ -15,7 +15,7 @@ public enum BezierElevation {
   case mEv5
   case mEv6
 
-  var rawValue: (semanticColor: SemanticColorToken, x: CGFloat, y: CGFloat, blur: CGFloat) {
+  var rawValue: (semanticColor: BCSemanticToken, x: CGFloat, y: CGFloat, blur: CGFloat) {
     switch self {
     case .mEv1: return (.elevationMedium, 0, 1, 4)
     case .mEv2: return (.elevationMedium, 0, 2, 6)

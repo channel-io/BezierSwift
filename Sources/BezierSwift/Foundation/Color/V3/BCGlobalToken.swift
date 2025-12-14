@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-public enum GlobalColorToken {
+public enum BCGlobalToken {
   case black0
   case black1
   case black100

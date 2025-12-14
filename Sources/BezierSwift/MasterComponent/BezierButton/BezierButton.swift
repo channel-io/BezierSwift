@@ -148,7 +148,7 @@ public enum ButtonType: Equatable {
     }
   }
   
-  func textColor(_ size: ButtonSize) -> SemanticColorToken {
+  func textColor(_ size: ButtonSize) -> BCSemanticToken {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
@@ -193,7 +193,7 @@ public enum ButtonType: Equatable {
     }
   }
   
-  func imageTintColor(_ size: ButtonSize) -> SemanticColorToken {
+  func imageTintColor(_ size: ButtonSize) -> BCSemanticToken {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
@@ -238,7 +238,7 @@ public enum ButtonType: Equatable {
     }
   }
   
-  func backgroundColor(state: ButtonState) -> SemanticColorToken {
+  func backgroundColor(state: ButtonState) -> BCSemanticToken {
     switch self {
     case .primary(let color):
       switch color {

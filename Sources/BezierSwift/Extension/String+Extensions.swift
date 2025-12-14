@@ -67,9 +67,9 @@ extension String {
   func applyBezierTagFont(
     _ component: BezierComponentable,
     normalFont: BezierFont,
-    normalColor: SemanticColorToken,
+    normalColor: BCSemanticToken,
     boldFont: BezierFont,
-    boldColor: SemanticColorToken,
+    boldColor: BCSemanticToken,
     underlineStyle: NSUnderlineStyle = .single,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
