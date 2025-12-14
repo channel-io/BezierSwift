@@ -1,8 +1,8 @@
 //
-//  GlobalColorToken.swift
+//  BCGlobalToken.swift
 //  BezierSwift
 //
-//  Created by 구본욱 on 12/10/25.
+//  Generated from BezierColorV3GlobalToken.js
 //
 
 import SwiftUI
@@ -93,6 +93,7 @@ public enum BCGlobalToken {
   case grey500
   case grey600
   case grey700
+  case grey750
   case grey800
   case grey850
   case grey900
@@ -410,6 +411,8 @@ public enum BCGlobalToken {
       return ColorComponentsWithAlpha(red: 0x7B, green: 0x7B, blue: 0x7B, alpha: 1)
     case .grey700:
       return ColorComponentsWithAlpha(red: 0x46, green: 0x47, blue: 0x48, alpha: 1)
+    case .grey750:
+      return ColorComponentsWithAlpha(red: 0x38, green: 0x39, blue: 0x3B, alpha: 1)
     case .grey800:
       return ColorComponentsWithAlpha(red: 0x31, green: 0x32, blue: 0x34, alpha: 1)
     case .grey850:
