@@ -9,8 +9,8 @@
 
 Bezier Color V3는 2단계 위계의 Token으로 나뉘어집니다
 
-- Global Token(`BZColorGlobalToken`)
+- Global Token(`BCGlobalToken`)
   - HEX값을 참조하는 색상 팔레트로, Semantic token의 값으로 레퍼런싱하는 목적으로만 사용하는 Token입니다 
   - 하나의 Global token을 여러 Semantic token에서 레퍼런싱할 수 있습니다
-- Semantic Token(`BZColorSemanticToken`)
+- Semantic Token(`BCSemanticToken`)
   - Global Token을 참조하고 있으며, Light / Dark Theme에 따라 다른 값을 레퍼런스합니다
