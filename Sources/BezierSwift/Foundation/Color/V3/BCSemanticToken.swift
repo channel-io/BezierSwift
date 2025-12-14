@@ -139,6 +139,10 @@ public enum BCSemanticToken {
   case fillGreyHeavier
   case fillGreyHeavy
 
+  // MARK: - Gradient
+  case gradientAccentGreen
+  case gradientAccentGreenHeavy
+
   // MARK: - Icon
   case iconAbsoluteBlack
   case iconAbsoluteWhite
@@ -454,6 +458,12 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.grey200.value, dark: BCGlobalToken.grey750.value)
     case .fillGreyHeavy:
       return (light: BCGlobalToken.grey100.value, dark: BCGlobalToken.grey800.value)
+
+    // MARK: - Gradient
+    case .gradientAccentGreen:
+      return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green400.value)
+    case .gradientAccentGreenHeavy:
+      return (light: BCGlobalToken.green500.value, dark: BCGlobalToken.green300.value)
 
     // MARK: - Icon
     case .iconAbsoluteBlack:
