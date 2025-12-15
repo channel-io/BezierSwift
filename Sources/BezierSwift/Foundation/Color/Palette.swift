@@ -7,6 +7,34 @@
 
 import SwiftUI
 
+fileprivate extension Color {
+  init(r: Double, g: Double, b: Double, alpha: Double) {
+    self = Color(red: r / 255, green: g / 255, blue: b / 255, opacity: alpha)
+  }
+}
+
+public struct ColorComponentsWithAlpha: Equatable {
+  private let red: Double
+  private let green: Double
+  private let blue: Double
+  private let alpha: Double
+  
+  public init(red: Double, green: Double, blue: Double, alpha: Double) {
+    self.red = red
+    self.green = green
+    self.blue = blue
+    self.alpha = alpha
+  }
+  
+  public var color: Color {
+    Color(red: self.red / 255, green: self.green / 255, blue: self.blue / 255, opacity: alpha)
+  }
+  
+  public var uiColor: UIColor {
+    UIColor(red: self.red / 255, green: self.green / 255, blue: self.blue / 255, alpha: alpha)
+  }
+}
+
 public enum Palette {
   public static let white = ColorComponentsWithAlpha(red: 255, green: 255, blue: 255, alpha: 1.0)
   public static let white_90 = ColorComponentsWithAlpha(red: 255, green: 255, blue: 255, alpha: 0.9)
