@@ -15,14 +15,14 @@ public enum BezierElevation {
   case mEv5
   case mEv6
 
-  var rawValue: (semanticColor: SemanticColor, x: CGFloat, y: CGFloat, blur: CGFloat) {
+  var rawValue: (semanticColor: BCSemanticToken, x: CGFloat, y: CGFloat, blur: CGFloat) {
     switch self {
-    case .mEv1: return (.shdwMedium, 0, 1, 4)
-    case .mEv2: return (.shdwMedium, 0, 2, 6)
-    case .mEv3: return (.shdwLarge, 0, 4, 20)
-    case .mEv4: return (.shdwXlarge, 0, 4, 24)
-    case .mEv5: return (.shdwXlarge, 0, 6, 40)
-    case .mEv6: return (.shdwXlarge, 0, 12, 60)
+    case .mEv1: return (.elevationMedium, 0, 1, 4)
+    case .mEv2: return (.elevationMedium, 0, 2, 6)
+    case .mEv3: return (.elevationLarge, 0, 4, 20)
+    case .mEv4: return (.elevationXlarge, 0, 4, 24)
+    case .mEv5: return (.elevationXlarge, 0, 6, 40)
+    case .mEv6: return (.elevationXlarge, 0, 12, 60)
     }
   }
 }

@@ -39,12 +39,58 @@ extension BezierFont {
       lineBreakMode: lineBreakMode
     )
   }
+  
+  public func attributedString(
+    _ component: BezierComponentable,
+    text: String,
+    semanticColorToken: BCSemanticToken = .textNeutral,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping,
+    hasTagProperty: Bool = false
+  ) -> NSAttributedString {
+    let color = semanticColorToken.palette(component)
+    
+    guard !hasTagProperty else {
+      return text.applyBezierTagFont(
+        component,
+        normalFont: self,
+        normalColor: semanticColorToken,
+        boldFont: self.getPairedBoldFont,
+        boldColor: semanticColorToken,
+        alignment: alignment,
+        lineBreakMode: lineBreakMode
+      )
+    }
+    
+    return text.applyBezierFont(
+      height: self.lineHeight,
+      font: self.uiFont,
+      color: color,
+      letterSpacing: self.letterSpacing,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
 }
 
 extension View {
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    semanticColor: SemanticColor = .txtBlackDarkest
+    semanticColor: SemanticColor
+  ) -> some View {
+    self.applyBezierFontStyle(bezierFont, semanticColor)
+  }
+  
+  public func applyBezierFontStyle(
+    _ bezierFont: BezierFont,
+    semanticColorToken: BCSemanticToken
+  ) -> some View {
+    self.applyBezierFontStyle(bezierFont, semanticColorToken)
+  }
+  
+  public func applyBezierFontStyle(
+    _ bezierFont: BezierFont,
+    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutral
   ) -> some View {
     self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
   }
@@ -54,7 +100,7 @@ private struct BezierFontStyle: ViewModifier, Themeable {
   @Environment(\.colorScheme) var colorScheme
   
   let bezierFont: BezierFont
-  let semanticColor: SemanticColor
+  let semanticColor: SemanticColorProtocol
   
   func body(content: Content) -> some View {
     content
@@ -64,4 +110,3 @@ private struct BezierFontStyle: ViewModifier, Themeable {
       .foregroundColor(self.palette(self.semanticColor))
   }
 }
-
