@@ -148,7 +148,7 @@ public enum SemanticColor {
 }
 
 // MARK: Light, Dark Color
-extension SemanticColor: SemanticColorProtocol {
+extension SemanticColor {
   public var light: ColorComponentsWithAlpha { self.paletteSet.light }
   public var dark: ColorComponentsWithAlpha { self.paletteSet.dark }
 }
@@ -295,6 +295,32 @@ extension SemanticColor {
     case .bgtxtNavyNormal: return (Palette.navy400, Palette.navy300)
     case .bgtxtNavyDark: return (Palette.navy500, Palette.navy400)
     case .custom(let paletteSet): return (paletteSet.light, paletteSet.dark)
+    }
+  }
+}
+
+extension SemanticColor {
+  public func palette(_ component: BezierComponentable) -> UIColor {
+    UIColor { [weak component] _ in
+      let component = component ?? TempBezierComponent()
+      let colorTheme = component.colorTheme
+      let componentTheme = component.componentTheme
+      switch componentTheme {
+      case .normal:
+        switch colorTheme {
+        case .light:
+          return paletteSet.light.uiColor
+        case .dark:
+          return paletteSet.dark.uiColor
+        }
+      case .inverted:
+        switch colorTheme {
+        case .light:
+          return paletteSet.dark.uiColor
+        case .dark:
+          return paletteSet.light.uiColor
+        }
+      }
     }
   }
 }
