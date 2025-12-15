@@ -148,317 +148,317 @@ public enum ButtonType: Equatable {
     }
   }
   
-  func textColor(_ size: ButtonSize) -> SemanticColor {
+  func textColor(_ size: ButtonSize) -> BCSemanticToken {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
-      case .monochromeLight, .monochromeDark: return .txtWhiteNormal
-      default: return .bgtxtAbsoluteWhiteDark
+      case .monochromeLight, .monochromeDark: return .textAbsoluteWhite
+      default: return .textAbsoluteWhite
       }
     case .secondary(let color), .tertiary(let color):
       switch color {
       case .blue:
-        return .bgtxtBlueNormal
+        return .textAccentBlue
       case .red:
-        return .bgtxtRedNormal
+        return .textAccentRed
       case .green:
-        return .bgtxtGreenNormal
+        return .textAccentGreen
       case .yellow:
-        return .bgtxtYellowNormal
+        return .textAccentYellow
       case .cobalt:
-        return .bgtxtCobaltNormal
+        return .textAccentCobalt
       case .orange:
-        return .bgtxtOrangeNormal
+        return .textAccentOrange
       case .monochrome:
         switch size {
         case .xsmall, .small:
-          return .txtBlackDarker
+          return .textNeutralLight
         case .medium, .large, .xlarge:
-          return .txtBlackDarkest
+          return .textNeutral
         }
       case .monochromeLight:
-        return .txtBlackDarker
+        return .textNeutralLight
       case .monochromeDark:
-        return .txtBlackDarkest
+        return .textNeutral
       case .absoulteWhite:
-        return .bgtxtAbsoluteWhiteDark
+        return .textAbsoluteWhite
       }
     case .floating(let color):
       switch color {
       case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
-        return .bgtxtAbsoluteWhiteDark
+        return .textAbsoluteWhite
       case .monochrome, .monochromeLight, .monochromeDark:
-        return .txtBlackDarkest
+        return .textNeutral
       }
     }
   }
   
-  func imageTintColor(_ size: ButtonSize) -> SemanticColor {
+  func imageTintColor(_ size: ButtonSize) -> BCSemanticToken {
     switch self {
     case .primary(let buttonColor):
       switch buttonColor {
-      case .monochromeLight, .monochromeDark: return .txtWhiteNormal
-      default: return .bgtxtAbsoluteWhiteDark
+      case .monochromeLight, .monochromeDark: return .iconAbsoluteWhite
+      default: return .iconAbsoluteWhite
       }
     case .secondary(let color), .tertiary(let color):
       switch color {
       case .blue:
-        return .bgtxtBlueNormal
+        return .iconAccentBlue
       case .red:
-        return .bgtxtRedNormal
+        return .iconAccentRed
       case .green:
-        return .bgtxtGreenNormal
+        return .iconAccentGreen
       case .yellow:
-        return .bgtxtYellowNormal
+        return .iconAccentYellow
       case .cobalt:
-        return .bgtxtCobaltNormal
+        return .iconAccentCobalt
       case .orange:
-        return .bgtxtOrangeNormal
+        return .iconAccentOrange
       case .monochrome:
         switch size {
         case .xsmall, .small:
-          return .txtBlackDark
+          return .iconNeutral
         case .medium, .large, .xlarge:
-          return .txtBlackDarker
+          return .iconNeutralHeavy
         }
       case .monochromeLight:
-        return .txtBlackDark
+        return .iconNeutral
       case .monochromeDark:
-        return .txtBlackDarker
+        return .iconNeutralHeavy
       case .absoulteWhite:
-        return .bgtxtAbsoluteWhiteDark
+        return .iconAbsoluteWhite
       }
     case .floating(let color):
       switch color {
       case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
-        return .bgtxtAbsoluteWhiteDark
+        return .iconAbsoluteWhite
       case .monochrome, .monochromeLight, .monochromeDark:
-        return .txtBlackDarker
+        return .iconNeutralHeavy
       }
     }
   }
   
-  func backgroundColor(state: ButtonState) -> SemanticColor {
+  func backgroundColor(state: ButtonState) -> BCSemanticToken {
     switch self {
     case .primary(let color):
       switch color {
       case .blue:
         switch state {
         case .default, .disabled:
-          return .bgtxtBlueNormal
+          return .fillAccentBlueHeavier
         case .pressed:
-          return .bgtxtBlueDark
+          return .fillAccentBlueHeavier
         }
       case .red:
         switch state {
         case .default, .disabled:
-          return .bgtxtRedNormal
+          return .fillAccentRedHeavier
         case .pressed:
-          return .bgtxtRedDark
+          return .fillAccentRedHeavier
         }
       case .green:
         switch state {
         case .default, .disabled:
-          return .bgtxtGreenNormal
+          return .fillAccentGreenHeavier
         case .pressed:
-          return .bgtxtGreenDark
+          return .fillAccentGreenHeavier
         }
       case .yellow:
         switch state {
         case .default, .disabled:
-          return .bgtxtYellowNormal
+          return .fillAccentYellowHeavier
         case .pressed:
-          return .bgtxtYellowDark
+          return .fillAccentYellowHeavier
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
-          return .bgtxtCobaltNormal
+          return .fillAccentCobaltHeavier
         case .pressed:
-          return .bgtxtCobaltDark
+          return .fillAccentCobaltHeavier
         }
       case .orange:
         switch state {
         case .default, .disabled:
-          return .bgtxtOrangeNormal
+          return .fillAccentOrangeHeavier
         case .pressed:
-          return .bgtxtOrangeDark
+          return .fillAccentOrangeHeavier
         }
       case .monochrome:
         switch state {
         case .default, .disabled:
-          return .bgtxtAbsoluteBlackLightest
+          return .fillAbsoluteBlackLight
         case .pressed:
-          return .bgtxtAbsoluteBlackLighter
+          return .dimAbsoluteBlack
         }
       case .monochromeLight:
-        return .bgBlackDarker
+        return .fillNeutralHeavier
       case .monochromeDark:
-        return .bgGreyDarkest
+        return .fillNeutralHeaviest
       case .absoulteWhite:
-        return .bgTransparent
+        return .fillNeutralTransparent
       }
     case .secondary(let color):
       switch color {
       case .blue:
         switch state {
         case .default, .disabled:
-          return .bgtxtBlueLightest
+          return .fillAccentBlue
         case .pressed:
-          return .bgtxtBlueLighter
+          return .fillAccentBlueHeavy
         }
       case .red:
         switch state {
         case .default, .disabled:
-          return .bgtxtRedLightest
+          return .fillAccentRed
         case .pressed:
-          return .bgtxtRedLighter
+          return .fillAccentRedHeavy
         }
       case .green:
         switch state {
         case .default, .disabled:
-          return .bgtxtGreenLightest
+          return .fillAccentGreen
         case .pressed:
-          return .bgtxtGreenLighter
+          return .fillAccentGreenHeavy
         }
       case .yellow:
         switch state {
         case .default, .disabled:
-          return .bgtxtYellowLightest
+          return .fillAccentYellow
         case .pressed:
-          return .bgtxtYellowLighter
+          return .fillAccentYellowHeavy
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
-          return .bgtxtCobaltLightest
+          return .fillAccentCobalt
         case .pressed:
-          return .bgtxtCobaltLighter
+          return .fillAccentCobaltHeavy
         }
       case .orange:
         switch state {
         case .default, .disabled:
-          return .bgtxtOrangeLightest
+          return .fillAccentOrange
         case .pressed:
-          return .bgtxtOrangeLighter
+          return .fillAccentOrangeHeavy
         }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
         case .default, .disabled:
-          return .bgBlackLighter
+          return .fillNeutralLighter
         case .pressed:
-          return .bgBlackLight
+          return .fillNeutralLight
         }
       case .absoulteWhite:
-        return .bgTransparent
+        return .fillNeutralTransparent
       }
     case .tertiary(let color):
       switch color {
       case .blue:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtBlueLightest
+          return .fillAccentBlue
         }
       case .red:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtRedLightest
+          return .fillAccentRed
         }
       case .green:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtGreenLightest
+          return .fillAccentGreen
         }
       case .yellow:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtYellowLightest
+          return .fillAccentYellow
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtCobaltLightest
+          return .fillAccentCobalt
         }
       case .orange:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgtxtOrangeLightest
+          return .fillAccentOrange
         }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
         case .default, .disabled:
-          return .bgTransparent
+          return .fillNeutralTransparent
         case .pressed:
-          return .bgBlackLighter
+          return .fillNeutralLighter
         }
       case .absoulteWhite:
-        return .bgTransparent
+        return .fillNeutralTransparent
       }
     case .floating(let color):
       switch color {
       case .blue:
         switch state {
         case .default, .disabled:
-          return .bgtxtBlueNormal
+          return .fillAccentBlueHeavier
         case .pressed:
-          return .bgtxtBlueDark
+          return .fillAccentBlueHeavier
         }
       case .red:
         switch state {
         case .default, .disabled:
-          return .bgtxtRedNormal
+          return .fillAccentRedHeavier
         case .pressed:
-          return .bgtxtRedDark
+          return .fillAccentRedHeavier
         }
       case .green:
         switch state {
         case .default, .disabled:
-          return .bgtxtGreenNormal
+          return .fillAccentGreenHeavier
         case .pressed:
-          return .bgtxtGreenDark
+          return .fillAccentGreenHeavier
         }
       case .yellow:
         switch state {
         case .default, .disabled:
-          return .bgtxtYellowNormal
+          return .fillAccentYellowHeavier
         case .pressed:
-          return .bgtxtYellowDark
+          return .fillAccentYellowHeavier
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
-          return .bgtxtCobaltNormal
+          return .fillAccentCobaltHeavier
         case .pressed:
-          return .bgtxtCobaltDark
+          return .fillAccentCobaltHeavier
         }
       case .orange:
         switch state {
         case .default, .disabled:
-          return .bgtxtOrangeNormal
+          return .fillAccentOrangeHeavier
         case .pressed:
-          return .bgtxtOrangeDark
+          return .fillAccentOrangeHeavier
         }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
         case .default, .disabled:
-          return .bgWhiteHigh
+          return .surfaceHighest
         case .pressed:
-          return .bgWhiteLow
+          return .surfaceHigh
         }
       case .absoulteWhite:
-        return .bgTransparent
+        return .fillNeutralTransparent
       }
     }
   }
@@ -613,7 +613,7 @@ public struct BezierButton: View, Themeable {
           Text(title)
             .applyBezierFontStyle(
               self.size.bezierFont,
-              semanticColor: self.type.textColor(self.size)
+              semanticColorToken: self.type.textColor(self.size)
             )
             .padding(.horizontal, Metric.textLeadingTrailing)
         }
