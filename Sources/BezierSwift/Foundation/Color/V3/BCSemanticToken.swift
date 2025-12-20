@@ -555,13 +555,13 @@ extension BCSemanticToken {
     case .surfaceAccentYellow:
       return (light: BCGlobalToken.yellow400.value, dark: BCGlobalToken.yellow300.value)
     case .surfaceGlass:
-      return (light: BCGlobalToken.white90.value, dark: BCGlobalToken.greyAlpha800_90.value)
+      return (light: BCGlobalToken.white90.value, dark: BCGlobalToken.grey800_90.value)
     case .surfaceGlassHigh:
-      return (light: BCGlobalToken.white90.value, dark: BCGlobalToken.greyAlpha850_90.value)
+      return (light: BCGlobalToken.white90.value, dark: BCGlobalToken.grey850_90.value)
     case .surfaceGlassHigher:
-      return (light: BCGlobalToken.greyAlpha100_90.value, dark: BCGlobalToken.greyAlpha800_90.value)
+      return (light: BCGlobalToken.grey100_90.value, dark: BCGlobalToken.grey800_90.value)
     case .surfaceGlassHighest:
-      return (light: BCGlobalToken.greyAlpha200_90.value, dark: BCGlobalToken.greyAlpha700_90.value)
+      return (light: BCGlobalToken.grey200_90.value, dark: BCGlobalToken.grey700_90.value)
     case .surfaceHigh:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey850.value)
     case .surfaceHigher:
