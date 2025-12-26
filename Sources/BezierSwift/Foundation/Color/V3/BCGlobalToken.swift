@@ -388,9 +388,9 @@ public enum BCGlobalToken {
     case .grey800_90:
       return ColorComponentsWithAlpha(red: 0x30, green: 0x30, blue: 0x35, alpha: 0.90)
     case .grey850_80:
-      return ColorComponentsWithAlpha(red: 0x2A, green: 0x2B, blue: 0x2D, alpha: 0.80)
+      return ColorComponentsWithAlpha(red: 0x2A, green: 0x2A, blue: 0x2D, alpha: 0.80)
     case .grey850_90:
-      return ColorComponentsWithAlpha(red: 0x2A, green: 0x2B, blue: 0x2D, alpha: 0.90)
+      return ColorComponentsWithAlpha(red: 0x2A, green: 0x2A, blue: 0x2D, alpha: 0.90)
     case .grey900_0:
       return ColorComponentsWithAlpha(red: 0x24, green: 0x24, blue: 0x28, alpha: 0)
     case .grey900_90:
