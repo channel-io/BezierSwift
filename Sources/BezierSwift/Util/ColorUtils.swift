@@ -189,20 +189,21 @@ extension ColorUtils {
     maxChannelValue: Double,
     hueOffset: Double
   ) -> Double {
-    var hueOffset = hueOffset
-    if hueOffset < 0 { hueOffset += 1 }
-    if hueOffset > 1 { hueOffset -= 1 }
+    var adjustedHueOffset = hueOffset
+
+    if adjustedHueOffset < 0 { adjustedHueOffset += 1 }
+    if adjustedHueOffset > 1 { adjustedHueOffset -= 1 }
 
     let channelRange = maxChannelValue - minChannelValue
 
-    if hueOffset < 1.0 / 6.0 {
-      return minChannelValue + channelRange * 6 * hueOffset
+    if adjustedHueOffset < 1.0 / 6.0 {
+      return minChannelValue + channelRange * 6 * adjustedHueOffset
     }
-    if hueOffset < 1.0 / 2.0 {
+    if adjustedHueOffset < 1.0 / 2.0 {
       return maxChannelValue
     }
-    if hueOffset < 2.0 / 3.0 {
-      return minChannelValue + channelRange * (2.0 / 3.0 - hueOffset) * 6
+    if adjustedHueOffset < 2.0 / 3.0 {
+      return minChannelValue + channelRange * (2.0 / 3.0 - adjustedHueOffset) * 6
     }
     return minChannelValue
   }
