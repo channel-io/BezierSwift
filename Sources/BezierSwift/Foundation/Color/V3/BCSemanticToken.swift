@@ -137,6 +137,7 @@ public enum BCSemanticToken: Equatable {
   case fillWarningTransparent
 
   // MARK: - Fill Grey
+  case fillBright
   case fillGrey
   case fillGreyHeavier
   case fillGreyHeavy
@@ -168,6 +169,7 @@ public enum BCSemanticToken: Equatable {
   case iconNeutralHeavy
   case iconSuccess
   case iconWarning
+  case iconInverseHeavier
 
   // MARK: - State
   case stateAction
@@ -221,7 +223,8 @@ public enum BCSemanticToken: Equatable {
   case textNeutralLighter
   case textSuccess
   case textWarning
-  
+  case textInverse
+
   case custom(light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
 }
 
@@ -258,7 +261,7 @@ extension BCSemanticToken {
     case .borderDetachHigher:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey800.value)
     case .borderDetachHighest:
-      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey700.value)
+      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey750.value)
     case .borderDetachLow:
       return (light: BCGlobalToken.grey50.value, dark: BCGlobalToken.grey950.value)
     case .borderNeutral:
@@ -444,7 +447,7 @@ extension BCSemanticToken {
     case .fillNeutralHeavier:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
     case .fillNeutralHeaviest:
-      return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white90.value)
+      return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white100.value)
     case .fillNeutralHeavy:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
     case .fillNeutralLight:
@@ -473,6 +476,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.orange400_0.value, dark: BCGlobalToken.orange300_0.value)
 
     // MARK: - Fill Grey
+    case .fillBright:
+      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey650.value)
     case .fillGrey:
       return (light: BCGlobalToken.grey50.value, dark: BCGlobalToken.grey850.value)
     case .fillGreyHeavier:
@@ -531,6 +536,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green300.value)
     case .iconWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
+    case .iconInverseHeavier:
+      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
 
     // MARK: - State
     case .stateAction:
@@ -576,7 +583,7 @@ extension BCSemanticToken {
     case .surfaceGlassHigher:
       return (light: BCGlobalToken.grey100_90.value, dark: BCGlobalToken.grey800_90.value)
     case .surfaceGlassHighest:
-      return (light: BCGlobalToken.grey200_90.value, dark: BCGlobalToken.grey700_90.value)
+      return (light: BCGlobalToken.grey200_90.value, dark: BCGlobalToken.grey750_90.value)
     case .surfaceHigh:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey850.value)
     case .surfaceHigher:
@@ -631,6 +638,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green300.value)
     case .textWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
+    case .textInverse:
+      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
     case .custom(let light, let dark):
       return (light: light, dark: dark)
     }
