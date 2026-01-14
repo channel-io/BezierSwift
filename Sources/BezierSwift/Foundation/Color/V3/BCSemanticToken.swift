@@ -141,10 +141,10 @@ public enum BCSemanticToken: Equatable {
   case fillGrey
   case fillGreyHeavier
   case fillGreyHeavy
+  case fillGreyLight
 
   // MARK: - Gradient
   case gradientAccentGreen
-  case gradientAccentGreenHeavy
   case gradientAccentGreenLight
 
   // MARK: - Icon
@@ -180,17 +180,6 @@ public enum BCSemanticToken: Equatable {
 
   // MARK: - Surface
   case surface
-  case surfaceAccentBlue
-  case surfaceAccentCobalt
-  case surfaceAccentGreen
-  case surfaceAccentNavy
-  case surfaceAccentOlive
-  case surfaceAccentOrange
-  case surfaceAccentPink
-  case surfaceAccentPurple
-  case surfaceAccentRed
-  case surfaceAccentTeal
-  case surfaceAccentYellow
   case surfaceGlass
   case surfaceGlassHigh
   case surfaceGlassHigher
@@ -484,12 +473,12 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.grey200.value, dark: BCGlobalToken.grey750.value)
     case .fillGreyHeavy:
       return (light: BCGlobalToken.grey100.value, dark: BCGlobalToken.grey800.value)
+    case .fillGreyLight:
+      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey900.value)
 
     // MARK: - Gradient
     case .gradientAccentGreen:
       return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green400.value)
-    case .gradientAccentGreenHeavy:
-      return (light: BCGlobalToken.green500.value, dark: BCGlobalToken.green300.value)
     case .gradientAccentGreenLight:
       return (light: BCGlobalToken.green300.value, dark: BCGlobalToken.green300.value)
 
@@ -554,28 +543,6 @@ extension BCSemanticToken {
     // MARK: - Surface
     case .surface:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey900.value)
-    case .surfaceAccentBlue:
-      return (light: BCGlobalToken.blue400.value, dark: BCGlobalToken.blue300.value)
-    case .surfaceAccentCobalt:
-      return (light: BCGlobalToken.cobalt400.value, dark: BCGlobalToken.cobalt300.value)
-    case .surfaceAccentGreen:
-      return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green300.value)
-    case .surfaceAccentNavy:
-      return (light: BCGlobalToken.navy400.value, dark: BCGlobalToken.navy300.value)
-    case .surfaceAccentOlive:
-      return (light: BCGlobalToken.olive400.value, dark: BCGlobalToken.olive300.value)
-    case .surfaceAccentOrange:
-      return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
-    case .surfaceAccentPink:
-      return (light: BCGlobalToken.pink400.value, dark: BCGlobalToken.pink300.value)
-    case .surfaceAccentPurple:
-      return (light: BCGlobalToken.purple400.value, dark: BCGlobalToken.purple300.value)
-    case .surfaceAccentRed:
-      return (light: BCGlobalToken.red400.value, dark: BCGlobalToken.red300.value)
-    case .surfaceAccentTeal:
-      return (light: BCGlobalToken.teal400.value, dark: BCGlobalToken.teal300.value)
-    case .surfaceAccentYellow:
-      return (light: BCGlobalToken.yellow400.value, dark: BCGlobalToken.yellow300.value)
     case .surfaceGlass:
       return (light: BCGlobalToken.white90.value, dark: BCGlobalToken.grey800_90.value)
     case .surfaceGlassHigh:
