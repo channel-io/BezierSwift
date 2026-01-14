@@ -11,7 +11,7 @@ extension BezierFont {
   public func attributedString(
     _ component: BezierComponentable,
     text: String,
-    semanticColor: SemanticColor = .txtBlackDarkest,
+    semanticColor: SemanticColor,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping,
     hasTagProperty: Bool = false
