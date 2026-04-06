@@ -239,35 +239,32 @@ extension String {
     alignment: NSTextAlignment,
     lineBreakMode: NSLineBreakMode
   ) -> NSAttributedString {
-    let normalParagraphStyle = NSMutableParagraphStyle()
-    normalParagraphStyle.lineBreakMode = lineBreakMode
-    normalParagraphStyle.minimumLineHeight = normalToken.lineHeight
-    normalParagraphStyle.alignment = alignment
+    let normalFont = normalToken.uiFont
+    let boldFont = boldToken.uiFont
 
-    let boldParagraphStyle = NSMutableParagraphStyle()
-    boldParagraphStyle.lineBreakMode = lineBreakMode
-    boldParagraphStyle.minimumLineHeight = boldToken.lineHeight
-    boldParagraphStyle.alignment = alignment
-
-    if lineBreakMode == .byWordWrapping {
-      normalParagraphStyle.lineBreakStrategy = .hangulWordPriority
-      boldParagraphStyle.lineBreakStrategy = .hangulWordPriority
-    }
+    let normalParagraphStyle = normalToken.makeParagraphStyle(
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+    let boldParagraphStyle = boldToken.makeParagraphStyle(
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
 
     let normalAttributes: [NSAttributedString.Key: Any] = [
       .foregroundColor: normalColor,
-      .font: normalToken.uiFont,
+      .font: normalFont,
       .kern: normalToken.letterSpacing,
       .paragraphStyle: normalParagraphStyle,
-      .baselineOffset: (normalParagraphStyle.minimumLineHeight - normalToken.uiFont.lineHeight) / 4,
+      .baselineOffset: (normalParagraphStyle.minimumLineHeight - normalFont.lineHeight) / 4,
     ]
 
     let boldAttributes: [NSAttributedString.Key: Any] = [
       .foregroundColor: boldColor,
-      .font: boldToken.uiFont,
+      .font: boldFont,
       .kern: boldToken.letterSpacing,
       .paragraphStyle: boldParagraphStyle,
-      .baselineOffset: (boldParagraphStyle.minimumLineHeight - boldToken.uiFont.lineHeight) / 4,
+      .baselineOffset: (boldParagraphStyle.minimumLineHeight - boldFont.lineHeight) / 4,
     ]
 
     let underlineAttributes: [NSAttributedString.Key: Any] = [

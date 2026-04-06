@@ -142,12 +142,26 @@ private struct BezierTypographyStyle: ViewModifier, Themeable {
   let token: BTSemanticToken
   let semanticColor: SemanticColorProtocol
 
+  private let resolvedFont: Font
+  private let resolvedLineSpacing: CGFloat
+  private let resolvedVerticalPadding: CGFloat
+  private let resolvedLetterSpacing: CGFloat
+
+  init(token: BTSemanticToken, semanticColor: SemanticColorProtocol) {
+    self.token = token
+    self.semanticColor = semanticColor
+    self.resolvedFont = token.font
+    self.resolvedLineSpacing = token.lineSpacing
+    self.resolvedVerticalPadding = token.verticalPadding
+    self.resolvedLetterSpacing = token.letterSpacing
+  }
+
   func body(content: Content) -> some View {
     content
-      .font(token.font)
-      .lineSpacing(token.lineSpacing)
-      .padding(.vertical, token.verticalPadding)
-      .bezierLetterSpacing(token.letterSpacing)
+      .font(resolvedFont)
+      .lineSpacing(resolvedLineSpacing)
+      .padding(.vertical, resolvedVerticalPadding)
+      .bezierLetterSpacing(resolvedLetterSpacing)
       .foregroundColor(self.palette(self.semanticColor))
   }
 }
@@ -210,20 +224,13 @@ extension BTSemanticToken {
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
   ) -> [NSAttributedString.Key: Any] {
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineBreakMode = lineBreakMode
-    paragraphStyle.alignment = alignment
-    paragraphStyle.minimumLineHeight = self.lineHeight
-
-    if lineBreakMode == .byWordWrapping {
-      paragraphStyle.lineBreakStrategy = .hangulWordPriority
-    }
-
-    let baselineOffset = (paragraphStyle.minimumLineHeight - self.uiFont.lineHeight) / 4
+    let font = self.uiFont
+    let paragraphStyle = self.makeParagraphStyle(alignment: alignment, lineBreakMode: lineBreakMode)
+    let baselineOffset = (paragraphStyle.minimumLineHeight - font.lineHeight) / 4
 
     return [
       .foregroundColor: semanticColorToken.palette(component),
-      .font: self.uiFont,
+      .font: font,
       .kern: self.letterSpacing,
       .paragraphStyle: paragraphStyle,
       .baselineOffset: baselineOffset,
@@ -234,6 +241,22 @@ extension BTSemanticToken {
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
   ) -> [NSAttributedString.Key: Any] {
+    let font = self.uiFont
+    let paragraphStyle = self.makeParagraphStyle(alignment: alignment, lineBreakMode: lineBreakMode)
+    let baselineOffset = (paragraphStyle.minimumLineHeight - font.lineHeight) / 4
+
+    return [
+      .font: font,
+      .kern: self.letterSpacing,
+      .paragraphStyle: paragraphStyle,
+      .baselineOffset: baselineOffset,
+    ]
+  }
+
+  func makeParagraphStyle(
+    alignment: NSTextAlignment,
+    lineBreakMode: NSLineBreakMode
+  ) -> NSMutableParagraphStyle {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineBreakMode = lineBreakMode
     paragraphStyle.alignment = alignment
@@ -243,13 +266,6 @@ extension BTSemanticToken {
       paragraphStyle.lineBreakStrategy = .hangulWordPriority
     }
 
-    let baselineOffset = (paragraphStyle.minimumLineHeight - self.uiFont.lineHeight) / 4
-
-    return [
-      .font: self.uiFont,
-      .kern: self.letterSpacing,
-      .paragraphStyle: paragraphStyle,
-      .baselineOffset: baselineOffset,
-    ]
+    return paragraphStyle
   }
 }

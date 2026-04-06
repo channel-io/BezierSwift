@@ -34,6 +34,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 22)
     #expect(token.lineHeight == 28)
     #expect(token.letterSpacing == -0.4)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func headingMediumProperties() {
@@ -41,6 +42,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 18)
     #expect(token.lineHeight == 24)
     #expect(token.letterSpacing == 0)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func headingSmallProperties() {
@@ -48,6 +50,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 17)
     #expect(token.lineHeight == 24)
     #expect(token.letterSpacing == -0.1)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func headingXsmallProperties() {
@@ -55,6 +58,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 16)
     #expect(token.lineHeight == 24)
     #expect(token.letterSpacing == -0.1)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func headingXxsmallProperties() {
@@ -118,6 +122,16 @@ struct BTSemanticTokenTests {
   }
 
   // MARK: - Text (bold weight)
+  @Test func textBoldWeightProperties() {
+    #expect(BTSemanticToken.textXxlarge(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textXlarge(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textLarge(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textMedium(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textSmall(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textXsmall(weight: .bold).resolvedWeight == .bold)
+    #expect(BTSemanticToken.textXxsmall(weight: .bold).resolvedWeight == .bold)
+  }
+
   @Test func textMediumBoldProperties() {
     let token = BTSemanticToken.textMedium(weight: .bold)
     #expect(token.fontSize == 14)
@@ -140,6 +154,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 13)
     #expect(token.lineHeight == 18)
     #expect(token.letterSpacing == 0)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func labelSmallProperties() {
@@ -147,6 +162,7 @@ struct BTSemanticTokenTests {
     #expect(token.fontSize == 12)
     #expect(token.lineHeight == 16)
     #expect(token.letterSpacing == 0)
+    #expect(token.resolvedWeight == .bold)
   }
 
   // MARK: - Caption
@@ -156,6 +172,14 @@ struct BTSemanticTokenTests {
     #expect(token.lineHeight == 16)
     #expect(token.letterSpacing == 0)
     #expect(token.resolvedWeight == .regular)
+  }
+
+  @Test func captionMediumBoldProperties() {
+    let token = BTSemanticToken.captionMedium(weight: .bold)
+    #expect(token.fontSize == 12)
+    #expect(token.lineHeight == 16)
+    #expect(token.letterSpacing == 0)
+    #expect(token.resolvedWeight == .bold)
   }
 
   @Test func captionSmallBoldProperties() {
