@@ -98,15 +98,67 @@ extension View {
 
 private struct BezierFontStyle: ViewModifier, Themeable {
   @Environment(\.colorScheme) var colorScheme
-  
+
   let bezierFont: BezierFont
   let semanticColor: SemanticColorProtocol
-  
+
   func body(content: Content) -> some View {
     content
       .font(bezierFont.font)
       .lineSpacing(bezierFont.lineSpacing)
       .padding(.vertical, bezierFont.verticalPadding)
       .foregroundColor(self.palette(self.semanticColor))
+  }
+}
+
+// MARK: - V3 Typography Token Support
+
+extension View {
+  public func applyBezierFontStyle(
+    _ token: BTSemanticToken,
+    semanticColorToken: BCSemanticToken = .textNeutral
+  ) -> some View {
+    self.modifier(BezierTypographyStyle(token: token, semanticColor: semanticColorToken))
+  }
+
+  public func applyBezierFontStyle(
+    _ token: BTSemanticToken,
+    semanticColor: SemanticColor
+  ) -> some View {
+    self.modifier(BezierTypographyStyle(token: token, semanticColor: semanticColor))
+  }
+
+  public func applyBezierFontStyle(
+    _ token: BTSemanticToken,
+    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutral
+  ) -> some View {
+    self.modifier(BezierTypographyStyle(token: token, semanticColor: semanticColor))
+  }
+}
+
+private struct BezierTypographyStyle: ViewModifier, Themeable {
+  @Environment(\.colorScheme) var colorScheme
+
+  let token: BTSemanticToken
+  let semanticColor: SemanticColorProtocol
+
+  func body(content: Content) -> some View {
+    content
+      .font(token.font)
+      .lineSpacing(token.lineSpacing)
+      .padding(.vertical, token.verticalPadding)
+      .bezierLetterSpacing(token.letterSpacing)
+      .foregroundColor(self.palette(self.semanticColor))
+  }
+}
+
+private extension View {
+  @ViewBuilder
+  func bezierLetterSpacing(_ spacing: CGFloat) -> some View {
+    if #available(iOS 16.0, *) {
+      self.tracking(spacing)
+    } else {
+      self
+    }
   }
 }
