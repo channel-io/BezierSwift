@@ -162,3 +162,94 @@ private extension View {
     }
   }
 }
+
+// MARK: - V3 Typography UIKit Support
+
+extension BTSemanticToken {
+  public func attributedString(
+    _ component: BezierComponentable,
+    text: String,
+    semanticColorToken: BCSemanticToken = .textNeutral,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    let color = semanticColorToken.palette(component)
+
+    return text.applyBezierFont(
+      height: self.lineHeight,
+      font: self.uiFont,
+      color: color,
+      letterSpacing: self.letterSpacing,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  public func attributedString(
+    _ component: BezierComponentable,
+    text: String,
+    semanticColor: SemanticColor,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    let color = semanticColor.palette(component)
+
+    return text.applyBezierFont(
+      height: self.lineHeight,
+      font: self.uiFont,
+      color: color,
+      letterSpacing: self.letterSpacing,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  public func attributes(
+    _ component: BezierComponentable,
+    semanticColorToken: BCSemanticToken = .textNeutral,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> [NSAttributedString.Key: Any] {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineBreakMode = lineBreakMode
+    paragraphStyle.alignment = alignment
+    paragraphStyle.minimumLineHeight = self.lineHeight
+
+    if lineBreakMode == .byWordWrapping {
+      paragraphStyle.lineBreakStrategy = .hangulWordPriority
+    }
+
+    let baselineOffset = (paragraphStyle.minimumLineHeight - self.uiFont.lineHeight) / 4
+
+    return [
+      .foregroundColor: semanticColorToken.palette(component),
+      .font: self.uiFont,
+      .kern: self.letterSpacing,
+      .paragraphStyle: paragraphStyle,
+      .baselineOffset: baselineOffset,
+    ]
+  }
+
+  public func sizeAttributes(
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> [NSAttributedString.Key: Any] {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineBreakMode = lineBreakMode
+    paragraphStyle.alignment = alignment
+    paragraphStyle.minimumLineHeight = self.lineHeight
+
+    if lineBreakMode == .byWordWrapping {
+      paragraphStyle.lineBreakStrategy = .hangulWordPriority
+    }
+
+    let baselineOffset = (paragraphStyle.minimumLineHeight - self.uiFont.lineHeight) / 4
+
+    return [
+      .font: self.uiFont,
+      .kern: self.letterSpacing,
+      .paragraphStyle: paragraphStyle,
+      .baselineOffset: baselineOffset,
+    ]
+  }
+}
