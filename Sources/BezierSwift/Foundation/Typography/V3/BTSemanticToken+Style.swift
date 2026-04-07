@@ -117,6 +117,22 @@ extension BTSemanticToken {
     }
   }
 
+  // MARK: - Bold Pair
+  public var boldPair: BTSemanticToken {
+    switch self {
+    case .textXxlarge:      return .textXxlarge(weight: .bold)
+    case .textXlarge:       return .textXlarge(weight: .bold)
+    case .textLarge:        return .textLarge(weight: .bold)
+    case .textMedium:       return .textMedium(weight: .bold)
+    case .textSmall:        return .textSmall(weight: .bold)
+    case .textXsmall:       return .textXsmall(weight: .bold)
+    case .textXxsmall:      return .textXxsmall(weight: .bold)
+    case .captionMedium:    return .captionMedium(weight: .bold)
+    case .captionSmall:     return .captionSmall(weight: .bold)
+    default:                return self
+    }
+  }
+
   // MARK: - Monospace 여부 (public)
   public var isMonospace: Bool {
     self.resolvedFontFamily == .monospace

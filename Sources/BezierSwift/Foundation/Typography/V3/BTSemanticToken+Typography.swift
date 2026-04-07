@@ -79,14 +79,25 @@ extension BTSemanticToken {
     text: String,
     semanticColorToken: BCSemanticToken = .textNeutral,
     alignment: NSTextAlignment = .left,
-    lineBreakMode: NSLineBreakMode = .byWordWrapping
+    lineBreakMode: NSLineBreakMode = .byWordWrapping,
+    hasTagProperty: Bool = false
   ) -> NSAttributedString {
-    let color = semanticColorToken.palette(component)
+    guard !hasTagProperty else {
+      return text.applyBezierTagFont(
+        component,
+        normalToken: self,
+        normalColor: semanticColorToken,
+        boldToken: self.boldPair,
+        boldColor: semanticColorToken,
+        alignment: alignment,
+        lineBreakMode: lineBreakMode
+      )
+    }
 
     return text.applyBezierFont(
       height: self.lineHeight,
       font: self.uiFont,
-      color: color,
+      color: semanticColorToken.palette(component),
       letterSpacing: self.letterSpacing,
       alignment: alignment,
       lineBreakMode: lineBreakMode
@@ -98,14 +109,25 @@ extension BTSemanticToken {
     text: String,
     semanticColor: SemanticColor,
     alignment: NSTextAlignment = .left,
-    lineBreakMode: NSLineBreakMode = .byWordWrapping
+    lineBreakMode: NSLineBreakMode = .byWordWrapping,
+    hasTagProperty: Bool = false
   ) -> NSAttributedString {
-    let color = semanticColor.palette(component)
+    guard !hasTagProperty else {
+      return text.applyBezierTagFont(
+        component,
+        normalToken: self,
+        normalColor: semanticColor,
+        boldToken: self.boldPair,
+        boldColor: semanticColor,
+        alignment: alignment,
+        lineBreakMode: lineBreakMode
+      )
+    }
 
     return text.applyBezierFont(
       height: self.lineHeight,
       font: self.uiFont,
-      color: color,
+      color: semanticColor.palette(component),
       letterSpacing: self.letterSpacing,
       alignment: alignment,
       lineBreakMode: lineBreakMode

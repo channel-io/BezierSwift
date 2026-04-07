@@ -212,6 +212,27 @@ extension String {
   func applyBezierTagFont(
     _ component: BezierComponentable,
     normalToken: BTSemanticToken,
+    normalColor: SemanticColor,
+    boldToken: BTSemanticToken,
+    boldColor: SemanticColor,
+    underlineStyle: NSUnderlineStyle = .single,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    return self.applyBezierTagFont(
+      normalToken: normalToken,
+      normalColor: normalColor.palette(component),
+      boldToken: boldToken,
+      boldColor: boldColor.palette(component),
+      underlineStyle: underlineStyle,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  func applyBezierTagFont(
+    _ component: BezierComponentable,
+    normalToken: BTSemanticToken,
     normalColor: BCSemanticToken,
     boldToken: BTSemanticToken,
     boldColor: BCSemanticToken,
