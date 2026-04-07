@@ -55,19 +55,8 @@ private struct BezierTypographyStyle: ViewModifier, Themeable {
       .font(resolvedFont)
       .lineSpacing(resolvedLineSpacing)
       .padding(.vertical, resolvedVerticalPadding)
-      .bezierLetterSpacing(resolvedLetterSpacing)
+      .tracking(resolvedLetterSpacing)
       .foregroundColor(self.palette(self.semanticColor))
-  }
-}
-
-private extension View {
-  @ViewBuilder
-  func bezierLetterSpacing(_ spacing: CGFloat) -> some View {
-    if #available(iOS 16.0, *) {
-      self.tracking(spacing)
-    } else {
-      self
-    }
   }
 }
 
