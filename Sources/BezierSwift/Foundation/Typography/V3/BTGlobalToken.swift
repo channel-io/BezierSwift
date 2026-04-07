@@ -37,30 +37,11 @@ enum BTGlobalToken {
     static let spacing0_4: CGFloat = -0.4
   }
 
-  enum FontWeight: Int {
-    case regular = 400
-    case bold = 700
-
-    var swiftUIWeight: Font.Weight {
-      switch self {
-      case .regular: return .regular
-      case .bold: return .bold
-      }
-    }
-
-    var uiKitWeight: UIFont.Weight {
-      switch self {
-      case .regular: return .regular
-      case .bold: return .bold
-      }
-    }
-  }
-
   enum FontFamily: Equatable {
     case system
     case monospace
 
-    func font(size: CGFloat, weight: FontWeight) -> Font {
+    func font(size: CGFloat, weight: BTFontWeight) -> Font {
       switch self {
       case .system:
         return .system(size: size, weight: weight.swiftUIWeight)
@@ -69,7 +50,7 @@ enum BTGlobalToken {
       }
     }
 
-    func uiFont(size: CGFloat, weight: FontWeight) -> UIFont {
+    func uiFont(size: CGFloat, weight: BTFontWeight) -> UIFont {
       switch self {
       case .system:
         return .systemFont(ofSize: size, weight: weight.uiKitWeight)

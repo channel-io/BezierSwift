@@ -80,8 +80,8 @@ extension BTSemanticToken {
     }
   }
 
-  // MARK: - Resolved Weight (internal)
-  var resolvedWeight: BTGlobalToken.FontWeight {
+  // MARK: - Resolved Weight
+  public var resolvedWeight: BTFontWeight {
     switch self {
     case .displayLarge, .displayMedium,
          .headingXlarge, .headingLarge, .headingMedium,
@@ -96,11 +96,11 @@ extension BTSemanticToken {
          .textSmall(let weight),
          .textXsmall(let weight),
          .textXxsmall(let weight):
-      return weight == .bold ? .bold : .regular
+      return weight
 
     case .captionMedium(let weight),
          .captionSmall(let weight):
-      return weight == .bold ? .bold : .regular
+      return weight
 
     case .codeMedium, .codeSmall:
       return .regular
