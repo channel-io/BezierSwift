@@ -10,7 +10,7 @@ import SwiftUI
 extension View {
   public func applyBezierFontStyle(
     _ token: BTSemanticToken,
-    semanticColorToken: BCSemanticToken = .textNeutral
+    semanticColorToken: BCSemanticToken
   ) -> some View {
     self.modifier(BezierTypographyStyle(token: token, semanticColor: semanticColorToken))
   }
