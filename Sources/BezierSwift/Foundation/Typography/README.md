@@ -100,9 +100,13 @@ let attrs = BTSemanticToken.textMedium()
 textView.typingAttributes = attrs
 
 // 색상 없이 (사이즈 계산용)
-let size = text.boundingRect(
-  with: maxSize,
+let size = NSAttributedString(
+  string: text,
   attributes: BTSemanticToken.textMedium().sizeAttributes()
+).boundingRect(
+  with: maxSize,
+  options: [.usesLineFragmentOrigin, .usesFontLeading],
+  context: nil
 ).size
 ```
 

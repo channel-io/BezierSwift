@@ -209,7 +209,7 @@ extension String {
 // MARK: - V3 Typography Tag Font Support
 
 extension String {
-  func applyBezierTagFont(
+  public func applyBezierTagFont(
     _ component: BezierComponentable,
     normalToken: BTSemanticToken,
     normalColor: SemanticColor,
@@ -230,7 +230,7 @@ extension String {
     )
   }
 
-  func applyBezierTagFont(
+  public func applyBezierTagFont(
     _ component: BezierComponentable,
     normalToken: BTSemanticToken,
     normalColor: BCSemanticToken,
