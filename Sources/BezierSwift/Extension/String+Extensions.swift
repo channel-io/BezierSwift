@@ -136,7 +136,7 @@ extension String {
           attributedString.replaceCharacters(in: endTagRange, with: "")
           attributedString.replaceCharacters(in: startTagRange, with: "")
           
-          adjustLocation = startTag.count + endTag.count
+          adjustLocation += startTag.count + endTag.count
         }
       } catch {
         return attributedString
