@@ -7,19 +7,19 @@ extension BTSemanticToken {
     switch self {
     case .displayLarge:                     return BTGlobalToken.FontSize.size36
     case .displayMedium:                    return BTGlobalToken.FontSize.size30
-    case .headingXlarge:                    return BTGlobalToken.FontSize.size24
+    case .headingXLarge:                    return BTGlobalToken.FontSize.size24
     case .headingLarge:                     return BTGlobalToken.FontSize.size22
     case .headingMedium:                    return BTGlobalToken.FontSize.size18
     case .headingSmall:                     return BTGlobalToken.FontSize.size17
-    case .headingXsmall:                    return BTGlobalToken.FontSize.size16
-    case .headingXxsmall:                   return BTGlobalToken.FontSize.size15
-    case .textXxlarge:                      return BTGlobalToken.FontSize.size17
-    case .textXlarge:                       return BTGlobalToken.FontSize.size16
+    case .headingXSmall:                    return BTGlobalToken.FontSize.size16
+    case .headingXXSmall:                   return BTGlobalToken.FontSize.size15
+    case .textXXLarge:                      return BTGlobalToken.FontSize.size17
+    case .textXLarge:                       return BTGlobalToken.FontSize.size16
     case .textLarge:                        return BTGlobalToken.FontSize.size15
     case .textMedium:                       return BTGlobalToken.FontSize.size14
     case .textSmall:                        return BTGlobalToken.FontSize.size13
-    case .textXsmall:                       return BTGlobalToken.FontSize.size12
-    case .textXxsmall:                      return BTGlobalToken.FontSize.size11
+    case .textXSmall:                       return BTGlobalToken.FontSize.size12
+    case .textXXSmall:                      return BTGlobalToken.FontSize.size11
     case .labelLarge:                       return BTGlobalToken.FontSize.size14
     case .labelMedium:                      return BTGlobalToken.FontSize.size13
     case .labelSmall:                       return BTGlobalToken.FontSize.size12
@@ -35,19 +35,19 @@ extension BTSemanticToken {
     switch self {
     case .displayLarge:                     return BTGlobalToken.LineHeight.height44
     case .displayMedium:                    return BTGlobalToken.LineHeight.height36
-    case .headingXlarge:                    return BTGlobalToken.LineHeight.height32
+    case .headingXLarge:                    return BTGlobalToken.LineHeight.height32
     case .headingLarge:                     return BTGlobalToken.LineHeight.height28
     case .headingMedium:                    return BTGlobalToken.LineHeight.height24
     case .headingSmall:                     return BTGlobalToken.LineHeight.height24
-    case .headingXsmall:                    return BTGlobalToken.LineHeight.height24
-    case .headingXxsmall:                   return BTGlobalToken.LineHeight.height20
-    case .textXxlarge:                      return BTGlobalToken.LineHeight.height24
-    case .textXlarge:                       return BTGlobalToken.LineHeight.height24
+    case .headingXSmall:                    return BTGlobalToken.LineHeight.height24
+    case .headingXXSmall:                   return BTGlobalToken.LineHeight.height20
+    case .textXXLarge:                      return BTGlobalToken.LineHeight.height24
+    case .textXLarge:                       return BTGlobalToken.LineHeight.height24
     case .textLarge:                        return BTGlobalToken.LineHeight.height20
     case .textMedium:                       return BTGlobalToken.LineHeight.height18
     case .textSmall:                        return BTGlobalToken.LineHeight.height18
-    case .textXsmall:                       return BTGlobalToken.LineHeight.height16
-    case .textXxsmall:                      return BTGlobalToken.LineHeight.height16
+    case .textXSmall:                       return BTGlobalToken.LineHeight.height16
+    case .textXXSmall:                      return BTGlobalToken.LineHeight.height16
     case .labelLarge:                       return BTGlobalToken.LineHeight.height18
     case .labelMedium:                      return BTGlobalToken.LineHeight.height18
     case .labelSmall:                       return BTGlobalToken.LineHeight.height16
@@ -62,17 +62,17 @@ extension BTSemanticToken {
   public var letterSpacing: CGFloat {
     switch self {
     case .displayLarge, .displayMedium,
-         .headingXlarge, .headingLarge:
+         .headingXLarge, .headingLarge:
       return BTGlobalToken.LetterSpacing.spacing0_4
 
     case .headingMedium:
       return BTGlobalToken.LetterSpacing.spacing0
 
-    case .headingSmall, .headingXsmall, .headingXxsmall,
-         .textXxlarge, .textXlarge, .textLarge:
+    case .headingSmall, .headingXSmall, .headingXXSmall,
+         .textXXLarge, .textXLarge, .textLarge:
       return BTGlobalToken.LetterSpacing.spacing0_1
 
-    case .textMedium, .textSmall, .textXsmall, .textXxsmall,
+    case .textMedium, .textSmall, .textXSmall, .textXXSmall,
          .labelLarge, .labelMedium, .labelSmall,
          .captionMedium, .captionSmall,
          .codeMedium, .codeSmall:
@@ -84,18 +84,18 @@ extension BTSemanticToken {
   public var resolvedWeight: BTFontWeight {
     switch self {
     case .displayLarge, .displayMedium,
-         .headingXlarge, .headingLarge, .headingMedium,
-         .headingSmall, .headingXsmall, .headingXxsmall,
+         .headingXLarge, .headingLarge, .headingMedium,
+         .headingSmall, .headingXSmall, .headingXXSmall,
          .labelLarge, .labelMedium, .labelSmall:
       return .bold
 
-    case .textXxlarge(let weight),
-         .textXlarge(let weight),
+    case .textXXLarge(let weight),
+         .textXLarge(let weight),
          .textLarge(let weight),
          .textMedium(let weight),
          .textSmall(let weight),
-         .textXsmall(let weight),
-         .textXxsmall(let weight):
+         .textXSmall(let weight),
+         .textXXSmall(let weight):
       return weight
 
     case .captionMedium(let weight),
@@ -120,13 +120,13 @@ extension BTSemanticToken {
   // MARK: - Bold Pair
   public var boldPair: BTSemanticToken {
     switch self {
-    case .textXxlarge:      return .textXxlarge(weight: .bold)
-    case .textXlarge:       return .textXlarge(weight: .bold)
+    case .textXXLarge:      return .textXXLarge(weight: .bold)
+    case .textXLarge:       return .textXLarge(weight: .bold)
     case .textLarge:        return .textLarge(weight: .bold)
     case .textMedium:       return .textMedium(weight: .bold)
     case .textSmall:        return .textSmall(weight: .bold)
-    case .textXsmall:       return .textXsmall(weight: .bold)
-    case .textXxsmall:      return .textXxsmall(weight: .bold)
+    case .textXSmall:       return .textXSmall(weight: .bold)
+    case .textXXSmall:      return .textXXSmall(weight: .bold)
     case .captionMedium:    return .captionMedium(weight: .bold)
     case .captionSmall:     return .captionSmall(weight: .bold)
     default:                return self

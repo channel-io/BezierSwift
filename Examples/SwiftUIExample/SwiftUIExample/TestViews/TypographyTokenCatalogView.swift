@@ -4,6 +4,9 @@ import BezierSwift
 struct TypographyTokenCatalogView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
 
+  private let sampleText = "The quick brown fox jumps over the lazy dog. 다람쥐 헌 쳇바퀴에 타고파. 色は匂へど散りぬるを。"
+  private let codeSampleText = "let greeting = \"Hello, World!\"\nprint(greeting) // 다람쥐 헌 쳇바퀴"
+
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 32) {
@@ -23,11 +26,11 @@ struct TypographyTokenCatalogView: View, Themeable {
   private var displaySection: some View {
     TokenSection(title: "Display") {
       TokenRow(name: "display-large", detail: "36pt / Bold") {
-        Text("Display Large")
+        Text(sampleText)
           .applyBezierFontStyle(.displayLarge, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "display-medium", detail: "30pt / Bold") {
-        Text("Display Medium")
+        Text(sampleText)
           .applyBezierFontStyle(.displayMedium, semanticColorToken: .textNeutral)
       }
     }
@@ -37,28 +40,28 @@ struct TypographyTokenCatalogView: View, Themeable {
   private var headingSection: some View {
     TokenSection(title: "Heading") {
       TokenRow(name: "heading-xlarge", detail: "24pt / Bold") {
-        Text("Heading XLarge")
-          .applyBezierFontStyle(.headingXlarge, semanticColorToken: .textNeutral)
+        Text(sampleText)
+          .applyBezierFontStyle(.headingXLarge, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "heading-large", detail: "22pt / Bold") {
-        Text("Heading Large")
+        Text(sampleText)
           .applyBezierFontStyle(.headingLarge, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "heading-medium", detail: "18pt / Bold") {
-        Text("Heading Medium")
+        Text(sampleText)
           .applyBezierFontStyle(.headingMedium, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "heading-small", detail: "17pt / Bold") {
-        Text("Heading Small")
+        Text(sampleText)
           .applyBezierFontStyle(.headingSmall, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "heading-xsmall", detail: "16pt / Bold") {
-        Text("Heading XSmall")
-          .applyBezierFontStyle(.headingXsmall, semanticColorToken: .textNeutral)
+        Text(sampleText)
+          .applyBezierFontStyle(.headingXSmall, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "heading-xxsmall", detail: "15pt / Bold") {
-        Text("Heading XXSmall")
-          .applyBezierFontStyle(.headingXxsmall, semanticColorToken: .textNeutral)
+        Text(sampleText)
+          .applyBezierFontStyle(.headingXXSmall, semanticColorToken: .textNeutral)
       }
     }
   }
@@ -68,42 +71,42 @@ struct TypographyTokenCatalogView: View, Themeable {
     TokenSection(title: "Text") {
       Group {
         TokenRow(name: "text-xxlarge", detail: "17pt / Regular") {
-          Text("Text XXLarge")
-            .applyBezierFontStyle(.textXxlarge(), semanticColorToken: .textNeutral)
+          Text(sampleText)
+            .applyBezierFontStyle(.textXXLarge(), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-xxlarge (bold)", detail: "17pt / Bold") {
-          Text("Text XXLarge Bold")
-            .applyBezierFontStyle(.textXxlarge(weight: .bold), semanticColorToken: .textNeutral)
+          Text(sampleText)
+            .applyBezierFontStyle(.textXXLarge(weight: .bold), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-xlarge", detail: "16pt / Regular") {
-          Text("Text XLarge")
-            .applyBezierFontStyle(.textXlarge(), semanticColorToken: .textNeutral)
+          Text(sampleText)
+            .applyBezierFontStyle(.textXLarge(), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-large", detail: "15pt / Regular") {
-          Text("Text Large")
+          Text(sampleText)
             .applyBezierFontStyle(.textLarge(), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-medium", detail: "14pt / Regular") {
-          Text("Text Medium")
+          Text(sampleText)
             .applyBezierFontStyle(.textMedium(), semanticColorToken: .textNeutral)
         }
       }
       Group {
         TokenRow(name: "text-medium (bold)", detail: "14pt / Bold") {
-          Text("Text Medium Bold")
+          Text(sampleText)
             .applyBezierFontStyle(.textMedium(weight: .bold), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-small", detail: "13pt / Regular") {
-          Text("Text Small")
+          Text(sampleText)
             .applyBezierFontStyle(.textSmall(), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-xsmall", detail: "12pt / Regular") {
-          Text("Text XSmall")
-            .applyBezierFontStyle(.textXsmall(), semanticColorToken: .textNeutral)
+          Text(sampleText)
+            .applyBezierFontStyle(.textXSmall(), semanticColorToken: .textNeutral)
         }
         TokenRow(name: "text-xxsmall", detail: "11pt / Regular") {
-          Text("Text XXSmall")
-            .applyBezierFontStyle(.textXxsmall(), semanticColorToken: .textNeutral)
+          Text(sampleText)
+            .applyBezierFontStyle(.textXXSmall(), semanticColorToken: .textNeutral)
         }
       }
     }
@@ -113,15 +116,15 @@ struct TypographyTokenCatalogView: View, Themeable {
   private var labelSection: some View {
     TokenSection(title: "Label") {
       TokenRow(name: "label-large", detail: "14pt / Bold") {
-        Text("Label Large")
+        Text(sampleText)
           .applyBezierFontStyle(.labelLarge, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "label-medium", detail: "13pt / Bold") {
-        Text("Label Medium")
+        Text(sampleText)
           .applyBezierFontStyle(.labelMedium, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "label-small", detail: "12pt / Bold") {
-        Text("Label Small")
+        Text(sampleText)
           .applyBezierFontStyle(.labelSmall, semanticColorToken: .textNeutral)
       }
     }
@@ -131,19 +134,19 @@ struct TypographyTokenCatalogView: View, Themeable {
   private var captionSection: some View {
     TokenSection(title: "Caption") {
       TokenRow(name: "caption-medium", detail: "12pt / Regular") {
-        Text("Caption Medium")
+        Text(sampleText)
           .applyBezierFontStyle(.captionMedium(), semanticColorToken: .textNeutral)
       }
       TokenRow(name: "caption-medium (bold)", detail: "12pt / Bold") {
-        Text("Caption Medium Bold")
+        Text(sampleText)
           .applyBezierFontStyle(.captionMedium(weight: .bold), semanticColorToken: .textNeutral)
       }
       TokenRow(name: "caption-small", detail: "11pt / Regular") {
-        Text("Caption Small")
+        Text(sampleText)
           .applyBezierFontStyle(.captionSmall(), semanticColorToken: .textNeutral)
       }
       TokenRow(name: "caption-small (bold)", detail: "11pt / Bold") {
-        Text("Caption Small Bold")
+        Text(sampleText)
           .applyBezierFontStyle(.captionSmall(weight: .bold), semanticColorToken: .textNeutral)
       }
     }
@@ -153,11 +156,11 @@ struct TypographyTokenCatalogView: View, Themeable {
   private var codeSection: some View {
     TokenSection(title: "Code") {
       TokenRow(name: "code-medium", detail: "14pt / Regular / Monospace") {
-        Text("Code Medium: let x = 42")
+        Text(codeSampleText)
           .applyBezierFontStyle(.codeMedium, semanticColorToken: .textNeutral)
       }
       TokenRow(name: "code-small", detail: "13pt / Regular / Monospace") {
-        Text("Code Small: let x = 42")
+        Text(codeSampleText)
           .applyBezierFontStyle(.codeSmall, semanticColorToken: .textNeutral)
       }
     }

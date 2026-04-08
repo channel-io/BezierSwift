@@ -8,21 +8,21 @@ public enum BTSemanticToken: Equatable {
   case displayMedium
 
   // MARK: - Heading (6) — weight 700 고정
-  case headingXlarge
+  case headingXLarge
   case headingLarge
   case headingMedium
   case headingSmall
-  case headingXsmall
-  case headingXxsmall
+  case headingXSmall
+  case headingXXSmall
 
   // MARK: - Text (7) — 기본 400, weight prop으로 bold 700 가능
-  case textXxlarge(weight: BTFontWeight = .regular)
-  case textXlarge(weight: BTFontWeight = .regular)
+  case textXXLarge(weight: BTFontWeight = .regular)
+  case textXLarge(weight: BTFontWeight = .regular)
   case textLarge(weight: BTFontWeight = .regular)
   case textMedium(weight: BTFontWeight = .regular)
   case textSmall(weight: BTFontWeight = .regular)
-  case textXsmall(weight: BTFontWeight = .regular)
-  case textXxsmall(weight: BTFontWeight = .regular)
+  case textXSmall(weight: BTFontWeight = .regular)
+  case textXXSmall(weight: BTFontWeight = .regular)
 
   // MARK: - Label (3) — weight 700 고정
   case labelLarge
