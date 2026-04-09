@@ -17,10 +17,6 @@ extension View {
   }
   
   func applyBlurEffect() -> some View {
-    if #available(iOS 15.0, *) {
-      return self.background(.thickMaterial)
-    } else {
-      return self
-    }
+    return self.background(.thickMaterial)
   }
 }

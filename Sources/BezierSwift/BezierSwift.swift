@@ -32,33 +32,13 @@ public final class BezierSwift {
     // Keyboard 를 닫아 키보드 입력을 막기 위한 함수입니다. by Tom 2024.04.17
     if self.config.hideKeyboardOnDialogDisplay {
       DispatchQueue.main.async {
-        if #available(iOS 15.0, *) {
-          self.bezierWindow?.windowScene?.keyWindow?.endEditing(true)
-        } else {
-          UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
+        self.bezierWindow?.windowScene?.keyWindow?.endEditing(true)
       }
     }
   }
 }
 
 extension BezierSwift {
-  @available(iOS, deprecated: 16.0)
-  @MainActor
-  public static func initializeWindow(
-    windowLevel: UIWindow.Level = .bezierSwift,
-    config: Config = Config()
-  ) -> UIWindow {
-    guard let bezierWindow = BezierSwift.shared.bezierWindow else {
-      let bezierWindow = BezierWindow(frame: UIScreen.main.bounds, windowLevel: windowLevel)
-      BezierSwift.shared.bezierWindow = bezierWindow
-      BezierSwift.shared.config = config
-      return bezierWindow
-    }
-    
-    return bezierWindow
-  }
-  
   @MainActor
   public static func initializeWindow(
     windowScene: UIWindowScene,
