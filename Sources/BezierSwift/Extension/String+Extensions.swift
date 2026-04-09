@@ -136,7 +136,7 @@ extension String {
           attributedString.replaceCharacters(in: endTagRange, with: "")
           attributedString.replaceCharacters(in: startTagRange, with: "")
           
-          adjustLocation = startTag.count + endTag.count
+          adjustLocation += startTag.count + endTag.count
         }
       } catch {
         return attributedString
@@ -201,6 +201,102 @@ extension String {
       tagAttributes: [
         .bold: boldAttributes,
         .underline: underlineAttributes
+      ]
+    )
+  }
+}
+
+// MARK: - V3 Typography Tag Font Support
+
+extension String {
+  public func applyBezierTagFont(
+    _ component: BezierComponentable,
+    normalToken: BTSemanticToken,
+    normalColor: SemanticColor,
+    boldToken: BTSemanticToken,
+    boldColor: SemanticColor,
+    underlineStyle: NSUnderlineStyle = .single,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    return self.applyBezierTagFont(
+      normalToken: normalToken,
+      normalColor: normalColor.palette(component),
+      boldToken: boldToken,
+      boldColor: boldColor.palette(component),
+      underlineStyle: underlineStyle,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  public func applyBezierTagFont(
+    _ component: BezierComponentable,
+    normalToken: BTSemanticToken,
+    normalColor: BCSemanticToken,
+    boldToken: BTSemanticToken,
+    boldColor: BCSemanticToken,
+    underlineStyle: NSUnderlineStyle = .single,
+    alignment: NSTextAlignment = .left,
+    lineBreakMode: NSLineBreakMode = .byWordWrapping
+  ) -> NSAttributedString {
+    return self.applyBezierTagFont(
+      normalToken: normalToken,
+      normalColor: normalColor.palette(component),
+      boldToken: boldToken,
+      boldColor: boldColor.palette(component),
+      underlineStyle: underlineStyle,
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+  }
+
+  private func applyBezierTagFont(
+    normalToken: BTSemanticToken,
+    normalColor: UIColor,
+    boldToken: BTSemanticToken,
+    boldColor: UIColor,
+    underlineStyle: NSUnderlineStyle,
+    alignment: NSTextAlignment,
+    lineBreakMode: NSLineBreakMode
+  ) -> NSAttributedString {
+    let normalFont = normalToken.uiFont
+    let boldFont = boldToken.uiFont
+
+    let normalParagraphStyle = normalToken.makeParagraphStyle(
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+    let boldParagraphStyle = boldToken.makeParagraphStyle(
+      alignment: alignment,
+      lineBreakMode: lineBreakMode
+    )
+
+    let normalAttributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: normalColor,
+      .font: normalFont,
+      .kern: normalToken.letterSpacing,
+      .paragraphStyle: normalParagraphStyle,
+      .baselineOffset: (normalParagraphStyle.minimumLineHeight - normalFont.lineHeight) / 4,
+    ]
+
+    let boldAttributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: boldColor,
+      .font: boldFont,
+      .kern: boldToken.letterSpacing,
+      .paragraphStyle: boldParagraphStyle,
+      .baselineOffset: (boldParagraphStyle.minimumLineHeight - boldFont.lineHeight) / 4,
+    ]
+
+    let underlineAttributes: [NSAttributedString.Key: Any] = [
+      .underlineStyle: underlineStyle.rawValue,
+    ]
+
+    return self.attributes(
+      normalAttributes,
+      tagAttributes: [
+        .bold: boldAttributes,
+        .underline: underlineAttributes,
       ]
     )
   }

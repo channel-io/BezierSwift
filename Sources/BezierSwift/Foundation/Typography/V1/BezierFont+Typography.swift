@@ -1,11 +1,13 @@
 //
-//  Typography.swift
+//  BezierFont+Typography.swift
 //
 //
 //  Created by Jam on 2022/12/02.
 //
 
 import SwiftUI
+
+// MARK: - V1 UIKit Support
 
 extension BezierFont {
   public func attributedString(
@@ -17,7 +19,7 @@ extension BezierFont {
     hasTagProperty: Bool = false
   ) -> NSAttributedString {
     let color = semanticColor.palette(component)
-    
+
     guard !hasTagProperty else {
       return text.applyBezierTagFont(
         component,
@@ -29,7 +31,7 @@ extension BezierFont {
         lineBreakMode: lineBreakMode
       )
     }
-    
+
     return text.applyBezierFont(
       height: self.lineHeight,
       font: self.uiFont,
@@ -39,7 +41,7 @@ extension BezierFont {
       lineBreakMode: lineBreakMode
     )
   }
-  
+
   public func attributedString(
     _ component: BezierComponentable,
     text: String,
@@ -49,7 +51,7 @@ extension BezierFont {
     hasTagProperty: Bool = false
   ) -> NSAttributedString {
     let color = semanticColorToken.palette(component)
-    
+
     guard !hasTagProperty else {
       return text.applyBezierTagFont(
         component,
@@ -61,7 +63,7 @@ extension BezierFont {
         lineBreakMode: lineBreakMode
       )
     }
-    
+
     return text.applyBezierFont(
       height: self.lineHeight,
       font: self.uiFont,
@@ -73,6 +75,8 @@ extension BezierFont {
   }
 }
 
+// MARK: - V1 SwiftUI Support
+
 extension View {
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
@@ -80,14 +84,14 @@ extension View {
   ) -> some View {
     self.applyBezierFontStyle(bezierFont, semanticColor)
   }
-  
+
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
     semanticColorToken: BCSemanticToken
   ) -> some View {
     self.applyBezierFontStyle(bezierFont, semanticColorToken)
   }
-  
+
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
     _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutral
@@ -98,10 +102,10 @@ extension View {
 
 private struct BezierFontStyle: ViewModifier, Themeable {
   @Environment(\.colorScheme) var colorScheme
-  
+
   let bezierFont: BezierFont
   let semanticColor: SemanticColorProtocol
-  
+
   func body(content: Content) -> some View {
     content
       .font(bezierFont.font)

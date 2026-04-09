@@ -10,10 +10,19 @@ import BezierSwift
 
 struct ContentView: View, Themeable {
   @Environment(\.colorScheme) var colorScheme
-  
+
   var body: some View {
-    Rectangle()
-      .foregroundColor(self.palette(.bgtxtRedDark))
+    NavigationView {
+      List {
+        NavigationLink("V3 Typography Catalog") {
+          TypographyTokenCatalogView()
+        }
+        NavigationLink("Elevation Test") {
+          BezierElevationTestView()
+        }
+      }
+      .navigationTitle("BezierSwift Examples")
+    }
   }
 }
 
