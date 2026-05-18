@@ -76,7 +76,7 @@ public struct SUBezierButton: View, Themeable {
         self.iconView(leadingIcon)
       }
 
-      if let title = self.title {
+      if let title = self.title, !title.isEmpty {
         Text(title)
           .applyBezierFontStyle(
             self.size.typography,

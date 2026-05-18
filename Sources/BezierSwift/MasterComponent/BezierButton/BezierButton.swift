@@ -294,6 +294,7 @@ public final class BezierButton: UIControl, BezierComponentable {
   }
 
   private func refreshLoading() {
+    self.isUserInteractionEnabled = !self.isLoading
     if self.isLoading {
       self.contentStackView.isHidden = true
       self.activityIndicator.startAnimating()
