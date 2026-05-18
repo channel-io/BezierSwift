@@ -3,112 +3,328 @@
 //  BezierSwift
 //
 
-import SwiftUI
+import UIKit
 
-public struct BezierButton: View, Themeable {
-  private let size: BezierButtonSize
-  private let variant: BezierButtonVariant
-  private let semantic: BezierButtonSemantic
-  private let resizing: BezierButtonResizing
-  private let title: String?
-  private let leadingIcon: Image?
-  private let trailingIcon: Image?
-  private let isLoading: Bool
-  private let action: () -> Void
+public final class BezierButton: UIControl, BezierComponentable {
+  // MARK: - BezierComponentable
 
-  @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.colorScheme) public var colorScheme
+  public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
+  public var componentTheme: BezierComponentTheme = .normal {
+    didSet { self.refreshAppearance() }
+  }
+
+  // MARK: - Public Properties
+
+  public var size: BezierButtonSize = .medium {
+    didSet { if oldValue != self.size { self.refreshLayout() } }
+  }
+
+  public var variant: BezierButtonVariant = .filled {
+    didSet { if oldValue != self.variant { self.refreshAppearance() } }
+  }
+
+  public var semantic: BezierButtonSemantic = .primary {
+    didSet { if oldValue != self.semantic { self.refreshAppearance() } }
+  }
+
+  public var resizing: BezierButtonResizing = .hug {
+    didSet { if oldValue != self.resizing { self.refreshResizing() } }
+  }
+
+  public var title: String? {
+    didSet { if oldValue != self.title { self.refreshContent() } }
+  }
+
+  public var leadingIcon: UIImage? {
+    didSet { self.refreshContent() }
+  }
+
+  public var trailingIcon: UIImage? {
+    didSet { self.refreshContent() }
+  }
+
+  public var isLoading: Bool = false {
+    didSet { if oldValue != self.isLoading { self.refreshLoading() } }
+  }
+
+  public override var isEnabled: Bool {
+    didSet { if oldValue != self.isEnabled { self.refreshEnabled() } }
+  }
+
+  public override var isHighlighted: Bool {
+    didSet { self.refreshHighlight() }
+  }
+
+  // MARK: - Subviews
+
+  private let contentStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.alignment = .center
+    stackView.distribution = .fill
+    stackView.isUserInteractionEnabled = false
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    return stackView
+  }()
+
+  private let leadingImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.isHidden = true
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
+  }()
+
+  private let trailingImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.isHidden = true
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
+  }()
+
+  private let titleLabel: BezierButtonPaddedLabel = {
+    let label = BezierButtonPaddedLabel()
+    label.numberOfLines = 1
+    label.textAlignment = .center
+    return label
+  }()
+
+  private let activityIndicator: UIActivityIndicatorView = {
+    let indicator = UIActivityIndicatorView(style: .medium)
+    indicator.hidesWhenStopped = true
+    indicator.translatesAutoresizingMaskIntoConstraints = false
+    return indicator
+  }()
+
+  // MARK: - Layout Constraints (mutable)
+
+  private var heightConstraint: NSLayoutConstraint?
+  private var minWidthConstraint: NSLayoutConstraint?
+  private var leadingImageWidthConstraint: NSLayoutConstraint?
+  private var leadingImageHeightConstraint: NSLayoutConstraint?
+  private var trailingImageWidthConstraint: NSLayoutConstraint?
+  private var trailingImageHeightConstraint: NSLayoutConstraint?
+
+  // MARK: - Init
 
   public init(
-    size: BezierButtonSize,
-    variant: BezierButtonVariant,
-    semantic: BezierButtonSemantic,
-    resizing: BezierButtonResizing = .hug,
-    title: String? = nil,
-    leadingIcon: Image? = nil,
-    trailingIcon: Image? = nil,
-    isLoading: Bool = false,
-    action: @escaping () -> Void
+    size: BezierButtonSize = .medium,
+    variant: BezierButtonVariant = .filled,
+    semantic: BezierButtonSemantic = .primary,
+    resizing: BezierButtonResizing = .hug
   ) {
     self.size = size
     self.variant = variant
     self.semantic = semantic
     self.resizing = resizing
-    self.title = title
-    self.leadingIcon = leadingIcon
-    self.trailingIcon = trailingIcon
-    self.isLoading = isLoading
-    self.action = action
+    super.init(frame: .zero)
+    self.setUp()
   }
 
-  public var body: some View {
-    Button(action: { if !self.isLoading { self.action() } }) {
-      ZStack {
-        self.contentStack
-          .opacity(self.isLoading ? 0 : 1)
+  public required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    self.setUp()
+  }
 
-        if self.isLoading {
-          self.loadingIndicator
-        }
+  // MARK: - Setup
+
+  private func setUp() {
+    self.translatesAutoresizingMaskIntoConstraints = false
+
+    self.layer.masksToBounds = true
+    self.layer.borderWidth = 0
+
+    self.contentStackView.addArrangedSubview(self.leadingImageView)
+    self.contentStackView.addArrangedSubview(self.titleLabel)
+    self.contentStackView.addArrangedSubview(self.trailingImageView)
+
+    self.addSubview(self.contentStackView)
+    self.addSubview(self.activityIndicator)
+
+    let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.height)
+    let minWidthConstraint = self.widthAnchor.constraint(greaterThanOrEqualToConstant: self.size.minWidth)
+
+    let leadingImageWidthConstraint = self.leadingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
+    let leadingImageHeightConstraint = self.leadingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
+    let trailingImageWidthConstraint = self.trailingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
+    let trailingImageHeightConstraint = self.trailingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
+
+    NSLayoutConstraint.activate([
+      heightConstraint,
+      minWidthConstraint,
+      leadingImageWidthConstraint,
+      leadingImageHeightConstraint,
+      trailingImageWidthConstraint,
+      trailingImageHeightConstraint,
+      self.contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.contentStackView.leadingAnchor.constraint(
+        greaterThanOrEqualTo: self.leadingAnchor,
+        constant: self.size.horizontalPadding
+      ).withIdentifier("contentLeading"),
+      self.contentStackView.trailingAnchor.constraint(
+        lessThanOrEqualTo: self.trailingAnchor,
+        constant: -self.size.horizontalPadding
+      ).withIdentifier("contentTrailing"),
+      self.activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+    ])
+
+    self.heightConstraint = heightConstraint
+    self.minWidthConstraint = minWidthConstraint
+    self.leadingImageWidthConstraint = leadingImageWidthConstraint
+    self.leadingImageHeightConstraint = leadingImageHeightConstraint
+    self.trailingImageWidthConstraint = trailingImageWidthConstraint
+    self.trailingImageHeightConstraint = trailingImageHeightConstraint
+
+    self.refreshLayout()
+    self.refreshContent()
+    self.refreshAppearance()
+    self.refreshResizing()
+    self.refreshLoading()
+    self.refreshEnabled()
+  }
+
+  // MARK: - Layout Update
+
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    self.layer.cornerRadius = self.bounds.height / 2
+  }
+
+  public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    self.refreshAppearance()
+  }
+
+  // MARK: - Refresh
+
+  private func refreshLayout() {
+    self.heightConstraint?.constant = self.size.height
+    self.minWidthConstraint?.constant = self.size.minWidth
+    self.leadingImageWidthConstraint?.constant = self.size.iconLength
+    self.leadingImageHeightConstraint?.constant = self.size.iconLength
+    self.trailingImageWidthConstraint?.constant = self.size.iconLength
+    self.trailingImageHeightConstraint?.constant = self.size.iconLength
+
+    for constraint in self.constraints {
+      if constraint.identifier == "contentLeading" {
+        constraint.constant = self.size.horizontalPadding
+      } else if constraint.identifier == "contentTrailing" {
+        constraint.constant = -self.size.horizontalPadding
       }
-      .padding(.horizontal, self.size.horizontalPadding)
-      .frame(
-        minWidth: self.resizing == .fill ? nil : self.size.minWidth,
-        maxWidth: self.resizing == .fill ? .infinity : nil,
-        minHeight: self.size.height,
-        maxHeight: self.size.height
-      )
     }
-    .buttonStyle(
-      BezierButtonStyle(
-        size: self.size,
-        variant: self.variant,
-        semantic: self.semantic,
-        isLoading: self.isLoading
-      )
+
+    self.contentStackView.spacing = self.size.contentSpacing
+    self.titleLabel.contentInsets = UIEdgeInsets(
+      top: 0,
+      left: self.size.textHorizontalPadding,
+      bottom: 0,
+      right: self.size.textHorizontalPadding
     )
-    .opacity(self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity)
+    self.activityIndicator.transform = CGAffineTransform(
+      scaleX: self.activityIndicatorScale,
+      y: self.activityIndicatorScale
+    )
+    self.refreshContent()
+    self.setNeedsLayout()
+    self.invalidateIntrinsicContentSize()
   }
 
-  private var contentStack: some View {
-    HStack(spacing: self.size.contentSpacing) {
-      if let leadingIcon = self.leadingIcon {
-        self.iconView(leadingIcon)
-      }
+  private func refreshContent() {
+    self.leadingImageView.image = self.leadingIcon?.withRenderingMode(.alwaysTemplate)
+    self.leadingImageView.isHidden = self.leadingIcon == nil
 
-      if let title = self.title {
-        Text(title)
-          .applyBezierFontStyle(
-            self.size.typography,
-            semanticColorToken: self.variant.foregroundToken(self.semantic)
-          )
-          .padding(.horizontal, self.size.textHorizontalPadding)
-          .fixedSize(horizontal: true, vertical: false)
-      }
+    self.trailingImageView.image = self.trailingIcon?.withRenderingMode(.alwaysTemplate)
+    self.trailingImageView.isHidden = self.trailingIcon == nil
 
-      if let trailingIcon = self.trailingIcon {
-        self.iconView(trailingIcon)
-      }
+    let foregroundToken = self.variant.foregroundToken(self.semantic)
+    let foregroundColor = foregroundToken.palette(self)
+
+    self.leadingImageView.tintColor = foregroundColor
+    self.trailingImageView.tintColor = foregroundColor
+
+    if let title = self.title, !title.isEmpty {
+      self.titleLabel.attributedText = self.size.typography.attributedString(
+        self,
+        text: title,
+        semanticColorToken: foregroundToken,
+        alignment: .center
+      )
+      self.titleLabel.isHidden = false
+    } else {
+      self.titleLabel.attributedText = nil
+      self.titleLabel.isHidden = true
     }
   }
 
-  private func iconView(_ image: Image) -> some View {
-    image
-      .renderingMode(.template)
-      .resizable()
-      .scaledToFit()
-      .frame(width: self.size.iconLength, height: self.size.iconLength)
-      .foregroundColor(self.palette(self.variant.foregroundToken(self.semantic)))
+  private func refreshAppearance() {
+    if let backgroundToken = self.variant.backgroundToken(self.semantic) {
+      self.backgroundColor = backgroundToken.palette(self)
+    } else {
+      self.backgroundColor = .clear
+    }
+
+    if let borderToken = self.variant.borderToken(self.semantic) {
+      self.layer.borderWidth = BezierButtonConstant.borderWidth
+      self.layer.borderColor = borderToken.palette(self).cgColor
+    } else {
+      self.layer.borderWidth = 0
+      self.layer.borderColor = nil
+    }
+
+    let foregroundColor = self.variant.foregroundToken(self.semantic).palette(self)
+    self.leadingImageView.tintColor = foregroundColor
+    self.trailingImageView.tintColor = foregroundColor
+    self.activityIndicator.color = foregroundColor
+
+    self.refreshContent()
   }
 
-  private var loadingIndicator: some View {
-    ProgressView()
-      .progressViewStyle(.circular)
-      .tint(self.palette(self.variant.foregroundToken(self.semantic)))
-      .scaleEffect(self.loadingScale)
+  private func refreshResizing() {
+    switch self.resizing {
+    case .hug:
+      self.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+      self.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+    case .fill:
+      self.setContentHuggingPriority(.defaultLow, for: .horizontal)
+      self.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    }
   }
 
-  private var loadingScale: CGFloat {
+  private func refreshLoading() {
+    if self.isLoading {
+      self.contentStackView.isHidden = true
+      self.activityIndicator.startAnimating()
+    } else {
+      self.contentStackView.isHidden = false
+      self.activityIndicator.stopAnimating()
+    }
+  }
+
+  private func refreshEnabled() {
+    self.alpha = self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity
+  }
+
+  private func refreshHighlight() {
+    UIView.animate(withDuration: 0.1) {
+      self.alpha = self.isHighlighted
+        ? BezierButtonConstant.pressedOpacity
+        : (self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity)
+    }
+  }
+
+  // MARK: - Touch
+
+  public override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+    guard !self.isLoading else { return }
+    super.sendAction(action, to: target, for: event)
+  }
+
+  // MARK: - Helpers
+
+  private var activityIndicatorScale: CGFloat {
     switch self.size {
     case .xsmall, .small: return 0.6
     case .medium, .large, .xlarge: return 0.8
@@ -116,53 +332,34 @@ public struct BezierButton: View, Themeable {
   }
 }
 
-private struct BezierButtonStyle: ButtonStyle, Themeable {
-  let size: BezierButtonSize
-  let variant: BezierButtonVariant
-  let semantic: BezierButtonSemantic
-  let isLoading: Bool
+// MARK: - Padded Label
 
-  @Environment(\.colorScheme) var colorScheme
-
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .background(self.backgroundShape)
-      .clipShape(Capsule())
-      .overlay(self.borderShape)
-      .opacity(configuration.isPressed && !self.isLoading ? BezierButtonConstant.pressedOpacity : 1)
-  }
-
-  @ViewBuilder
-  private var backgroundShape: some View {
-    if let token = self.variant.backgroundToken(self.semantic) {
-      Capsule().fill(self.palette(token))
-    } else {
-      Color.clear
+final class BezierButtonPaddedLabel: UILabel {
+  var contentInsets: UIEdgeInsets = .zero {
+    didSet {
+      self.invalidateIntrinsicContentSize()
+      self.setNeedsDisplay()
     }
   }
 
-  @ViewBuilder
-  private var borderShape: some View {
-    if let token = self.variant.borderToken(self.semantic) {
-      Capsule()
-        .strokeBorder(
-          self.palette(token),
-          lineWidth: BezierButtonConstant.borderWidth
-        )
-    }
+  override func drawText(in rect: CGRect) {
+    super.drawText(in: rect.inset(by: self.contentInsets))
+  }
+
+  override var intrinsicContentSize: CGSize {
+    let size = super.intrinsicContentSize
+    return CGSize(
+      width: size.width + self.contentInsets.left + self.contentInsets.right,
+      height: size.height + self.contentInsets.top + self.contentInsets.bottom
+    )
   }
 }
 
-struct BezierButton_Previews: PreviewProvider {
-  static var previews: some View {
-    VStack(spacing: 12) {
-      BezierButton(size: .xsmall, variant: .filled, semantic: .primary, title: "Label") {}
-      BezierButton(size: .small, variant: .outlined, semantic: .secondary, title: "Label") {}
-      BezierButton(size: .medium, variant: .ghost, semantic: .destructive, title: "Label") {}
-      BezierButton(size: .large, variant: .filled, semantic: .destructive, title: "Confirm", leadingIcon: Image(systemName: "trash")) {}
-      BezierButton(size: .xlarge, variant: .filled, semantic: .primary, resizing: .fill, title: "Continue", trailingIcon: Image(systemName: "arrow.right")) {}
-      BezierButton(size: .medium, variant: .filled, semantic: .primary, title: "Loading", isLoading: true) {}
-    }
-    .padding()
+// MARK: - NSLayoutConstraint Identifier Helper
+
+private extension NSLayoutConstraint {
+  func withIdentifier(_ identifier: String) -> NSLayoutConstraint {
+    self.identifier = identifier
+    return self
   }
 }
