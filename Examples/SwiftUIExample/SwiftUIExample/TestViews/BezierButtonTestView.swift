@@ -22,7 +22,7 @@ struct BezierButtonTestView: View {
     Form {
       Section("Preview") {
         VStack(spacing: 12) {
-          BezierButton(
+          SUBezierButton(
             size: self.size,
             variant: self.variant,
             semantic: self.semantic,
@@ -101,7 +101,7 @@ struct BezierButtonTestView: View {
                 ForEach(BezierButtonVariant.allCases, id: \.self) { variant in
                   HStack(spacing: 8) {
                     ForEach(BezierButtonSemantic.allCases, id: \.self) { semantic in
-                      BezierButton(
+                      SUBezierButton(
                         size: size,
                         variant: variant,
                         semantic: semantic,

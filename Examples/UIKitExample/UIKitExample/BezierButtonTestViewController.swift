@@ -47,8 +47,8 @@ final class BezierButtonTestViewController: BaseViewController {
     return view
   }()
 
-  private lazy var previewButton: BezierButtonUIView = {
-    let button = BezierButtonUIView(
+  private lazy var previewButton: BezierButton = {
+    let button = BezierButton(
       size: self.size,
       variant: self.variant,
       semantic: self.semantic,
