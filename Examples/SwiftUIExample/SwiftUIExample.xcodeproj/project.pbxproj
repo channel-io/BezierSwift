@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1B2C3D42A737BD700C99C9E /* TypographyTokenCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D32A737BD700C99C9E /* TypographyTokenCatalogView.swift */; };
+		BB48760B2B11FE0100000001 /* BezierButtonTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48760A2B11FE0100000001 /* BezierButtonTestView.swift */; };
 		E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		A1B2C3D32A737BD700C99C9E /* TypographyTokenCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyTokenCatalogView.swift; sourceTree = "<group>"; };
+		BB48760A2B11FE0100000001 /* BezierButtonTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierButtonTestView.swift; sourceTree = "<group>"; };
 		E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierElevationTestView.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 			children = (
 				E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */,
 				A1B2C3D32A737BD700C99C9E /* TypographyTokenCatalogView.swift */,
+				BB48760A2B11FE0100000001 /* BezierButtonTestView.swift */,
 			);
 			path = TestViews;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 				E28212342A4B32F700018327 /* ContentView.swift in Sources */,
 				E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */,
 				A1B2C3D42A737BD700C99C9E /* TypographyTokenCatalogView.swift in Sources */,
+				BB48760B2B11FE0100000001 /* BezierButtonTestView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

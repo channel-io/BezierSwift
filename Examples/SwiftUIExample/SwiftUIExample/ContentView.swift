@@ -17,6 +17,9 @@ struct ContentView: View, Themeable {
         NavigationLink("V3 Typography Catalog") {
           TypographyTokenCatalogView()
         }
+        NavigationLink("Button") {
+          BezierButtonTestView()
+        }
         NavigationLink("Elevation Test") {
           BezierElevationTestView()
         }

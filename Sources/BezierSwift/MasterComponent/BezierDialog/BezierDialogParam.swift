@@ -27,8 +27,8 @@ public struct BezierDialogParam {
 }
 
 public enum BezierDialogButtonInfo {
-  case vertical([BezierButton])
-  case horizontal([BezierButton])
+  case vertical([LegacyBezierButton])
+  case horizontal([LegacyBezierButton])
 }
 
 public enum BezierDialogPriority {
