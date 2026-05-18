@@ -11,10 +11,12 @@ import BezierSwift
 final class ViewController: BaseViewController {
   private enum Row: Int, CaseIterable {
     case bezierIconCatalog
+    case bezierButton
 
     var title: String {
       switch self {
       case .bezierIconCatalog: return "Bezier Icon Catalog"
+      case .bezierButton: return "Button"
       }
     }
   }
@@ -62,6 +64,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     switch row {
     case .bezierIconCatalog:
       self.navigationController?.pushViewController(BezierIconCatalogViewController(), animated: true)
+    case .bezierButton:
+      self.navigationController?.pushViewController(BezierButtonTestViewController(), animated: true)
     }
   }
 }
