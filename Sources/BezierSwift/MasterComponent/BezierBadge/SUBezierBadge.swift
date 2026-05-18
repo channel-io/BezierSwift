@@ -35,7 +35,7 @@ public struct SUBezierBadge: View, Themeable {
         if let leadingIcon = self.leadingIcon {
           self.iconView(leadingIcon)
         }
-        if let text = self.shape.displayText {
+        if let text = self.shape.displayText, !text.isEmpty {
           Text(text)
             .applyBezierFontStyle(
               self.size.typography,

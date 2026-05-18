@@ -127,6 +127,9 @@ final class BezierBadgeTestViewController: BaseViewController {
     return toggle
   }()
 
+  private lazy var numericRow: UIView = self.makeStepperRow()
+  private lazy var textRow: UIView = self.textField
+
   // MARK: - Lifecycle
 
   override func viewDidLoad() {
@@ -163,10 +166,59 @@ final class BezierBadgeTestViewController: BaseViewController {
     self.containerStackView.addArrangedSubview(self.variantPicker)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Shape"))
     self.containerStackView.addArrangedSubview(self.shapeControl)
-    self.containerStackView.addArrangedSubview(self.textField)
-    self.containerStackView.addArrangedSubview(self.makeStepperRow())
+    self.containerStackView.addArrangedSubview(self.textRow)
+    self.containerStackView.addArrangedSubview(self.numericRow)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Content"))
     self.containerStackView.addArrangedSubview(self.makeRow(label: "Leading Icon", control: self.leadingIconSwitch))
+    self.containerStackView.addArrangedSubview(self.makeSectionTitle("Catalog"))
+    self.containerStackView.addArrangedSubview(self.makeCatalogSection())
+  }
+
+  private func makeCatalogSection() -> UIView {
+    let container = UIStackView()
+    container.axis = .vertical
+    container.spacing = 16
+    container.alignment = .leading
+
+    for size in BezierBadgeSize.allCases {
+      let title = UILabel()
+      title.text = size.rawValue
+      title.font = .preferredFont(forTextStyle: .footnote)
+      title.textColor = .secondaryLabel
+      container.addArrangedSubview(title)
+
+      for shape in [BezierBadgeShape.text("Badge"), .numeric(7), .numeric(150), .dot] {
+        container.addArrangedSubview(self.makeCatalogRow(size: size, shape: shape))
+      }
+    }
+    return container
+  }
+
+  private func makeCatalogRow(size: BezierBadgeSize, shape: BezierBadgeShape) -> UIView {
+    let scroll = UIScrollView()
+    scroll.showsHorizontalScrollIndicator = false
+    scroll.translatesAutoresizingMaskIntoConstraints = false
+
+    let row = UIStackView()
+    row.axis = .horizontal
+    row.spacing = 8
+    row.alignment = .center
+    row.translatesAutoresizingMaskIntoConstraints = false
+
+    for variant in BezierBadgeVariant.allCases {
+      row.addArrangedSubview(BezierBadge(size: size, variant: variant, shape: shape))
+    }
+
+    scroll.addSubview(row)
+    NSLayoutConstraint.activate([
+      row.topAnchor.constraint(equalTo: scroll.contentLayoutGuide.topAnchor),
+      row.leadingAnchor.constraint(equalTo: scroll.contentLayoutGuide.leadingAnchor),
+      row.trailingAnchor.constraint(equalTo: scroll.contentLayoutGuide.trailingAnchor),
+      row.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor),
+      row.heightAnchor.constraint(equalTo: scroll.frameLayoutGuide.heightAnchor),
+      scroll.heightAnchor.constraint(equalToConstant: max(size.height, size.dotLength) + 4),
+    ])
+    return scroll
   }
 
   private func makePreviewSection() -> UIView {
@@ -256,9 +308,8 @@ final class BezierBadgeTestViewController: BaseViewController {
   }
 
   private func refreshShapeRow() {
-    self.textField.isHidden = self.shapeKind != .text
-    self.numericStepper.isHidden = self.shapeKind != .numeric
-    self.numericValueLabel.isHidden = self.shapeKind != .numeric
+    self.textRow.isHidden = self.shapeKind != .text
+    self.numericRow.isHidden = self.shapeKind != .numeric
   }
 
   // MARK: - Actions
