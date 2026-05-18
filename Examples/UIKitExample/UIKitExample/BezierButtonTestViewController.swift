@@ -142,6 +142,7 @@ final class BezierButtonTestViewController: BaseViewController {
     self.title = "Button (UIKit)"
     self.view.backgroundColor = .systemBackground
     self.setUpLayout()
+    self.refreshPreview()
     self.refreshTapCount()
   }
 
