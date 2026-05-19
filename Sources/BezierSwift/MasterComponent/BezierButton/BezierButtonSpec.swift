@@ -58,15 +58,34 @@ public enum BezierButtonSize: String, CaseIterable {
 
   public var iconLength: CGFloat { 16 }
 
-  public var typography: BTSemanticToken {
+  public var spinnerLength: CGFloat {
     switch self {
-    case .xsmall: return .labelMedium
-    case .small:  return .labelLarge
-    case .medium: return .headingXXSmall
-    case .large:  return .headingXSmall
-    case .xlarge: return .headingXSmall
+    case .xsmall: return 12
+    case .small:  return 14
+    case .medium: return 16
+    case .large:  return 18
+    case .xlarge: return 18
     }
   }
+
+  public var fontSize: CGFloat {
+    switch self {
+    case .xsmall: return 13
+    case .small:  return 14
+    case .medium: return 15
+    case .large, .xlarge: return 16
+    }
+  }
+
+  public var lineHeight: CGFloat {
+    switch self {
+    case .xsmall, .small: return 18
+    case .medium, .large, .xlarge: return 20
+    }
+  }
+
+  // Figma SemiBold(600) → iOS BTFontWeight binary system(`bold`) 매핑 (디자인 시스템 합의)
+  public var fontWeight: BTFontWeight { .bold }
 }
 
 public enum BezierButtonVariant: String, CaseIterable {
@@ -79,11 +98,6 @@ public enum BezierButtonSemantic: String, CaseIterable {
   case primary
   case secondary
   case destructive
-}
-
-public enum BezierButtonResizing: String, CaseIterable {
-  case hug
-  case fill
 }
 
 enum BezierButtonConstant {
