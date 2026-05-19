@@ -10,7 +10,6 @@ struct BezierButtonTestView: View {
   @State private var size: BezierButtonSize = .medium
   @State private var variant: BezierButtonVariant = .filled
   @State private var semantic: BezierButtonSemantic = .primary
-  @State private var resizing: BezierButtonResizing = .hug
   @State private var title: String = "Label"
   @State private var hasLeadingIcon: Bool = false
   @State private var hasTrailingIcon: Bool = false
@@ -26,7 +25,6 @@ struct BezierButtonTestView: View {
             size: self.size,
             variant: self.variant,
             semantic: self.semantic,
-            resizing: self.resizing,
             title: self.title.isEmpty ? nil : self.title,
             leadingIcon: self.hasLeadingIcon ? Image(systemName: "star.fill") : nil,
             trailingIcon: self.hasTrailingIcon ? Image(systemName: "arrow.right") : nil,
@@ -65,15 +63,6 @@ struct BezierButtonTestView: View {
         Picker("Semantic", selection: self.$semantic) {
           ForEach(BezierButtonSemantic.allCases, id: \.self) { semantic in
             Text(semantic.rawValue).tag(semantic)
-          }
-        }
-        .pickerStyle(.segmented)
-      }
-
-      Section("Resizing") {
-        Picker("Resizing", selection: self.$resizing) {
-          ForEach(BezierButtonResizing.allCases, id: \.self) { resizing in
-            Text(resizing.rawValue).tag(resizing)
           }
         }
         .pickerStyle(.segmented)
