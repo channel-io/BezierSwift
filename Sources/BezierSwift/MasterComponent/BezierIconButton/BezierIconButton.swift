@@ -142,9 +142,11 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     self.iconWidthConstraint?.constant = self.size.iconLength
     self.iconHeightConstraint?.constant = self.size.iconLength
 
-    // UIActivityIndicatorView(.medium) 기본 크기 = 20pt 기준으로 SPEC §5의 spinner 크기 적용
-    let scale = self.size.spinnerLength / 20
-    self.activityIndicator.transform = CGAffineTransform(scaleX: scale, y: scale)
+    let baseSize = self.activityIndicator.intrinsicContentSize.width
+    if baseSize > 0 {
+      let scale = self.size.spinnerLength / baseSize
+      self.activityIndicator.transform = CGAffineTransform(scaleX: scale, y: scale)
+    }
 
     self.setNeedsLayout()
     self.invalidateIntrinsicContentSize()

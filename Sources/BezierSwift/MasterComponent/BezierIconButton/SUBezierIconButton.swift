@@ -51,8 +51,8 @@ public struct SUBezierIconButton: View, Themeable {
         isLoading: self.isLoading
       )
     )
-    .opacity(self.isEnabled ? 1 : BezierIconButtonConstant.disabledOpacity)
-    .allowsHitTesting(!self.isLoading)
+    .opacity((self.isLoading || self.isEnabled) ? 1 : BezierIconButtonConstant.disabledOpacity)
+    .disabled(self.isLoading)
   }
 
   private var iconView: some View {
