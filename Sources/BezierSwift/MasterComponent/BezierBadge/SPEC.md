@@ -142,7 +142,7 @@ Figma 컴포넌트가 정의하는 property와 옵션은 다음이 전부다.
 
 총 instance: `4 size × 14 color = 56개`
 
-```
+```text
 Size=xsmall, Color=default          = 1729:2
 Size=xsmall, Color=monochrome-light = 1729:41
 Size=xsmall, Color=monochrome-dark  = 1729:38
