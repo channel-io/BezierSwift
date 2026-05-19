@@ -2,22 +2,21 @@ import SwiftUI
 import BezierSwift
 
 struct BezierIconCatalogView: View {
-  @State private var searchText: String = ""
+  private static let allSortedIcons: [BezierIcon] = BezierIcon.allCases
+    .sorted { $0.rawValue < $1.rawValue }
 
-  private var filteredIcons: [BezierIcon] {
-    let all = BezierIcon.allCases.sorted { $0.rawValue < $1.rawValue }
-    guard !searchText.isEmpty else { return all }
-    return all.filter { $0.rawValue.localizedCaseInsensitiveContains(searchText) }
-  }
+  @State private var searchText: String = ""
 
   private let columns = [
     GridItem(.adaptive(minimum: 88), spacing: 12)
   ]
 
   var body: some View {
-    ScrollView {
-      LazyVGrid(columns: columns, spacing: 12) {
-        ForEach(filteredIcons, id: \.self) { icon in
+    let icons = self.filteredIcons(query: self.searchText)
+
+    return ScrollView {
+      LazyVGrid(columns: self.columns, spacing: 12) {
+        ForEach(icons, id: \.self) { icon in
           VStack(spacing: 6) {
             icon.image
               .frame(width: 32, height: 32)
@@ -36,8 +35,16 @@ struct BezierIconCatalogView: View {
       }
       .padding()
     }
-    .navigationTitle("Bezier Icons (\(filteredIcons.count))")
-    .searchable(text: $searchText, prompt: "Search icons")
+    .navigationTitle("Bezier Icons (\(icons.count))")
+    .searchable(text: self.$searchText, prompt: "Search icons")
+  }
+
+  private func filteredIcons(query: String) -> [BezierIcon] {
+    let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty else { return Self.allSortedIcons }
+    return Self.allSortedIcons.filter {
+      $0.rawValue.localizedCaseInsensitiveContains(trimmed)
+    }
   }
 }
 
