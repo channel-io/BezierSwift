@@ -18,9 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     
     self.window = UIWindow(windowScene: windowScene)
-    let viewController = ViewController()
-    
-    self.window?.rootViewController = viewController
+    let navigationController = UINavigationController(rootViewController: ViewController())
+
+    self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
     
     self.bezierWindow = BezierSwift.initializeWindow(windowScene: windowScene)
