@@ -9,7 +9,6 @@ public struct SUBezierButton: View, Themeable {
   private let size: BezierButtonSize
   private let variant: BezierButtonVariant
   private let semantic: BezierButtonSemantic
-  private let resizing: BezierButtonResizing
   private let title: String?
   private let leadingIcon: Image?
   private let trailingIcon: Image?
@@ -23,7 +22,6 @@ public struct SUBezierButton: View, Themeable {
     size: BezierButtonSize,
     variant: BezierButtonVariant,
     semantic: BezierButtonSemantic,
-    resizing: BezierButtonResizing = .hug,
     title: String? = nil,
     leadingIcon: Image? = nil,
     trailingIcon: Image? = nil,
@@ -33,7 +31,6 @@ public struct SUBezierButton: View, Themeable {
     self.size = size
     self.variant = variant
     self.semantic = semantic
-    self.resizing = resizing
     self.title = title
     self.leadingIcon = leadingIcon
     self.trailingIcon = trailingIcon
@@ -53,11 +50,11 @@ public struct SUBezierButton: View, Themeable {
       }
       .padding(.horizontal, self.size.horizontalPadding)
       .frame(
-        minWidth: self.resizing == .fill ? nil : self.size.minWidth,
-        maxWidth: self.resizing == .fill ? .infinity : nil,
+        minWidth: self.size.minWidth,
         minHeight: self.size.height,
         maxHeight: self.size.height
       )
+      .fixedSize(horizontal: true, vertical: false)
     }
     .buttonStyle(
       SUBezierButtonStyle(
@@ -77,11 +74,22 @@ public struct SUBezierButton: View, Themeable {
       }
 
       if let title = self.title, !title.isEmpty {
+        let uiFont = BTGlobalToken.FontFamily.system.uiFont(
+          size: self.size.fontSize,
+          weight: self.size.fontWeight
+        )
+        let lineSpacing = max(0, self.size.lineHeight - uiFont.lineHeight)
+
         Text(title)
-          .applyBezierFontStyle(
-            self.size.typography,
-            semanticColorToken: self.variant.foregroundToken(self.semantic)
+          .font(
+            BTGlobalToken.FontFamily.system.font(
+              size: self.size.fontSize,
+              weight: self.size.fontWeight
+            )
           )
+          .lineSpacing(lineSpacing)
+          .padding(.vertical, lineSpacing / 2)
+          .foregroundColor(self.palette(self.variant.foregroundToken(self.semantic)))
           .padding(.horizontal, self.size.textHorizontalPadding)
           .fixedSize(horizontal: true, vertical: false)
       }
@@ -105,15 +113,11 @@ public struct SUBezierButton: View, Themeable {
     ProgressView()
       .progressViewStyle(.circular)
       .tint(self.palette(self.variant.foregroundToken(self.semantic)))
-      .scaleEffect(self.loadingScale)
+      .scaleEffect(self.size.spinnerLength / Self.progressViewBaseLength)
   }
 
-  private var loadingScale: CGFloat {
-    switch self.size {
-    case .xsmall, .small: return 0.6
-    case .medium, .large, .xlarge: return 0.8
-    }
-  }
+  // ProgressView().progressViewStyle(.circular) base size on iOS
+  private static let progressViewBaseLength: CGFloat = 20
 }
 
 private struct SUBezierButtonStyle: ButtonStyle, Themeable {
@@ -160,7 +164,7 @@ struct SUBezierButton_Previews: PreviewProvider {
       SUBezierButton(size: .small, variant: .outlined, semantic: .secondary, title: "Label") {}
       SUBezierButton(size: .medium, variant: .ghost, semantic: .destructive, title: "Label") {}
       SUBezierButton(size: .large, variant: .filled, semantic: .destructive, title: "Confirm", leadingIcon: Image(systemName: "trash")) {}
-      SUBezierButton(size: .xlarge, variant: .filled, semantic: .primary, resizing: .fill, title: "Continue", trailingIcon: Image(systemName: "arrow.right")) {}
+      SUBezierButton(size: .xlarge, variant: .filled, semantic: .primary, title: "Continue", trailingIcon: Image(systemName: "arrow.right")) {}
       SUBezierButton(size: .medium, variant: .filled, semantic: .primary, title: "Loading", isLoading: true) {}
     }
     .padding()
