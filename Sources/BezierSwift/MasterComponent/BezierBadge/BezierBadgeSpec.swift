@@ -35,15 +35,6 @@ public enum BezierBadgeSize: String, CaseIterable {
 
   public var iconLength: CGFloat { 16 }
 
-  public var dotLength: CGFloat {
-    switch self {
-    case .xsmall: return 6
-    case .small:  return 6
-    case .medium: return 8
-    case .large:  return 10
-    }
-  }
-
   public var typography: BTSemanticToken {
     switch self {
     case .xsmall: return .textXSmall(weight: .regular)
@@ -69,16 +60,6 @@ public enum BezierBadgeVariant: String, CaseIterable {
   case orange
   case red
   case purple
-}
-
-public enum BezierBadgeShape: Equatable {
-  case dot
-  case numeric(Int)
-  case text(String)
-}
-
-public enum BezierBadgeConstant {
-  public static let numericCap: Int = 99
 }
 
 extension BezierBadgeVariant {
@@ -118,26 +99,5 @@ extension BezierBadgeVariant {
     case .red:             return .textAccentRed
     case .purple:          return .textAccentPurple
     }
-  }
-}
-
-extension BezierBadgeShape {
-  public var displayText: String? {
-    switch self {
-    case .dot:
-      return nil
-    case .numeric(let value):
-      let clamped = max(0, value)
-      return clamped > BezierBadgeConstant.numericCap
-        ? "\(BezierBadgeConstant.numericCap)+"
-        : "\(clamped)"
-    case .text(let text):
-      return text
-    }
-  }
-
-  public var isDot: Bool {
-    if case .dot = self { return true }
-    return false
   }
 }

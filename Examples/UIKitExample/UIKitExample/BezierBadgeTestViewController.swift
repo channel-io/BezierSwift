@@ -7,36 +7,12 @@ import UIKit
 import BezierSwift
 
 final class BezierBadgeTestViewController: BaseViewController {
-  private enum ShapeKind: Int, CaseIterable {
-    case dot
-    case numeric
-    case text
-
-    var title: String {
-      switch self {
-      case .dot:     return "dot"
-      case .numeric: return "numeric"
-      case .text:    return "text"
-      }
-    }
-  }
-
   // MARK: - State
 
   private var size: BezierBadgeSize = .small
   private var variant: BezierBadgeVariant = .default
-  private var shapeKind: ShapeKind = .text
-  private var textValue: String = "Badge"
-  private var numericValue: Int = 7
+  private var labelText: String = "Badge"
   private var hasLeadingIcon: Bool = false
-
-  private var resolvedShape: BezierBadgeShape {
-    switch self.shapeKind {
-    case .dot:     return .dot
-    case .numeric: return .numeric(self.numericValue)
-    case .text:    return .text(self.textValue.isEmpty ? "Badge" : self.textValue)
-    }
-  }
 
   // MARK: - Subviews
 
@@ -66,7 +42,8 @@ final class BezierBadgeTestViewController: BaseViewController {
   }()
 
   private lazy var previewBadge: BezierBadge = {
-    let badge = BezierBadge(size: self.size, variant: self.variant, shape: self.resolvedShape)
+    let badge = BezierBadge(size: self.size, variant: self.variant)
+    badge.label = self.labelText
     return badge
   }()
 
@@ -85,39 +62,15 @@ final class BezierBadgeTestViewController: BaseViewController {
     return picker
   }()
 
-  private lazy var shapeControl: UISegmentedControl = {
-    let control = UISegmentedControl(items: ShapeKind.allCases.map { $0.title })
-    control.selectedSegmentIndex = self.shapeKind.rawValue
-    control.addTarget(self, action: #selector(self.onShapeChanged(_:)), for: .valueChanged)
-    return control
-  }()
-
-  private lazy var textField: UITextField = {
+  private lazy var labelTextField: UITextField = {
     let field = UITextField()
     field.borderStyle = .roundedRect
-    field.text = self.textValue
-    field.placeholder = "Text"
+    field.text = self.labelText
+    field.placeholder = "Label"
     field.autocorrectionType = .no
     field.autocapitalizationType = .none
-    field.addTarget(self, action: #selector(self.onTextChanged(_:)), for: .editingChanged)
+    field.addTarget(self, action: #selector(self.onLabelChanged(_:)), for: .editingChanged)
     return field
-  }()
-
-  private lazy var numericStepper: UIStepper = {
-    let stepper = UIStepper()
-    stepper.minimumValue = 0
-    stepper.maximumValue = 150
-    stepper.stepValue = 1
-    stepper.value = Double(self.numericValue)
-    stepper.addTarget(self, action: #selector(self.onNumericChanged(_:)), for: .valueChanged)
-    return stepper
-  }()
-
-  private lazy var numericValueLabel: UILabel = {
-    let label = UILabel()
-    label.text = "\(self.numericValue)"
-    label.font = .preferredFont(forTextStyle: .body)
-    return label
   }()
 
   private lazy var leadingIconSwitch: UISwitch = {
@@ -127,9 +80,6 @@ final class BezierBadgeTestViewController: BaseViewController {
     return toggle
   }()
 
-  private lazy var numericRow: UIView = self.makeStepperRow()
-  private lazy var textRow: UIView = self.textField
-
   // MARK: - Lifecycle
 
   override func viewDidLoad() {
@@ -138,7 +88,6 @@ final class BezierBadgeTestViewController: BaseViewController {
     self.view.backgroundColor = .systemBackground
     self.setUpLayout()
     self.refreshPreview()
-    self.refreshShapeRow()
   }
 
   private func setUpLayout() {
@@ -164,10 +113,8 @@ final class BezierBadgeTestViewController: BaseViewController {
     self.containerStackView.addArrangedSubview(self.sizeControl)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Variant"))
     self.containerStackView.addArrangedSubview(self.variantPicker)
-    self.containerStackView.addArrangedSubview(self.makeSectionTitle("Shape"))
-    self.containerStackView.addArrangedSubview(self.shapeControl)
-    self.containerStackView.addArrangedSubview(self.textRow)
-    self.containerStackView.addArrangedSubview(self.numericRow)
+    self.containerStackView.addArrangedSubview(self.makeSectionTitle("Label"))
+    self.containerStackView.addArrangedSubview(self.labelTextField)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Content"))
     self.containerStackView.addArrangedSubview(self.makeRow(label: "Leading Icon", control: self.leadingIconSwitch))
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Catalog"))
@@ -187,14 +134,13 @@ final class BezierBadgeTestViewController: BaseViewController {
       title.textColor = .secondaryLabel
       container.addArrangedSubview(title)
 
-      for shape in [BezierBadgeShape.text("Badge"), .numeric(7), .numeric(150), .dot] {
-        container.addArrangedSubview(self.makeCatalogRow(size: size, shape: shape))
-      }
+      container.addArrangedSubview(self.makeCatalogRow(size: size, leadingIcon: nil))
+      container.addArrangedSubview(self.makeCatalogRow(size: size, leadingIcon: UIImage(systemName: "plus")))
     }
     return container
   }
 
-  private func makeCatalogRow(size: BezierBadgeSize, shape: BezierBadgeShape) -> UIView {
+  private func makeCatalogRow(size: BezierBadgeSize, leadingIcon: UIImage?) -> UIView {
     let scroll = UIScrollView()
     scroll.showsHorizontalScrollIndicator = false
     scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -206,7 +152,10 @@ final class BezierBadgeTestViewController: BaseViewController {
     row.translatesAutoresizingMaskIntoConstraints = false
 
     for variant in BezierBadgeVariant.allCases {
-      row.addArrangedSubview(BezierBadge(size: size, variant: variant, shape: shape))
+      let badge = BezierBadge(size: size, variant: variant)
+      badge.label = "Badge"
+      badge.leadingIcon = leadingIcon
+      row.addArrangedSubview(badge)
     }
 
     scroll.addSubview(row)
@@ -216,7 +165,7 @@ final class BezierBadgeTestViewController: BaseViewController {
       row.trailingAnchor.constraint(equalTo: scroll.contentLayoutGuide.trailingAnchor),
       row.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor),
       row.heightAnchor.constraint(equalTo: scroll.frameLayoutGuide.heightAnchor),
-      scroll.heightAnchor.constraint(equalToConstant: max(size.height, size.dotLength) + 4),
+      scroll.heightAnchor.constraint(equalToConstant: size.height + 4),
     ])
     return scroll
   }
@@ -252,25 +201,6 @@ final class BezierBadgeTestViewController: BaseViewController {
     return self.previewContainer
   }
 
-  private func makeStepperRow() -> UIView {
-    let container = UIStackView()
-    container.axis = .horizontal
-    container.alignment = .center
-    container.spacing = 12
-
-    let title = UILabel()
-    title.text = "Numeric"
-    title.font = .preferredFont(forTextStyle: .body)
-
-    container.addArrangedSubview(title)
-    let spacer = UIView()
-    spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
-    container.addArrangedSubview(spacer)
-    container.addArrangedSubview(self.numericValueLabel)
-    container.addArrangedSubview(self.numericStepper)
-    return container
-  }
-
   private func makeSectionTitle(_ text: String) -> UILabel {
     let label = UILabel()
     label.text = text
@@ -303,13 +233,8 @@ final class BezierBadgeTestViewController: BaseViewController {
   private func refreshPreview() {
     self.previewBadge.size = self.size
     self.previewBadge.variant = self.variant
-    self.previewBadge.shape = self.resolvedShape
+    self.previewBadge.label = self.labelText.isEmpty ? nil : self.labelText
     self.previewBadge.leadingIcon = self.hasLeadingIcon ? UIImage(systemName: "plus") : nil
-  }
-
-  private func refreshShapeRow() {
-    self.textRow.isHidden = self.shapeKind != .text
-    self.numericRow.isHidden = self.shapeKind != .numeric
   }
 
   // MARK: - Actions
@@ -319,20 +244,8 @@ final class BezierBadgeTestViewController: BaseViewController {
     self.refreshPreview()
   }
 
-  @objc private func onShapeChanged(_ sender: UISegmentedControl) {
-    self.shapeKind = ShapeKind.allCases[sender.selectedSegmentIndex]
-    self.refreshShapeRow()
-    self.refreshPreview()
-  }
-
-  @objc private func onTextChanged(_ sender: UITextField) {
-    self.textValue = sender.text ?? ""
-    self.refreshPreview()
-  }
-
-  @objc private func onNumericChanged(_ sender: UIStepper) {
-    self.numericValue = Int(sender.value)
-    self.numericValueLabel.text = "\(self.numericValue)"
+  @objc private func onLabelChanged(_ sender: UITextField) {
+    self.labelText = sender.text ?? ""
     self.refreshPreview()
   }
 

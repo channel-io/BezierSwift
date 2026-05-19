@@ -23,8 +23,8 @@ public final class BezierBadge: UIView, BezierComponentable {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
-  public var shape: BezierBadgeShape = .text("Badge") {
-    didSet { if oldValue != self.shape { self.refreshShape() } }
+  public var label: String? {
+    didSet { if oldValue != self.label { self.refreshContent() } }
   }
 
   public var leadingIcon: UIImage? {
@@ -62,7 +62,6 @@ public final class BezierBadge: UIView, BezierComponentable {
   // MARK: - Layout Constraints
 
   private var heightConstraint: NSLayoutConstraint?
-  private var minWidthConstraint: NSLayoutConstraint?
   private var leadingImageWidthConstraint: NSLayoutConstraint?
   private var leadingImageHeightConstraint: NSLayoutConstraint?
   private var contentLeadingConstraint: NSLayoutConstraint?
@@ -72,12 +71,10 @@ public final class BezierBadge: UIView, BezierComponentable {
 
   public init(
     size: BezierBadgeSize = .small,
-    variant: BezierBadgeVariant = .default,
-    shape: BezierBadgeShape = .text("Badge")
+    variant: BezierBadgeVariant = .default
   ) {
     self.size = size
     self.variant = variant
-    self.shape = shape
     super.init(frame: .zero)
     self.setUp()
   }
@@ -102,7 +99,6 @@ public final class BezierBadge: UIView, BezierComponentable {
     self.addSubview(self.contentStackView)
 
     let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.height)
-    let minWidthConstraint = self.widthAnchor.constraint(greaterThanOrEqualToConstant: self.size.height)
     let leadingImageWidthConstraint = self.leadingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
     let leadingImageHeightConstraint = self.leadingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
     let contentLeadingConstraint = self.contentStackView.leadingAnchor.constraint(
@@ -116,7 +112,6 @@ public final class BezierBadge: UIView, BezierComponentable {
 
     NSLayoutConstraint.activate([
       heightConstraint,
-      minWidthConstraint,
       leadingImageWidthConstraint,
       leadingImageHeightConstraint,
       contentLeadingConstraint,
@@ -126,14 +121,12 @@ public final class BezierBadge: UIView, BezierComponentable {
     ])
 
     self.heightConstraint = heightConstraint
-    self.minWidthConstraint = minWidthConstraint
     self.leadingImageWidthConstraint = leadingImageWidthConstraint
     self.leadingImageHeightConstraint = leadingImageHeightConstraint
     self.contentLeadingConstraint = contentLeadingConstraint
     self.contentTrailingConstraint = contentTrailingConstraint
 
     self.refreshLayout()
-    self.refreshShape()
     self.refreshAppearance()
   }
 
@@ -144,13 +137,6 @@ public final class BezierBadge: UIView, BezierComponentable {
     self.layer.cornerRadius = self.bounds.height / 2
   }
 
-  public override var intrinsicContentSize: CGSize {
-    if self.shape.isDot {
-      return CGSize(width: self.size.dotLength, height: self.size.dotLength)
-    }
-    return super.intrinsicContentSize
-  }
-
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
     self.refreshAppearance()
@@ -159,8 +145,7 @@ public final class BezierBadge: UIView, BezierComponentable {
   // MARK: - Refresh
 
   private func refreshLayout() {
-    self.heightConstraint?.constant = self.shape.isDot ? self.size.dotLength : self.size.height
-    self.minWidthConstraint?.constant = self.shape.isDot ? self.size.dotLength : self.size.height
+    self.heightConstraint?.constant = self.size.height
     self.leadingImageWidthConstraint?.constant = self.size.iconLength
     self.leadingImageHeightConstraint?.constant = self.size.iconLength
     self.contentLeadingConstraint?.constant = self.size.horizontalPadding
@@ -178,26 +163,17 @@ public final class BezierBadge: UIView, BezierComponentable {
     self.setNeedsLayout()
   }
 
-  private func refreshShape() {
-    self.contentStackView.isHidden = self.shape.isDot
-    self.heightConstraint?.constant = self.shape.isDot ? self.size.dotLength : self.size.height
-    self.minWidthConstraint?.constant = self.shape.isDot ? self.size.dotLength : self.size.height
-    self.refreshContent()
-    self.invalidateIntrinsicContentSize()
-    self.setNeedsLayout()
-  }
-
   private func refreshContent() {
     self.leadingImageView.image = self.leadingIcon?.withRenderingMode(.alwaysTemplate)
-    self.leadingImageView.isHidden = self.leadingIcon == nil || self.shape.isDot
+    self.leadingImageView.isHidden = self.leadingIcon == nil
 
     let foregroundToken = self.variant.foregroundToken
     self.leadingImageView.tintColor = foregroundToken.palette(self)
 
-    if let text = self.shape.displayText, !text.isEmpty {
+    if let label = self.label, !label.isEmpty {
       self.titleLabel.attributedText = self.size.typography.attributedString(
         self,
-        text: text,
+        text: label,
         semanticColorToken: foregroundToken,
         alignment: .center
       )
