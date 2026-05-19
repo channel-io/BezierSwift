@@ -123,14 +123,18 @@ Figma 컴포넌트가 정의하는 property와 옵션은 다음이 전부다.
 | 색상 토큰 (semantic) | `Sources/BezierSwift/Foundation/Color/V3/BCSemanticToken.swift` |
 | 타이포 토큰 (semantic) | `Sources/BezierSwift/Foundation/Typography/V3/BTSemanticToken.swift` |
 
-> ⚠️ **Typography 매핑 정책 (TYPO-MIGRATION 협의)**: SPEC §3의 Figma raw 값은 `BTSemanticToken`의 가장 가까운 case로 매핑한다. **font size는 정확히 일치**하지만 medium/large의 `lineHeight`는 토큰값(20/24)을 따르며 Figma raw(18/20)와 차이가 있다. 이는 로컬 타이포 스타일 일괄 바인딩 시 정합될 예정.
+> ⚠️ **Typography 매핑 정책 (TYPO-MIGRATION 진행 중 잠정 매핑)**: Figma component description의 `📌 TYPO-MIGRATION: Text Style 미적용 — 로컬 타이포 스타일 등록 시 일괄 바인딩 예정`에 따라, Figma는 현재 raw value를 직접 박아놓은 상태다.
 >
-> | Size | Figma raw (FS/LH/LS) | 매핑 case | 토큰 값 (FS/LH/LS) |
+> **현재 정책**: Figma SSOT를 우선시한다. `BTSemanticToken`의 case 중 Figma raw와 정확히 일치하는 것이 있더라도 일관성을 위해 **모든 size에서 raw 값을 직접 사용**한다. 일치하지 않는 medium/large는 token이 아닌 raw로 처리.
+>
+> | Size | Figma raw (FS/LH/LS) | 가장 가까운 token (참고용) | Token 정합성 |
 > |---|---|---|---|
-> | xsmall | 12 / 16 / 0 | `.textXSmall(.regular)` | 12 / 16 / 0 ✅ |
-> | small | 14 / 18 / 0 | `.textMedium(.regular)` | 14 / 18 / 0 ✅ |
-> | medium | 15 / 18 / 0 | `.textLarge(.regular)` | 15 / 20 / -0.1 ⚠️ |
-> | large | 16 / 20 / -0.1 | `.textXLarge(.regular)` | 16 / 24 / -0.1 ⚠️ |
+> | xsmall | 12 / 16 / 0 | `.textXSmall(.regular)` (12 / 16 / 0) | ✅ 일치 (참고) |
+> | small | 14 / 18 / 0 | `.textMedium(.regular)` (14 / 18 / 0) | ✅ 일치 (참고) |
+> | medium | 15 / 18 / 0 | `.textLarge(.regular)` (15 / 20 / -0.1) | ⚠️ lineHeight·spacing 불일치 |
+> | large | 16 / 20 / -0.1 | `.textXLarge(.regular)` (16 / 24 / -0.1) | ⚠️ lineHeight 불일치 |
+>
+> **TODO**: 디자인팀의 TYPO-MIGRATION (로컬 typography style 일괄 바인딩) 완료 후 raw 값과 token이 정합되면 `BTSemanticToken` 기반 API로 통합 예정.
 
 ---
 

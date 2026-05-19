@@ -125,7 +125,7 @@ final class BezierBadgeTestViewController: BaseViewController {
     let container = UIStackView()
     container.axis = .vertical
     container.spacing = 16
-    container.alignment = .leading
+    container.alignment = .fill
 
     for size in BezierBadgeSize.allCases {
       let title = UILabel()

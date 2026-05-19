@@ -31,11 +31,13 @@ public struct SUBezierBadge: View, Themeable {
         self.iconView(leadingIcon)
       }
       if let label = self.label, !label.isEmpty {
+        // TYPO-MIGRATION: Figma raw 값을 직접 사용. 추후 BTSemanticToken으로 통합 예정 (BezierBadgeSpec.swift 참고).
         Text(label)
-          .applyBezierFontStyle(
-            self.size.typography,
-            semanticColorToken: self.variant.foregroundToken
-          )
+          .font(.system(size: self.size.fontSize, weight: self.size.fontWeight.swiftUIWeight))
+          .tracking(self.size.letterSpacing)
+          .lineSpacing(self.size.lineSpacing)
+          .padding(.vertical, self.size.verticalLineSpacing)
+          .foregroundColor(self.palette(self.variant.foregroundToken))
           .padding(.horizontal, self.size.textHorizontalPadding)
           .fixedSize(horizontal: true, vertical: false)
       }

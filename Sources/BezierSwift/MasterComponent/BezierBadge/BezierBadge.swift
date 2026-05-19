@@ -102,11 +102,11 @@ public final class BezierBadge: UIView, BezierComponentable {
     let leadingImageWidthConstraint = self.leadingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
     let leadingImageHeightConstraint = self.leadingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
     let contentLeadingConstraint = self.contentStackView.leadingAnchor.constraint(
-      greaterThanOrEqualTo: self.leadingAnchor,
+      equalTo: self.leadingAnchor,
       constant: self.size.horizontalPadding
     )
     let contentTrailingConstraint = self.contentStackView.trailingAnchor.constraint(
-      lessThanOrEqualTo: self.trailingAnchor,
+      equalTo: self.trailingAnchor,
       constant: -self.size.horizontalPadding
     )
 
@@ -116,7 +116,6 @@ public final class BezierBadge: UIView, BezierComponentable {
       leadingImageHeightConstraint,
       contentLeadingConstraint,
       contentTrailingConstraint,
-      self.contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       self.contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
     ])
 
@@ -171,10 +170,16 @@ public final class BezierBadge: UIView, BezierComponentable {
     self.leadingImageView.tintColor = foregroundToken.palette(self)
 
     if let label = self.label, !label.isEmpty {
-      self.titleLabel.attributedText = self.size.typography.attributedString(
-        self,
-        text: label,
-        semanticColorToken: foregroundToken,
+      // TYPO-MIGRATION: Figma raw 값을 직접 사용. 추후 BTSemanticToken으로 통합 예정 (BezierBadgeSpec.swift 참고).
+      let font = UIFont.systemFont(
+        ofSize: self.size.fontSize,
+        weight: self.size.fontWeight.uiKitWeight
+      )
+      self.titleLabel.attributedText = label.applyBezierFont(
+        height: self.size.lineHeight,
+        font: font,
+        color: foregroundToken.palette(self),
+        letterSpacing: self.size.letterSpacing,
         alignment: .center
       )
       self.titleLabel.isHidden = false

@@ -4,6 +4,7 @@
 //
 
 import CoreGraphics
+import UIKit
 
 public enum BezierBadgeSize: String, CaseIterable {
   case xsmall
@@ -35,14 +36,51 @@ public enum BezierBadgeSize: String, CaseIterable {
 
   public var iconLength: CGFloat { 16 }
 
-  public var typography: BTSemanticToken {
+  // MARK: - Typography (Figma raw, see SPEC §3)
+  //
+  // TYPO-MIGRATION: Figma component description의 `📌 TYPO-MIGRATION: Text Style
+  // 미적용` 상태에 따라 raw 값을 직접 사용한다. xsmall/small은 BTSemanticToken
+  // (.textXSmall / .textMedium)과 정합하지만, medium/large는 lineHeight·letterSpacing
+  // 이 token(.textLarge / .textXLarge)과 일치하지 않으므로 token을 우회하고 raw 값을
+  // 적용한다. 디자인팀의 로컬 typography 스타일 일괄 바인딩이 끝나 raw가 token과
+  // 정합되면 BTSemanticToken 기반 API로 통합 예정.
+
+  public var fontSize: CGFloat {
     switch self {
-    case .xsmall: return .textXSmall(weight: .regular)
-    case .small:  return .textMedium(weight: .regular)
-    case .medium: return .textLarge(weight: .regular)
-    case .large:  return .textXLarge(weight: .regular)
+    case .xsmall: return 12
+    case .small:  return 14
+    case .medium: return 15
+    case .large:  return 16
     }
   }
+
+  public var lineHeight: CGFloat {
+    switch self {
+    case .xsmall: return 16
+    case .small:  return 18
+    case .medium: return 18
+    case .large:  return 20
+    }
+  }
+
+  public var letterSpacing: CGFloat {
+    switch self {
+    case .xsmall, .small, .medium: return 0
+    case .large: return -0.1
+    }
+  }
+
+  public var fontWeight: BTFontWeight { .regular }
+
+  /// SwiftUI `.lineSpacing` modifier에 전달할 값. UIFont의 line height와 spec의
+  /// lineHeight 차이를 보정한다.
+  public var lineSpacing: CGFloat {
+    let font = UIFont.systemFont(ofSize: self.fontSize, weight: self.fontWeight.uiKitWeight)
+    return max(0, self.lineHeight - font.lineHeight)
+  }
+
+  /// 상·하 line-box 보정을 균등하게 적용하기 위한 vertical padding.
+  public var verticalLineSpacing: CGFloat { self.lineSpacing / 2 }
 }
 
 public enum BezierBadgeVariant: String, CaseIterable {
