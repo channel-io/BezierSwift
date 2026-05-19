@@ -9,34 +9,59 @@ import UIKit
 import BezierSwift
 
 final class ViewController: BaseViewController {
-  private enum Font {
-    case title
-    
-    func attributedString(_ component: BezierComponentable) -> NSAttributedString {
+  private enum Row: Int, CaseIterable {
+    case bezierIconCatalog
+
+    var title: String {
       switch self {
-      case .title: return BezierFont.bold22.attributedString(component, text: "hello world")        
+      case .bezierIconCatalog: return "Bezier Icon Catalog"
       }
     }
   }
-  
-  private lazy var titleLabel: UILabel = {
-    $0.translatesAutoresizingMaskIntoConstraints = false
-    $0.numberOfLines = 1
-    $0.attributedText = Font.title.attributedString(self)
-    return $0
-  }(UILabel())
-  
+
+  private lazy var tableView: UITableView = {
+    let tv = UITableView(frame: .zero, style: .insetGrouped)
+    tv.translatesAutoresizingMaskIntoConstraints = false
+    tv.dataSource = self
+    tv.delegate = self
+    tv.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    return tv
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    self.view.backgroundColor = SemanticColor.bgtxtRedDark.palette(self)
-    
-    self.view.addSubview(self.titleLabel)
-    
+
+    self.title = "BezierSwift Examples"
+    self.view.backgroundColor = .systemBackground
+
+    self.view.addSubview(self.tableView)
     NSLayoutConstraint.activate([
-      self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      self.titleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+      self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+      self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+      self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
     ])
   }
 }
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    Row.allCases.count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    cell.textLabel?.text = Row(rawValue: indexPath.row)?.title
+    cell.accessoryType = .disclosureIndicator
+    return cell
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    guard let row = Row(rawValue: indexPath.row) else { return }
+    switch row {
+    case .bezierIconCatalog:
+      self.navigationController?.pushViewController(BezierIconCatalogViewController(), animated: true)
+    }
+  }
+}

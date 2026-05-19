@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "chat-error-btn-filled.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "properties" : {
+     "preserves-vector-representation" : true
+  },
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
