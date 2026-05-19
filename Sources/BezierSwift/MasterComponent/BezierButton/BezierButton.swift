@@ -27,10 +27,6 @@ public final class BezierButton: UIControl, BezierComponentable {
     didSet { if oldValue != self.semantic { self.refreshAppearance() } }
   }
 
-  public var resizing: BezierButtonResizing = .hug {
-    didSet { if oldValue != self.resizing { self.refreshResizing() } }
-  }
-
   public var title: String? {
     didSet { if oldValue != self.title { self.refreshContent() } }
   }
@@ -97,6 +93,9 @@ public final class BezierButton: UIControl, BezierComponentable {
     return indicator
   }()
 
+  // UIActivityIndicatorView(style: .medium) base size
+  private let activityIndicatorBaseLength: CGFloat = 20
+
   // MARK: - Layout Constraints (mutable)
 
   private var heightConstraint: NSLayoutConstraint?
@@ -111,13 +110,11 @@ public final class BezierButton: UIControl, BezierComponentable {
   public init(
     size: BezierButtonSize = .medium,
     variant: BezierButtonVariant = .filled,
-    semantic: BezierButtonSemantic = .primary,
-    resizing: BezierButtonResizing = .hug
+    semantic: BezierButtonSemantic = .primary
   ) {
     self.size = size
     self.variant = variant
     self.semantic = semantic
-    self.resizing = resizing
     super.init(frame: .zero)
     self.setUp()
   }
@@ -178,10 +175,12 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.trailingImageWidthConstraint = trailingImageWidthConstraint
     self.trailingImageHeightConstraint = trailingImageHeightConstraint
 
+    self.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    self.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
     self.refreshLayout()
     self.refreshContent()
     self.refreshAppearance()
-    self.refreshResizing()
     self.refreshLoading()
     self.refreshEnabled()
   }
@@ -246,10 +245,14 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.trailingImageView.tintColor = foregroundColor
 
     if let title = self.title, !title.isEmpty {
-      self.titleLabel.attributedText = self.size.typography.attributedString(
-        self,
-        text: title,
-        semanticColorToken: foregroundToken,
+      self.titleLabel.attributedText = title.applyBezierFont(
+        height: self.size.lineHeight,
+        font: BTGlobalToken.FontFamily.system.uiFont(
+          size: self.size.fontSize,
+          weight: self.size.fontWeight
+        ),
+        color: foregroundColor,
+        letterSpacing: 0,
         alignment: .center
       )
       self.titleLabel.isHidden = false
@@ -280,17 +283,6 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.activityIndicator.color = foregroundColor
 
     self.refreshContent()
-  }
-
-  private func refreshResizing() {
-    switch self.resizing {
-    case .hug:
-      self.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-      self.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-    case .fill:
-      self.setContentHuggingPriority(.defaultLow, for: .horizontal)
-      self.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    }
   }
 
   private func refreshLoading() {
@@ -326,10 +318,7 @@ public final class BezierButton: UIControl, BezierComponentable {
   // MARK: - Helpers
 
   private var activityIndicatorScale: CGFloat {
-    switch self.size {
-    case .xsmall, .small: return 0.6
-    case .medium, .large, .xlarge: return 0.8
-    }
+    self.size.spinnerLength / self.activityIndicatorBaseLength
   }
 }
 

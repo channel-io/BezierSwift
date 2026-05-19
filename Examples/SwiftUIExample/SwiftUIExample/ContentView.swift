@@ -23,6 +23,9 @@ struct ContentView: View, Themeable {
         NavigationLink("IconButton") {
           BezierIconButtonTestView()
         }
+        NavigationLink("Badge") {
+          BezierBadgeTestView()
+        }
         NavigationLink("Elevation Test") {
           BezierElevationTestView()
         }

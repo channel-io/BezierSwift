@@ -12,7 +12,6 @@ final class BezierButtonTestViewController: BaseViewController {
   private var size: BezierButtonSize = .medium
   private var variant: BezierButtonVariant = .filled
   private var semantic: BezierButtonSemantic = .primary
-  private var resizing: BezierButtonResizing = .hug
   private var titleText: String = "Label"
   private var hasLeadingIcon: Bool = false
   private var hasTrailingIcon: Bool = false
@@ -51,8 +50,7 @@ final class BezierButtonTestViewController: BaseViewController {
     let button = BezierButton(
       size: self.size,
       variant: self.variant,
-      semantic: self.semantic,
-      resizing: self.resizing
+      semantic: self.semantic
     )
     button.title = self.titleText
     button.addTarget(self, action: #selector(self.onPreviewTapped), for: .touchUpInside)
@@ -86,13 +84,6 @@ final class BezierButtonTestViewController: BaseViewController {
     let control = UISegmentedControl(items: BezierButtonSemantic.allCases.map { $0.rawValue })
     control.selectedSegmentIndex = BezierButtonSemantic.allCases.firstIndex(of: self.semantic) ?? 0
     control.addTarget(self, action: #selector(self.onSemanticChanged(_:)), for: .valueChanged)
-    return control
-  }()
-
-  private lazy var resizingControl: UISegmentedControl = {
-    let control = UISegmentedControl(items: BezierButtonResizing.allCases.map { $0.rawValue })
-    control.selectedSegmentIndex = BezierButtonResizing.allCases.firstIndex(of: self.resizing) ?? 0
-    control.addTarget(self, action: #selector(self.onResizingChanged(_:)), for: .valueChanged)
     return control
   }()
 
@@ -173,8 +164,6 @@ final class BezierButtonTestViewController: BaseViewController {
     self.containerStackView.addArrangedSubview(self.variantControl)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Semantic"))
     self.containerStackView.addArrangedSubview(self.semanticControl)
-    self.containerStackView.addArrangedSubview(self.makeSectionTitle("Resizing"))
-    self.containerStackView.addArrangedSubview(self.resizingControl)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Title"))
     self.containerStackView.addArrangedSubview(self.titleField)
     self.containerStackView.addArrangedSubview(self.makeRow(label: "Leading Icon", control: self.leadingIconSwitch))
@@ -253,18 +242,11 @@ final class BezierButtonTestViewController: BaseViewController {
     self.previewButton.size = self.size
     self.previewButton.variant = self.variant
     self.previewButton.semantic = self.semantic
-    self.previewButton.resizing = self.resizing
     self.previewButton.title = self.titleText.isEmpty ? nil : self.titleText
     self.previewButton.leadingIcon = self.hasLeadingIcon ? UIImage(systemName: "star.fill") : nil
     self.previewButton.trailingIcon = self.hasTrailingIcon ? UIImage(systemName: "arrow.right") : nil
     self.previewButton.isLoading = self.isLoadingState
     self.previewButton.isEnabled = self.isEnabledState
-
-    if self.resizing == .fill {
-      self.previewButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
-    } else {
-      self.previewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    }
   }
 
   private func refreshTapCount() {
@@ -290,11 +272,6 @@ final class BezierButtonTestViewController: BaseViewController {
 
   @objc private func onSemanticChanged(_ sender: UISegmentedControl) {
     self.semantic = BezierButtonSemantic.allCases[sender.selectedSegmentIndex]
-    self.refreshPreview()
-  }
-
-  @objc private func onResizingChanged(_ sender: UISegmentedControl) {
-    self.resizing = BezierButtonResizing.allCases[sender.selectedSegmentIndex]
     self.refreshPreview()
   }
 

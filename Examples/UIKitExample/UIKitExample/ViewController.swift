@@ -12,11 +12,13 @@ final class ViewController: BaseViewController {
   private enum Row: Int, CaseIterable {
     case bezierButton
     case bezierIconButton
+    case bezierBadge
 
     var title: String {
       switch self {
       case .bezierButton:     return "Button"
       case .bezierIconButton: return "IconButton"
+      case .bezierBadge:      return "Badge"
       }
     }
   }
@@ -69,6 +71,8 @@ extension ViewController: UITableViewDelegate {
       self.navigationController?.pushViewController(BezierButtonTestViewController(), animated: true)
     case .bezierIconButton:
       self.navigationController?.pushViewController(BezierIconButtonTestViewController(), animated: true)
+    case .bezierBadge:
+      self.navigationController?.pushViewController(BezierBadgeTestViewController(), animated: true)
     }
   }
 }
