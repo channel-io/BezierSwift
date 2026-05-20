@@ -193,7 +193,8 @@ public final class BezierTag: UIView, BezierComponentable {
       self.titleLabel.isHidden = true
     }
 
-    let showCloseButton = self.onDelete != nil
+    // closeIcon이 nil이면 onDelete가 설정되어 있어도 빈 탭 영역이 노출되므로 close button을 숨긴다.
+    let showCloseButton = self.onDelete != nil && self.closeIcon != nil
     self.closeButton.isHidden = !showCloseButton
     // UIStackView가 hidden된 arranged subview를 0pt로 압축할 때 required 고정 제약과 충돌하지 않도록,
     // close button의 width/height constant도 hidden 여부에 따라 함께 전환한다.
