@@ -19,10 +19,10 @@ final class ViewController: BaseViewController {
     var title: String {
       switch self {
       case .bezierIconCatalog: return "Bezier Icon Catalog"
-      case .bezierButton:     return "Button"
-      case .bezierIconButton: return "IconButton"
-      case .bezierBadge:      return "Badge"
-      case .bezierTag:        return "Tag"
+      case .bezierButton:      return "Button"
+      case .bezierIconButton:  return "IconButton"
+      case .bezierBadge:       return "Badge"
+      case .bezierTag:         return "Tag"
       }
     }
   }
