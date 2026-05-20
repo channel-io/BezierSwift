@@ -158,8 +158,6 @@ public final class BezierTag: UIView, BezierComponentable {
     self.heightConstraint?.constant = self.size.height
     self.contentLeadingConstraint?.constant = self.size.horizontalPadding
     self.contentTrailingConstraint?.constant = -self.size.horizontalPadding
-    self.closeButtonWidthConstraint?.constant = self.size.closeIconLength
-    self.closeButtonHeightConstraint?.constant = self.size.closeIconLength
 
     self.titleLabel.contentInsets = UIEdgeInsets(
       top: 0,
@@ -197,6 +195,11 @@ public final class BezierTag: UIView, BezierComponentable {
 
     let showCloseButton = self.onDelete != nil
     self.closeButton.isHidden = !showCloseButton
+    // UIStackView가 hidden된 arranged subview를 0pt로 압축할 때 required 고정 제약과 충돌하지 않도록,
+    // close button의 width/height constant도 hidden 여부에 따라 함께 전환한다.
+    let closeLength = showCloseButton ? self.size.closeIconLength : 0
+    self.closeButtonWidthConstraint?.constant = closeLength
+    self.closeButtonHeightConstraint?.constant = closeLength
     if showCloseButton {
       self.closeButton.setImage(self.closeIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
       self.closeButton.tintColor = foregroundColor
