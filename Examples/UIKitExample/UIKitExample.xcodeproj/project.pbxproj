@@ -13,6 +13,7 @@
 		BB48761C2B11FE0200000004 /* BezierBadgeTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48761D2B11FE0200000004 /* BezierBadgeTestViewController.swift */; };
 		BB4876202B11FE0200000005 /* BezierTagTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4876212B11FE0200000005 /* BezierTagTestViewController.swift */; };
 		BB4876202B11FE0200000006 /* BezierAvatarTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4876212B11FE0200000006 /* BezierAvatarTestViewController.swift */; };
+		11E7156BFCAB4B6189F19BF0 /* BezierAvatarGroupTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCD40EF27543478ABE817D /* BezierAvatarGroupTestViewController.swift */; };
 		E28212432A4B3C0900018327 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212422A4B3C0900018327 /* BaseViewController.swift */; };
 		A1B2C3E12A737BD700C99C9E /* BezierIconCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3E02A737BD700C99C9E /* BezierIconCatalogViewController.swift */; };
 		E2C2C3D32A4B2DE700A7E5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C2C3D22A4B2DE700A7E5E6 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		BB48761D2B11FE0200000004 /* BezierBadgeTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierBadgeTestViewController.swift; sourceTree = "<group>"; };
 		BB4876212B11FE0200000005 /* BezierTagTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierTagTestViewController.swift; sourceTree = "<group>"; };
 		BB4876212B11FE0200000006 /* BezierAvatarTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarTestViewController.swift; sourceTree = "<group>"; };
+		4FBCD40EF27543478ABE817D /* BezierAvatarGroupTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarGroupTestViewController.swift; sourceTree = "<group>"; };
 		E28212422A4B3C0900018327 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A1B2C3E02A737BD700C99C9E /* BezierIconCatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierIconCatalogViewController.swift; sourceTree = "<group>"; };
 		E2C2C3CF2A4B2DE700A7E5E6 /* UIKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 				BB48761D2B11FE0200000004 /* BezierBadgeTestViewController.swift */,
 				BB4876212B11FE0200000005 /* BezierTagTestViewController.swift */,
 				BB4876212B11FE0200000006 /* BezierAvatarTestViewController.swift */,
+				4FBCD40EF27543478ABE817D /* BezierAvatarGroupTestViewController.swift */,
 				E2C2C3DB2A4B2DE800A7E5E6 /* Assets.xcassets */,
 				E2C2C3DD2A4B2DE800A7E5E6 /* LaunchScreen.storyboard */,
 				E2C2C3E02A4B2DE800A7E5E6 /* Info.plist */,
@@ -176,6 +179,7 @@
 				BB48761C2B11FE0200000004 /* BezierBadgeTestViewController.swift in Sources */,
 				BB4876202B11FE0200000005 /* BezierTagTestViewController.swift in Sources */,
 				BB4876202B11FE0200000006 /* BezierAvatarTestViewController.swift in Sources */,
+				11E7156BFCAB4B6189F19BF0 /* BezierAvatarGroupTestViewController.swift in Sources */,
 				E2C2C3D32A4B2DE700A7E5E6 /* AppDelegate.swift in Sources */,
 				E2C2C3D52A4B2DE700A7E5E6 /* SceneDelegate.swift in Sources */,
 			);
