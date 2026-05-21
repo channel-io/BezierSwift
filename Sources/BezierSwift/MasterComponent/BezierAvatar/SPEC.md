@@ -255,7 +255,7 @@ State=disabled
 > 📌 이동 예정: Internal 페이지 (구현 정착 후) Used within Avatar only. Do not place standalone. 온라인/오프라인/방해금지/잠금 등 Avatar 위에 표시하는 상태 인디케이터.
 > - type: online / offline / onlineDnd / offlineDnd / lock
 > - size: small(8px, Avatar 16-24) / medium(12px, Avatar 30-60) / large(16px, Avatar 72) / xlarge(24px, Avatar 90-160)
-
+>
 > ⚠️ description의 size 매핑("small(8px) for Avatar 16-24")은 가이드라인이고, Figma 실제 매트릭스 노드에서 Avatar 16은 AvatarStatus.small 인스턴스가 아닌 custom 6×6 노드(1084:8)를 사용한다. Part 1 §4 표 참조.
 
 ---

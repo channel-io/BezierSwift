@@ -50,7 +50,7 @@ final class BezierAvatarTestViewController: BaseViewController {
   }()
 
   private lazy var sizeControl: UISegmentedControl = {
-    let titles = BezierAvatarSize.allCases.map { $0.rawValue.replacingOccurrences(of: "size", with: "") }
+    let titles = BezierAvatarSize.allCases.map { String(Int($0.length)) }
     let control = UISegmentedControl(items: titles)
     control.selectedSegmentIndex = BezierAvatarSize.allCases.firstIndex(of: self.size) ?? 0
     control.addTarget(self, action: #selector(self.onSizeChanged(_:)), for: .valueChanged)
@@ -85,6 +85,8 @@ final class BezierAvatarTestViewController: BaseViewController {
     picker.selectRow(BezierAvatarStatusType.allCases.firstIndex(of: self.statusType) ?? 0, inComponent: 0, animated: false)
     return picker
   }()
+
+  private lazy var statusTypeSectionTitle: UILabel = self.makeSectionTitle("Status type")
 
   // MARK: - Lifecycle
 
@@ -121,7 +123,7 @@ final class BezierAvatarTestViewController: BaseViewController {
     self.containerStackView.addArrangedSubview(self.makeRow(label: "showBorder", control: self.borderSwitch))
     self.containerStackView.addArrangedSubview(self.makeRow(label: "hasStatus", control: self.statusSwitch))
     self.containerStackView.addArrangedSubview(self.makeRow(label: "isEnabled", control: self.enabledSwitch))
-    self.containerStackView.addArrangedSubview(self.makeSectionTitle("Status type"))
+    self.containerStackView.addArrangedSubview(self.statusTypeSectionTitle)
     self.containerStackView.addArrangedSubview(self.statusTypePicker)
     self.containerStackView.addArrangedSubview(self.makeSectionTitle("Catalog"))
     self.containerStackView.addArrangedSubview(self.makeCatalogSection())
@@ -180,7 +182,7 @@ final class BezierAvatarTestViewController: BaseViewController {
       row.trailingAnchor.constraint(equalTo: scroll.contentLayoutGuide.trailingAnchor),
       row.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor),
       row.heightAnchor.constraint(equalTo: scroll.frameLayoutGuide.heightAnchor),
-      scroll.heightAnchor.constraint(equalToConstant: BezierAvatarSize.size160.length + 8),
+      scroll.heightAnchor.constraint(equalToConstant: (BezierAvatarSize.allCases.map(\.length).max() ?? 0) + 8),
     ])
     return scroll
   }
@@ -240,6 +242,9 @@ final class BezierAvatarTestViewController: BaseViewController {
     self.previewAvatar.showBorder = self.showBorder
     self.previewAvatar.statusType = self.hasStatus ? self.statusType : nil
     self.previewAvatar.isEnabled = self.isEnabled
+    // SwiftUI 예제와 UX 일관성 — hasStatus가 false면 status type picker 영역을 숨긴다.
+    self.statusTypeSectionTitle.isHidden = !self.hasStatus
+    self.statusTypePicker.isHidden = !self.hasStatus
   }
 
   // MARK: - Actions

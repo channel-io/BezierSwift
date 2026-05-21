@@ -142,6 +142,8 @@ public final class BezierAvatar: UIView, BezierComponentable {
   private func refreshLayout() {
     self.widthConstraint?.constant = self.size.length
     self.heightConstraint?.constant = self.size.length
+    // size별 border 두께가 다르므로 size 변경 시 border 갱신 필수.
+    self.refreshAppearance()
     self.refreshStatusOverlay()
     self.invalidateIntrinsicContentSize()
     self.setNeedsLayout()
