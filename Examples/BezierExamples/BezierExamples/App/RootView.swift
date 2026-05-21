@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RootView: View {
+  @StateObject private var env = CatalogEnvironment()
   @State private var selection: CatalogItem?
 
   var body: some View {
@@ -19,9 +20,12 @@ struct RootView: View {
       }
       .navigationTitle("BezierExamples")
     } detail: {
-      if let item = self.selection {
-        item.destination
+      Group {
+        if let item = self.selection {
+          item.destination
+        }
       }
+      .environmentObject(self.env)
     }
   }
 }
