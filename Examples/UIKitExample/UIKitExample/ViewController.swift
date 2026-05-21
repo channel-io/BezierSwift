@@ -16,15 +16,17 @@ final class ViewController: BaseViewController {
     case bezierBadge
     case bezierTag
     case bezierAvatar
+    case bezierAvatarGroup
 
     var title: String {
       switch self {
-      case .bezierIconCatalog: return "Bezier Icon Catalog"
-      case .bezierButton:      return "Button"
-      case .bezierIconButton:  return "IconButton"
-      case .bezierBadge:       return "Badge"
-      case .bezierTag:         return "Tag"
-      case .bezierAvatar:      return "Avatar"
+      case .bezierIconCatalog:  return "Bezier Icon Catalog"
+      case .bezierButton:       return "Button"
+      case .bezierIconButton:   return "IconButton"
+      case .bezierBadge:        return "Badge"
+      case .bezierTag:          return "Tag"
+      case .bezierAvatar:       return "Avatar"
+      case .bezierAvatarGroup:  return "AvatarGroup"
       }
     }
   }
@@ -82,6 +84,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
       self.navigationController?.pushViewController(BezierTagTestViewController(), animated: true)
     case .bezierAvatar:
       self.navigationController?.pushViewController(BezierAvatarTestViewController(), animated: true)
+    case .bezierAvatarGroup:
+      self.navigationController?.pushViewController(BezierAvatarGroupTestViewController(), animated: true)
     }
   }
 }
