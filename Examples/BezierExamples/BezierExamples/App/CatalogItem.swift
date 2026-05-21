@@ -1,8 +1,9 @@
 import SwiftUI
 
 enum CatalogSectionKind: String, CaseIterable, Identifiable {
-  case foundation = "Foundation"
-  case components = "Components"
+  case v3Foundation = "V3 · Foundation"
+  case v3Components = "V3 · Components"
+  case legacyComponents = "Legacy · Components"
 
   var id: String { self.rawValue }
 }
