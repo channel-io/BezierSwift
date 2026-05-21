@@ -26,7 +26,7 @@ struct TypographyCatalog: View {
                 let label = UILabel()
                 label.text = spec.sample
                 label.font = spec.token.uiFont
-                label.textColor = .label
+                label.textColor = BCSemanticToken.textNeutral.palette(BezierExamplesComponent.shared)
                 label.numberOfLines = 0
                 return label
               }

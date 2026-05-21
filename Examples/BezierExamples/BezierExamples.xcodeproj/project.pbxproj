@@ -202,7 +202,7 @@
 			mainGroup = 5C7A8D5A2FBF2A39000FA789;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				5C7A8DA12FBF2C2F000FA789 /* XCLocalSwiftPackageReference "../../../BezierSwift.etc-example-integrate" */,
+				5C7A8DA12FBF2C2F000FA789 /* XCLocalSwiftPackageReference "../../" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5C7A8D642FBF2A39000FA789 /* Products */;
@@ -581,9 +581,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		5C7A8DA12FBF2C2F000FA789 /* XCLocalSwiftPackageReference "../../../BezierSwift.etc-example-integrate" */ = {
+		5C7A8DA12FBF2C2F000FA789 /* XCLocalSwiftPackageReference "../../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../BezierSwift.etc-example-integrate";
+			relativePath = "../../";
 		};
 /* End XCLocalSwiftPackageReference section */
 
