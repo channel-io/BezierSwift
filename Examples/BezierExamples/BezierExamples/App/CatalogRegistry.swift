@@ -26,6 +26,30 @@ enum CatalogRegistry {
       section: .foundation,
       destination: AnyView(DimensionCatalog())
     ),
+    CatalogItem(
+      id: "button",
+      title: "Button",
+      section: .components,
+      destination: AnyView(ButtonCatalog())
+    ),
+    CatalogItem(
+      id: "icon-button",
+      title: "IconButton",
+      section: .components,
+      destination: AnyView(IconButtonCatalog())
+    ),
+    CatalogItem(
+      id: "badge",
+      title: "Badge",
+      section: .components,
+      destination: AnyView(BadgeCatalog())
+    ),
+    CatalogItem(
+      id: "tag",
+      title: "Tag",
+      section: .components,
+      destination: AnyView(TagCatalog())
+    ),
   ]
 
   static func items(in section: CatalogSectionKind) -> [CatalogItem] {
