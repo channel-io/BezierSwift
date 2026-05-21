@@ -50,6 +50,18 @@ enum CatalogRegistry {
       section: .components,
       destination: AnyView(TagCatalog())
     ),
+    CatalogItem(
+      id: "avatar",
+      title: "Avatar",
+      section: .components,
+      destination: AnyView(AvatarCatalog())
+    ),
+    CatalogItem(
+      id: "avatar-group",
+      title: "AvatarGroup",
+      section: .components,
+      destination: AnyView(AvatarGroupCatalog())
+    ),
   ]
 
   static func items(in section: CatalogSectionKind) -> [CatalogItem] {
