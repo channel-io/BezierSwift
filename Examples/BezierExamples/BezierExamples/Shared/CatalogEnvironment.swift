@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 enum CatalogBackground: String, CaseIterable, Identifiable {
   case system
