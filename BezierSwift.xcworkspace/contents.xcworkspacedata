@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:">
+      location = "container:Package.swift">
    </FileRef>
    <FileRef
       location = "group:Examples/BezierExamples/BezierExamples.xcodeproj">
