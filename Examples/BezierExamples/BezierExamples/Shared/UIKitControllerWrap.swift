@@ -11,5 +11,17 @@ struct UIKitControllerWrap<VC: UIViewController>: UIViewControllerRepresentable 
   }
 
   func makeUIViewController(context: Context) -> VC { self.make() }
+
   func updateUIViewController(_ uiViewController: VC, context: Context) { self.update(uiViewController) }
+
+  func sizeThatFits(_ proposal: ProposedViewSize, uiViewController: VC, context: Context) -> CGSize? {
+    uiViewController.view.systemLayoutSizeFitting(
+      CGSize(
+        width: proposal.width ?? UIView.layoutFittingCompressedSize.width,
+        height: proposal.height ?? UIView.layoutFittingCompressedSize.height
+      ),
+      withHorizontalFittingPriority: .fittingSizeLevel,
+      verticalFittingPriority: .fittingSizeLevel
+    )
+  }
 }
