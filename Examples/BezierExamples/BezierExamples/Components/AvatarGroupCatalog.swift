@@ -7,8 +7,8 @@ struct AvatarGroupCatalog: View {
   @State private var size: BezierAvatarGroupSize = .size20
   @State private var ellipsisType: BezierAvatarGroupEllipsisType = .icon
 
-  private let sampleImage = Image(systemName: "person.crop.circle.fill")
-  private let sampleUIImage = UIImage(systemName: "person.crop.circle.fill")
+  private let sampleImage = Image("AvatarSample")
+  private let sampleUIImage = UIImage(named: "AvatarSample")
 
   private var swiftUIAvatars: [Image?] {
     Array(repeating: self.sampleImage as Image?, count: self.avatarCount)

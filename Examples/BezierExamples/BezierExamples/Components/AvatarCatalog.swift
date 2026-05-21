@@ -7,8 +7,8 @@ struct AvatarCatalog: View {
   @State private var showBorder: Bool = false
   @State private var statusType: BezierAvatarStatusType? = nil
 
-  private let sampleImage = Image(systemName: "person.crop.circle.fill")
-  private let sampleUIImage = UIImage(systemName: "person.crop.circle.fill")
+  private let sampleImage = Image("AvatarSample")
+  private let sampleUIImage = UIImage(named: "AvatarSample")
 
   var body: some View {
     CatalogScreen(title: "Avatar") {
