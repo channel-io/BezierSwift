@@ -15,6 +15,7 @@ final class ViewController: BaseViewController {
     case bezierIconButton
     case bezierBadge
     case bezierTag
+    case bezierAvatar
 
     var title: String {
       switch self {
@@ -23,6 +24,7 @@ final class ViewController: BaseViewController {
       case .bezierIconButton:  return "IconButton"
       case .bezierBadge:       return "Badge"
       case .bezierTag:         return "Tag"
+      case .bezierAvatar:      return "Avatar"
       }
     }
   }
@@ -78,6 +80,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
       self.navigationController?.pushViewController(BezierBadgeTestViewController(), animated: true)
     case .bezierTag:
       self.navigationController?.pushViewController(BezierTagTestViewController(), animated: true)
+    case .bezierAvatar:
+      self.navigationController?.pushViewController(BezierAvatarTestViewController(), animated: true)
     }
   }
 }

@@ -13,6 +13,7 @@
 		BB48760D2B11FE0100000002 /* BezierIconButtonTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48760C2B11FE0100000002 /* BezierIconButtonTestView.swift */; };
 		BB48760D2B11FE0100000003 /* BezierBadgeTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48760C2B11FE0100000003 /* BezierBadgeTestView.swift */; };
 		BB48760D2B11FE0100000004 /* BezierTagTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48760C2B11FE0100000004 /* BezierTagTestView.swift */; };
+		BB48760D2B11FE0100000005 /* BezierAvatarTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48760C2B11FE0100000005 /* BezierAvatarTestView.swift */; };
 		E2789E4D2A737BC700B98B8D /* BezierElevationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */; };
 		E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */; };
 		E28212342A4B32F700018327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28212332A4B32F700018327 /* ContentView.swift */; };
@@ -28,6 +29,7 @@
 		BB48760C2B11FE0100000002 /* BezierIconButtonTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierIconButtonTestView.swift; sourceTree = "<group>"; };
 		BB48760C2B11FE0100000003 /* BezierBadgeTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierBadgeTestView.swift; sourceTree = "<group>"; };
 		BB48760C2B11FE0100000004 /* BezierTagTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierTagTestView.swift; sourceTree = "<group>"; };
+		BB48760C2B11FE0100000005 /* BezierAvatarTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierAvatarTestView.swift; sourceTree = "<group>"; };
 		E2789E4C2A737BC700B98B8D /* BezierElevationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierElevationTestView.swift; sourceTree = "<group>"; };
 		E282122E2A4B32F700018327 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28212312A4B32F700018327 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				BB48760C2B11FE0100000002 /* BezierIconButtonTestView.swift */,
 				BB48760C2B11FE0100000003 /* BezierBadgeTestView.swift */,
 				BB48760C2B11FE0100000004 /* BezierTagTestView.swift */,
+				BB48760C2B11FE0100000005 /* BezierAvatarTestView.swift */,
 			);
 			path = TestViews;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				BB48760D2B11FE0100000002 /* BezierIconButtonTestView.swift in Sources */,
 				BB48760D2B11FE0100000003 /* BezierBadgeTestView.swift in Sources */,
 				BB48760D2B11FE0100000004 /* BezierTagTestView.swift in Sources */,
+				BB48760D2B11FE0100000005 /* BezierAvatarTestView.swift in Sources */,
 				E28212322A4B32F700018327 /* SwiftUIExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
