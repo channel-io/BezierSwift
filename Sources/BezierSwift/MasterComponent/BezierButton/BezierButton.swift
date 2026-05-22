@@ -1,732 +1,355 @@
 //
 //  BezierButton.swift
-//  
-//
-//  Created by Jam on 2023/02/09.
+//  BezierSwift
 //
 
-import SwiftUI
+import UIKit
 
-private enum Metric {
-  static let textLeadingTrailing = CGFloat(2)
-}
+public final class BezierButton: UIControl, BezierComponentable {
+  // MARK: - BezierComponentable
 
-private enum Constant {
-  static let disalbedOpacity = CGFloat(0.4)
-}
+  public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
+  public var componentTheme: BezierComponentTheme = .normal {
+    didSet { self.refreshAppearance() }
+  }
 
-public enum ButtonSize {
-  case xsmall
-  case small
-  case medium
-  case large
-  case xlarge
-  
-  var height: CGFloat {
-    switch self {
-    case .xsmall:
-      return 24
-    case .small:
-      return 30
-    case .medium:
-      return 40
-    case .large:
-      return 44
-    case .xlarge:
-      return 54
-    }
-  }
-  
-  var stackSpacing: CGFloat {
-    switch self {
-    case .xsmall, .small, .medium:
-      return 4
-    case .large:
-      return 5
-    case .xlarge:
-      return 6
-    }
-  }
-  
-  var imageLength: CGFloat {
-    switch self {
-    case .xsmall:
-      return 16
-    case .small:
-      return 20
-    case .medium, .large, .xlarge:
-      return 24
-    }
-  }
-  
-  var font: Font {
-    self.bezierFont.font
-  }
-  
-  var bezierFont: BezierFont {
-    switch self {
-    case .xsmall:
-      return BezierFont.bold13
-    case .small:
-      return BezierFont.bold14
-    case .medium:
-      return BezierFont.bold15
-    case .large, .xlarge:
-      return BezierFont.bold16
-    }
-  }
-  
-  var minLeadingTrailingPadding: CGFloat {
-    switch self {
-    case .xsmall, .small:
-      return 6
-    case .medium:
-      return 8
-    case .large:
-      return 10
-    case .xlarge:
-      return 12
-    }
-  }
-  
-  var topBottomPadding: CGFloat {
-    return (self.height - self.imageLength) / CGFloat(2)
-  }
-  
-  func cornerRadius(type: ButtonType) -> BezierCornerRadius {
-    switch type {
-    case .primary, .secondary, .tertiary:
-      switch self {
-      case .xsmall:
-        return .round6
-      case .small:
-        return .round8
-      case .medium:
-        return .round12
-      case .large:
-        return .round12
-      case .xlarge:
-        return .round16
-      }
-    case .floating:
-      return .roundHalf(length: self.height)
-    }
-  }
-}
+  // MARK: - Public Properties
 
-public enum ButtonColor: String {
-  case blue
-  case red
-  case green
-  case yellow
-  case cobalt
-  case monochrome // TODO: 레거시. monochromeLight / Dark 논의 이후에 색상 치환할 것.
-  case monochromeLight
-  case monochromeDark
-  case absoulteWhite
-  case orange
-}
-
-public enum ButtonType: Equatable {
-  case primary(ButtonColor)
-  case secondary(ButtonColor)
-  case tertiary(ButtonColor)
-  case floating(ButtonColor)
-  
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    switch (lhs, rhs) {
-    case (let .primary(lhsColor), let .primary(rhsColor)):
-      return lhsColor == rhsColor
-    case (let .secondary(lhsColor), let .secondary(rhsColor)):
-      return lhsColor == rhsColor
-    case (let .tertiary(lhsColor), let .tertiary(rhsColor)):
-      return lhsColor == rhsColor
-    case (let .floating(lhsColor), let .floating(rhsColor)):
-      return lhsColor == rhsColor
-    default:
-      return false
-    }
+  public var size: BezierButtonSize = .medium {
+    didSet { if oldValue != self.size { self.refreshLayout() } }
   }
-  
-  func textColor(_ size: ButtonSize) -> BCSemanticToken {
-    switch self {
-    case .primary(let buttonColor):
-      switch buttonColor {
-      case .monochromeLight, .monochromeDark: return .textAbsoluteWhite
-      default: return .textAbsoluteWhite
-      }
-    case .secondary(let color), .tertiary(let color):
-      switch color {
-      case .blue:
-        return .textAccentBlue
-      case .red:
-        return .textAccentRed
-      case .green:
-        return .textAccentGreen
-      case .yellow:
-        return .textAccentYellow
-      case .cobalt:
-        return .textAccentCobalt
-      case .orange:
-        return .textAccentOrange
-      case .monochrome:
-        switch size {
-        case .xsmall, .small:
-          return .textNeutralLight
-        case .medium, .large, .xlarge:
-          return .textNeutral
-        }
-      case .monochromeLight:
-        return .textNeutralLight
-      case .monochromeDark:
-        return .textNeutral
-      case .absoulteWhite:
-        return .textAbsoluteWhite
-      }
-    case .floating(let color):
-      switch color {
-      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
-        return .textAbsoluteWhite
-      case .monochrome, .monochromeLight, .monochromeDark:
-        return .textNeutral
-      }
-    }
-  }
-  
-  func imageTintColor(_ size: ButtonSize) -> BCSemanticToken {
-    switch self {
-    case .primary(let buttonColor):
-      switch buttonColor {
-      case .monochromeLight, .monochromeDark: return .iconAbsoluteWhite
-      default: return .iconAbsoluteWhite
-      }
-    case .secondary(let color), .tertiary(let color):
-      switch color {
-      case .blue:
-        return .iconAccentBlue
-      case .red:
-        return .iconAccentRed
-      case .green:
-        return .iconAccentGreen
-      case .yellow:
-        return .iconAccentYellow
-      case .cobalt:
-        return .iconAccentCobalt
-      case .orange:
-        return .iconAccentOrange
-      case .monochrome:
-        switch size {
-        case .xsmall, .small:
-          return .iconNeutral
-        case .medium, .large, .xlarge:
-          return .iconNeutralHeavy
-        }
-      case .monochromeLight:
-        return .iconNeutral
-      case .monochromeDark:
-        return .iconNeutralHeavy
-      case .absoulteWhite:
-        return .iconAbsoluteWhite
-      }
-    case .floating(let color):
-      switch color {
-      case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
-        return .iconAbsoluteWhite
-      case .monochrome, .monochromeLight, .monochromeDark:
-        return .iconNeutralHeavy
-      }
-    }
-  }
-  
-  func backgroundColor(state: ButtonState) -> BCSemanticToken {
-    switch self {
-    case .primary(let color):
-      switch color {
-      case .blue:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentBlueHeavier
-        case .pressed:
-          return .fillAccentBlueHeavier
-        }
-      case .red:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentRedHeavier
-        case .pressed:
-          return .fillAccentRedHeavier
-        }
-      case .green:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentGreenHeavier
-        case .pressed:
-          return .fillAccentGreenHeavier
-        }
-      case .yellow:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentYellowHeavier
-        case .pressed:
-          return .fillAccentYellowHeavier
-        }
-      case .cobalt:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentCobaltHeavier
-        case .pressed:
-          return .fillAccentCobaltHeavier
-        }
-      case .orange:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentOrangeHeavier
-        case .pressed:
-          return .fillAccentOrangeHeavier
-        }
-      case .monochrome:
-        switch state {
-        case .default, .disabled:
-          return .fillAbsoluteBlackLight
-        case .pressed:
-          return .dimAbsoluteBlack
-        }
-      case .monochromeLight:
-        return .fillNeutralHeavier
-      case .monochromeDark:
-        return .fillNeutralHeaviest
-      case .absoulteWhite:
-        return .fillNeutralTransparent
-      }
-    case .secondary(let color):
-      switch color {
-      case .blue:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentBlue
-        case .pressed:
-          return .fillAccentBlueHeavy
-        }
-      case .red:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentRed
-        case .pressed:
-          return .fillAccentRedHeavy
-        }
-      case .green:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentGreen
-        case .pressed:
-          return .fillAccentGreenHeavy
-        }
-      case .yellow:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentYellow
-        case .pressed:
-          return .fillAccentYellowHeavy
-        }
-      case .cobalt:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentCobalt
-        case .pressed:
-          return .fillAccentCobaltHeavy
-        }
-      case .orange:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentOrange
-        case .pressed:
-          return .fillAccentOrangeHeavy
-        }
-      case .monochrome, .monochromeLight, .monochromeDark:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralLighter
-        case .pressed:
-          return .fillNeutralLight
-        }
-      case .absoulteWhite:
-        return .fillNeutralTransparent
-      }
-    case .tertiary(let color):
-      switch color {
-      case .blue:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentBlue
-        }
-      case .red:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentRed
-        }
-      case .green:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentGreen
-        }
-      case .yellow:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentYellow
-        }
-      case .cobalt:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentCobalt
-        }
-      case .orange:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillAccentOrange
-        }
-      case .monochrome, .monochromeLight, .monochromeDark:
-        switch state {
-        case .default, .disabled:
-          return .fillNeutralTransparent
-        case .pressed:
-          return .fillNeutralLighter
-        }
-      case .absoulteWhite:
-        return .fillNeutralTransparent
-      }
-    case .floating(let color):
-      switch color {
-      case .blue:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentBlueHeavier
-        case .pressed:
-          return .fillAccentBlueHeavier
-        }
-      case .red:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentRedHeavier
-        case .pressed:
-          return .fillAccentRedHeavier
-        }
-      case .green:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentGreenHeavier
-        case .pressed:
-          return .fillAccentGreenHeavier
-        }
-      case .yellow:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentYellowHeavier
-        case .pressed:
-          return .fillAccentYellowHeavier
-        }
-      case .cobalt:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentCobaltHeavier
-        case .pressed:
-          return .fillAccentCobaltHeavier
-        }
-      case .orange:
-        switch state {
-        case .default, .disabled:
-          return .fillAccentOrangeHeavier
-        case .pressed:
-          return .fillAccentOrangeHeavier
-        }
-      case .monochrome, .monochromeLight, .monochromeDark:
-        switch state {
-        case .default, .disabled:
-          return .surfaceHighest
-        case .pressed:
-          return .surfaceHigh
-        }
-      case .absoulteWhite:
-        return .fillNeutralTransparent
-      }
-    }
-  }
-}
 
-enum ButtonState {
-  case `default`
-  case pressed
-  case disabled
-}
+  public var variant: BezierButtonVariant = .filled {
+    didSet { if oldValue != self.variant { self.refreshAppearance() } }
+  }
 
-public enum ButtonResizing {
-  case hug
-  case fill
-}
+  public var semantic: BezierButtonSemantic = .primary {
+    didSet { if oldValue != self.semantic { self.refreshAppearance() } }
+  }
 
-public struct BezierButton: View, Themeable {
-  private var size: ButtonSize
-  private var type: ButtonType
-  private var resizing: ButtonResizing
-  
-  private let action: () -> Void
-  private let title: String?
-  private let leftImage: Image?
-  private let rightImage: Image?
-  
-  @Environment(\.colorScheme) public var colorScheme
-  
-  private init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    titleContent: String? = nil,
-    leftContent: Image? = nil,
-    rightContent: Image? = nil,
-    action: @escaping () -> Void
+  public var title: String? {
+    didSet { if oldValue != self.title { self.refreshContent() } }
+  }
+
+  public var leadingIcon: UIImage? {
+    didSet { self.refreshContent() }
+  }
+
+  public var trailingIcon: UIImage? {
+    didSet { self.refreshContent() }
+  }
+
+  public var isLoading: Bool = false {
+    didSet { if oldValue != self.isLoading { self.refreshLoading() } }
+  }
+
+  public override var isEnabled: Bool {
+    didSet { if oldValue != self.isEnabled { self.refreshEnabled() } }
+  }
+
+  public override var isHighlighted: Bool {
+    didSet { self.refreshHighlight() }
+  }
+
+  // MARK: - Subviews
+
+  private let contentStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.alignment = .center
+    stackView.distribution = .fill
+    stackView.isUserInteractionEnabled = false
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    return stackView
+  }()
+
+  private let leadingImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.isHidden = true
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
+  }()
+
+  private let trailingImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.isHidden = true
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
+  }()
+
+  private let titleLabel: BezierButtonPaddedLabel = {
+    let label = BezierButtonPaddedLabel()
+    label.numberOfLines = 1
+    label.textAlignment = .center
+    return label
+  }()
+
+  private let activityIndicator: UIActivityIndicatorView = {
+    let indicator = UIActivityIndicatorView(style: .medium)
+    indicator.hidesWhenStopped = true
+    indicator.translatesAutoresizingMaskIntoConstraints = false
+    return indicator
+  }()
+
+  // UIActivityIndicatorView(style: .medium) base size
+  private let activityIndicatorBaseLength: CGFloat = 20
+
+  // MARK: - Layout Constraints (mutable)
+
+  private var heightConstraint: NSLayoutConstraint?
+  private var minWidthConstraint: NSLayoutConstraint?
+  private var leadingImageWidthConstraint: NSLayoutConstraint?
+  private var leadingImageHeightConstraint: NSLayoutConstraint?
+  private var trailingImageWidthConstraint: NSLayoutConstraint?
+  private var trailingImageHeightConstraint: NSLayoutConstraint?
+
+  // MARK: - Init
+
+  public init(
+    size: BezierButtonSize = .medium,
+    variant: BezierButtonVariant = .filled,
+    semantic: BezierButtonSemantic = .primary
   ) {
     self.size = size
-    self.type = type
-    self.resizing = resizing
-    self.action = action
-    self.title = titleContent
-    self.leftImage = leftContent
-    self.rightImage = rightContent
+    self.variant = variant
+    self.semantic = semantic
+    super.init(frame: .zero)
+    self.setUp()
   }
-  
-  public init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    title: String,
-    leftImage: Image,
-    rightImage: Image,
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      size: size,
-      type: type,
-      resizing: resizing,
-      titleContent: title,
-      leftContent: leftImage,
-      rightContent: rightImage,
-      action: action
-    )
+
+  public required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    self.setUp()
   }
-  
-  public init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    title: String,
-    leftImage: Image,
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      size: size,
-      type: type,
-      resizing: resizing,
-      titleContent: title,
-      leftContent: leftImage,
-      action: action
-    )
+
+  // MARK: - Setup
+
+  private func setUp() {
+    self.translatesAutoresizingMaskIntoConstraints = false
+
+    self.layer.masksToBounds = true
+    self.layer.borderWidth = 0
+
+    self.contentStackView.addArrangedSubview(self.leadingImageView)
+    self.contentStackView.addArrangedSubview(self.titleLabel)
+    self.contentStackView.addArrangedSubview(self.trailingImageView)
+
+    self.addSubview(self.contentStackView)
+    self.addSubview(self.activityIndicator)
+
+    let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.height)
+    let minWidthConstraint = self.widthAnchor.constraint(greaterThanOrEqualToConstant: self.size.minWidth)
+
+    let leadingImageWidthConstraint = self.leadingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
+    let leadingImageHeightConstraint = self.leadingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
+    let trailingImageWidthConstraint = self.trailingImageView.widthAnchor.constraint(equalToConstant: self.size.iconLength)
+    let trailingImageHeightConstraint = self.trailingImageView.heightAnchor.constraint(equalToConstant: self.size.iconLength)
+
+    NSLayoutConstraint.activate([
+      heightConstraint,
+      minWidthConstraint,
+      leadingImageWidthConstraint,
+      leadingImageHeightConstraint,
+      trailingImageWidthConstraint,
+      trailingImageHeightConstraint,
+      self.contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.contentStackView.leadingAnchor.constraint(
+        greaterThanOrEqualTo: self.leadingAnchor,
+        constant: self.size.horizontalPadding
+      ).withIdentifier("contentLeading"),
+      self.contentStackView.trailingAnchor.constraint(
+        lessThanOrEqualTo: self.trailingAnchor,
+        constant: -self.size.horizontalPadding
+      ).withIdentifier("contentTrailing"),
+      self.activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+    ])
+
+    self.heightConstraint = heightConstraint
+    self.minWidthConstraint = minWidthConstraint
+    self.leadingImageWidthConstraint = leadingImageWidthConstraint
+    self.leadingImageHeightConstraint = leadingImageHeightConstraint
+    self.trailingImageWidthConstraint = trailingImageWidthConstraint
+    self.trailingImageHeightConstraint = trailingImageHeightConstraint
+
+    self.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    self.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
+    self.refreshLayout()
+    self.refreshContent()
+    self.refreshAppearance()
+    self.refreshLoading()
+    self.refreshEnabled()
   }
-  
-  public init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    title: String,
-    rightImage: Image,
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      size: size,
-      type: type,
-      resizing: resizing,
-      titleContent: title,
-      rightContent: rightImage,
-      action: action
-    )
+
+  // MARK: - Layout Update
+
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    self.layer.cornerRadius = self.bounds.height / 2
   }
-  
-  public init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    centerImage: Image,
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      size: size,
-      type: type,
-      resizing: resizing,
-      leftContent: centerImage,
-      action: action
-    )
+
+  public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    self.refreshAppearance()
   }
-  
-  public init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing,
-    title: String,
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      size: size,
-      type: type,
-      resizing: resizing,
-      titleContent: title,
-      action: action
-    )
-  }
-  
-  public var body: some View {
-    Button {
-      self.action()
-    } label: {
-      HStack(alignment: .center, spacing: self.size.stackSpacing) {
-        if self.resizing == .fill {
-          Spacer(minLength: 0)
-        }
-        
-        if let leftImage {
-          leftImage
-            .applyBaseImageStyle()
-            .foregroundColor(self.palette(self.type.imageTintColor(self.size)))
-            .frame(width: self.size.imageLength, height: self.size.imageLength)
-        }
-        
-        if let title {
-          Text(title)
-            .applyBezierFontStyle(
-              self.size.bezierFont,
-              semanticColorToken: self.type.textColor(self.size)
-            )
-            .padding(.horizontal, Metric.textLeadingTrailing)
-        }
-        
-        if let rightImage {
-          rightImage
-            .applyBaseImageStyle()
-            .foregroundColor(self.palette(self.type.imageTintColor(self.size)))
-            .frame(width: self.size.imageLength, height: self.size.imageLength)
-        }
-        
-        if self.resizing == .fill {
-          Spacer(minLength: 0)
-        }
+
+  // MARK: - Refresh
+
+  private func refreshLayout() {
+    self.heightConstraint?.constant = self.size.height
+    self.minWidthConstraint?.constant = self.size.minWidth
+    self.leadingImageWidthConstraint?.constant = self.size.iconLength
+    self.leadingImageHeightConstraint?.constant = self.size.iconLength
+    self.trailingImageWidthConstraint?.constant = self.size.iconLength
+    self.trailingImageHeightConstraint?.constant = self.size.iconLength
+
+    for constraint in self.constraints {
+      if constraint.identifier == "contentLeading" {
+        constraint.constant = self.size.horizontalPadding
+      } else if constraint.identifier == "contentTrailing" {
+        constraint.constant = -self.size.horizontalPadding
       }
-      .padding(.horizontal, self.minLeadingTrailing)
     }
-    .buttonStyle(
-      BezierButtonStyle(
-        size: size,
-        type: type,
-        resizing: resizing
+
+    self.contentStackView.spacing = self.size.contentSpacing
+    self.titleLabel.contentInsets = UIEdgeInsets(
+      top: 0,
+      left: self.size.textHorizontalPadding,
+      bottom: 0,
+      right: self.size.textHorizontalPadding
+    )
+    self.activityIndicator.transform = CGAffineTransform(
+      scaleX: self.activityIndicatorScale,
+      y: self.activityIndicatorScale
+    )
+    self.refreshContent()
+    self.setNeedsLayout()
+    self.invalidateIntrinsicContentSize()
+  }
+
+  private func refreshContent() {
+    self.leadingImageView.image = self.leadingIcon?.withRenderingMode(.alwaysTemplate)
+    self.leadingImageView.isHidden = self.leadingIcon == nil
+
+    self.trailingImageView.image = self.trailingIcon?.withRenderingMode(.alwaysTemplate)
+    self.trailingImageView.isHidden = self.trailingIcon == nil
+
+    let foregroundToken = self.variant.foregroundToken(self.semantic)
+    let foregroundColor = foregroundToken.palette(self)
+
+    self.leadingImageView.tintColor = foregroundColor
+    self.trailingImageView.tintColor = foregroundColor
+
+    if let title = self.title, !title.isEmpty {
+      self.titleLabel.attributedText = title.applyBezierFont(
+        height: self.size.lineHeight,
+        font: BTGlobalToken.FontFamily.system.uiFont(
+          size: self.size.fontSize,
+          weight: self.size.fontWeight
+        ),
+        color: foregroundColor,
+        letterSpacing: 0,
+        alignment: .center
       )
+      self.titleLabel.isHidden = false
+    } else {
+      self.titleLabel.attributedText = nil
+      self.titleLabel.isHidden = true
+    }
+  }
+
+  private func refreshAppearance() {
+    if let backgroundToken = self.variant.backgroundToken(self.semantic) {
+      self.backgroundColor = backgroundToken.palette(self)
+    } else {
+      self.backgroundColor = .clear
+    }
+
+    if let borderToken = self.variant.borderToken(self.semantic) {
+      self.layer.borderWidth = BezierButtonConstant.borderWidth
+      self.layer.borderColor = borderToken.palette(self).cgColor
+    } else {
+      self.layer.borderWidth = 0
+      self.layer.borderColor = nil
+    }
+
+    let foregroundColor = self.variant.foregroundToken(self.semantic).palette(self)
+    self.leadingImageView.tintColor = foregroundColor
+    self.trailingImageView.tintColor = foregroundColor
+    self.activityIndicator.color = foregroundColor
+
+    self.refreshContent()
+  }
+
+  private func refreshLoading() {
+    self.isUserInteractionEnabled = !self.isLoading
+    if self.isLoading {
+      self.contentStackView.isHidden = true
+      self.activityIndicator.startAnimating()
+    } else {
+      self.contentStackView.isHidden = false
+      self.activityIndicator.stopAnimating()
+    }
+  }
+
+  private func refreshEnabled() {
+    self.alpha = self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity
+  }
+
+  private func refreshHighlight() {
+    UIView.animate(withDuration: 0.1) {
+      self.alpha = self.isHighlighted
+        ? BezierButtonConstant.pressedOpacity
+        : (self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity)
+    }
+  }
+
+  // MARK: - Touch
+
+  public override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+    guard !self.isLoading else { return }
+    super.sendAction(action, to: target, for: event)
+  }
+
+  // MARK: - Helpers
+
+  private var activityIndicatorScale: CGFloat {
+    self.size.spinnerLength / self.activityIndicatorBaseLength
+  }
+}
+
+// MARK: - Padded Label
+
+final class BezierButtonPaddedLabel: UILabel {
+  var contentInsets: UIEdgeInsets = .zero {
+    didSet {
+      self.invalidateIntrinsicContentSize()
+      self.setNeedsDisplay()
+    }
+  }
+
+  override func drawText(in rect: CGRect) {
+    super.drawText(in: rect.inset(by: self.contentInsets))
+  }
+
+  override var intrinsicContentSize: CGSize {
+    let size = super.intrinsicContentSize
+    return CGSize(
+      width: size.width + self.contentInsets.left + self.contentInsets.right,
+      height: size.height + self.contentInsets.top + self.contentInsets.bottom
     )
   }
-  
-  private var minLeadingTrailing: CGFloat {
-    let isImageOnly = self.title.isNil
-    && (
-      (self.leftImage.isNotNil || self.rightImage.isNil)
-      || (self.leftImage.isNil || self.rightImage.isNotNil)
-    )
-    let minLeadingTrailing = isImageOnly
-    ? self.size.topBottomPadding : self.size.minLeadingTrailingPadding
-    
-    return minLeadingTrailing
-  }
 }
 
-private extension Image {
-  func applyBaseImageStyle() -> some View {
-    self
-      .renderingMode(.template)
-      .resizable()
-      .scaledToFit()
-  }
-}
+// MARK: - NSLayoutConstraint Identifier Helper
 
-private struct BezierButtonStyle: ButtonStyle, Themeable {
-  @Environment(\.colorScheme) var colorScheme
-  
-  private let size: ButtonSize
-  private let type: ButtonType
-  private let resizing: ButtonResizing
-  
-  @Environment(\.isEnabled) var isEnabled: Bool
-  
-  init(
-    size: ButtonSize,
-    type: ButtonType,
-    resizing: ButtonResizing
-  ) {
-    self.size = size
-    self.type = type
-    self.resizing = resizing
-  }
-  
-  func makeBody(configuration: Configuration) -> some View {
-    let buttonState: ButtonState = self.getState(configuration: configuration, isEnabled: self.isEnabled)
-    configuration.label
-      .frame(height: self.size.height)
-      .disabled(!self.isEnabled)
-      .background(self.palette(self.type.backgroundColor(state: buttonState)))
-      .applyBezierCornerRadius(type: self.size.cornerRadius(type: self.type))
-      .opacity(self.isEnabled ? 1 : Constant.disalbedOpacity)
-  }
-  
-  private func getState(configuration: Configuration, isEnabled: Bool) -> ButtonState {
-    return configuration.isPressed ? .pressed : isEnabled ? .default : .disabled
-  }
-}
-
-struct BezierButton_Previews: PreviewProvider {
-  static var previews: some View {
-    VStack {
-      BezierButton(size: .large, type: .primary(.green), resizing: .fill, title: "Get started", leftImage: Image(systemName: "trash")) {
-        print("")
-      }
-
-      BezierButton(size: .large, type: .primary(.blue), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-      BezierButton(size: .large, type: .primary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-      BezierButton(size: .large, type: .secondary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-      BezierButton(size: .large, type: .tertiary(.red), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-      BezierButton(size: .large, type: .floating(.cobalt), resizing: .hug, title: "Get started", leftImage: Image(systemName: "trash"), rightImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-      BezierButton(size: .large, type: .primary(.yellow), resizing: .hug, centerImage: Image(systemName: "trash")) {
-        print("")
-      }
-      
-    }.padding()
+private extension NSLayoutConstraint {
+  func withIdentifier(_ identifier: String) -> NSLayoutConstraint {
+    self.identifier = identifier
+    return self
   }
 }
