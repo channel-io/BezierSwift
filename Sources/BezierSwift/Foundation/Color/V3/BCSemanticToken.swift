@@ -120,6 +120,7 @@ public enum BCSemanticToken: Equatable {
   case fillHighlightLight
   case fillHighlightLighter
   case fillHighlightTransparent
+  case fillNeutral
   case fillNeutralHeavier
   case fillNeutralHeaviest
   case fillNeutralHeavy
@@ -174,6 +175,7 @@ public enum BCSemanticToken: Equatable {
   // MARK: - State
   case stateAction
   case stateActionLight
+  case stateActive
   case stateDefault
   case stateWarning
   case stateWarningLight
@@ -213,6 +215,18 @@ public enum BCSemanticToken: Equatable {
   case textSuccess
   case textWarning
   case textInverse
+
+  // MARK: - Chart
+  case chartThemeDefault01
+  case chartThemeDefault02
+  case chartThemeDefault03
+  case chartThemeDefault04
+  case chartThemeDefault05
+  case chartThemeDefault06
+  case chartThemeDefault07
+  case chartThemeDefault08
+  case chartThemeDefault09
+  case chartThemeDefault10
 
   case custom(light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
 }
@@ -433,6 +447,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.cobalt400_10.value, dark: BCGlobalToken.cobalt300_18.value)
     case .fillHighlightTransparent:
       return (light: BCGlobalToken.cobalt400_0.value, dark: BCGlobalToken.cobalt300_0.value)
+    case .fillNeutral:
+      return (light: BCGlobalToken.black8.value, dark: BCGlobalToken.white12.value)
     case .fillNeutralHeavier:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
     case .fillNeutralHeaviest:
@@ -533,6 +549,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.blue400.value, dark: BCGlobalToken.blue300.value)
     case .stateActionLight:
       return (light: BCGlobalToken.blue400_30.value, dark: BCGlobalToken.blue300_45.value)
+    case .stateActive:
+      return (light: BCGlobalToken.black80.value, dark: BCGlobalToken.white80.value)
     case .stateDefault:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
     case .stateWarning:
@@ -607,8 +625,35 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
     case .textInverse:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
+    // MARK: - Chart
+    // Figma SSOT에서 chart 토큰은 global 토큰 alias 없이 직접 색상값으로 정의됨 (light/dark 동일).
+    case .chartThemeDefault01:
+      return Self.chartColor(0x7C, 0x72, 0xFD)
+    case .chartThemeDefault02:
+      return Self.chartColor(0x81, 0xDF, 0xDD)
+    case .chartThemeDefault03:
+      return Self.chartColor(0xFC, 0x97, 0x83)
+    case .chartThemeDefault04:
+      return Self.chartColor(0xB1, 0x59, 0x6A)
+    case .chartThemeDefault05:
+      return Self.chartColor(0xFE, 0x71, 0xBA)
+    case .chartThemeDefault06:
+      return Self.chartColor(0xC9, 0x71, 0xEC)
+    case .chartThemeDefault07:
+      return Self.chartColor(0x4A, 0x75, 0xE3)
+    case .chartThemeDefault08:
+      return Self.chartColor(0x80, 0xB6, 0xFD)
+    case .chartThemeDefault09:
+      return Self.chartColor(0xFB, 0x90, 0xF1)
+    case .chartThemeDefault10:
+      return Self.chartColor(0xB4, 0xD6, 0xE5)
     case .custom(let light, let dark):
       return (light: light, dark: dark)
     }
+  }
+
+  private static func chartColor(_ r: Double, _ g: Double, _ b: Double) -> PaletteSet {
+    let color = ColorComponentsWithAlpha(red: r, green: g, blue: b, alpha: 1)
+    return (light: color, dark: color)
   }
 }
