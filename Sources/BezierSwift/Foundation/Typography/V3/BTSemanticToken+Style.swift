@@ -20,9 +20,9 @@ extension BTSemanticToken {
     case .textSmall:                        return BTGlobalToken.FontSize.size13
     case .textXSmall:                       return BTGlobalToken.FontSize.size12
     case .textXXSmall:                      return BTGlobalToken.FontSize.size11
-    case .labelLarge:                       return BTGlobalToken.FontSize.size14
-    case .labelMedium:                      return BTGlobalToken.FontSize.size13
-    case .labelSmall:                       return BTGlobalToken.FontSize.size12
+    case .labelLarge:                       return BTGlobalToken.FontSize.size15
+    case .labelMedium:                      return BTGlobalToken.FontSize.size14
+    case .labelSmall:                       return BTGlobalToken.FontSize.size13
     case .captionMedium:                    return BTGlobalToken.FontSize.size12
     case .captionSmall:                     return BTGlobalToken.FontSize.size11
     case .codeMedium:                       return BTGlobalToken.FontSize.size14
@@ -48,9 +48,9 @@ extension BTSemanticToken {
     case .textSmall:                        return BTGlobalToken.LineHeight.height18
     case .textXSmall:                       return BTGlobalToken.LineHeight.height16
     case .textXXSmall:                      return BTGlobalToken.LineHeight.height16
-    case .labelLarge:                       return BTGlobalToken.LineHeight.height18
-    case .labelMedium:                      return BTGlobalToken.LineHeight.height18
-    case .labelSmall:                       return BTGlobalToken.LineHeight.height16
+    case .labelLarge:                       return BTGlobalToken.LineHeight.height20
+    case .labelMedium:                      return BTGlobalToken.LineHeight.height20
+    case .labelSmall:                       return BTGlobalToken.LineHeight.height18
     case .captionMedium:                    return BTGlobalToken.LineHeight.height16
     case .captionSmall:                     return BTGlobalToken.LineHeight.height16
     case .codeMedium:                       return BTGlobalToken.LineHeight.height18

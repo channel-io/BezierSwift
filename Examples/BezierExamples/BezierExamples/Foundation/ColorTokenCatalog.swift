@@ -51,6 +51,7 @@ private struct ColorTokenGroup: Identifiable {
       ColorTokenSpec(.fillAbsoluteWhiteLight, "fill-absolute-white-light"),
     ]),
     ColorTokenGroup(title: "Fill (Neutral)", tokens: [
+      ColorTokenSpec(.fillNeutral,          "fill-neutral"),
       ColorTokenSpec(.fillNeutralLightest,  "fill-neutral-lightest"),
       ColorTokenSpec(.fillNeutralLighter,   "fill-neutral-lighter"),
       ColorTokenSpec(.fillNeutralLight,     "fill-neutral-light"),
@@ -105,6 +106,26 @@ private struct ColorTokenGroup: Identifiable {
       ColorTokenSpec(.dimAbsoluteBlackHeavy, "dim-absolute-black-heavy"),
       ColorTokenSpec(.dimAbsoluteWhite,      "dim-absolute-white"),
       ColorTokenSpec(.dimAbsoluteWhiteHeavy, "dim-absolute-white-heavy"),
+    ]),
+    ColorTokenGroup(title: "State", tokens: [
+      ColorTokenSpec(.stateAction,       "state-action"),
+      ColorTokenSpec(.stateActionLight,  "state-action-light"),
+      ColorTokenSpec(.stateActive,       "state-active"),
+      ColorTokenSpec(.stateDefault,      "state-default"),
+      ColorTokenSpec(.stateWarning,      "state-warning"),
+      ColorTokenSpec(.stateWarningLight, "state-warning-light"),
+    ]),
+    ColorTokenGroup(title: "Chart", tokens: [
+      ColorTokenSpec(.chartThemeDefault01, "chart-theme-default-01"),
+      ColorTokenSpec(.chartThemeDefault02, "chart-theme-default-02"),
+      ColorTokenSpec(.chartThemeDefault03, "chart-theme-default-03"),
+      ColorTokenSpec(.chartThemeDefault04, "chart-theme-default-04"),
+      ColorTokenSpec(.chartThemeDefault05, "chart-theme-default-05"),
+      ColorTokenSpec(.chartThemeDefault06, "chart-theme-default-06"),
+      ColorTokenSpec(.chartThemeDefault07, "chart-theme-default-07"),
+      ColorTokenSpec(.chartThemeDefault08, "chart-theme-default-08"),
+      ColorTokenSpec(.chartThemeDefault09, "chart-theme-default-09"),
+      ColorTokenSpec(.chartThemeDefault10, "chart-theme-default-10"),
     ]),
   ]
 }
