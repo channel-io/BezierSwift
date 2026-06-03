@@ -28,11 +28,11 @@ public enum BezierAvatarGroupSize: String, CaseIterable {
     }
   }
 
-  /// SPEC §2.3 / §2.5: count variant stride. size=20은 7pt overlap, size=24는 6pt overlap (Figma SSOT).
+  /// SPEC §2.3 / §2.5: count variant stride. size20·size24 모두 7pt overlap (Figma SSOT).
   public var countVariantStride: CGFloat {
     switch self {
     case .size20: return 13
-    case .size24: return 18
+    case .size24: return 17
     }
   }
 
