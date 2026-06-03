@@ -68,19 +68,25 @@ public enum BezierButtonSize: String, CaseIterable {
     }
   }
 
+  // MARK: - Typography
+  //
+  // Figma 변수 바인딩: xsmall·small·medium 은 `label/*` semantic, large·xlarge 는
+  // `font-size/16` + `line-height/24` global. BezierSwift 에는 16/24 조합의 label/text
+  // semantic 토큰이 없으므로 (내부 참조 가능한) BTGlobalToken raw 값을 직접 사용한다.
   public var fontSize: CGFloat {
     switch self {
-    case .xsmall: return 13
-    case .small:  return 14
-    case .medium: return 15
-    case .large, .xlarge: return 16
+    case .xsmall: return BTGlobalToken.FontSize.size13
+    case .small:  return BTGlobalToken.FontSize.size14
+    case .medium: return BTGlobalToken.FontSize.size15
+    case .large, .xlarge: return BTGlobalToken.FontSize.size16
     }
   }
 
   public var lineHeight: CGFloat {
     switch self {
-    case .xsmall, .small: return 18
-    case .medium, .large, .xlarge: return 20
+    case .xsmall: return BTGlobalToken.LineHeight.height18
+    case .small, .medium: return BTGlobalToken.LineHeight.height20
+    case .large, .xlarge: return BTGlobalToken.LineHeight.height24
     }
   }
 
@@ -102,7 +108,7 @@ public enum BezierButtonSemantic: String, CaseIterable {
 
 enum BezierButtonConstant {
   static let borderWidth: CGFloat = 1
-  static let disabledOpacity: CGFloat = 0.4
+  static let disabledOpacity: CGFloat = BOGlobalToken.disabled
   static let pressedOpacity: CGFloat = 0.7
 }
 
