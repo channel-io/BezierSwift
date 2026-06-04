@@ -47,10 +47,11 @@ Figma 컴포넌트가 정의하는 property와 옵션은 다음이 전부다.
 
 ### 호(arc) Fill
 
-| 위치 | Token | Figma Variable | Raw |
+| 위치 | Token | Figma Variable | Raw (light) |
 |---|---|---|---|
 | 도넛 호 fill | `borderNeutral` | `color/border/neutral` | `#00000014` (black @ 8%) |
 
+- `color/border/neutral`은 모드별 동적 변수 — 위 raw는 light 모드 해석값 (Figma SVG export 기준). 다크 모드 값은 토큰이 해석한다.
 - 전 size 공통 단일 컬러. Figma 매트릭스에 색상 축 없음.
 - stroke 없음 — fill 기반 도넛 호 (Figma SVG `fill-opacity="0.08"`).
 
