@@ -33,12 +33,12 @@ public enum BezierIconButtonSize: String, CaseIterable {
     self.length - self.padding * 2
   }
 
-  public var spinnerLength: CGFloat {
+  public var spinnerSize: BezierSpinnerSize {
     switch self {
-    case .xsmall: return 12
-    case .small:  return 14
-    case .medium: return 16
-    case .large:  return 18
+    case .xsmall: return .size12
+    case .small:  return .size16
+    case .medium: return .size20
+    case .large:  return .size24
     }
   }
 }

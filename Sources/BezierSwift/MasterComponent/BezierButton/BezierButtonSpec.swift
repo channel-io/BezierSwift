@@ -3,7 +3,7 @@
 //  BezierSwift
 //
 
-import CoreGraphics
+import UIKit
 
 public enum BezierButtonSize: String, CaseIterable {
   case xsmall
@@ -58,13 +58,13 @@ public enum BezierButtonSize: String, CaseIterable {
 
   public var iconLength: CGFloat { 16 }
 
-  public var spinnerLength: CGFloat {
+  public var spinnerSize: BezierSpinnerSize {
     switch self {
-    case .xsmall: return 12
-    case .small:  return 14
-    case .medium: return 16
-    case .large:  return 18
-    case .xlarge: return 18
+    case .xsmall: return .size12
+    case .small:  return .size16
+    case .medium: return .size20
+    case .large:  return .size24
+    case .xlarge: return .size30
     }
   }
 
@@ -110,6 +110,7 @@ enum BezierButtonConstant {
   static let borderWidth: CGFloat = 1
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
   static let pressedOpacity: CGFloat = 0.7
+  static let filledLoadingSpinnerColor = UIColor(white: 1, alpha: 0.7)
 }
 
 extension BezierButtonVariant {
@@ -128,6 +129,13 @@ extension BezierButtonVariant {
     switch self {
     case .outlined: return .borderNeutral
     case .filled, .ghost: return nil
+    }
+  }
+
+  var loadingSpinnerColorOverride: UIColor? {
+    switch self {
+    case .filled: return BezierButtonConstant.filledLoadingSpinnerColor
+    case .outlined, .ghost: return nil
     }
   }
 
