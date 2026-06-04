@@ -106,18 +106,25 @@ size 별 raw 값:
 | `pressed` | 본체 opacity를 낮춤 (터치 중에만 일시적) |
 | `active` | 코드 미노출 (Button은 토글 상태를 가지지 않음) |
 | `disabled` | 본체 전체 `opacity: 0.4` (Figma `opacity-40` 일치) |
-| `loading` | 라벨/아이콘 숨김 + 가운데 ActivityIndicator 표시. 사용자 입력 무시 |
+| `loading` | 라벨/아이콘 숨김 + 가운데 Spinner 컴포넌트 인스턴스 표시. 사용자 입력 무시 |
 
-## 7. Loading Spinner Size (size별)
+## 7. Loading Spinner (size별)
 
-> Figma `ActivityIndicator` 노드 크기.
+> Figma loading variant는 Spinner 컴포넌트(`3380:1591`) 인스턴스를 내장한다.
 
-| size | spinner size |
+| size | Spinner 인스턴스 size |
 |---|---|
 | xsmall | 12 |
-| small | 14 |
-| medium | 16 |
-| large | 18 |
-| xlarge | 18 |
+| small | 16 |
+| medium | 20 |
+| large | 24 |
+| xlarge | 30 |
 
-스피너 색은 해당 variant × semantic의 foreground (`text/icon`) 컬러와 동일.
+### Spinner 색 (variant별, semantic 무관 — Figma 인스턴스 색 override)
+
+| variant | Ellipse fill | 바인딩 |
+|---|---|---|
+| `filled` | white @ 0.7 | raw (변수 미바인딩) |
+| `outlined` / `ghost` | black @ 0.08 | raw (변수 미바인딩) |
+
+> 협의 사항: `outlined`/`ghost`의 black@0.08은 `color/border/neutral` light raw와 동일값이므로 구현은 Spinner 기본색(`borderNeutral` 토큰)을 그대로 사용한다. `filled`의 white@0.7은 대응 토큰이 없어 raw로 적용한다.

@@ -33,12 +33,12 @@ public enum BezierIconButtonSize: String, CaseIterable {
     self.length - self.padding * 2
   }
 
-  public var spinnerLength: CGFloat {
+  public var spinnerSize: BezierSpinnerSize {
     switch self {
-    case .xsmall: return 12
-    case .small:  return 14
-    case .medium: return 16
-    case .large:  return 18
+    case .xsmall: return .size12
+    case .small:  return .size16
+    case .medium: return .size20
+    case .large:  return .size24
     }
   }
 }
@@ -65,7 +65,7 @@ extension BezierIconButtonVariant {
 }
 
 enum BezierIconButtonConstant {
-  static let disabledOpacity: CGFloat = 0.4
+  static let disabledOpacity: CGFloat = BOGlobalToken.disabled
   /// Ghost variant의 pressed / active overlay 색상.
   /// bezier-tokens에 등록되지 않은 임시값 — Variable 등록 시 교체 예정.
   static let ghostOverlayAlpha: CGFloat = 0.05

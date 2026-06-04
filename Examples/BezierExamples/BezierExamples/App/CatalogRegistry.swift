@@ -64,6 +64,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(AvatarGroupCatalog())
     ),
+    CatalogItem(
+      id: "spinner",
+      title: "Spinner",
+      section: .v3Components,
+      destination: AnyView(SpinnerCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",

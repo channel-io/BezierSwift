@@ -65,12 +65,7 @@ public struct SUBezierIconButton: View, Themeable {
   }
 
   private var loadingIndicator: some View {
-    // ProgressView(.circular) 기본 크기 = 20pt 기준으로 SPEC §5의 spinner 크기 적용
-    ProgressView()
-      .progressViewStyle(.circular)
-      .tint(self.palette(self.variant.foregroundToken))
-      .scaleEffect(self.size.spinnerLength / 20)
-      .frame(width: self.size.spinnerLength, height: self.size.spinnerLength)
+    SUBezierSpinner(size: self.size.spinnerSize)
   }
 }
 

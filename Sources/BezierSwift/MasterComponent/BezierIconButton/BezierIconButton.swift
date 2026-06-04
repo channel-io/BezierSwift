@@ -53,11 +53,10 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     return imageView
   }()
 
-  private let activityIndicator: UIActivityIndicatorView = {
-    let indicator = UIActivityIndicatorView(style: .medium)
-    indicator.hidesWhenStopped = true
-    indicator.translatesAutoresizingMaskIntoConstraints = false
-    return indicator
+  private let spinner: BezierSpinner = {
+    let spinner = BezierSpinner()
+    spinner.isHidden = true
+    return spinner
   }()
 
   // MARK: - Layout Constraints (mutable)
@@ -92,7 +91,7 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     self.layer.borderWidth = 0
 
     self.addSubview(self.iconImageView)
-    self.addSubview(self.activityIndicator)
+    self.addSubview(self.spinner)
 
     let widthConstraint = self.widthAnchor.constraint(equalToConstant: self.size.length)
     let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.length)
@@ -106,8 +105,8 @@ public final class BezierIconButton: UIControl, BezierComponentable {
       iconHeightConstraint,
       self.iconImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       self.iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      self.activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor),
     ])
 
     self.widthConstraint = widthConstraint
@@ -142,11 +141,7 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     self.iconWidthConstraint?.constant = self.size.iconLength
     self.iconHeightConstraint?.constant = self.size.iconLength
 
-    let baseSize = self.activityIndicator.intrinsicContentSize.width
-    if baseSize > 0 {
-      let scale = self.size.spinnerLength / baseSize
-      self.activityIndicator.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
+    self.spinner.size = self.size.spinnerSize
 
     self.setNeedsLayout()
     self.invalidateIntrinsicContentSize()
@@ -167,20 +162,13 @@ public final class BezierIconButton: UIControl, BezierComponentable {
       self.backgroundColor = baseBackground
     }
 
-    let foregroundColor = self.variant.foregroundToken.palette(self)
-    self.iconImageView.tintColor = foregroundColor
-    self.activityIndicator.color = foregroundColor
+    self.iconImageView.tintColor = self.variant.foregroundToken.palette(self)
   }
 
   private func refreshLoading() {
     self.isUserInteractionEnabled = !self.isLoading
-    if self.isLoading {
-      self.iconImageView.isHidden = true
-      self.activityIndicator.startAnimating()
-    } else {
-      self.iconImageView.isHidden = false
-      self.activityIndicator.stopAnimating()
-    }
+    self.iconImageView.isHidden = self.isLoading
+    self.spinner.isHidden = !self.isLoading
   }
 
   private func refreshEnabled() {

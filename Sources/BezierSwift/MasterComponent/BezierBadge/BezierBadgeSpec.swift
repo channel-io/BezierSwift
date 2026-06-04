@@ -36,37 +36,36 @@ public enum BezierBadgeSize: String, CaseIterable {
 
   public var iconLength: CGFloat { 16 }
 
-  // MARK: - Typography (Figma raw, see SPEC §3)
+  // MARK: - Typography
   //
-  // TYPO-MIGRATION: Figma component description의 `📌 TYPO-MIGRATION: Text Style
-  // 미적용` 상태에 따라 raw 값을 직접 사용한다. xsmall/small은 BTSemanticToken
-  // (.textXSmall / .textMedium)과 정합하지만, medium/large는 lineHeight·letterSpacing
-  // 이 token(.textLarge / .textXLarge)과 일치하지 않으므로 token을 우회하고 raw 값을
-  // 적용한다. 디자인팀의 로컬 typography 스타일 일괄 바인딩이 끝나 raw가 token과
-  // 정합되면 BTSemanticToken 기반 API로 통합 예정.
+  // Figma `text/*` 변수 바인딩. size 차원(fontSize·letterSpacing)과 lineHeight 차원이
+  // 엇갈리게 매핑된다(예: medium = size/large + line-height/medium). BTSemanticToken 의
+  // 차원별 raw 값을 조합해 Figma SSOT 와 정합시킨다.
 
   public var fontSize: CGFloat {
     switch self {
-    case .xsmall: return 12
-    case .small:  return 14
-    case .medium: return 15
-    case .large:  return 16
+    case .xsmall: return BTSemanticToken.textXSmall().fontSize
+    case .small:  return BTSemanticToken.textMedium().fontSize
+    case .medium: return BTSemanticToken.textLarge().fontSize
+    case .large:  return BTSemanticToken.textXLarge().fontSize
     }
   }
 
   public var lineHeight: CGFloat {
     switch self {
-    case .xsmall: return 16
-    case .small:  return 18
-    case .medium: return 18
-    case .large:  return 20
+    case .xsmall: return BTSemanticToken.textXSmall().lineHeight
+    case .small:  return BTSemanticToken.textMedium().lineHeight
+    case .medium: return BTSemanticToken.textMedium().lineHeight
+    case .large:  return BTSemanticToken.textLarge().lineHeight
     }
   }
 
   public var letterSpacing: CGFloat {
     switch self {
-    case .xsmall, .small, .medium: return 0
-    case .large: return -0.1
+    case .xsmall: return BTSemanticToken.textXSmall().letterSpacing
+    case .small:  return BTSemanticToken.textMedium().letterSpacing
+    case .medium: return BTSemanticToken.textLarge().letterSpacing
+    case .large:  return BTSemanticToken.textXLarge().letterSpacing
     }
   }
 

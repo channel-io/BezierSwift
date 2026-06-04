@@ -23,6 +23,7 @@ public enum BCGlobalToken {
   case black60
   case black70
   case black8
+  case black80
   case black85
   case blue100
   case blue200
@@ -274,6 +275,8 @@ public enum BCGlobalToken {
       return ColorComponentsWithAlpha(red: 0x00, green: 0x00, blue: 0x00, alpha: 0.70)
     case .black8:
       return ColorComponentsWithAlpha(red: 0x00, green: 0x00, blue: 0x00, alpha: 0.08)
+    case .black80:
+      return ColorComponentsWithAlpha(red: 0x00, green: 0x00, blue: 0x00, alpha: 0.80)
     case .black85:
       return ColorComponentsWithAlpha(red: 0x00, green: 0x00, blue: 0x00, alpha: 0.85)
     case .blue100:
