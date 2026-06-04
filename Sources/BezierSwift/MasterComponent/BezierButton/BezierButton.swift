@@ -86,15 +86,11 @@ public final class BezierButton: UIControl, BezierComponentable {
     return label
   }()
 
-  private let activityIndicator: UIActivityIndicatorView = {
-    let indicator = UIActivityIndicatorView(style: .medium)
-    indicator.hidesWhenStopped = true
-    indicator.translatesAutoresizingMaskIntoConstraints = false
-    return indicator
+  private let spinner: BezierSpinner = {
+    let spinner = BezierSpinner()
+    spinner.isHidden = true
+    return spinner
   }()
-
-  // UIActivityIndicatorView(style: .medium) base size
-  private let activityIndicatorBaseLength: CGFloat = 20
 
   // MARK: - Layout Constraints (mutable)
 
@@ -137,7 +133,7 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.contentStackView.addArrangedSubview(self.trailingImageView)
 
     self.addSubview(self.contentStackView)
-    self.addSubview(self.activityIndicator)
+    self.addSubview(self.spinner)
 
     let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.height)
     let minWidthConstraint = self.widthAnchor.constraint(greaterThanOrEqualToConstant: self.size.minWidth)
@@ -164,8 +160,8 @@ public final class BezierButton: UIControl, BezierComponentable {
         lessThanOrEqualTo: self.trailingAnchor,
         constant: -self.size.horizontalPadding
       ).withIdentifier("contentTrailing"),
-      self.activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      self.activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor),
     ])
 
     self.heightConstraint = heightConstraint
@@ -222,10 +218,7 @@ public final class BezierButton: UIControl, BezierComponentable {
       bottom: 0,
       right: self.size.textHorizontalPadding
     )
-    self.activityIndicator.transform = CGAffineTransform(
-      scaleX: self.activityIndicatorScale,
-      y: self.activityIndicatorScale
-    )
+    self.spinner.size = self.size.spinnerSize
     self.refreshContent()
     self.setNeedsLayout()
     self.invalidateIntrinsicContentSize()
@@ -280,20 +273,15 @@ public final class BezierButton: UIControl, BezierComponentable {
     let foregroundColor = self.variant.foregroundToken(self.semantic).palette(self)
     self.leadingImageView.tintColor = foregroundColor
     self.trailingImageView.tintColor = foregroundColor
-    self.activityIndicator.color = foregroundColor
+    self.spinner.fillColorOverride = self.variant.loadingSpinnerColorOverride
 
     self.refreshContent()
   }
 
   private func refreshLoading() {
     self.isUserInteractionEnabled = !self.isLoading
-    if self.isLoading {
-      self.contentStackView.isHidden = true
-      self.activityIndicator.startAnimating()
-    } else {
-      self.contentStackView.isHidden = false
-      self.activityIndicator.stopAnimating()
-    }
+    self.contentStackView.isHidden = self.isLoading
+    self.spinner.isHidden = !self.isLoading
   }
 
   private func refreshEnabled() {
@@ -313,12 +301,6 @@ public final class BezierButton: UIControl, BezierComponentable {
   public override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
     guard !self.isLoading else { return }
     super.sendAction(action, to: target, for: event)
-  }
-
-  // MARK: - Helpers
-
-  private var activityIndicatorScale: CGFloat {
-    self.size.spinnerLength / self.activityIndicatorBaseLength
   }
 }
 

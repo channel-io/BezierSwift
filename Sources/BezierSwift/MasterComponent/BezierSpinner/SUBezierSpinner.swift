@@ -7,17 +7,24 @@ import SwiftUI
 
 public struct SUBezierSpinner: View, Themeable {
   private let size: BezierSpinnerSize
+  private let fillColorOverride: Color?
 
   @Environment(\.colorScheme) public var colorScheme
   @State private var isRotating = false
 
   public init(size: BezierSpinnerSize = .size12) {
     self.size = size
+    self.fillColorOverride = nil
+  }
+
+  init(size: BezierSpinnerSize, fillColorOverride: Color?) {
+    self.size = size
+    self.fillColorOverride = fillColorOverride
   }
 
   public var body: some View {
     SpinnerArcShape()
-      .fill(self.palette(BCSemanticToken.borderNeutral))
+      .fill(self.fillColorOverride ?? self.palette(BCSemanticToken.borderNeutral))
       .frame(width: self.size.length, height: self.size.length)
       .rotationEffect(.degrees(self.isRotating ? 360 : 0))
       .animation(

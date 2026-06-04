@@ -25,6 +25,12 @@ public final class BezierSpinner: UIView, BezierComponentable {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
+  // MARK: - Internal Properties
+
+  var fillColorOverride: UIColor? {
+    didSet { self.refreshAppearance() }
+  }
+
   // MARK: - Subviews
 
   private let arcLayer = CAShapeLayer()
@@ -97,7 +103,8 @@ public final class BezierSpinner: UIView, BezierComponentable {
   }
 
   private func refreshAppearance() {
-    self.arcLayer.fillColor = BCSemanticToken.borderNeutral.palette(self).cgColor
+    let fillColor = self.fillColorOverride ?? BCSemanticToken.borderNeutral.palette(self)
+    self.arcLayer.fillColor = fillColor.cgColor
   }
 
   // MARK: - Arc Path

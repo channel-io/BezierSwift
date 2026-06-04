@@ -110,14 +110,11 @@ public struct SUBezierButton: View, Themeable {
   }
 
   private var loadingIndicator: some View {
-    ProgressView()
-      .progressViewStyle(.circular)
-      .tint(self.palette(self.variant.foregroundToken(self.semantic)))
-      .scaleEffect(self.size.spinnerLength / Self.progressViewBaseLength)
+    SUBezierSpinner(
+      size: self.size.spinnerSize,
+      fillColorOverride: self.variant.loadingSpinnerColorOverride.map { Color(uiColor: $0) }
+    )
   }
-
-  // ProgressView().progressViewStyle(.circular) base size on iOS
-  private static let progressViewBaseLength: CGFloat = 20
 }
 
 private struct SUBezierButtonStyle: ButtonStyle, Themeable {
