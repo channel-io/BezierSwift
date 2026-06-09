@@ -36,9 +36,9 @@ public enum BezierIconButtonSize: String, CaseIterable {
   public var spinnerSize: BezierSpinnerSize {
     switch self {
     case .xsmall: return .size12
-    case .small:  return .size16
-    case .medium: return .size20
-    case .large:  return .size24
+    case .small:  return .size12
+    case .medium: return .size12
+    case .large:  return .size16
     }
   }
 }
@@ -59,6 +59,13 @@ extension BezierIconButtonVariant {
   var foregroundToken: BCSemanticToken {
     switch self {
     case .filled: return .iconNeutralHeavy
+    case .ghost:  return .iconNeutral
+    }
+  }
+
+  var loadingSpinnerToken: BCSemanticToken {
+    switch self {
+    case .filled: return .fillBright
     case .ghost:  return .iconNeutral
     }
   }

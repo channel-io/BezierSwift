@@ -112,7 +112,7 @@ public struct SUBezierButton: View, Themeable {
   private var loadingIndicator: some View {
     SUBezierSpinner(
       size: self.size.spinnerSize,
-      fillColorOverride: self.variant.loadingSpinnerColorOverride.map { Color(uiColor: $0) }
+      fillColorOverride: self.palette(self.variant.loadingSpinnerToken(self.semantic))
     )
   }
 }
