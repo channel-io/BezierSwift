@@ -111,20 +111,32 @@ size 별 raw 값:
 ## 7. Loading Spinner (size별)
 
 > Figma loading variant는 Spinner 컴포넌트(`3380:1591`) 인스턴스를 내장한다.
+> 색상·크기는 MOB-5322에서 디자인팀이 확정한 정책(design-team `Button-spec.md §6` / `Spinner-spec.md`)을 반영한다.
+
+### Spinner 크기 (size별)
 
 | size | Spinner 인스턴스 size |
 |---|---|
 | xsmall | 12 |
-| small | 16 |
-| medium | 20 |
-| large | 24 |
-| xlarge | 30 |
+| small | 12 |
+| medium | 12 |
+| large | 16 |
+| xlarge | 20 |
 
-### Spinner 색 (variant별, semantic 무관 — Figma 인스턴스 색 override)
+### Spinner 색 (variant × semantic)
 
-| variant | Ellipse fill | 바인딩 |
-|---|---|---|
-| `filled` | white @ 0.7 | raw (변수 미바인딩) |
-| `outlined` / `ghost` | black @ 0.08 | raw (변수 미바인딩) |
+| variant | Spinner fill | Token | Figma Variable |
+|---|---|---|---|
+| `filled` (전 semantic) | `fillBright` | `fillBright` | `color/fill/bright` |
+| `outlined` × `primary` | label 색 | `textNeutralHeaviest` | `color/text/neutral/heaviest` |
+| `outlined` × `secondary` | label 색 | `textNeutralLight` | `color/text/neutral/light` |
+| `outlined` × `destructive` | label 색 | `textAccentRed` | `color/text/accent/red` |
+| `ghost` × `primary` | label 색 | `textNeutralLight` | `color/text/neutral/light` |
+| `ghost` × `secondary` | label 색 | `textNeutralLighter` | `color/text/neutral/lighter` |
+| `ghost` × `destructive` | label 색 | `textAccentRed` | `color/text/accent/red` |
 
-> 협의 사항: `outlined`/`ghost`의 black@0.08은 `color/border/neutral` light raw와 동일값이므로 구현은 Spinner 기본색(`borderNeutral` 토큰)을 그대로 사용한다. `filled`의 white@0.7은 대응 토큰이 없어 raw로 적용한다.
+- `filled`: semantic 무관하게 `color/fill/bright`. 어두운 배경 위 대비를 위한 밝은 스피너.
+- `outlined`/`ghost`: 해당 variant의 default label(text) 색을 그대로 사용한다 (§5 `text/icon` 컬럼과 동일 토큰). 코드에서는 `foregroundToken(semantic)`을 재사용한다.
+- 크기 축소(§7 크기 표)는 `outlined`/`ghost` 스피너가 label 색을 사용하며 발생하는 시선 강탈을 완화하기 위한 후속 조정이다.
+
+> 협의 사항(MOB-5322 / Figma SSOT 외): 위 색·크기는 팀챗 스레드에서 확정해 design-team spec 문서에 반영된 정책이며, 현 시점 Figma loading 인스턴스의 raw override(white@0.7 / black@0.08)보다 우선한다. 추후 Figma 인스턴스가 갱신되면 그쪽이 SSOT가 된다.
