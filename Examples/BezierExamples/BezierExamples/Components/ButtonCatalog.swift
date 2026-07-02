@@ -23,6 +23,18 @@ struct ButtonCatalog: View {
         .textCase(.uppercase)
       CatalogSection(.swiftUI) { self.swiftUIMatrix }
       CatalogSection(.uiKit) { self.uiKitMatrix }
+      Text("Loading colors (large · variant × semantic)")
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(.secondary)
+        .textCase(.uppercase)
+      CatalogSection(.swiftUI) { self.swiftUILoadingColorMatrix }
+      CatalogSection(.uiKit) { self.uiKitLoadingColorMatrix }
+      Text("Loading sizes (filled · primary · size scale)")
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(.secondary)
+        .textCase(.uppercase)
+      CatalogSection(.swiftUI) { self.swiftUILoadingSizeMatrix }
+      CatalogSection(.uiKit) { self.uiKitLoadingSizeMatrix }
     }
   }
 
@@ -139,6 +151,84 @@ struct ButtonCatalog: View {
           }
         }
       }
+    }
+  }
+
+  // MARK: - Loading Matrices
+
+  private var swiftUILoadingColorMatrix: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      ForEach(BezierButtonVariant.allCases, id: \.self) { variant in
+        VStack(alignment: .leading, spacing: 6) {
+          Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
+          HStack(spacing: 8) {
+            ForEach(BezierButtonSemantic.allCases, id: \.self) { semantic in
+              SUBezierButton(
+                size: .large,
+                variant: variant,
+                semantic: semantic,
+                title: semantic.rawValue.capitalized,
+                isLoading: true,
+                action: {}
+              )
+            }
+            Spacer(minLength: 0)
+          }
+        }
+      }
+    }
+  }
+
+  private var uiKitLoadingColorMatrix: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      ForEach(BezierButtonVariant.allCases, id: \.self) { variant in
+        VStack(alignment: .leading, spacing: 6) {
+          Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
+          HStack(spacing: 8) {
+            ForEach(BezierButtonSemantic.allCases, id: \.self) { semantic in
+              UIKitWrap {
+                let button = BezierButton(size: .large, variant: variant, semantic: semantic)
+                button.title = semantic.rawValue.capitalized
+                button.isLoading = true
+                return button
+              }
+              .fixedSize()
+            }
+            Spacer(minLength: 0)
+          }
+        }
+      }
+    }
+  }
+
+  private var swiftUILoadingSizeMatrix: some View {
+    HStack(spacing: 8) {
+      ForEach(BezierButtonSize.allCases, id: \.self) { size in
+        SUBezierButton(
+          size: size,
+          variant: .filled,
+          semantic: .primary,
+          title: size.rawValue,
+          isLoading: true,
+          action: {}
+        )
+      }
+      Spacer(minLength: 0)
+    }
+  }
+
+  private var uiKitLoadingSizeMatrix: some View {
+    HStack(spacing: 8) {
+      ForEach(BezierButtonSize.allCases, id: \.self) { size in
+        UIKitWrap {
+          let button = BezierButton(size: size, variant: .filled, semantic: .primary)
+          button.title = size.rawValue
+          button.isLoading = true
+          return button
+        }
+        .fixedSize()
+      }
+      Spacer(minLength: 0)
     }
   }
 }

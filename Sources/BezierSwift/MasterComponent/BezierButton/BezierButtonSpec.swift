@@ -61,10 +61,10 @@ public enum BezierButtonSize: String, CaseIterable {
   public var spinnerSize: BezierSpinnerSize {
     switch self {
     case .xsmall: return .size12
-    case .small:  return .size16
-    case .medium: return .size20
-    case .large:  return .size24
-    case .xlarge: return .size30
+    case .small:  return .size12
+    case .medium: return .size12
+    case .large:  return .size16
+    case .xlarge: return .size20
     }
   }
 
@@ -110,7 +110,6 @@ enum BezierButtonConstant {
   static let borderWidth: CGFloat = 1
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
   static let pressedOpacity: CGFloat = 0.7
-  static let filledLoadingSpinnerColor = UIColor(white: 1, alpha: 0.7)
 }
 
 extension BezierButtonVariant {
@@ -132,10 +131,10 @@ extension BezierButtonVariant {
     }
   }
 
-  var loadingSpinnerColorOverride: UIColor? {
+  func loadingSpinnerToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
     switch self {
-    case .filled: return BezierButtonConstant.filledLoadingSpinnerColor
-    case .outlined, .ghost: return nil
+    case .filled: return .fillBright
+    case .outlined, .ghost: return self.foregroundToken(semantic)
     }
   }
 

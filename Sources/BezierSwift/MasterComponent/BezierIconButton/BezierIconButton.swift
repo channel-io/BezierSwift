@@ -163,6 +163,7 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     }
 
     self.iconImageView.tintColor = self.variant.foregroundToken.palette(self)
+    self.spinner.fillColorOverride = self.variant.loadingSpinnerToken.palette(self)
   }
 
   private func refreshLoading() {

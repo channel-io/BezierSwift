@@ -273,7 +273,7 @@ public final class BezierButton: UIControl, BezierComponentable {
     let foregroundColor = self.variant.foregroundToken(self.semantic).palette(self)
     self.leadingImageView.tintColor = foregroundColor
     self.trailingImageView.tintColor = foregroundColor
-    self.spinner.fillColorOverride = self.variant.loadingSpinnerColorOverride
+    self.spinner.fillColorOverride = self.variant.loadingSpinnerToken(self.semantic).palette(self)
 
     self.refreshContent()
   }

@@ -20,6 +20,12 @@ struct IconButtonCatalog: View {
         .textCase(.uppercase)
       CatalogSection(.swiftUI) { self.swiftUIMatrix }
       CatalogSection(.uiKit) { self.uiKitMatrix }
+      Text("Loading matrix (variant × size)")
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(.secondary)
+        .textCase(.uppercase)
+      CatalogSection(.swiftUI) { self.swiftUILoadingMatrix }
+      CatalogSection(.uiKit) { self.uiKitLoadingMatrix }
     }
   }
 
@@ -93,6 +99,46 @@ struct IconButtonCatalog: View {
               UIKitWrap {
                 let button = BezierIconButton(size: size, variant: variant)
                 button.icon = BezierIcon.star.uiImage
+                return button
+              }
+              .fixedSize()
+            }
+            Spacer(minLength: 0)
+          }
+        }
+      }
+    }
+  }
+
+  // MARK: - Loading Matrices
+
+  private var swiftUILoadingMatrix: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      ForEach(BezierIconButtonVariant.allCases, id: \.self) { variant in
+        VStack(alignment: .leading, spacing: 6) {
+          Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
+          HStack(spacing: 8) {
+            ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
+              SUBezierIconButton(size: size, variant: variant, icon: BezierIcon.star.image, isLoading: true, action: {})
+            }
+            Spacer(minLength: 0)
+          }
+        }
+      }
+    }
+  }
+
+  private var uiKitLoadingMatrix: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      ForEach(BezierIconButtonVariant.allCases, id: \.self) { variant in
+        VStack(alignment: .leading, spacing: 6) {
+          Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
+          HStack(spacing: 8) {
+            ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
+              UIKitWrap {
+                let button = BezierIconButton(size: size, variant: variant)
+                button.icon = BezierIcon.star.uiImage
+                button.isLoading = true
                 return button
               }
               .fixedSize()

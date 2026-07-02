@@ -65,7 +65,10 @@ public struct SUBezierIconButton: View, Themeable {
   }
 
   private var loadingIndicator: some View {
-    SUBezierSpinner(size: self.size.spinnerSize)
+    SUBezierSpinner(
+      size: self.size.spinnerSize,
+      fillColorOverride: self.palette(self.variant.loadingSpinnerToken)
+    )
   }
 }
 
