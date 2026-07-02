@@ -136,6 +136,17 @@ public final class BezierBadge: UIView, BezierComponentable {
     self.layer.cornerRadius = self.bounds.height / 2
   }
 
+  public override var intrinsicContentSize: CGSize {
+    var width = self.size.horizontalPadding * 2
+    if !self.leadingImageView.isHidden {
+      width += self.size.iconLength
+    }
+    if !self.titleLabel.isHidden {
+      width += self.titleLabel.intrinsicContentSize.width
+    }
+    return CGSize(width: width, height: self.size.height)
+  }
+
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
     self.refreshAppearance()
@@ -187,6 +198,8 @@ public final class BezierBadge: UIView, BezierComponentable {
       self.titleLabel.attributedText = nil
       self.titleLabel.isHidden = true
     }
+
+    self.invalidateIntrinsicContentSize()
   }
 
   private func refreshAppearance() {
