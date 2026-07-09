@@ -27,6 +27,11 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
     didSet { if oldValue != self.ellipsisType { self.refresh() } }
   }
 
+  /// SPEC §4: true 면 avatar 가 겹치고(showBorder=true), false 면 나란히 배치(showBorder=false).
+  public var overlap: Bool = true {
+    didSet { if oldValue != self.overlap { self.refresh() } }
+  }
+
   // MARK: - Private State
 
   private var managedSubviews: [UIView] = []
@@ -39,11 +44,13 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
   public init(
     avatars: [UIImage?] = [],
     size: BezierAvatarGroupSize = .size20,
-    ellipsisType: BezierAvatarGroupEllipsisType = .icon
+    ellipsisType: BezierAvatarGroupEllipsisType = .icon,
+    overlap: Bool = true
   ) {
     self.avatars = avatars
     self.size = size
     self.ellipsisType = ellipsisType
+    self.overlap = overlap
     super.init(frame: .zero)
     self.setUp()
   }
@@ -82,17 +89,13 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
     let maxVisible = BezierAvatarGroupConstant.maxVisibleAvatars
     let visibleCount = min(self.avatars.count, maxVisible)
     let hasOverflow = self.avatars.count > maxVisible
-    let stride: CGFloat
-    switch self.ellipsisType {
-    case .icon:  stride = self.size.iconVariantStride
-    case .count: stride = self.size.countVariantStride
-    }
+    let stride = self.size.stride(overlap: self.overlap)
     let avatarLength = self.size.avatarLength
 
     var totalWidth: CGFloat = 0
 
     for index in 0..<visibleCount {
-      let avatar = BezierAvatar(image: self.avatars[index], size: self.size.avatarSize, showBorder: false)
+      let avatar = BezierAvatar(image: self.avatars[index], size: self.size.avatarSize, showBorder: self.overlap)
       self.addSubview(avatar)
       NSLayoutConstraint.activate([
         avatar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CGFloat(index) * stride),
@@ -145,31 +148,32 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
           icon.heightAnchor.constraint(equalToConstant: self.size.moreIconLength),
         ])
 
-        let borderView = UIView()
-        borderView.translatesAutoresizingMaskIntoConstraints = false
-        borderView.isUserInteractionEnabled = false
-        borderView.layer.borderColor = BCSemanticToken.surface.palette(self).cgColor
-        borderView.layer.borderWidth = self.size.avatarSize.borderWidth
-        borderView.layer.cornerRadius = self.size.avatarSize.cornerRadius
-        self.addSubview(borderView)
-        NSLayoutConstraint.activate([
-          borderView.leadingAnchor.constraint(equalTo: ellipsisAvatar.leadingAnchor),
-          borderView.topAnchor.constraint(equalTo: ellipsisAvatar.topAnchor),
-          borderView.widthAnchor.constraint(equalToConstant: avatarLength),
-          borderView.heightAnchor.constraint(equalToConstant: avatarLength),
-        ])
-        self.managedSubviews.append(borderView)
+        if self.overlap {
+          let borderView = UIView()
+          borderView.translatesAutoresizingMaskIntoConstraints = false
+          borderView.isUserInteractionEnabled = false
+          borderView.layer.borderColor = BCSemanticToken.surface.palette(self).cgColor
+          borderView.layer.borderWidth = self.size.borderWidth
+          borderView.layer.cornerRadius = self.size.avatarSize.cornerRadius
+          self.addSubview(borderView)
+          NSLayoutConstraint.activate([
+            borderView.leadingAnchor.constraint(equalTo: ellipsisAvatar.leadingAnchor),
+            borderView.topAnchor.constraint(equalTo: ellipsisAvatar.topAnchor),
+            borderView.widthAnchor.constraint(equalToConstant: avatarLength),
+            borderView.heightAnchor.constraint(equalToConstant: avatarLength),
+          ])
+          self.managedSubviews.append(borderView)
+        }
 
         totalWidth = ellipsisLeft + avatarLength
 
       case .count:
         let overflowCount = self.avatars.count - maxVisible
-        let attributedString = self.size.countTextToken.attributedString(
-          self,
-          text: "+\(overflowCount)",
-          semanticColorToken: .textNeutralLighter,
-          alignment: .center
-        )
+        let attributes: [NSAttributedString.Key: Any] = [
+          .font: self.size.countFont.uiFont,
+          .foregroundColor: BCSemanticToken.textNeutralLighter.palette(self),
+        ]
+        let attributedString = NSAttributedString(string: "+\(overflowCount)", attributes: attributes)
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -179,11 +183,10 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
         self.addSubview(label)
         self.managedSubviews.append(label)
 
-        let intrinsicTextWidth = ceil(attributedString.size().width)
-        let labelWidth = self.size.countTextContainerFixedWidth ?? intrinsicTextWidth
+        let labelWidth = self.size.countTextWidth(overflowCount: overflowCount)
 
         let lastAvatarRight = CGFloat(visibleCount - 1) * stride + avatarLength
-        let labelLeft = lastAvatarRight + self.size.countTextSpacing
+        let labelLeft = lastAvatarRight + self.size.countTextSpacing(overlap: self.overlap)
 
         NSLayoutConstraint.activate([
           label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeft),
