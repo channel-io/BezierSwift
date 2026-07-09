@@ -5,7 +5,7 @@ import BezierSwift
 struct AvatarCatalog: View {
   @State private var size: BezierAvatarSize = .size48
   @State private var showBorder: Bool = false
-  @State private var statusType: BezierAvatarStatusType? = nil
+  @State private var statusType: BezierStatusType? = nil
 
   private let sampleImage = Image("AvatarSample")
   private let sampleUIImage = UIImage(named: "AvatarSample")
@@ -45,9 +45,9 @@ struct AvatarCatalog: View {
       HStack(spacing: 8) {
         Text("Status").font(.caption).foregroundStyle(.secondary).frame(width: 72, alignment: .leading)
         Picker("Status", selection: self.$statusType) {
-          Text("None").tag(BezierAvatarStatusType?.none)
-          ForEach(BezierAvatarStatusType.allCases, id: \.self) { type in
-            Text(type.rawValue).tag(BezierAvatarStatusType?.some(type))
+          Text("None").tag(BezierStatusType?.none)
+          ForEach(BezierStatusType.allCases, id: \.self) { type in
+            Text(type.rawValue).tag(BezierStatusType?.some(type))
           }
         }
         .pickerStyle(.menu)
@@ -110,12 +110,12 @@ struct AvatarCatalog: View {
 
   private var swiftUIStatusMatrix: some View {
     VStack(alignment: .leading, spacing: 10) {
-      ForEach(BezierAvatarStatusType.allCases, id: \.self) { type in
+      ForEach(BezierStatusType.allCases, id: \.self) { type in
         VStack(alignment: .leading, spacing: 4) {
           Text(type.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 12) {
-            ForEach(BezierAvatarStatusSize.allCases, id: \.self) { size in
-              SUBezierAvatarStatus(type: type, size: size)
+            ForEach(BezierStatusSize.allCases, id: \.self) { size in
+              SUBezierStatus(type: type, size: size)
             }
             Spacer(minLength: 0)
           }
@@ -126,12 +126,12 @@ struct AvatarCatalog: View {
 
   private var uiKitStatusMatrix: some View {
     VStack(alignment: .leading, spacing: 10) {
-      ForEach(BezierAvatarStatusType.allCases, id: \.self) { type in
+      ForEach(BezierStatusType.allCases, id: \.self) { type in
         VStack(alignment: .leading, spacing: 4) {
           Text(type.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 12) {
-            ForEach(BezierAvatarStatusSize.allCases, id: \.self) { size in
-              UIKitWrap { BezierAvatarStatus(type: type, size: size) }.fixedSize()
+            ForEach(BezierStatusSize.allCases, id: \.self) { size in
+              UIKitWrap { BezierStatus(type: type, size: size) }.fixedSize()
             }
             Spacer(minLength: 0)
           }
