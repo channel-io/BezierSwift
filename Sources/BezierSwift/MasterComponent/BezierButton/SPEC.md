@@ -84,7 +84,7 @@ size 별 raw 값:
 | variant × semantic | background | text/icon | border |
 |---|---|---|---|
 | `filled` × `primary` | `color/fill/neutral/heaviest` (`#000000d9`) | `color/text/inverse` (`#ffffff`) | — |
-| `filled` × `secondary` | `color/fill/neutral/light` (`#0000000d`) | `color/text/neutral` (`#000000d9`) | — |
+| `filled` × `secondary` | `color/fill/neutral` (`#00000014`) | `color/text/neutral` (`#000000d9`) | — |
 | `filled` × `destructive` | `color/fill/accent/red/heavier` (`#e1535d`) | `color/text/inverse` (`#ffffff`) | — |
 | `outlined` × `primary` | — | `color/text/neutral/heaviest` (`#000000`) | `color/border/neutral` (`#00000014`) |
 | `outlined` × `secondary` | — | `color/text/neutral/light` (`#00000099`) | `color/border/neutral` (`#00000014`) |
@@ -125,9 +125,11 @@ size 별 raw 값:
 
 ### Spinner 색 (variant × semantic)
 
-| variant | Spinner fill | Token | Figma Variable |
+| variant × semantic | Spinner fill | Token | Figma Variable |
 |---|---|---|---|
-| `filled` (전 semantic) | `fillBright` | `fillBright` | `color/fill/bright` |
+| `filled` × `primary` | label 색 | `textInverse` | `color/text/inverse` |
+| `filled` × `secondary` | label 색 | `textNeutral` | `color/text/neutral` |
+| `filled` × `destructive` | label 색 | `textInverse` | `color/text/inverse` |
 | `outlined` × `primary` | label 색 | `textNeutralHeaviest` | `color/text/neutral/heaviest` |
 | `outlined` × `secondary` | label 색 | `textNeutralLight` | `color/text/neutral/light` |
 | `outlined` × `destructive` | label 색 | `textAccentRed` | `color/text/accent/red` |
@@ -135,8 +137,7 @@ size 별 raw 값:
 | `ghost` × `secondary` | label 색 | `textNeutralLighter` | `color/text/neutral/lighter` |
 | `ghost` × `destructive` | label 색 | `textAccentRed` | `color/text/accent/red` |
 
-- `filled`: semantic 무관하게 `color/fill/bright`. 어두운 배경 위 대비를 위한 밝은 스피너.
-- `outlined`/`ghost`: 해당 variant의 default label(text) 색을 그대로 사용한다 (§5 `text/icon` 컬럼과 동일 토큰). 코드에서는 `foregroundToken(semantic)`을 재사용한다.
-- 크기 축소(§7 크기 표)는 `outlined`/`ghost` 스피너가 label 색을 사용하며 발생하는 시선 강탈을 완화하기 위한 후속 조정이다.
+- **모든 variant에서 Spinner 색 = 해당 조합의 label(text) 색**(§5 `text/icon` 컬럼과 동일 토큰). 코드에서는 `loadingSpinnerToken(semantic)`이 `foregroundToken(semantic)`을 그대로 위임한다.
+- 크기 축소(§7 크기 표)는 label 색 스피너가 발생시키는 시선 강탈을 완화하기 위한 후속 조정이다.
 
-> 협의 사항(MOB-5322 / Figma SSOT 외): 위 색·크기는 팀챗 스레드에서 확정해 design-team spec 문서에 반영된 정책이며, 현 시점 Figma loading 인스턴스의 raw override(white@0.7 / black@0.08)보다 우선한다. 추후 Figma 인스턴스가 갱신되면 그쪽이 SSOT가 된다.
+> Spinner 색은 GitHub design-team `Button-spec.md §6`(v1.1, "Spinner 색 = 라벨 텍스트 색" 원칙)과 일치한다. 크기(§7 크기 표)는 MOB-5322에서 확정한 값을 유지한다.

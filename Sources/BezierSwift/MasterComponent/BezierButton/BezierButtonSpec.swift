@@ -116,7 +116,7 @@ extension BezierButtonVariant {
   func backgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
     switch (self, semantic) {
     case (.filled, .primary):     return .fillNeutralHeaviest
-    case (.filled, .secondary):   return .fillNeutralLight
+    case (.filled, .secondary):   return .fillNeutral
     case (.filled, .destructive): return .fillAccentRedHeavier
     case (.outlined, _),
          (.ghost, _):
@@ -132,10 +132,7 @@ extension BezierButtonVariant {
   }
 
   func loadingSpinnerToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
-    switch self {
-    case .filled: return .fillBright
-    case .outlined, .ghost: return self.foregroundToken(semantic)
-    }
+    self.foregroundToken(semantic)
   }
 
   func foregroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
