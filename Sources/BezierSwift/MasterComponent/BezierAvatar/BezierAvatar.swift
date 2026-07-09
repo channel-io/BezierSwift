@@ -27,7 +27,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     didSet { if oldValue != self.showBorder { self.refreshAppearance() } }
   }
 
-  public var statusType: BezierAvatarStatusType? {
+  public var statusType: BezierStatusType? {
     didSet { self.refreshStatusOverlay() }
   }
 
@@ -57,9 +57,9 @@ public final class BezierAvatar: UIView, BezierComponentable {
   }()
 
   /// size20-160용 status overlay. size16은 별도 `miniStatusView`로 처리.
-  private var statusView: BezierAvatarStatus?
+  private var statusView: BezierStatus?
 
-  /// size16 전용 6×6 mini status. AvatarStatus 매트릭스 외 special case (SPEC Part 1 §4).
+  /// size16 전용 6×6 mini status. Status 매트릭스 외 special case (SPEC Part 1 §4).
   private var miniStatusView: UIView?
 
   // MARK: - Layout Constraints
@@ -73,7 +73,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     image: UIImage? = nil,
     size: BezierAvatarSize = .size24,
     showBorder: Bool = false,
-    statusType: BezierAvatarStatusType? = nil
+    statusType: BezierStatusType? = nil
   ) {
     self.image = image
     self.size = size
@@ -173,7 +173,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     let overlayLength = self.size.statusOverlayLength
 
     if let avatarStatusSize = self.size.matchingAvatarStatusSize {
-      let status = BezierAvatarStatus(type: statusType, size: avatarStatusSize)
+      let status = BezierStatus(type: statusType, size: avatarStatusSize)
       self.addSubview(status)
       NSLayoutConstraint.activate([
         status.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: position.x),
@@ -185,7 +185,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     } else {
       let mini = UIView()
       mini.translatesAutoresizingMaskIntoConstraints = false
-      mini.backgroundColor = statusType.indicatorToken.palette(self)
+      mini.backgroundColor = statusType.circleToken.palette(self)
       mini.layer.cornerRadius = overlayLength / 2
       mini.layer.masksToBounds = true
       self.addSubview(mini)
