@@ -45,35 +45,60 @@ public enum BezierIconButtonSize: String, CaseIterable {
 
 public enum BezierIconButtonVariant: String, CaseIterable {
   case filled
+  case outlined
   case ghost
 }
 
+public enum BezierIconButtonSemantic: String, CaseIterable {
+  case primary
+  case secondary
+  case destructive
+}
+
 extension BezierIconButtonVariant {
-  var backgroundToken: BCSemanticToken? {
-    switch self {
-    case .filled: return .fillNeutralLight
-    case .ghost:  return nil
+  func backgroundToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken? {
+    switch (self, semantic) {
+    case (.filled, .primary):     return .fillNeutralHeaviest
+    case (.filled, .secondary):   return .fillNeutral
+    case (.filled, .destructive): return .fillAccentRedHeavier
+    case (.outlined, _),
+         (.ghost, _):
+      return nil
     }
   }
 
-  var foregroundToken: BCSemanticToken {
+  func borderToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken? {
     switch self {
-    case .filled: return .iconNeutralHeavy
-    case .ghost:  return .iconNeutral
+    case .outlined: return .borderNeutral
+    case .filled, .ghost: return nil
     }
   }
 
-  var loadingSpinnerToken: BCSemanticToken {
-    switch self {
-    case .filled: return .fillBright
-    case .ghost:  return .iconNeutral
+  func foregroundToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken {
+    switch (self, semantic) {
+    case (.filled, .primary):     return .iconInverseHeavier
+    case (.filled, .secondary):   return .iconNeutralHeavy
+    case (.filled, .destructive): return .iconInverseHeavier
+
+    case (.outlined, .primary):     return .iconNeutralHeavier
+    case (.outlined, .secondary):   return .iconNeutral
+    case (.outlined, .destructive): return .textAccentRed
+
+    case (.ghost, .primary):     return .iconNeutralHeavier
+    case (.ghost, .secondary):   return .iconNeutral
+    case (.ghost, .destructive): return .textAccentRed
     }
+  }
+
+  func loadingSpinnerToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken {
+    self.foregroundToken(semantic)
   }
 }
 
 enum BezierIconButtonConstant {
+  static let borderWidth: CGFloat = 1
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
-  /// Ghost variant의 pressed / active overlay 색상.
+  /// 배경 없는 variant(outlined·ghost)의 pressed / active overlay 색상.
   /// bezier-tokens에 등록되지 않은 임시값 — Variable 등록 시 교체 예정.
   static let ghostOverlayAlpha: CGFloat = 0.05
 }

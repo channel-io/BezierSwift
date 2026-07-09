@@ -23,6 +23,10 @@ public final class BezierIconButton: UIControl, BezierComponentable {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
+  public var semantic: BezierIconButtonSemantic = .secondary {
+    didSet { if oldValue != self.semantic { self.refreshAppearance() } }
+  }
+
   public var icon: UIImage? {
     didSet { self.refreshContent() }
   }
@@ -70,10 +74,12 @@ public final class BezierIconButton: UIControl, BezierComponentable {
 
   public init(
     size: BezierIconButtonSize = .medium,
-    variant: BezierIconButtonVariant = .ghost
+    variant: BezierIconButtonVariant = .ghost,
+    semantic: BezierIconButtonSemantic = .secondary
   ) {
     self.size = size
     self.variant = variant
+    self.semantic = semantic
     super.init(frame: .zero)
     self.setUp()
   }
@@ -152,18 +158,26 @@ public final class BezierIconButton: UIControl, BezierComponentable {
   }
 
   private func refreshAppearance() {
-    let baseBackground: UIColor = self.variant.backgroundToken?.palette(self) ?? .clear
+    let backgroundToken = self.variant.backgroundToken(self.semantic)
     let isInteractionOverlayActive = self.isHighlighted || self.isSelected
 
-    if self.variant == .ghost && isInteractionOverlayActive {
-      // SPEC §4: ghost의 pressed / active 상태는 raw rgba(0,0,0,0.05) overlay 적용
+    if backgroundToken == nil && isInteractionOverlayActive {
+      // 배경 없는 variant(outlined·ghost)의 pressed / active — bezier-tokens 미등록 raw overlay
       self.backgroundColor = UIColor(white: 0, alpha: BezierIconButtonConstant.ghostOverlayAlpha)
     } else {
-      self.backgroundColor = baseBackground
+      self.backgroundColor = backgroundToken?.palette(self) ?? .clear
     }
 
-    self.iconImageView.tintColor = self.variant.foregroundToken.palette(self)
-    self.spinner.fillColorOverride = self.variant.loadingSpinnerToken.palette(self)
+    if let borderToken = self.variant.borderToken(self.semantic) {
+      self.layer.borderWidth = BezierIconButtonConstant.borderWidth
+      self.layer.borderColor = borderToken.palette(self).cgColor
+    } else {
+      self.layer.borderWidth = 0
+      self.layer.borderColor = nil
+    }
+
+    self.iconImageView.tintColor = self.variant.foregroundToken(self.semantic).palette(self)
+    self.spinner.fillColorOverride = self.variant.loadingSpinnerToken(self.semantic).palette(self)
   }
 
   private func refreshLoading() {
