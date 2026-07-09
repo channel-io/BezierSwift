@@ -5,6 +5,7 @@ import BezierSwift
 struct IconButtonCatalog: View {
   @State private var size: BezierIconButtonSize = .medium
   @State private var variant: BezierIconButtonVariant = .ghost
+  @State private var semantic: BezierIconButtonSemantic = .secondary
   @State private var icon: BezierIcon = .star
   @State private var isLoading: Bool = false
   @State private var isEnabled: Bool = true
@@ -33,6 +34,7 @@ struct IconButtonCatalog: View {
     VStack(alignment: .leading, spacing: 10) {
       LabeledSegmented(label: "Size", selection: self.$size, options: BezierIconButtonSize.allCases)
       LabeledSegmented(label: "Variant", selection: self.$variant, options: BezierIconButtonVariant.allCases)
+      LabeledSegmented(label: "Semantic", selection: self.$semantic, options: BezierIconButtonSemantic.allCases)
       Toggle("Loading", isOn: self.$isLoading).font(.callout)
       Toggle("Enabled", isOn: self.$isEnabled).font(.callout)
     }
@@ -44,6 +46,7 @@ struct IconButtonCatalog: View {
       SUBezierIconButton(
         size: self.size,
         variant: self.variant,
+        semantic: self.semantic,
         icon: self.icon.image,
         isLoading: self.isLoading,
         action: {}
@@ -58,10 +61,11 @@ struct IconButtonCatalog: View {
     HStack {
       Spacer()
       UIKitWrap(
-        { BezierIconButton(size: self.size, variant: self.variant) },
+        { BezierIconButton(size: self.size, variant: self.variant, semantic: self.semantic) },
         update: { button in
           button.size = self.size
           button.variant = self.variant
+          button.semantic = self.semantic
           button.icon = self.icon.uiImage
           button.isLoading = self.isLoading
           button.isEnabled = self.isEnabled
@@ -80,7 +84,7 @@ struct IconButtonCatalog: View {
           Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 8) {
             ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
-              SUBezierIconButton(size: size, variant: variant, icon: BezierIcon.star.image, action: {})
+              SUBezierIconButton(size: size, variant: variant, semantic: self.semantic, icon: BezierIcon.star.image, action: {})
             }
             Spacer(minLength: 0)
           }
@@ -96,11 +100,14 @@ struct IconButtonCatalog: View {
           Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 8) {
             ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
-              UIKitWrap {
-                let button = BezierIconButton(size: size, variant: variant)
-                button.icon = BezierIcon.star.uiImage
-                return button
-              }
+              UIKitWrap(
+                {
+                  let button = BezierIconButton(size: size, variant: variant, semantic: self.semantic)
+                  button.icon = BezierIcon.star.uiImage
+                  return button
+                },
+                update: { (button: BezierIconButton) in button.semantic = self.semantic }
+              )
               .fixedSize()
             }
             Spacer(minLength: 0)
@@ -119,7 +126,7 @@ struct IconButtonCatalog: View {
           Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 8) {
             ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
-              SUBezierIconButton(size: size, variant: variant, icon: BezierIcon.star.image, isLoading: true, action: {})
+              SUBezierIconButton(size: size, variant: variant, semantic: self.semantic, icon: BezierIcon.star.image, isLoading: true, action: {})
             }
             Spacer(minLength: 0)
           }
@@ -135,12 +142,15 @@ struct IconButtonCatalog: View {
           Text(variant.rawValue).font(.caption2).foregroundStyle(.secondary)
           HStack(spacing: 8) {
             ForEach(BezierIconButtonSize.allCases, id: \.self) { size in
-              UIKitWrap {
-                let button = BezierIconButton(size: size, variant: variant)
-                button.icon = BezierIcon.star.uiImage
-                button.isLoading = true
-                return button
-              }
+              UIKitWrap(
+                {
+                  let button = BezierIconButton(size: size, variant: variant, semantic: self.semantic)
+                  button.icon = BezierIcon.star.uiImage
+                  button.isLoading = true
+                  return button
+                },
+                update: { (button: BezierIconButton) in button.semantic = self.semantic }
+              )
               .fixedSize()
             }
             Spacer(minLength: 0)
