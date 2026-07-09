@@ -115,7 +115,16 @@ struct AvatarGroupCatalog: View {
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .frame(width: 110, alignment: .leading)
-              UIKitWrap { BezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType, overlap: self.overlap) }.fixedSize()
+              UIKitWrap(
+                { BezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType, overlap: self.overlap) },
+                update: { group in
+                  group.avatars = images
+                  group.size = size
+                  group.ellipsisType = ellipsisType
+                  group.overlap = self.overlap
+                }
+              )
+              .fixedSize()
             }
           }
         }

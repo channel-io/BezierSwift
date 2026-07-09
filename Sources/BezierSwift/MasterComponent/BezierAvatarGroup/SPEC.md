@@ -27,7 +27,7 @@ Figma 컴포넌트가 정의하는 property와 옵션은 다음이 전부다.
 | **overlap** | `true` / `false` | 겹침(spacing<0, showBorder=true) / 나란히(spacing>0, showBorder=false) |
 
 > Figma 매트릭스에는 size 16·160도 그려져 있으나 component description의 공식 지원 범위(20~120)에 포함되지 않아 iOS 구현 대상에서 제외한다.
-> 총 Figma instance: `9 size × 2 ellipsisType × 2 overlap = 36개`.
+> 지원 대상 변형: `9 size × 2 ellipsisType × 2 overlap = 36개` (Figma 전체 매트릭스는 16·160 포함 11 size 기준 44개).
 
 ---
 
