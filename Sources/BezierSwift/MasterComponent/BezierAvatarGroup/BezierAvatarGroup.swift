@@ -169,14 +169,11 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
 
       case .count:
         let overflowCount = self.avatars.count - maxVisible
-        let countFont = self.size.countFont
-        let attributedString = "+\(overflowCount)".applyBezierFont(
-          height: countFont.lineHeight,
-          font: countFont.uiFont,
-          color: BCSemanticToken.textNeutralLighter.palette(self),
-          letterSpacing: 0,
-          alignment: .center
-        )
+        let attributes: [NSAttributedString.Key: Any] = [
+          .font: self.size.countFont.uiFont,
+          .foregroundColor: BCSemanticToken.textNeutralLighter.palette(self),
+        ]
+        let attributedString = NSAttributedString(string: "+\(overflowCount)", attributes: attributes)
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +183,7 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
         self.addSubview(label)
         self.managedSubviews.append(label)
 
-        let labelWidth = ceil(attributedString.size().width)
+        let labelWidth = self.size.countTextWidth(overflowCount: overflowCount)
 
         let lastAvatarRight = CGFloat(visibleCount - 1) * stride + avatarLength
         let labelLeft = lastAvatarRight + self.size.countTextSpacing(overlap: self.overlap)

@@ -67,7 +67,7 @@ public struct SUBezierAvatarGroup: View, Themeable {
         return CGFloat(BezierAvatarGroupConstant.maxVisibleAvatars) * stride + avatarLength
       case .count:
         let overflowCount = self.avatars.count - BezierAvatarGroupConstant.maxVisibleAvatars
-        let labelWidth = self.intrinsicCountTextWidth(overflowCount: overflowCount)
+        let labelWidth = self.size.countTextWidth(overflowCount: overflowCount)
         let lastAvatarRight = CGFloat(visibleCount - 1) * stride + avatarLength
         return lastAvatarRight + self.size.countTextSpacing(overlap: self.overlap) + labelWidth
       }
@@ -75,12 +75,6 @@ public struct SUBezierAvatarGroup: View, Themeable {
       return CGFloat(visibleCount - 1) * stride + avatarLength
     }
     return 0
-  }
-
-  private func intrinsicCountTextWidth(overflowCount: Int) -> CGFloat {
-    let text = "+\(overflowCount)" as NSString
-    let width = text.size(withAttributes: [.font: self.size.countFont.uiFont]).width
-    return ceil(width)
   }
 
   // MARK: - Ellipsis Layers
@@ -112,7 +106,7 @@ public struct SUBezierAvatarGroup: View, Themeable {
 
   private var ellipsisCountView: some View {
     let overflowCount = self.avatars.count - BezierAvatarGroupConstant.maxVisibleAvatars
-    let labelWidth = self.intrinsicCountTextWidth(overflowCount: overflowCount)
+    let labelWidth = self.size.countTextWidth(overflowCount: overflowCount)
     return Text("+\(overflowCount)")
       .font(self.size.countFont.font)
       .foregroundColor(self.palette(BCSemanticToken.textNeutralLighter))
