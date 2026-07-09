@@ -6,6 +6,7 @@ struct AvatarGroupCatalog: View {
   @State private var avatarCount: Int = 5
   @State private var size: BezierAvatarGroupSize = .size20
   @State private var ellipsisType: BezierAvatarGroupEllipsisType = .icon
+  @State private var overlap: Bool = true
 
   private let sampleImage = Image("AvatarSample")
   private let sampleUIImage = UIImage(named: "AvatarSample")
@@ -23,7 +24,7 @@ struct AvatarGroupCatalog: View {
       self.controls
       CatalogSection(.swiftUI) { self.swiftUIPreview }
       CatalogSection(.uiKit) { self.uiKitPreview }
-      Text("Both Sizes × Both Ellipsis (count: 5)")
+      Text("All Sizes × Ellipsis (count: 5, overlap toggle 반영)")
         .font(.system(size: 13, weight: .semibold))
         .foregroundStyle(.secondary)
         .textCase(.uppercase)
@@ -34,8 +35,22 @@ struct AvatarGroupCatalog: View {
 
   private var controls: some View {
     VStack(alignment: .leading, spacing: 10) {
-      LabeledSegmented(label: "Size", selection: self.$size, options: BezierAvatarGroupSize.allCases)
+      HStack(spacing: 8) {
+        Text("Size").font(.caption).foregroundStyle(.secondary).frame(width: 72, alignment: .leading)
+        Picker("Size", selection: self.$size) {
+          ForEach(BezierAvatarGroupSize.allCases, id: \.self) { s in
+            Text(s.rawValue).tag(s)
+          }
+        }
+        .pickerStyle(.menu)
+        Spacer()
+      }
       LabeledSegmented(label: "Ellipsis", selection: self.$ellipsisType, options: BezierAvatarGroupEllipsisType.allCases)
+      HStack(spacing: 8) {
+        Text("Overlap").font(.caption).foregroundStyle(.secondary).frame(width: 72, alignment: .leading)
+        Toggle("", isOn: self.$overlap).labelsHidden()
+        Spacer()
+      }
       HStack(spacing: 8) {
         Text("Count").font(.caption).foregroundStyle(.secondary).frame(width: 72, alignment: .leading)
         Stepper("\(self.avatarCount)", value: self.$avatarCount, in: 0...15)
@@ -46,7 +61,7 @@ struct AvatarGroupCatalog: View {
   private var swiftUIPreview: some View {
     HStack {
       Spacer()
-      SUBezierAvatarGroup(avatars: self.swiftUIAvatars, size: self.size, ellipsisType: self.ellipsisType)
+      SUBezierAvatarGroup(avatars: self.swiftUIAvatars, size: self.size, ellipsisType: self.ellipsisType, overlap: self.overlap)
       Spacer()
     }
     .padding(.vertical, 8)
@@ -56,11 +71,12 @@ struct AvatarGroupCatalog: View {
     HStack {
       Spacer()
       UIKitWrap(
-        { BezierAvatarGroup(avatars: self.uiKitAvatars, size: self.size, ellipsisType: self.ellipsisType) },
+        { BezierAvatarGroup(avatars: self.uiKitAvatars, size: self.size, ellipsisType: self.ellipsisType, overlap: self.overlap) },
         update: { group in
           group.avatars = self.uiKitAvatars
           group.size = self.size
           group.ellipsisType = self.ellipsisType
+          group.overlap = self.overlap
         }
       )
       .fixedSize()
@@ -74,13 +90,14 @@ struct AvatarGroupCatalog: View {
     return VStack(alignment: .leading, spacing: 10) {
       ForEach(BezierAvatarGroupSize.allCases, id: \.self) { size in
         ForEach(BezierAvatarGroupEllipsisType.allCases, id: \.self) { ellipsisType in
-          HStack(spacing: 12) {
-            Text("\(size.rawValue) · \(ellipsisType.rawValue)")
-              .font(.caption2)
-              .foregroundStyle(.secondary)
-              .frame(width: 110, alignment: .leading)
-            SUBezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType)
-            Spacer(minLength: 0)
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+              Text("\(size.rawValue) · \(ellipsisType.rawValue)")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .frame(width: 110, alignment: .leading)
+              SUBezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType, overlap: self.overlap)
+            }
           }
         }
       }
@@ -92,13 +109,14 @@ struct AvatarGroupCatalog: View {
     return VStack(alignment: .leading, spacing: 10) {
       ForEach(BezierAvatarGroupSize.allCases, id: \.self) { size in
         ForEach(BezierAvatarGroupEllipsisType.allCases, id: \.self) { ellipsisType in
-          HStack(spacing: 12) {
-            Text("\(size.rawValue) · \(ellipsisType.rawValue)")
-              .font(.caption2)
-              .foregroundStyle(.secondary)
-              .frame(width: 110, alignment: .leading)
-            UIKitWrap { BezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType) }.fixedSize()
-            Spacer(minLength: 0)
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+              Text("\(size.rawValue) · \(ellipsisType.rawValue)")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .frame(width: 110, alignment: .leading)
+              UIKitWrap { BezierAvatarGroup(avatars: images, size: size, ellipsisType: ellipsisType, overlap: self.overlap) }.fixedSize()
+            }
           }
         }
       }
