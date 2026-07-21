@@ -70,6 +70,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(SpinnerCatalog())
     ),
+    CatalogItem(
+      id: "modal",
+      title: "Modal",
+      section: .v3Components,
+      destination: AnyView(ModalCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
