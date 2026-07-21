@@ -1,8 +1,6 @@
 //
 //  Animation+BezierToast.swift
-//  
-//
-//  Created by woody on 2023/04/03.
+//  BezierSwift
 //
 
 import SwiftUI

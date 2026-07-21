@@ -76,6 +76,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(ModalCatalog())
     ),
+    CatalogItem(
+      id: "toast",
+      title: "Toast",
+      section: .v3Components,
+      destination: AnyView(ToastCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
