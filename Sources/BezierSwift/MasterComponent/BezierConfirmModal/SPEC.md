@@ -164,9 +164,9 @@ ConfirmModal 자체는 state property가 없다. 버튼의 pressed/disabled/load
 
 | 정의 | 파일 / 심볼 |
 |---|---|
-| UIKit 구현 | `BezierConfirmModal.swift` *(신설 예정 — V3 컨벤션)* |
-| SwiftUI 구현 | `SUBezierConfirmModal.swift` *(신설 예정 — V3 컨벤션)* |
-| Layout 상수 정의 | `BezierConfirmModalSpec.swift` *(신설 예정 — V3 컨벤션)* |
+| UIKit 구현 | `BezierConfirmModal.swift` |
+| SwiftUI 구현 | `SUBezierConfirmModal.swift` |
+| Layout 상수 정의 | `BezierConfirmModalSpec.swift` |
 | 컨테이너 재사용 | `BezierModal` / `SUBezierModal` (`Sources/BezierSwift/MasterComponent/BezierModal/`) — 협의 사항: ConfirmModal이 Modal 컨테이너를 재사용 (BezierModal SPEC §8) |
 | 버튼 재사용 | `BezierButton` / `SUBezierButton` — `BezierButtonSize.large`, `BezierButtonVariant.filled`, `BezierButtonSemantic.primary` / `.secondary` / `.destructive` (`BezierButtonSpec.swift`, 버튼 spec: `Sources/BezierSwift/MasterComponent/BezierButton/SPEC.md`) |
 | Typography 토큰 | `BTSemanticToken.headingXSmall`, `BTSemanticToken.textLarge(weight: .regular)` (`Sources/BezierSwift/Foundation/Typography/V3/BTSemanticToken.swift`) |
