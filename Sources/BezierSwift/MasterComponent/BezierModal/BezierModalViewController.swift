@@ -10,9 +10,9 @@ enum BezierModalPresentationConstant {
   static let dimToken: BCSemanticToken = .dimAbsoluteBlack
   static let horizontalMargin: CGFloat = 40
   static let expandedWidth: CGFloat = BezierModalSpec.maxWidth
-  // BezierModal 내장 width 320(.defaultHigh) 제약을 1만큼 이겨서 카드를 최대로 확장하고,
+  // BezierModal 내장 width 320 제약을 1만큼 이겨서 카드를 최대로 확장하고,
   // required인 좌우 마진이 좁은 화면에서 이를 깎아 폭 = min(화면너비 − 80, 480)이 되게 한다
-  static let widthExpansionPriority = UILayoutPriority(UILayoutPriority.defaultHigh.rawValue + 1)
+  static let widthExpansionPriority = UILayoutPriority(BezierModal.widthConstraintPriority.rawValue + 1)
 }
 
 public final class BezierModalViewController: UIViewController, BezierComponentable {
@@ -73,6 +73,8 @@ public final class BezierModalViewController: UIViewController, BezierComponenta
 
   private func setUp() {
     self.view.backgroundColor = .clear
+    // overFullScreen은 배경 계층이 유지되어 VoiceOver가 뒤 화면에 포커스할 수 있다
+    self.view.accessibilityViewIsModal = true
 
     self.dimView.translatesAutoresizingMaskIntoConstraints = false
     self.modalView.translatesAutoresizingMaskIntoConstraints = false

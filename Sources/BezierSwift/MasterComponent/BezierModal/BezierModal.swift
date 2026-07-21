@@ -6,6 +6,9 @@
 import UIKit
 
 public final class BezierModal: UIView, BezierComponentable {
+  // 프레젠테이션 확장 제약(BezierModalPresentationConstant)이 이 값을 기준으로 +1 우선순위를 계산한다
+  static let widthConstraintPriority: UILayoutPriority = .defaultHigh
+
   // MARK: - BezierComponentable
 
   public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
@@ -53,7 +56,7 @@ public final class BezierModal: UIView, BezierComponentable {
     self.containerView.addSubview(self.contentView)
 
     let widthConstraint = self.widthAnchor.constraint(equalToConstant: BezierModalSpec.width)
-    widthConstraint.priority = .defaultHigh
+    widthConstraint.priority = Self.widthConstraintPriority
 
     NSLayoutConstraint.activate([
       widthConstraint,
