@@ -77,6 +77,12 @@ enum CatalogRegistry {
       destination: AnyView(ModalCatalog())
     ),
     CatalogItem(
+      id: "toast",
+      title: "Toast",
+      section: .v3Components,
+      destination: AnyView(ToastCatalog())
+    ),
+    CatalogItem(
       id: "confirm-modal",
       title: "ConfirmModal",
       section: .v3Components,
