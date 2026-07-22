@@ -82,6 +82,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(ToastCatalog())
     ),
+    CatalogItem(
+      id: "confirm-modal",
+      title: "ConfirmModal",
+      section: .v3Components,
+      destination: AnyView(ConfirmModalCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
