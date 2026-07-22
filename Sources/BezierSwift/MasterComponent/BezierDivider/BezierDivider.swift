@@ -67,7 +67,7 @@ public final class BezierDivider: UIView, BezierComponentable {
     self.lineLayer.frame = CGRect(
       x: sideInset,
       y: (self.bounds.height - lineHeight) / 2,
-      width: max(self.bounds.width - sideInset * 2, 0),
+      width: max(self.bounds.width - sideInset * 2, BezierDividerConstant.lineThickness),
       height: lineHeight
     )
   }

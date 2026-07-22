@@ -20,7 +20,7 @@ public struct SUBezierDivider: View, Themeable {
     Rectangle()
       .fill(self.palette(BCSemanticToken.borderNeutral))
       .frame(height: BezierDividerConstant.lineThickness)
-      .frame(maxWidth: .infinity)
+      .frame(minWidth: BezierDividerConstant.lineThickness, maxWidth: .infinity)
       .padding(.horizontal, self.sideIndent ? BezierDividerConstant.indentSize : 0)
       .padding(.vertical, self.parallelIndent ? BezierDividerConstant.indentSize : 0)
   }
