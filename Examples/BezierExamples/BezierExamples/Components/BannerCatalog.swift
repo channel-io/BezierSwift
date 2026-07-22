@@ -90,25 +90,38 @@ private struct BannerUIKitRepresentable: UIViewRepresentable {
   let description: String
   let clickAreaKind: BannerCatalog.ClickAreaKind
 
-  func makeUIView(context: Context) -> BezierBanner {
-    BezierBanner(
+  // BezierBanner는 intrinsic width(content hug)를 노출하므로 Representable에 직접 반환하면
+  // full-width로 늘어나지 않는다. wrapper에 leading/trailing을 pin해 컨테이너 폭을 채운다.
+  func makeUIView(context: Context) -> UIView {
+    let wrapper = UIView()
+    let banner = BezierBanner(
       variant: self.variant,
       leadingIcon: self.leadingIcon,
       title: self.title,
       description: self.description,
       clickArea: self.clickArea
     )
+    banner.translatesAutoresizingMaskIntoConstraints = false
+    wrapper.addSubview(banner)
+    NSLayoutConstraint.activate([
+      banner.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
+      banner.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor),
+      banner.topAnchor.constraint(equalTo: wrapper.topAnchor),
+      banner.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor),
+    ])
+    return wrapper
   }
 
-  func updateUIView(_ uiView: BezierBanner, context: Context) {
-    uiView.variant = self.variant
-    uiView.leadingIcon = self.leadingIcon
-    uiView.title = self.title
-    uiView.bannerDescription = self.description
-    uiView.clickArea = self.clickArea
+  func updateUIView(_ wrapper: UIView, context: Context) {
+    guard let banner = wrapper.subviews.compactMap({ $0 as? BezierBanner }).first else { return }
+    banner.variant = self.variant
+    banner.leadingIcon = self.leadingIcon
+    banner.title = self.title
+    banner.bannerDescription = self.description
+    banner.clickArea = self.clickArea
   }
 
-  func sizeThatFits(_ proposal: ProposedViewSize, uiView: BezierBanner, context: Context) -> CGSize? {
+  func sizeThatFits(_ proposal: ProposedViewSize, uiView: UIView, context: Context) -> CGSize? {
     let width = proposal.width ?? 320
     let fitting = uiView.systemLayoutSizeFitting(
       CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
