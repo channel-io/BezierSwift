@@ -71,6 +71,12 @@ enum CatalogRegistry {
       destination: AnyView(SpinnerCatalog())
     ),
     CatalogItem(
+      id: "divider",
+      title: "Divider",
+      section: .v3Components,
+      destination: AnyView(DividerCatalog())
+    ),
+    CatalogItem(
       id: "modal",
       title: "Modal",
       section: .v3Components,
