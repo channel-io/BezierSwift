@@ -183,8 +183,13 @@ public final class BezierBanner: UIView, BezierComponentable {
     self.contentStackView.addArrangedSubview(self.titleLabel)
     self.contentStackView.addArrangedSubview(self.descriptionLabel)
     self.contentContainer.addSubview(self.contentStackView)
-    self.contentContainer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    // content가 남은 가로 공간을 채워 actionIcon을 오른쪽 끝으로 밀도록 hugging을 최저로 낮춘다.
+    let expandingPriority = UILayoutPriority(1)
+    self.contentContainer.setContentHuggingPriority(expandingPriority, for: .horizontal)
     self.contentContainer.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    self.contentStackView.setContentHuggingPriority(expandingPriority, for: .horizontal)
+    self.titleLabel.setContentHuggingPriority(expandingPriority, for: .horizontal)
+    self.descriptionLabel.setContentHuggingPriority(expandingPriority, for: .horizontal)
     NSLayoutConstraint.activate([
       self.contentStackView.topAnchor.constraint(
         equalTo: self.contentContainer.topAnchor,
