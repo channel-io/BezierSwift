@@ -19,13 +19,10 @@ public enum BezierToastPreset: String, CaseIterable {
     }
   }
 
-  /// leading 아이콘 tint. 무채색(neutral) 계열. `info`는 아이콘이 없어 사용되지 않는다.
+  /// leading 아이콘 tint. Figma export SVG 기준 success·error 모두 `iconNeutralHeavy`(#ffffff99, white opacity 0.6).
+  /// `info`는 아이콘이 없어 사용되지 않는다.
   public var iconColor: BCSemanticToken {
-    switch self {
-    case .success: return .iconNeutral
-    case .error: return .iconNeutralHeavy
-    case .info: return .iconNeutral
-    }
+    .iconNeutralHeavy
   }
 }
 
