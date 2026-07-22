@@ -16,7 +16,7 @@ public final class BezierDivider: UIView, BezierComponentable {
   // MARK: - Public Properties
 
   public var sideIndent: Bool = true {
-    didSet { if oldValue != self.sideIndent { self.setNeedsLayout() } }
+    didSet { if oldValue != self.sideIndent { self.refreshLayout() } }
   }
 
   public var parallelIndent: Bool = true {
@@ -25,7 +25,12 @@ public final class BezierDivider: UIView, BezierComponentable {
 
   // MARK: - Subviews
 
-  private let lineLayer = CALayer()
+  private let lineView = UIView()
+
+  // MARK: - Layout Constraints
+
+  private var lineLeadingConstraint: NSLayoutConstraint?
+  private var lineTrailingConstraint: NSLayoutConstraint?
 
   // MARK: - Init
 
@@ -46,7 +51,25 @@ public final class BezierDivider: UIView, BezierComponentable {
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.isUserInteractionEnabled = false
-    self.layer.addSublayer(self.lineLayer)
+
+    self.lineView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(self.lineView)
+
+    let leading = self.lineView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+    let trailing = self.lineView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+    // 부모가 좌우 여백(2 × indentSize)보다 좁아지면 trailing을 깨고 최소 너비를 지킨다 (SPEC min-width 1pt).
+    trailing.priority = .init(999)
+    NSLayoutConstraint.activate([
+      leading,
+      trailing,
+      self.lineView.widthAnchor.constraint(greaterThanOrEqualToConstant: BezierDividerConstant.lineThickness),
+      self.lineView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.lineView.heightAnchor.constraint(equalToConstant: BezierDividerConstant.lineThickness),
+    ])
+    self.lineLeadingConstraint = leading
+    self.lineTrailingConstraint = trailing
+
+    self.refreshLayout()
     self.refreshAppearance()
   }
 
@@ -58,33 +81,16 @@ public final class BezierDivider: UIView, BezierComponentable {
     return CGSize(width: UIView.noIntrinsicMetric, height: height)
   }
 
-  public override func layoutSubviews() {
-    super.layoutSubviews()
-
-    let sideInset = self.sideIndent ? BezierDividerConstant.indentSize : 0
-    let lineHeight = BezierDividerConstant.lineThickness
-
-    self.lineLayer.frame = CGRect(
-      x: sideInset,
-      y: (self.bounds.height - lineHeight) / 2,
-      width: max(self.bounds.width - sideInset * 2, BezierDividerConstant.lineThickness),
-      height: lineHeight
-    )
-  }
-
-  public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-    super.traitCollectionDidChange(previousTraitCollection)
-    self.refreshAppearance()
-  }
-
   // MARK: - Refresh
 
   private func refreshLayout() {
+    let sideInset = self.sideIndent ? BezierDividerConstant.indentSize : 0
+    self.lineLeadingConstraint?.constant = sideInset
+    self.lineTrailingConstraint?.constant = -sideInset
     self.invalidateIntrinsicContentSize()
-    self.setNeedsLayout()
   }
 
   private func refreshAppearance() {
-    self.lineLayer.backgroundColor = BCSemanticToken.borderNeutral.palette(self).cgColor
+    self.lineView.backgroundColor = BCSemanticToken.borderNeutral.palette(self)
   }
 }
