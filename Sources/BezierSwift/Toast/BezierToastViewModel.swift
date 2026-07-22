@@ -25,7 +25,7 @@ final class BezierToastViewModel: ObservableObject {
       self?.toastPresentations.append(presentation)
     }
 
-    self.timerCancelBags[presentation.id] = Timer.publish(every: Constant.autoDismissTime, on: .main, in: .default)
+    self.timerCancelBags[presentation.id] = Timer.publish(every: Constant.autoDismissTime, on: .main, in: .common)
       .autoconnect()
       .prefix(1)
       .sink { [weak self] _ in

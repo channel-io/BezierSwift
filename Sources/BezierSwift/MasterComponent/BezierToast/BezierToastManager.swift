@@ -56,7 +56,7 @@ public final class BezierToastManager: BezierToastManageable {
       ),
       container.leadingAnchor.constraint(equalTo: keyWindow.leadingAnchor),
       container.trailingAnchor.constraint(equalTo: keyWindow.trailingAnchor),
-      container.bottomAnchor.constraint(lessThanOrEqualTo: keyWindow.bottomAnchor),
+      container.bottomAnchor.constraint(equalTo: keyWindow.bottomAnchor),
     ])
 
     self.containerView = container

@@ -125,7 +125,7 @@ Figma 컴포넌트는 정적 목업이며 state 축이 없다. 아래 런타임 
 | preset / layout 정의 | `BezierToastSpec.swift` (`BezierToastPreset`) |
 | UIKit 전역 present | `BezierToastManager.swift` |
 
-> 위 파일은 구현 예정(신규). 아이콘·컬러·typography 심볼은 §3·§4에 기재된 것을 참조한다.
+> 아이콘·컬러·typography 심볼은 §3·§4에 기재된 것을 참조한다.
 
 ---
 
@@ -133,7 +133,7 @@ Figma 컴포넌트는 정적 목업이며 state 축이 없다. 아래 런타임 
 
 총 instance: preset × 3 = **3개**
 
-```
+```text
 preset=success = 2089:2   (icon: check-circle-filled, h-padding 12)
 preset=error   = 2089:17  (icon: error-diamond-filled, h-padding 12)
 preset=info    = 2089:25  (icon 없음, h-padding 14)
