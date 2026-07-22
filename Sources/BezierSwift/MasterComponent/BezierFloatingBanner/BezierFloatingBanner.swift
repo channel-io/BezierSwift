@@ -223,6 +223,16 @@ public final class BezierFloatingBanner: UIView, BezierComponentable {
     ])
   }
 
+  // MARK: - Layout
+
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    self.layer.shadowPath = UIBezierPath(
+      roundedRect: self.bounds,
+      cornerRadius: BezierFloatingBannerConstant.cornerRadius
+    ).cgPath
+  }
+
   // MARK: - Trait
 
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
