@@ -94,6 +94,18 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(ConfirmModalCatalog())
     ),
+    CatalogItem(
+      id: "banner",
+      title: "Banner",
+      section: .v3Components,
+      destination: AnyView(BannerCatalog())
+    ),
+    CatalogItem(
+      id: "floating-banner",
+      title: "FloatingBanner",
+      section: .v3Components,
+      destination: AnyView(FloatingBannerCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
