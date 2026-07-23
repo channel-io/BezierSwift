@@ -29,6 +29,12 @@ enum CatalogRegistry {
     ),
     // MARK: - V3 Components
     CatalogItem(
+      id: "base-item",
+      title: "BaseItem",
+      section: .v3Components,
+      destination: AnyView(BaseItemCatalog())
+    ),
+    CatalogItem(
       id: "button",
       title: "Button",
       section: .v3Components,
