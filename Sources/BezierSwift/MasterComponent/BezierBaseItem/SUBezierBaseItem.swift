@@ -67,18 +67,20 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
   private var centerView: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(spacing: BezierBaseItemConstant.titleRowSpacing) {
-        Text(self.title)
-          .applyBezierFontStyle(
-            BezierBaseItemConstant.titleTypography,
-            semanticColorToken: BezierBaseItemConstant.titleColor
-          )
-          .lineLimit(1)
-          .truncationMode(.tail)
+        if !self.title.isEmpty {
+          Text(self.title)
+            .applyBezierFontStyle(
+              BezierBaseItemConstant.titleTypography,
+              semanticColorToken: BezierBaseItemConstant.titleColor
+            )
+            .lineLimit(1)
+            .truncationMode(.tail)
+        }
         self.centerSlotView
         Spacer(minLength: 0)
       }
 
-      if self.size != .small, let itemDescription = self.itemDescription {
+      if self.size != .small, let itemDescription = self.itemDescription, !itemDescription.isEmpty {
         Text(itemDescription)
           .applyBezierFontStyle(
             BezierBaseItemConstant.descriptionTypography,

@@ -19,7 +19,7 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
     didSet { if oldValue != self.size { self.refreshSize() } }
   }
 
-  public var title: String? {
+  public var title: String = "" {
     didSet { if oldValue != self.title { self.refreshText() } }
   }
 
@@ -125,7 +125,7 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
 
   public init(
     size: BezierBaseItemSize = .medium,
-    title: String? = nil,
+    title: String,
     description: String? = nil,
     onTap: (() -> Void)? = nil
   ) {
@@ -268,10 +268,10 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
   }
 
   private func refreshText() {
-    if let title = self.title, !title.isEmpty {
+    if !self.title.isEmpty {
       self.titleLabel.attributedText = BezierBaseItemConstant.titleTypography.attributedString(
         self,
-        text: title,
+        text: self.title,
         semanticColorToken: BezierBaseItemConstant.titleColor,
         alignment: .left,
         lineBreakMode: .byTruncatingTail
