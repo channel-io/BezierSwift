@@ -7,19 +7,51 @@ import UIKit
 
 // MARK: - Decoration Element Kind
 
-extension BezierSectionVariant {
-  var decorationElementKind: String {
-    switch self {
-    case .solid: return "BezierSectionLayout.background.solid"
-    case .card: return "BezierSectionLayout.background.card"
+// decoration view는 UIKit이 dequeue해 소비자가 직접 componentTheme를 주입할 수 없으므로,
+// variant × componentTheme 조합을 elementKind 문자열에 인코딩해 전달한다.
+enum BezierSectionDecorationKind: CaseIterable {
+  case solidNormal
+  case solidInverted
+  case cardNormal
+  case cardInverted
+
+  init(variant: BezierSectionVariant, componentTheme: BezierComponentTheme) {
+    switch (variant, componentTheme) {
+    case (.solid, .normal): self = .solidNormal
+    case (.solid, .inverted): self = .solidInverted
+    case (.card, .normal): self = .cardNormal
+    case (.card, .inverted): self = .cardInverted
     }
   }
 
-  init?(decorationElementKind: String) {
-    guard let variant = Self.allCases.first(
-      where: { $0.decorationElementKind == decorationElementKind }
-    ) else { return nil }
-    self = variant
+  init?(elementKind: String) {
+    guard let kind = Self.allCases.first(where: { $0.elementKind == elementKind }) else {
+      return nil
+    }
+    self = kind
+  }
+
+  var variant: BezierSectionVariant {
+    switch self {
+    case .solidNormal, .solidInverted: return .solid
+    case .cardNormal, .cardInverted: return .card
+    }
+  }
+
+  var componentTheme: BezierComponentTheme {
+    switch self {
+    case .solidNormal, .cardNormal: return .normal
+    case .solidInverted, .cardInverted: return .inverted
+    }
+  }
+
+  var elementKind: String {
+    switch self {
+    case .solidNormal: return "BezierSectionLayout.background.solid.normal"
+    case .solidInverted: return "BezierSectionLayout.background.solid.inverted"
+    case .cardNormal: return "BezierSectionLayout.background.card.normal"
+    case .cardInverted: return "BezierSectionLayout.background.card.inverted"
+    }
   }
 }
 
@@ -29,10 +61,10 @@ public enum BezierSectionLayout {
   public static let labelElementKind = "BezierSectionLayout.label"
 
   public static func register(in layout: UICollectionViewCompositionalLayout) {
-    for variant in BezierSectionVariant.allCases {
+    for kind in BezierSectionDecorationKind.allCases {
       layout.register(
         BezierSectionBackgroundView.self,
-        forDecorationViewOfKind: variant.decorationElementKind
+        forDecorationViewOfKind: kind.elementKind
       )
     }
   }
@@ -41,6 +73,7 @@ public enum BezierSectionLayout {
     variant: BezierSectionVariant,
     numberOfItems: Int,
     showsLabel: Bool = false,
+    componentTheme: BezierComponentTheme = .normal,
     layoutEnvironment: NSCollectionLayoutEnvironment
   ) -> NSCollectionLayoutSection {
     let appearance = variant.appearance
@@ -52,9 +85,9 @@ public enum BezierSectionLayout {
     if let divider = appearance.divider {
       var separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .plain)
       separatorConfiguration.color = UIColor { traitCollection in
-        traitCollection.userInterfaceStyle == .dark
-          ? divider.color.dark.uiColor
-          : divider.color.light.uiColor
+        let isDarkTrait = traitCollection.userInterfaceStyle == .dark
+        let usesDarkPalette = componentTheme == .normal ? isDarkTrait : !isDarkTrait
+        return usesDarkPalette ? divider.color.dark.uiColor : divider.color.light.uiColor
       }
       separatorConfiguration.bottomSeparatorInsets = NSDirectionalEdgeInsets(
         top: 0,
@@ -103,7 +136,10 @@ public enum BezierSectionLayout {
 
     if appearance.hasChrome {
       let decoration = NSCollectionLayoutDecorationItem.background(
-        elementKind: variant.decorationElementKind
+        elementKind: BezierSectionDecorationKind(
+          variant: variant,
+          componentTheme: componentTheme
+        ).elementKind
       )
       // background decoration은 boundary header 영역까지 덮으므로
       // label 높이만큼 top을 밀어 chrome이 콘텐츠 영역에서 시작하게 상쇄한다.
@@ -154,9 +190,10 @@ public final class BezierSectionBackgroundView: UICollectionReusableView, Bezier
     super.apply(layoutAttributes)
     guard
       let elementKind = layoutAttributes.representedElementKind,
-      let variant = BezierSectionVariant(decorationElementKind: elementKind)
+      let kind = BezierSectionDecorationKind(elementKind: elementKind)
     else { return }
-    self.variant = variant
+    self.variant = kind.variant
+    self.componentTheme = kind.componentTheme
   }
 
   // MARK: - Trait

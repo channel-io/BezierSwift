@@ -147,6 +147,7 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
    - `numberOfItems`는 마지막 행 bottom separator 숨김에 사용. 데이터 변경 시 레이아웃 invalidate는 소비자 책임 (diffable snapshot apply 시 자동).
    - header(SectionLabel)는 높이 32pt 고정 boundary item. decoration이 header 영역을 덮는 동작을 decoration top inset으로 상쇄하므로 label trailing 슬롯 높이는 32pt 초과 금지 (Figma trailing 래퍼도 20pt 고정).
    - 셀 배경은 `UIBackgroundConfiguration.clear()`로 두어야 card decoration이 비쳐 보인다.
+   - **componentTheme 지원**: decoration view는 UIKit이 dequeue해 소비자가 직접 주입할 수 없으므로 `makeSection(componentTheme:)` 인자를 variant × theme 조합의 decoration elementKind로 인코딩해 전달한다 (`BezierSectionDecorationKind`, `register(in:)`이 4종 전부 등록). separator 색도 같은 인자로 계산한다. label boundary supplementary는 소비자가 configure 시점에 `sectionLabel.componentTheme`를 직접 설정한다.
 3. **SwiftUI = ScrollView + LazyVStack 안에서 쓰는 `SUBezierSection` 컨테이너**, 데이터 주도 init (ForEach 동형). 정적 나열(free `@ViewBuilder`) init은 iOS 16에서 자식 분해에 비공개 API가 필요해 제공하지 않음. lazy 단위는 섹션 — 행이 매우 많은 화면은 UIKit 경로 사용.
 4. **행 간 divider 구현**: Figma의 card divider는 `Divider` 컴포넌트 인스턴스(1pt·borderNeutral·인셋 0)다. 구현은 값 소스를 `BezierSectionVariant.Appearance.Divider` 한곳에 두고 정적 컨테이너(internal `BezierSectionRowDivider`)·SwiftUI(Rectangle)·컴포지셔널(`UIListSeparatorConfiguration`) 세 경로가 공유한다.
 5. **label 유무 표현**: 코드 API는 `hasLabel` boolean 대신 `labelText: String?`(nil = 미표시) / 컴포지셔널은 `showsLabel: Bool`.

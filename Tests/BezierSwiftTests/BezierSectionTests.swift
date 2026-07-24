@@ -43,21 +43,28 @@ struct BezierSectionAppearanceTests {
     #expect(divider.trailingInset == 0)
   }
 
-  @Test("decoration elementKind는 왕복 변환된다", arguments: BezierSectionVariant.allCases)
-  func decorationElementKindRoundTrips(variant: BezierSectionVariant) {
-    let kind = variant.decorationElementKind
-    #expect(BezierSectionVariant(decorationElementKind: kind) == variant)
+  @Test("decoration elementKind는 왕복 변환된다", arguments: BezierSectionDecorationKind.allCases)
+  func decorationElementKindRoundTrips(kind: BezierSectionDecorationKind) {
+    let parsed = BezierSectionDecorationKind(elementKind: kind.elementKind)
+    #expect(parsed == kind)
+    #expect(
+      BezierSectionDecorationKind(
+        variant: kind.variant,
+        componentTheme: kind.componentTheme
+      ) == kind
+    )
   }
 
-  @Test("variant마다 decoration elementKind가 유일하다")
+  @Test("variant × componentTheme마다 decoration elementKind가 유일하다")
   func decorationElementKindsAreUnique() {
-    let kinds = BezierSectionVariant.allCases.map(\.decorationElementKind)
+    let kinds = BezierSectionDecorationKind.allCases.map(\.elementKind)
     #expect(Set(kinds).count == kinds.count)
+    #expect(kinds.count == BezierSectionVariant.allCases.count * 2)
   }
 
-  @Test("알 수 없는 elementKind는 variant로 해석되지 않는다")
+  @Test("알 수 없는 elementKind는 해석되지 않는다")
   func unknownElementKindReturnsNil() {
-    #expect(BezierSectionVariant(decorationElementKind: "unknown") == nil)
+    #expect(BezierSectionDecorationKind(elementKind: "unknown") == nil)
   }
 }
 

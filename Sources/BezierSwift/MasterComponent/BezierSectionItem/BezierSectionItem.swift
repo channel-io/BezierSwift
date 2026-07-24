@@ -10,7 +10,10 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
   public var componentTheme: BezierComponentTheme = .normal {
-    didSet { self.refreshAppearance() }
+    didSet {
+      self.accessoryView.componentTheme = self.componentTheme
+      self.refreshAppearance()
+    }
   }
 
   // MARK: - Public Properties
@@ -28,11 +31,17 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
   }
 
   public var leading: BezierSectionItemLeading<UIView> = .none {
-    didSet { self.refreshLeading() }
+    didSet {
+      self.refreshLeading()
+      self.refreshAppearance()
+    }
   }
 
   public var centerSlot: UIView? {
-    didSet { self.updateSlot(container: self.centerSlotContainer, old: oldValue, new: self.centerSlot) }
+    didSet {
+      self.updateSlot(container: self.centerSlotContainer, old: oldValue, new: self.centerSlot)
+      self.refreshText()
+    }
   }
 
   public var customCenterContent: UIView? {
@@ -313,7 +322,6 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
       trailing: BezierSectionItemConstant.horizontalPadding
     )
     self.refreshLeading()
-    self.refreshDescription()
     self.setNeedsLayout()
   }
 
@@ -363,15 +371,21 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     let isCustom = self.leading.isCustom
     let description = (self.itemDescription?.isEmpty == false && !isCustom) ? self.itemDescription : nil
 
-    self.descriptionLabel.removeFromSuperview()
     if self.size.isDescriptionNested {
+      if self.descriptionLabel.superview !== self.centerContentStackView {
+        self.descriptionLabel.removeFromSuperview()
+        self.centerContentStackView.addArrangedSubview(self.descriptionLabel)
+      }
       self.denestDescriptionWrapper.isHidden = true
       self.centerContentStackView.spacing = BezierSectionItemConstant.nestedDescriptionSpacing
-      self.centerContentStackView.addArrangedSubview(self.descriptionLabel)
       self.descriptionLabel.isHidden = description == nil
     } else {
+      if self.descriptionLabel.superview !== self.denestDescriptionWrapper {
+        self.descriptionLabel.removeFromSuperview()
+        self.setUpDescription()
+      }
+      self.descriptionLabel.isHidden = false
       self.centerContentStackView.spacing = 0
-      self.setUpDescription()
       self.denestDescriptionWrapper.isHidden = description == nil
       self.denestDescriptionWrapper.directionalLayoutMargins = NSDirectionalEdgeInsets(
         top: 0,

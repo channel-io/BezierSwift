@@ -10,7 +10,10 @@ final class BezierSectionItemAccessoryView: UIView, BezierComponentable {
 
   var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
   var componentTheme: BezierComponentTheme = .normal {
-    didSet { self.refreshAppearance() }
+    didSet {
+      self.toggleView.componentTheme = self.componentTheme
+      self.refreshAppearance()
+    }
   }
 
   // MARK: - Private Properties

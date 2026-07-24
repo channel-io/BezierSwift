@@ -10,7 +10,13 @@ public final class BezierSection: UIView, BezierComponentable {
 
   public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
   public var componentTheme: BezierComponentTheme = .normal {
-    didSet { self.refreshAppearance() }
+    didSet {
+      self.sectionLabel.componentTheme = self.componentTheme
+      self.itemsStackView.arrangedSubviews
+        .compactMap { $0 as? BezierSectionRowDivider }
+        .forEach { $0.componentTheme = self.componentTheme }
+      self.refreshAppearance()
+    }
   }
 
   // MARK: - Public Properties
@@ -170,6 +176,7 @@ public final class BezierSection: UIView, BezierComponentable {
 
       if let divider, index < self.items.count - 1 {
         let dividerView = BezierSectionRowDivider()
+        dividerView.componentTheme = self.componentTheme
         dividerView.apply(divider)
         self.itemsStackView.addArrangedSubview(dividerView)
       }

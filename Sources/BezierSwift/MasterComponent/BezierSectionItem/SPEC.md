@@ -29,9 +29,9 @@ Section 내부 리스트 아이템(Mobile) (Figma component description 1행).
 
 ### Internal/SectionItemAccessory (CS `5230:51815`)
 
-| Property | 값 |
-|---|---|
-| **type** | `navigation`(기본) / `outlink` / `toggle` / `select` / `multiselect` / `display` / `custom` |
+| Property | 값 | 비고 |
+|---|---|---|
+| **type** | `navigation`(기본) / `outlink` / `toggle` / `select` / `multiselect` / `display` / `custom` | |
 | **content** | SLOT | custom variant 전용 자유 콘텐츠 |
 
 총 instance: **7개**
