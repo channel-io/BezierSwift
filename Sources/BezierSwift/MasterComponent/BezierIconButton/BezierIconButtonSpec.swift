@@ -5,10 +5,15 @@
 
 import CoreGraphics
 
+/// 아이콘 버튼의 크기. Figma `IconButton` 컴포넌트의 `size` 프로퍼티에 대응 (case 이름 = Figma 값). `BezierButton`과 동일한 밀도 기준을 따른다.
 public enum BezierIconButtonSize: String, CaseIterable {
+  /// 좁은 인라인·툴바에서 가장 조밀하게 놓는 크기.
   case xsmall
+  /// 좁은 인라인·툴바에 놓는 조밀한 크기.
   case small
+  /// 표준 크기. 대부분의 맥락에서 기본으로 쓴다.
   case medium
+  /// 큰 진입점이나 강조가 필요한 단독 액션에 쓰는 크기.
   case large
 
   public var length: CGFloat {
@@ -43,15 +48,23 @@ public enum BezierIconButtonSize: String, CaseIterable {
   }
 }
 
+/// 아이콘 버튼의 시각적 강조도. Figma `IconButton` 컴포넌트의 `variant` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierIconButtonVariant: String, CaseIterable {
+  /// 화면당 하나만 두는 강조된 아이콘 액션.
   case filled
+  /// `filled` 옆에 두는 보조 액션이나 행 내 인라인 액션.
   case outlined
+  /// 기본값. 툴바나 저강조 맥락의 아이콘 액션.
   case ghost
 }
 
+/// 아이콘 버튼의 의미론적 위계. Figma `IconButton` 컴포넌트의 `semantic` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierIconButtonSemantic: String, CaseIterable {
+  /// 화면에서 최상위 위계를 갖는 아이콘 액션.
   case primary
+  /// 기본값. 닫기·더보기·편집·뒤로 등 일반적인 아이콘 액션.
   case secondary
+  /// 삭제·연결 해제 등 파괴적인 아이콘 액션.
   case destructive
 }
 

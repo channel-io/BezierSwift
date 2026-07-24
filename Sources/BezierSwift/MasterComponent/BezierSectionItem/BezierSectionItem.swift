@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// `BezierSection` 안에 넣는 리스트 행 아이템 (UIKit). leading(아이콘/아바타/커스텀) · 텍스트 · description · centerSlot · 우측 accessory로 구성되며 탭·pressed·disabled 상호작용을 지원한다. 섹션 밖 독립 리스트 행에는 `BezierBaseItem`을 쓴다. SwiftUI에서는 `SUBezierSectionItem`을 사용한다.
 public final class BezierSectionItem: UIControl, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -18,18 +19,22 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 행 크기(small/medium/large) (기본값 `.medium`).
   public var size: BezierSectionItemSize = .medium {
     didSet { if oldValue != self.size { self.refreshSize() } }
   }
 
+  /// 행 본문(label) 텍스트 (기본값 `""`).
   public var content: String = "" {
     didSet { if oldValue != self.content { self.refreshText() } }
   }
 
+  /// 본문 아래 보조 설명. `nil`/빈 문자열이면 숨긴다. `large`는 nested, 그 외는 행 아래 de-nest로 배치한다.
   public var itemDescription: String? {
     didSet { if oldValue != self.itemDescription { self.refreshDescription() } }
   }
 
+  /// leading 콘텐츠 유형(none/icon/avatar/custom) (기본값 `.none`).
   public var leading: BezierSectionItemLeading<UIView> = .none {
     didSet {
       self.refreshLeading()
@@ -37,6 +42,7 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     }
   }
 
+  /// label 우측에 인라인으로 붙는 슬롯 뷰(높이 24). custom leading에서는 지원하지 않는다.
   public var centerSlot: UIView? {
     didSet {
       self.updateSlot(container: self.centerSlotContainer, old: oldValue, new: self.centerSlot)
@@ -44,6 +50,7 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     }
   }
 
+  /// custom leading일 때 label 대신 중앙을 채우는 자유 콘텐츠 뷰.
   public var customCenterContent: UIView? {
     didSet {
       self.updateSlot(container: self.customCenterContainer, old: oldValue, new: self.customCenterContent)
@@ -51,14 +58,17 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     }
   }
 
+  /// 우측 accessory(navigation/toggle 등). `nil`이면 숨긴다.
   public var accessory: BezierSectionItemAccessory<UIView>? {
     didSet { self.accessoryView.apply(self.accessory) }
   }
 
+  /// 삭제 등 파괴적 액션 표시. `true`면 leading 아이콘·본문을 red 색으로 그린다 (기본값 `false`).
   public var isDestructive: Bool = false {
     didSet { if oldValue != self.isDestructive { self.refreshAppearance() } }
   }
 
+  /// 행 탭 핸들러. `nil`이면 비인터랙티브(pressed 없음)가 된다.
   public var onTap: (() -> Void)? {
     didSet { self.refreshInteraction() }
   }
@@ -166,6 +176,7 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   // MARK: - Init
 
+  /// size·본문 텍스트·description·탭 핸들러로 행을 만든다. leading·accessory 등 나머지 구성은 생성 후 프로퍼티로 지정한다.
   public init(
     size: BezierSectionItemSize = .medium,
     content: String,

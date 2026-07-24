@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 되돌릴 수 없거나 영향이 큰 액션 실행 전 확인을 받는 모달 (SwiftUI). 제목·설명·버튼으로 구성된다. UIKit에서는 `BezierConfirmModal`을 사용한다.
 public struct SUBezierConfirmModal<CustomContent: View>: View {
   private let title: String
   private let description: String?
@@ -14,6 +15,7 @@ public struct SUBezierConfirmModal<CustomContent: View>: View {
   private let cancelAction: BezierConfirmModalAction?
   private let customContent: CustomContent?
 
+  /// 제목·설명·버튼 구성과 함께 추가 커스텀 콘텐츠를 `@ViewBuilder`로 받아 확인 모달을 생성한다.
   public init(
     title: String,
     description: String? = nil,
@@ -135,6 +137,7 @@ public struct SUBezierConfirmModal<CustomContent: View>: View {
 }
 
 extension SUBezierConfirmModal where CustomContent == EmptyView {
+  /// 커스텀 콘텐츠 없이 제목·설명·버튼만으로 확인 모달을 생성하는 편의 이니셜라이저.
   public init(
     title: String,
     description: String? = nil,

@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 카테고리 라벨링용 태그 컴포넌트 (SwiftUI). 상태·시맨틱 표현은 `BezierBadge`를 쓴다. UIKit에서는 `BezierTag`를 사용한다.
 public struct SUBezierTag: View, Themeable {
   private let size: BezierTagSize
   private let variant: BezierTagVariant
@@ -14,6 +15,7 @@ public struct SUBezierTag: View, Themeable {
 
   @Environment(\.colorScheme) public var colorScheme
 
+  /// 크기·색상 계열·라벨과 삭제 콜백을 지정해 태그를 생성한다. `onDelete`가 있으면 trailing에 close 아이콘이 노출된다.
   public init(
     size: BezierTagSize = .small,
     variant: BezierTagVariant = .default,

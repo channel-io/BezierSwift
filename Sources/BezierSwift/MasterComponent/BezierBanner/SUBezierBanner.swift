@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 화면 흐름 안내용 인라인(Inner) 배너 컴포넌트 (SwiftUI). 콘텐츠 영역 안에 놓여 상황을 안내한다. UIKit에서는 `BezierBanner`를 사용한다.
 public struct SUBezierBanner: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
@@ -14,6 +15,7 @@ public struct SUBezierBanner: View, Themeable {
   private let description: String
   private let clickArea: BezierBannerClickArea
 
+  /// 색상 계열·아이콘·제목·본문·클릭 영역을 지정해 배너를 생성한다.
   public init(
     variant: BezierBannerVariant = .default,
     leadingIcon: BezierIcon? = nil,

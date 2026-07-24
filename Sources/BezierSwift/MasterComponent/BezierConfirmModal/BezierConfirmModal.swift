@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 되돌릴 수 없거나 영향이 큰 액션 실행 전 확인을 받는 모달 (UIKit). 제목·설명·버튼으로 구성되며, 표시는 `BezierModalViewController.confirm(...)`을 사용한다. SwiftUI에서는 `SUBezierConfirmModal`을 사용한다.
 public final class BezierConfirmModal: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -21,17 +22,22 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 모달 상단에 표시하는 제목.
   public var title: String {
     didSet { self.refreshAppearance() }
   }
 
   // UIView.description(NSObject)과의 충돌을 피하기 위한 명명
+  /// 제목 아래 표시하는 설명 텍스트. `nil`이면 숨겨진다.
   public var descriptionText: String? {
     didSet { self.refreshAppearance() }
   }
 
+  /// 주 액션(확인) 버튼. `type`에 따라 강조 색이 결정된다.
   public let confirmButton: BezierButton
+  /// 취소 버튼. `cancelAction`을 지정하지 않으면 `nil`이다.
   public let cancelButton: BezierButton?
+  /// 세로 배치에서 쓰는 세 번째 대체 액션 버튼. `.vertical(altAction:)`에 액션을 넘겼을 때만 존재한다.
   public let altButton: BezierButton?
 
   // MARK: - Subviews
@@ -45,6 +51,7 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 제목·설명·버튼 구성으로 확인 모달을 생성한다. `type`으로 확인 버튼의 강조를, `buttonLayout`으로 버튼 배치를 정하며, `cancelAction`이 `nil`이면 확인 단일 버튼이 된다.
   public init(
     title: String,
     description: String? = nil,

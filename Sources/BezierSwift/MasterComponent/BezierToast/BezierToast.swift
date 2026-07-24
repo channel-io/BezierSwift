@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 짧은 비차단 알림 토스트 컴포넌트 (UIKit/UIView). 확인이 꼭 필요한 오류·영구 메시지는 `BezierBanner`를 쓴다. SwiftUI에서는 `View.bezierToast(param:)` modifier를 사용한다.
 public final class BezierToast: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -16,6 +17,7 @@ public final class BezierToast: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 토스트의 표시 유형. 기본값 `.info`.
   public var preset: BezierToastPreset = .info {
     didSet {
       if oldValue != self.preset {
@@ -25,6 +27,7 @@ public final class BezierToast: UIView, BezierComponentable {
     }
   }
 
+  /// 토스트에 표시할 텍스트. 기본값 `nil`.
   public var title: String? {
     didSet { if oldValue != self.title { self.refreshContent() } }
   }
@@ -65,6 +68,7 @@ public final class BezierToast: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 표시 유형과 텍스트를 지정해 토스트를 생성한다.
   public init(preset: BezierToastPreset = .info, title: String? = nil) {
     self.preset = preset
     self.title = title

@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 섹션 헤더 bar (SwiftUI). 선택적 좌측 슬롯 · 텍스트 · 우측 슬롯을 담는 `SUBezierSection` 전용 헤더다. 단독으로 쓰지 말고 섹션 헤더로 사용한다. UIKit에서는 `BezierSectionLabel`을 사용한다.
 public struct SUBezierSectionLabel<Leading: View, Trailing: View>: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
@@ -13,6 +14,7 @@ public struct SUBezierSectionLabel<Leading: View, Trailing: View>: View, Themeab
   private let leading: Leading
   private let trailing: Trailing
 
+  /// 라벨 텍스트·색과 좌우 슬롯 빌더로 헤더를 만든다.
   public init(
     _ text: String,
     color: BezierSectionLabelColor = .neutralDark,
@@ -73,6 +75,7 @@ public struct SUBezierSectionLabel<Leading: View, Trailing: View>: View, Themeab
 // MARK: - Convenience init
 
 extension SUBezierSectionLabel where Leading == EmptyView {
+  /// 좌측 슬롯 없이 텍스트·우측 슬롯만으로 만드는 편의 이니셜라이저.
   public init(
     _ text: String,
     color: BezierSectionLabelColor = .neutralDark,
@@ -83,6 +86,7 @@ extension SUBezierSectionLabel where Leading == EmptyView {
 }
 
 extension SUBezierSectionLabel where Leading == EmptyView, Trailing == EmptyView {
+  /// 텍스트(와 색)만으로 만드는 편의 이니셜라이저.
   public init(_ text: String, color: BezierSectionLabelColor = .neutralDark) {
     self.init(text, color: color, leading: { EmptyView() }, trailing: { EmptyView() })
   }

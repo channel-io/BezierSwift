@@ -8,15 +8,25 @@ import UIKit
 
 // MARK: - AvatarGroup Size
 
+/// 아바타 그룹의 아바타 크기. Figma `AvatarGroup` 컴포넌트의 `size` 프로퍼티에 대응 (Figma 값 `"20"` = `.size20`, 철자만 다르다).
 public enum BezierAvatarGroupSize: String, CaseIterable {
+  /// 인라인 보조(타이핑·AI 참조)에 쓴다.
   case size20
+  /// 리스트·카드의 독립 UI(담당자·팔로워)에 쓰는 기본 크기다.
   case size24
+  /// 중밀도 배치에 쓴다.
   case size30
+  /// 카드 헤더에 쓴다.
   case size36
+  /// 상세 패널에 쓴다.
   case size42
+  /// 프로필 미리보기에 쓴다.
   case size48
+  /// 팀 페이지에 쓴다.
   case size72
+  /// 히어로 영역에 쓴다.
   case size90
+  /// 풀사이즈로 쓴다.
   case size120
 
   public var avatarSize: BezierAvatarSize {
@@ -118,8 +128,11 @@ struct BezierAvatarGroupCountFont: Equatable {
 
 // MARK: - Ellipsis Type
 
+/// 최대 표시 인원을 넘는 초과분의 표현 방식. Figma `AvatarGroup` 컴포넌트의 `ellipsisType` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierAvatarGroupEllipsisType: String, CaseIterable {
+  /// 초과 인원 수가 불필요하고 폭이 매우 좁을 때 쓴다. 기본값이다.
   case icon
+  /// "+N"으로 총 초과 인원 수가 중요할 때 쓴다.
   case count
 }
 

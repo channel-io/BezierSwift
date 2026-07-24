@@ -7,6 +7,7 @@ import SwiftUI
 import UIKit
 
 extension View {
+  /// 이 뷰 위에 `SUBezierModal` 카드를 dim 배경과 함께 띄우는 modifier. `isPresented` 바인딩으로 표시·해제를 제어하고, `onDismiss`로 닫힘 시점을 후처리한다.
   public func bezierModal<ModalContent: View>(
     isPresented: Binding<Bool>,
     onDismiss: (() -> Void)? = nil,

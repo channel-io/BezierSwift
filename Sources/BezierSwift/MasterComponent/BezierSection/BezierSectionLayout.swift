@@ -57,9 +57,12 @@ enum BezierSectionDecorationKind: CaseIterable {
 
 // MARK: - Layout Builder
 
+/// `UICollectionViewCompositionalLayout`로 항목이 많은 동적 섹션 리스트를 구성하기 위한 헬퍼 (UIKit 전용, Figma에 대응 없음). 섹션 배경·테두리·radius는 background decoration view로, 헤더(`BezierSectionLabel`)는 boundary supplementary로, 행 간 divider는 list separator로 그린다. 정적 소수 항목에는 `BezierSection`을 사용한다.
 public enum BezierSectionLayout {
+  /// 헤더(SectionLabel) boundary supplementary의 elementKind 문자열. 소비자가 supplementary 등록·dequeue에 쓴다.
   public static let labelElementKind = "BezierSectionLayout.label"
 
+  /// 섹션 배경 decoration view 4종(variant × componentTheme)을 레이아웃에 등록한다. 레이아웃 생성 직후 반드시 호출해야 decoration dequeue 크래시를 막는다.
   public static func register(in layout: UICollectionViewCompositionalLayout) {
     for kind in BezierSectionDecorationKind.allCases {
       layout.register(
@@ -69,6 +72,7 @@ public enum BezierSectionLayout {
     }
   }
 
+  /// variant·행 수·헤더 표시 여부·테마에 맞는 `NSCollectionLayoutSection`을 만든다. `numberOfItems`는 마지막 행의 bottom separator를 숨겨 divider 수를 (행 수 − 1)로 맞추는 데 쓴다.
   public static func makeSection(
     variant: BezierSectionVariant,
     numberOfItems: Int,
@@ -158,6 +162,7 @@ public enum BezierSectionLayout {
 
 // MARK: - Background Decoration View
 
+/// 컴포지셔널 레이아웃에서 섹션 배경(카드 chrome — 배경색·테두리·radius)을 그리는 decoration view (UIKit 내부용). `BezierSectionLayout`이 dequeue하며 소비자가 직접 생성할 필요는 없다.
 public final class BezierSectionBackgroundView: UICollectionReusableView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -227,7 +232,9 @@ public final class BezierSectionBackgroundView: UICollectionReusableView, Bezier
 
 // MARK: - Label Reusable View
 
+/// 컴포지셔널 레이아웃 헤더에 `BezierSectionLabel`을 얹는 supplementary view. configure 시점에 `sectionLabel`을 설정해 헤더 내용을 채운다.
 public final class BezierSectionLabelReusableView: UICollectionReusableView {
+  /// 헤더로 표시되는 `BezierSectionLabel` 인스턴스. 텍스트·색·슬롯·componentTheme를 여기서 설정한다.
   public let sectionLabel = BezierSectionLabel(text: "")
 
   public override init(frame: CGRect) {

@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 섹션 헤더 bar (UIKit). 선택적 좌측 아이콘 · 텍스트 · 우측 액션 슬롯을 담는 `BezierSection` 전용 헤더다. 단독으로 쓰지 말고 항상 `BezierSection`의 헤더로 사용한다. SwiftUI에서는 `SUBezierSectionLabel`을 사용한다.
 public final class BezierSectionLabel: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,18 +16,22 @@ public final class BezierSectionLabel: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 헤더 텍스트. 빈 문자열이면 텍스트를 숨긴다 (기본값 `""`).
   public var text: String = "" {
     didSet { if oldValue != self.text { self.refreshText() } }
   }
 
+  /// 라벨 색(neutralDark/neutralLight) (기본값 `.neutralDark`).
   public var color: BezierSectionLabelColor = .neutralDark {
     didSet { if oldValue != self.color { self.refreshText() } }
   }
 
+  /// 좌측 20×20 슬롯 뷰(아이콘 등). `nil`이면 비운다.
   public var leadingContent: UIView? {
     didSet { self.updateSlot(container: self.leadingContainer, old: oldValue, new: self.leadingContent) }
   }
 
+  /// 우측 슬롯 뷰(높이 20, 우측 정렬 액션). `nil`이면 비운다.
   public var trailingContent: UIView? {
     didSet { self.updateSlot(container: self.trailingContainer, old: oldValue, new: self.trailingContent) }
   }
@@ -64,6 +69,7 @@ public final class BezierSectionLabel: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 라벨 텍스트와 색으로 헤더를 만든다. 좌우 슬롯은 생성 후 `leadingContent`/`trailingContent`로 채운다.
   public init(text: String, color: BezierSectionLabelColor = .neutralDark) {
     self.text = text
     self.color = color

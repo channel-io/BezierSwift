@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 사용자·대상을 나타내는 아바타 (SwiftUI). 이미지·크기·테두리·접속 상태 표식을 조합한다. UIKit에서는 `BezierAvatar`를 사용한다.
 public struct SUBezierAvatar: View, Themeable {
   private let image: Image?
   private let size: BezierAvatarSize
@@ -14,6 +15,7 @@ public struct SUBezierAvatar: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   @Environment(\.isEnabled) private var isEnabled
 
+  /// 이미지·크기·테두리·상태 표식을 지정해 아바타를 만든다. 모든 인자는 기본값이 있어 필요한 것만 넘기면 된다.
   public init(
     image: Image? = nil,
     size: BezierAvatarSize = .size24,

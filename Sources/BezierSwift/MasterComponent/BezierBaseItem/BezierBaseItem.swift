@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// leading·center·trailing 3영역으로 구성되는 리스트 행 아이템 (UIKit). 탭 가능한 행과 정적인 행을 모두 표현한다. SwiftUI에서는 `SUBezierBaseItem`을 사용한다.
 public final class BezierBaseItem: UIControl, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,30 +16,37 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 행의 크기. 기본값 `.medium`.
   public var size: BezierBaseItemSize = .medium {
     didSet { if oldValue != self.size { self.refreshSize() } }
   }
 
+  /// center 영역에 표시하는 주 텍스트. 기본값은 빈 문자열이며, 비어 있으면 제목이 숨겨진다.
   public var title: String = "" {
     didSet { if oldValue != self.title { self.refreshText() } }
   }
 
+  /// title 아래에 표시하는 보조 설명. `size`가 `.small`이면 무시된다. 기본값 `nil`.
   public var itemDescription: String? {
     didSet { if oldValue != self.itemDescription { self.refreshText() } }
   }
 
+  /// 행을 탭했을 때 실행되는 클로저. 지정하면 press 피드백과 상호작용이 켜지고, `nil`이면 정적인 행이 된다. 기본값 `nil`.
   public var onTap: (() -> Void)? {
     didSet { self.refreshInteraction() }
   }
 
+  /// leading(앞) 영역에 넣는 뷰(Avatar·아이콘 등). `size`에 맞춰 정사각형으로 크기가 잡힌다. 기본값 `nil`.
   public var leadingContent: UIView? {
     didSet { self.updateSlot(container: self.leadingContainer, old: oldValue, new: self.leadingContent, fill: true) }
   }
 
+  /// title 우측에 붙이는 뷰(배지·보조 아이콘 등). 기본값 `nil`.
   public var centerSlot: UIView? {
     didSet { self.updateSlot(container: self.centerSlotContainer, old: oldValue, new: self.centerSlot, fill: true) }
   }
 
+  /// trailing(뒤) 영역에 넣는 뷰(chevron·토글 등). 기본값 `nil`.
   public var trailingContent: UIView? {
     didSet { self.updateSlot(container: self.trailingContainer, old: oldValue, new: self.trailingContent, fill: true) }
   }
@@ -123,6 +131,7 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
 
   // MARK: - Init
 
+  /// 행의 텍스트·크기·탭 동작을 지정해 생성한다. leading·center·trailing 슬롯 뷰는 생성 후 각 프로퍼티로 주입한다.
   public init(
     size: BezierBaseItemSize = .medium,
     title: String,

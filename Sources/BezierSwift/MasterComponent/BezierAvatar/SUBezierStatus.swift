@@ -5,12 +5,14 @@
 
 import SwiftUI
 
+/// 접속 상태를 나타내는 표식 (SwiftUI). 보통 `SUBezierAvatar`가 내부에서 사용하지만 단독으로도 쓸 수 있다. UIKit에서는 `BezierStatus`를 사용한다.
 public struct SUBezierStatus: View, Themeable {
   private let type: BezierStatusType
   private let size: BezierStatusSize
 
   @Environment(\.colorScheme) public var colorScheme
 
+  /// 상태 종류와 크기를 지정해 표식을 만든다.
   public init(type: BezierStatusType, size: BezierStatusSize) {
     self.type = type
     self.size = size

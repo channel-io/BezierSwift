@@ -7,17 +7,29 @@ import CoreGraphics
 
 // MARK: - Avatar Size
 
+/// 아바타의 지름 크기. Figma `Avatar` 컴포넌트의 `size` 프로퍼티에 대응 (Figma 값 `"20"` = `.size20`, bare 숫자에 `size` prefix가 붙은 형태). Figma엔 `60`이 있으나 Swift엔 없고, `.size16`·`.size160`은 모바일 parity로 추가된 값이다.
 public enum BezierAvatarSize: String, CaseIterable {
+  /// 초소형. 모바일 전용 예외 크기다.
   case size16
+  /// 드롭다운·칩·인라인 식별자에 쓴다.
   case size20
+  /// 대화 목록·발신자·알림에 쓰는 기본 크기다.
   case size24
+  /// 사이드바 팀원 목록에 쓴다.
   case size30
+  /// 담당자 배지·대화 헤더에 쓴다.
   case size36
+  /// 고객정보 패널 상단에 쓴다.
   case size42
+  /// 프로필 카드 헤더에 쓴다.
   case size48
+  /// 설정 내 프로필·상세 모달에 쓴다. 목록 안에서는 쓰지 않는다.
   case size72
+  /// 모달 대형·온보딩에 쓴다. 목록 안에서는 쓰지 않는다.
   case size90
+  /// 계정 설정 대표 프로필에 쓴다. 목록 안에서는 쓰지 않는다.
   case size120
+  /// 최대 크기. 목록 안에서는 쓰지 않는다.
   case size160
 
   public var length: CGFloat {

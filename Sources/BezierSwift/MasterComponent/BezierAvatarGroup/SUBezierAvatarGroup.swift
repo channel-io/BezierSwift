@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 여러 아바타를 겹치거나 나란히 묶어 보여주는 그룹 (SwiftUI). 최대 3명까지 표시하고 초과분은 아이콘·카운트로 나타낸다. UIKit에서는 `BezierAvatarGroup`을 사용한다.
 public struct SUBezierAvatarGroup: View, Themeable {
   private let avatars: [Image?]
   private let size: BezierAvatarGroupSize
@@ -13,6 +14,7 @@ public struct SUBezierAvatarGroup: View, Themeable {
 
   @Environment(\.colorScheme) public var colorScheme
 
+  /// 아바타 이미지 목록·크기·초과 표현·겹침 여부를 지정해 그룹을 만든다.
   public init(
     avatars: [Image?] = [],
     size: BezierAvatarGroupSize = .size20,

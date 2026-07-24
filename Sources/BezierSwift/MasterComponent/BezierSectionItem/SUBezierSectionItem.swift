@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// `SUBezierSection` 안에 넣는 리스트 행 아이템 (SwiftUI). leading · 텍스트 · description · centerSlot · 우측 accessory로 구성되며 탭·pressed·disabled를 지원한다. 섹션 밖 독립 리스트 행에는 `SUBezierBaseItem`을 쓴다. UIKit에서는 `BezierSectionItem`을 사용한다.
 public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   @Environment(\.isEnabled) private var isEnabled
@@ -19,6 +20,7 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
   private let onTap: (() -> Void)?
   private let centerSlot: CenterSlot
 
+  /// size·본문·description·leading·accessory·탭 핸들러와 `centerSlot` 빌더로 행을 만든다.
   public init(
     size: BezierSectionItemSize = .medium,
     content: String,
@@ -168,6 +170,7 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
 // MARK: - Convenience init (centerSlot 생략)
 
 extension SUBezierSectionItem where CenterSlot == EmptyView {
+  /// centerSlot 없이 만드는 편의 이니셜라이저.
   public init(
     size: BezierSectionItemSize = .medium,
     content: String,
