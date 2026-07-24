@@ -13,6 +13,7 @@ public struct SUBezierButton: View, Themeable {
   private let leadingIcon: Image?
   private let trailingIcon: Image?
   private let isLoading: Bool
+  private let isFillWidth: Bool
   private let action: () -> Void
 
   @Environment(\.isEnabled) private var isEnabled
@@ -28,6 +29,31 @@ public struct SUBezierButton: View, Themeable {
     isLoading: Bool = false,
     action: @escaping () -> Void
   ) {
+    self.init(
+      size: size,
+      variant: variant,
+      semantic: semantic,
+      title: title,
+      leadingIcon: leadingIcon,
+      trailingIcon: trailingIcon,
+      isLoading: isLoading,
+      isFillWidth: false,
+      action: action
+    )
+  }
+
+  // 배치는 컨테이너 책임이라 public으로 노출하지 않는다 — 모듈 내 컨테이너(SUBezierConfirmModal 등) 전용
+  init(
+    size: BezierButtonSize,
+    variant: BezierButtonVariant,
+    semantic: BezierButtonSemantic,
+    title: String? = nil,
+    leadingIcon: Image? = nil,
+    trailingIcon: Image? = nil,
+    isLoading: Bool = false,
+    isFillWidth: Bool,
+    action: @escaping () -> Void
+  ) {
     self.size = size
     self.variant = variant
     self.semantic = semantic
@@ -35,6 +61,7 @@ public struct SUBezierButton: View, Themeable {
     self.leadingIcon = leadingIcon
     self.trailingIcon = trailingIcon
     self.isLoading = isLoading
+    self.isFillWidth = isFillWidth
     self.action = action
   }
 
@@ -51,10 +78,11 @@ public struct SUBezierButton: View, Themeable {
       .padding(.horizontal, self.size.horizontalPadding)
       .frame(
         minWidth: self.size.minWidth,
+        maxWidth: self.isFillWidth ? .infinity : nil,
         minHeight: self.size.height,
         maxHeight: self.size.height
       )
-      .fixedSize(horizontal: true, vertical: false)
+      .fixedSize(horizontal: !self.isFillWidth, vertical: false)
     }
     .buttonStyle(
       SUBezierButtonStyle(
