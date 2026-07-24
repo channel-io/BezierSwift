@@ -583,7 +583,7 @@
 /* Begin XCLocalSwiftPackageReference section */
 		5C7A8DA12FBF2C2F000FA789 /* XCLocalSwiftPackageReference "../../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../";
+			relativePath = ../../;
 		};
 /* End XCLocalSwiftPackageReference section */
 
