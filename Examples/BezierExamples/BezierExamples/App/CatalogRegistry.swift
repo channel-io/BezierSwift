@@ -107,6 +107,12 @@ enum CatalogRegistry {
       destination: AnyView(BannerCatalog())
     ),
     CatalogItem(
+      id: "section",
+      title: "Section",
+      section: .v3Components,
+      destination: AnyView(SectionCatalog())
+    ),
+    CatalogItem(
       id: "floating-banner",
       title: "FloatingBanner",
       section: .v3Components,
