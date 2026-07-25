@@ -1,11 +1,12 @@
 //
-//  BezierAvatarStatus.swift
+//  BezierStatus.swift
 //  BezierSwift
 //
 
 import UIKit
 
-public final class BezierAvatarStatus: UIView, BezierComponentable {
+/// 접속 상태를 나타내는 표식 (UIKit). 보통 `BezierAvatar`가 내부에서 사용하지만 단독으로도 쓸 수 있다. SwiftUI에서는 `SUBezierStatus`를 사용한다.
+public final class BezierStatus: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
   public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
@@ -15,11 +16,13 @@ public final class BezierAvatarStatus: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
-  public var type: BezierAvatarStatusType {
+  /// 표시할 접속 상태 종류다.
+  public var type: BezierStatusType {
     didSet { if oldValue != self.type { self.refreshContent() } }
   }
 
-  public var size: BezierAvatarStatusSize {
+  /// 표식 크기다.
+  public var size: BezierStatusSize {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
@@ -49,7 +52,8 @@ public final class BezierAvatarStatus: UIView, BezierComponentable {
 
   // MARK: - Init
 
-  public init(type: BezierAvatarStatusType, size: BezierAvatarStatusSize) {
+  /// 상태 종류와 크기를 지정해 표식을 만든다.
+  public init(type: BezierStatusType, size: BezierStatusSize) {
     self.type = type
     self.size = size
     super.init(frame: .zero)
@@ -74,8 +78,8 @@ public final class BezierAvatarStatus: UIView, BezierComponentable {
 
     let widthConstraint = self.widthAnchor.constraint(equalToConstant: self.size.containerLength)
     let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.containerLength)
-    let indicatorWidthConstraint = self.indicatorCircleView.widthAnchor.constraint(equalToConstant: self.size.innerIndicatorLength)
-    let indicatorHeightConstraint = self.indicatorCircleView.heightAnchor.constraint(equalToConstant: self.size.innerIndicatorLength)
+    let indicatorWidthConstraint = self.indicatorCircleView.widthAnchor.constraint(equalToConstant: self.size.circleLength)
+    let indicatorHeightConstraint = self.indicatorCircleView.heightAnchor.constraint(equalToConstant: self.size.circleLength)
 
     NSLayoutConstraint.activate([
       widthConstraint,
@@ -118,28 +122,31 @@ public final class BezierAvatarStatus: UIView, BezierComponentable {
   private func refreshLayout() {
     self.widthConstraint?.constant = self.size.containerLength
     self.heightConstraint?.constant = self.size.containerLength
-    self.indicatorWidthConstraint?.constant = self.size.innerIndicatorLength
-    self.indicatorHeightConstraint?.constant = self.size.innerIndicatorLength
+    self.indicatorWidthConstraint?.constant = self.size.circleLength
+    self.indicatorHeightConstraint?.constant = self.size.circleLength
+    // size별 stroke 두께가 다르므로 size 변경 시 border 갱신 필수.
+    self.layer.borderWidth = self.size.borderWidth
     self.refreshContent()
     self.setNeedsLayout()
   }
 
   private func refreshContent() {
-    let tintColor = self.type.indicatorToken.palette(self)
-    if let icon = self.type.indicatorIcon {
+    if let icon = self.type.icon, let iconToken = self.type.iconToken {
       self.indicatorImageView.image = icon.uiImage
-      self.indicatorImageView.tintColor = tintColor
+      self.indicatorImageView.tintColor = iconToken.palette(self)
       self.indicatorImageView.isHidden = false
       self.indicatorCircleView.isHidden = true
     } else {
-      self.indicatorCircleView.backgroundColor = tintColor
+      self.indicatorCircleView.backgroundColor = self.type.circleToken.palette(self)
       self.indicatorCircleView.isHidden = false
       self.indicatorImageView.isHidden = true
     }
   }
 
   private func refreshAppearance() {
-    self.backgroundColor = BCSemanticToken.surfaceHighest.palette(self)
+    self.backgroundColor = BCSemanticToken.surfaceHigh.palette(self)
+    self.layer.borderWidth = self.size.borderWidth
+    self.layer.borderColor = BCSemanticToken.surfaceHighest.palette(self).cgColor
     self.refreshContent()
   }
 }

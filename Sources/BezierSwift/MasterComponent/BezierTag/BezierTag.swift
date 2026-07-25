@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 카테고리 라벨링용 태그 컴포넌트 (UIKit). 상태·시맨틱 표현은 `BezierBadge`를 쓴다. SwiftUI에서는 `SUBezierTag`를 사용한다.
 public final class BezierTag: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,14 +16,17 @@ public final class BezierTag: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 태그의 크기. 기본값 `.small`.
   public var size: BezierTagSize = .small {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
+  /// 태그의 색상 계열. 기본값 `.default`.
   public var variant: BezierTagVariant = .default {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
+  /// 태그에 표시할 텍스트. 기본값 `nil`.
   public var label: String? {
     didSet { if oldValue != self.label { self.refreshContent() } }
   }
@@ -78,6 +82,7 @@ public final class BezierTag: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 크기와 색상 계열을 지정해 태그를 생성한다. 라벨과 close 아이콘은 프로퍼티로 설정한다.
   public init(
     size: BezierTagSize = .small,
     variant: BezierTagVariant = .default

@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 사용자·대상을 나타내는 아바타 (UIKit). 이미지·크기·테두리·접속 상태 표식을 조합한다. SwiftUI에서는 `SUBezierAvatar`를 사용한다.
 public final class BezierAvatar: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,22 +16,27 @@ public final class BezierAvatar: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 아바타에 표시할 이미지. 없으면 빈 영역으로 렌더된다.
   public var image: UIImage? {
     didSet { self.imageView.image = self.image }
   }
 
+  /// 아바타 크기. 기본값은 `.size24`다.
   public var size: BezierAvatarSize = .size24 {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
+  /// 테두리 표시 여부. 기본값은 `false`다.
   public var showBorder: Bool = false {
     didSet { if oldValue != self.showBorder { self.refreshAppearance() } }
   }
 
-  public var statusType: BezierAvatarStatusType? {
+  /// 겹쳐 표시할 접속 상태 표식. `nil`이면 표식을 그리지 않는다.
+  public var statusType: BezierStatusType? {
     didSet { self.refreshStatusOverlay() }
   }
 
+  /// 활성 여부. `false`면 흐리게(opacity `0.4`) 표시된다. 기본값은 `true`다.
   public var isEnabled: Bool = true {
     didSet { self.alpha = self.isEnabled ? 1.0 : BezierAvatarConstant.disabledOpacity }
   }
@@ -57,9 +63,9 @@ public final class BezierAvatar: UIView, BezierComponentable {
   }()
 
   /// size20-160용 status overlay. size16은 별도 `miniStatusView`로 처리.
-  private var statusView: BezierAvatarStatus?
+  private var statusView: BezierStatus?
 
-  /// size16 전용 6×6 mini status. AvatarStatus 매트릭스 외 special case (SPEC Part 1 §4).
+  /// size16 전용 6×6 mini status. Status 매트릭스 외 special case (SPEC Part 1 §4).
   private var miniStatusView: UIView?
 
   // MARK: - Layout Constraints
@@ -69,11 +75,12 @@ public final class BezierAvatar: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 이미지·크기·테두리·상태 표식을 지정해 아바타를 만든다. 모든 인자는 기본값이 있어 필요한 것만 넘기면 된다.
   public init(
     image: UIImage? = nil,
     size: BezierAvatarSize = .size24,
     showBorder: Bool = false,
-    statusType: BezierAvatarStatusType? = nil
+    statusType: BezierStatusType? = nil
   ) {
     self.image = image
     self.size = size
@@ -173,7 +180,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     let overlayLength = self.size.statusOverlayLength
 
     if let avatarStatusSize = self.size.matchingAvatarStatusSize {
-      let status = BezierAvatarStatus(type: statusType, size: avatarStatusSize)
+      let status = BezierStatus(type: statusType, size: avatarStatusSize)
       self.addSubview(status)
       NSLayoutConstraint.activate([
         status.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: position.x),
@@ -185,7 +192,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     } else {
       let mini = UIView()
       mini.translatesAutoresizingMaskIntoConstraints = false
-      mini.backgroundColor = statusType.indicatorToken.palette(self)
+      mini.backgroundColor = statusType.circleToken.palette(self)
       mini.layer.cornerRadius = overlayLength / 2
       mini.layer.masksToBounds = true
       self.addSubview(mini)

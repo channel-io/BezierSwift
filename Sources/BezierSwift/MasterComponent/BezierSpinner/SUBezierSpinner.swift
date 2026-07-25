@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 비동기 로딩 대기를 나타내는 회전 스피너 (SwiftUI). 무한 회전 애니메이션으로 처리 중임을 표시한다. UIKit에서는 `BezierSpinner`를 사용한다.
 public struct SUBezierSpinner: View, Themeable {
   private let size: BezierSpinnerSize
   private let fillColorOverride: Color?
@@ -12,6 +13,7 @@ public struct SUBezierSpinner: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   @State private var isRotating = false
 
+  /// 크기를 지정해 스피너를 만든다. 기본값은 `.size12`다.
   public init(size: BezierSpinnerSize = .size12) {
     self.size = size
     self.fillColorOverride = nil

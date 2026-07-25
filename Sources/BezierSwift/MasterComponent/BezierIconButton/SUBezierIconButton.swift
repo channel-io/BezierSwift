@@ -5,9 +5,11 @@
 
 import SwiftUI
 
+/// 아이콘 전용 버튼 컴포넌트 (SwiftUI). 텍스트 없이 아이콘 하나로 액션을 표현한다. UIKit에서는 `BezierIconButton`을 사용한다.
 public struct SUBezierIconButton: View, Themeable {
   private let size: BezierIconButtonSize
   private let variant: BezierIconButtonVariant
+  private let semantic: BezierIconButtonSemantic
   private let icon: Image
   private let isActive: Bool
   private let isLoading: Bool
@@ -16,9 +18,11 @@ public struct SUBezierIconButton: View, Themeable {
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.colorScheme) public var colorScheme
 
+  /// 크기·강조도·위계와 아이콘, 탭 시 실행할 `action`을 지정해 아이콘 버튼을 만든다. `isActive`는 toggle ON(선택) 상태를, `isLoading`은 스피너 표시 여부를 지정한다. 기본 조합은 `ghost`×`secondary`.
   public init(
     size: BezierIconButtonSize = .medium,
     variant: BezierIconButtonVariant = .ghost,
+    semantic: BezierIconButtonSemantic = .secondary,
     icon: Image,
     isActive: Bool = false,
     isLoading: Bool = false,
@@ -26,6 +30,7 @@ public struct SUBezierIconButton: View, Themeable {
   ) {
     self.size = size
     self.variant = variant
+    self.semantic = semantic
     self.icon = icon
     self.isActive = isActive
     self.isLoading = isLoading
@@ -47,6 +52,7 @@ public struct SUBezierIconButton: View, Themeable {
     .buttonStyle(
       SUBezierIconButtonStyle(
         variant: self.variant,
+        semantic: self.semantic,
         isActive: self.isActive,
         isLoading: self.isLoading
       )
@@ -61,19 +67,20 @@ public struct SUBezierIconButton: View, Themeable {
       .resizable()
       .scaledToFit()
       .frame(width: self.size.iconLength, height: self.size.iconLength)
-      .foregroundColor(self.palette(self.variant.foregroundToken))
+      .foregroundColor(self.palette(self.variant.foregroundToken(self.semantic)))
   }
 
   private var loadingIndicator: some View {
     SUBezierSpinner(
       size: self.size.spinnerSize,
-      fillColorOverride: self.palette(self.variant.loadingSpinnerToken)
+      fillColorOverride: self.palette(self.variant.loadingSpinnerToken(self.semantic))
     )
   }
 }
 
 private struct SUBezierIconButtonStyle: ButtonStyle, Themeable {
   let variant: BezierIconButtonVariant
+  let semantic: BezierIconButtonSemantic
   let isActive: Bool
   let isLoading: Bool
 
@@ -83,18 +90,29 @@ private struct SUBezierIconButtonStyle: ButtonStyle, Themeable {
     let isInteractionOverlayActive = (configuration.isPressed && !self.isLoading) || self.isActive
     configuration.label
       .background(self.backgroundShape(isOverlayActive: isInteractionOverlayActive))
+      .overlay(self.borderShape)
       .clipShape(Circle())
   }
 
   @ViewBuilder
   private func backgroundShape(isOverlayActive: Bool) -> some View {
-    if self.variant == .ghost && isOverlayActive {
-      // SPEC §4: ghost의 pressed / active overlay (raw rgba(0,0,0,0.05))
+    if self.variant.backgroundToken(self.semantic) == nil && isOverlayActive {
+      // 배경 없는 variant(outlined·ghost)의 pressed / active — bezier-tokens 미등록 raw overlay
       Circle().fill(Color.black.opacity(BezierIconButtonConstant.ghostOverlayAlpha))
-    } else if let token = self.variant.backgroundToken {
+    } else if let token = self.variant.backgroundToken(self.semantic) {
       Circle().fill(self.palette(token))
     } else {
       Color.clear
+    }
+  }
+
+  @ViewBuilder
+  private var borderShape: some View {
+    if let borderToken = self.variant.borderToken(self.semantic) {
+      Circle().strokeBorder(
+        self.palette(borderToken),
+        lineWidth: BezierIconButtonConstant.borderWidth
+      )
     }
   }
 }

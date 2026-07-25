@@ -6,10 +6,15 @@
 import CoreGraphics
 import UIKit
 
+/// 태그의 크기(밀도). Figma `Tag` 컴포넌트의 `size` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierTagSize: String, CaseIterable {
+  /// 밀도가 가장 높은 조밀한 크기. 좁은 공간이나 인라인 라벨에 쓴다.
   case xsmall
+  /// 기본 밀도. 목록·폼 등 일반적인 상황에 쓴다.
   case small
+  /// 본문 텍스트와 함께 놓아 가독성을 높일 때 쓴다.
   case medium
+  /// 가장 큰 밀도. 강조가 필요하거나 넉넉한 영역에 쓴다.
   case large
 
   public var height: CGFloat {
@@ -79,18 +84,31 @@ public enum BezierTagSize: String, CaseIterable {
   public var verticalLineSpacing: CGFloat { self.lineSpacing / 2 }
 }
 
+/// 태그의 색상 계열. Figma `Tag` 컴포넌트의 `variant` 프로퍼티에 대응 (case 이름 = Figma 값). Figma의 `monochrome-light`/`monochrome-dark`는 Swift Tag에서 제공하지 않는다.
 public enum BezierTagVariant: String, CaseIterable {
+  /// 색상 약속이 없는 중립 기본.
   case `default`
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case red
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case orange
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case yellow
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case olive
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case green
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case cobalt
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case purple
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case pink
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case navy
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case blue
+  /// 팀 내 색상↔의미 약속이 있는 카테고리 구분용. 상태·시맨틱 강조는 `BezierBadge`를 쓴다.
   case teal
 }
 

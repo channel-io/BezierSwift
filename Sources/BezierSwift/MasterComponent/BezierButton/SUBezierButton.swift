@@ -5,6 +5,8 @@
 
 import SwiftUI
 
+/// Bezier 디자인 시스템 V3 버튼 (SwiftUI). `size`·`variant`·`semantic` 세 축으로 형태를 지정하고,
+/// 아이콘과 로딩 상태를 지원한다. UIKit에서는 `BezierButton`을 사용한다.
 public struct SUBezierButton: View, Themeable {
   private let size: BezierButtonSize
   private let variant: BezierButtonVariant
@@ -13,11 +15,14 @@ public struct SUBezierButton: View, Themeable {
   private let leadingIcon: Image?
   private let trailingIcon: Image?
   private let isLoading: Bool
+  private let isFillWidth: Bool
   private let action: () -> Void
 
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.colorScheme) public var colorScheme
 
+  /// V3 버튼을 생성한다. `size`·`variant`·`semantic`은 필수이고, 콘텐츠(`title`·`leadingIcon`·`trailingIcon`)와
+  /// `isLoading`은 선택이다. `action`은 탭 시 실행되며, `isLoading`이 `true`인 동안에는 실행되지 않는다.
   public init(
     size: BezierButtonSize,
     variant: BezierButtonVariant,
@@ -28,6 +33,31 @@ public struct SUBezierButton: View, Themeable {
     isLoading: Bool = false,
     action: @escaping () -> Void
   ) {
+    self.init(
+      size: size,
+      variant: variant,
+      semantic: semantic,
+      title: title,
+      leadingIcon: leadingIcon,
+      trailingIcon: trailingIcon,
+      isLoading: isLoading,
+      isFillWidth: false,
+      action: action
+    )
+  }
+
+  // 배치는 컨테이너 책임이라 public으로 노출하지 않는다 — 모듈 내 컨테이너(SUBezierConfirmModal 등) 전용
+  init(
+    size: BezierButtonSize,
+    variant: BezierButtonVariant,
+    semantic: BezierButtonSemantic,
+    title: String? = nil,
+    leadingIcon: Image? = nil,
+    trailingIcon: Image? = nil,
+    isLoading: Bool = false,
+    isFillWidth: Bool,
+    action: @escaping () -> Void
+  ) {
     self.size = size
     self.variant = variant
     self.semantic = semantic
@@ -35,6 +65,7 @@ public struct SUBezierButton: View, Themeable {
     self.leadingIcon = leadingIcon
     self.trailingIcon = trailingIcon
     self.isLoading = isLoading
+    self.isFillWidth = isFillWidth
     self.action = action
   }
 
@@ -51,10 +82,11 @@ public struct SUBezierButton: View, Themeable {
       .padding(.horizontal, self.size.horizontalPadding)
       .frame(
         minWidth: self.size.minWidth,
+        maxWidth: self.isFillWidth ? .infinity : nil,
         minHeight: self.size.height,
         maxHeight: self.size.height
       )
-      .fixedSize(horizontal: true, vertical: false)
+      .fixedSize(horizontal: !self.isFillWidth, vertical: false)
     }
     .buttonStyle(
       SUBezierButtonStyle(

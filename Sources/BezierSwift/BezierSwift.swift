@@ -57,12 +57,27 @@ extension BezierSwift {
 }
 
 extension BezierSwift {
-  public static func showToast(param: BezierToastParam) {
-    BezierSwift.shared.toastViewModel.appendToastItem(BezierToastItem(param: param))
+  public static func showToast(
+    preset: BezierToastPreset = .info,
+    title: String,
+    onDismiss: (() -> Void)? = nil
+  ) {
+    let presentation = BezierToastPresentation(content: .v3(preset: preset, title: title), onDismiss: onDismiss)
+    BezierSwift.shared.toastViewModel.append(presentation)
   }
-  
-  public static func showToast(item: BezierToastItem) {
-    BezierSwift.shared.toastViewModel.appendToastItem(item)
+
+  public static func showLegacyToast(param: LegacyBezierToastParam) {
+    let presentation = BezierToastPresentation(content: .legacy(param), position: param.toastPosition)
+    BezierSwift.shared.toastViewModel.append(presentation)
+  }
+
+  public static func showLegacyToast(item: LegacyBezierToastItem) {
+    let presentation = BezierToastPresentation(
+      content: .legacy(item.param),
+      position: item.param.toastPosition,
+      onDismiss: item.onDismiss
+    )
+    BezierSwift.shared.toastViewModel.append(presentation)
   }
 }
 

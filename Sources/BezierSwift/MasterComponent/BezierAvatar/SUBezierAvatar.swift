@@ -5,20 +5,22 @@
 
 import SwiftUI
 
+/// 사용자·대상을 나타내는 아바타 (SwiftUI). 이미지·크기·테두리·접속 상태 표식을 조합한다. UIKit에서는 `BezierAvatar`를 사용한다.
 public struct SUBezierAvatar: View, Themeable {
   private let image: Image?
   private let size: BezierAvatarSize
   private let showBorder: Bool
-  private let statusType: BezierAvatarStatusType?
+  private let statusType: BezierStatusType?
 
   @Environment(\.colorScheme) public var colorScheme
   @Environment(\.isEnabled) private var isEnabled
 
+  /// 이미지·크기·테두리·상태 표식을 지정해 아바타를 만든다. 모든 인자는 기본값이 있어 필요한 것만 넘기면 된다.
   public init(
     image: Image? = nil,
     size: BezierAvatarSize = .size24,
     showBorder: Bool = false,
-    statusType: BezierAvatarStatusType? = nil
+    statusType: BezierStatusType? = nil
   ) {
     self.image = image
     self.size = size
@@ -66,11 +68,11 @@ public struct SUBezierAvatar: View, Themeable {
     if let statusType = self.statusType {
       Group {
         if let avatarStatusSize = self.size.matchingAvatarStatusSize {
-          SUBezierAvatarStatus(type: statusType, size: avatarStatusSize)
+          SUBezierStatus(type: statusType, size: avatarStatusSize)
         } else {
-          // size16 전용 6×6 mini status (AvatarStatus 매트릭스 외, SPEC Part 1 §4)
+          // size16 전용 6×6 mini status (Status 매트릭스 외, SPEC Part 1 §4)
           Circle()
-            .fill(self.palette(statusType.indicatorToken))
+            .fill(self.palette(statusType.circleToken))
             .frame(width: self.size.statusOverlayLength, height: self.size.statusOverlayLength)
         }
       }
@@ -114,7 +116,7 @@ struct SUBezierAvatar_Previews: PreviewProvider {
     }
   }
 
-  private static func avatarRow(showBorder: Bool, statusType: BezierAvatarStatusType?) -> some View {
+  private static func avatarRow(showBorder: Bool, statusType: BezierStatusType?) -> some View {
     ScrollView(.horizontal, showsIndicators: false) {
       HStack(alignment: .top, spacing: 24) {
         ForEach(BezierAvatarSize.allCases, id: \.self) { size in

@@ -5,11 +5,17 @@
 
 import UIKit
 
+/// 버튼의 크기. Figma `Button` 컴포넌트의 `size` 프로퍼티에 대응 (case 이름 = Figma 값). 놓이는 맥락의 밀도에 따라 고른다.
 public enum BezierButtonSize: String, CaseIterable {
+  /// 테이블 행·필터 칩 옆 등 가장 조밀한 맥락.
   case xsmall
+  /// 툴바·인라인 컨트롤 등 조밀한 맥락.
   case small
+  /// 폼 제출·모달 하단·헤더 등 표준 액션. 대부분의 기본값.
   case medium
+  /// Empty state CTA·온보딩 등 큰 진입점.
   case large
+  /// 가장 큰 강조가 필요한 대형 진입점.
   case xlarge
 
   public var height: CGFloat {
@@ -94,15 +100,23 @@ public enum BezierButtonSize: String, CaseIterable {
   public var fontWeight: BTFontWeight { .bold }
 }
 
+/// 버튼의 시각적 강조도. Figma `Button` 컴포넌트의 `variant` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierButtonVariant: String, CaseIterable {
+  /// 화면에서 가장 중요한 단일 액션(저장·확인·제출). 한 화면에 하나만 둔다.
   case filled
+  /// 주 액션과 함께 두는 보조 액션(취소·나중에)이나 행 내 인라인 액션(편집·복제).
   case outlined
+  /// 흐름을 방해하지 않는 최저 강조 액션(필터 초기화·도움말)이나 그룹의 세 번째 옵션.
   case ghost
 }
 
+/// 버튼의 의미론적 색상 역할. Figma `Button` 컴포넌트의 `semantic` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierButtonSemantic: String, CaseIterable {
+  /// 강조가 필요한 주 액션. 최고 위계.
   case primary
+  /// 중립·보조 조작. 낮은 대비의 보조 위계.
   case secondary
+  /// 되돌릴 수 없는 파괴적 액션(삭제·연결 끊기). 확인 모달과 함께 쓴다.
   case destructive
 }
 
@@ -116,7 +130,7 @@ extension BezierButtonVariant {
   func backgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
     switch (self, semantic) {
     case (.filled, .primary):     return .fillNeutralHeaviest
-    case (.filled, .secondary):   return .fillNeutralLight
+    case (.filled, .secondary):   return .fillNeutral
     case (.filled, .destructive): return .fillAccentRedHeavier
     case (.outlined, _),
          (.ghost, _):
@@ -132,10 +146,7 @@ extension BezierButtonVariant {
   }
 
   func loadingSpinnerToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
-    switch self {
-    case .filled: return .fillBright
-    case .outlined, .ghost: return self.foregroundToken(semantic)
-    }
+    self.foregroundToken(semantic)
   }
 
   func foregroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {

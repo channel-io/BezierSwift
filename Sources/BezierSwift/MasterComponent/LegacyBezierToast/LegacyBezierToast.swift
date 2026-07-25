@@ -1,0 +1,64 @@
+//
+//  LegacyBezierToast.swift
+//  BezierSwift
+//
+
+import SwiftUI
+
+private enum Metric {
+  static let horizontalPadding = CGFloat(10)
+
+  static let contentHStackSpacing = CGFloat(6)
+  static let contentHStackVerticalPadding = CGFloat(10)
+  static let contentHStackHorizontalPadding = CGFloat(14)
+
+  static let textTopPadding = CGFloat(4)
+}
+
+private enum Constant {
+  static let contentMaxWidth = CGFloat(460)
+  static let textLineLimit = 2
+  static let animationDuration = CGFloat(0.3)
+  static let disappearDelay = CGFloat(3.0)
+}
+
+struct LegacyBezierToast: View, Themeable {
+  @Environment(\.colorScheme) var colorScheme
+
+  private let param: LegacyBezierToastParam
+
+  init(param: LegacyBezierToastParam) {
+    self.param = param
+  }
+
+  var body: some View {
+    VStack(spacing: .zero) {
+      HStack(alignment: .top, spacing: Metric.contentHStackSpacing) {
+        if let leftItem = self.param.leftItem {
+          switch leftItem {
+          case .icon(let image, let color):
+            image
+              .renderingMode(.template)
+              .resizable()
+              .scaledToFit()
+              .frame(width: leftItem.length, height: leftItem.length)
+              .padding(.top, leftItem.top)
+              .foregroundColor(self.palette(color))
+          }
+        }
+
+        Text(self.param.title)
+          .applyBezierFontStyle(.bold14, semanticColorToken: .textAbsoluteWhite)
+          .lineLimit(Constant.textLineLimit)
+          .padding(.vertical, Metric.textTopPadding)
+      }
+      .padding(.vertical, Metric.contentHStackVerticalPadding)
+      .padding(.horizontal, Metric.contentHStackHorizontalPadding)
+    }
+    .background(self.palette(.bgBlackDarker))
+    .applyBlurEffect()
+    .applyBezierCornerRadius(type: .round20)
+    .frame(maxWidth: Constant.contentMaxWidth)
+    .padding(.horizontal, Metric.horizontalPadding)
+  }
+}

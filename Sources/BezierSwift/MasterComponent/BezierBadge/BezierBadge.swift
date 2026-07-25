@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 짧은 상태·속성을 색으로 구분해 보여주는 배지 컴포넌트 (UIKit). 서로 다른 성격의 값을 구분하는 용도이며, 동일 성격의 나열이나 dismiss 가능한 라벨에는 `BezierTag`를 쓴다. SwiftUI에서는 `SUBezierBadge`를 사용한다.
 public final class BezierBadge: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,18 +16,22 @@ public final class BezierBadge: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 배지 크기. 기본값은 `.small`.
   public var size: BezierBadgeSize = .small {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
+  /// 색상 변형. 기본값은 `.default`.
   public var variant: BezierBadgeVariant = .default {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
+  /// 배지에 표시할 텍스트. `nil`이거나 비어 있으면 라벨을 숨긴다.
   public var label: String? {
     didSet { if oldValue != self.label { self.refreshContent() } }
   }
 
+  /// 텍스트 앞에 붙는 아이콘. template 렌더링되어 `variant` 색으로 tint된다. 기본값은 `nil`.
   public var leadingIcon: UIImage? {
     didSet { self.refreshContent() }
   }
@@ -69,6 +74,7 @@ public final class BezierBadge: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 크기·색상 변형을 지정해 배지를 만든다. 텍스트·아이콘은 생성 후 `label`·`leadingIcon` 프로퍼티로 설정한다.
   public init(
     size: BezierBadgeSize = .small,
     variant: BezierBadgeVariant = .default

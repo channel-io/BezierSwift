@@ -29,6 +29,12 @@ enum CatalogRegistry {
     ),
     // MARK: - V3 Components
     CatalogItem(
+      id: "base-item",
+      title: "BaseItem",
+      section: .v3Components,
+      destination: AnyView(BaseItemCatalog())
+    ),
+    CatalogItem(
       id: "button",
       title: "Button",
       section: .v3Components,
@@ -69,6 +75,54 @@ enum CatalogRegistry {
       title: "Spinner",
       section: .v3Components,
       destination: AnyView(SpinnerCatalog())
+    ),
+    CatalogItem(
+      id: "divider",
+      title: "Divider",
+      section: .v3Components,
+      destination: AnyView(DividerCatalog())
+    ),
+    CatalogItem(
+      id: "modal",
+      title: "Modal",
+      section: .v3Components,
+      destination: AnyView(ModalCatalog())
+    ),
+    CatalogItem(
+      id: "toast",
+      title: "Toast",
+      section: .v3Components,
+      destination: AnyView(ToastCatalog())
+    ),
+    CatalogItem(
+      id: "confirm-modal",
+      title: "ConfirmModal",
+      section: .v3Components,
+      destination: AnyView(ConfirmModalCatalog())
+    ),
+    CatalogItem(
+      id: "banner",
+      title: "Banner",
+      section: .v3Components,
+      destination: AnyView(BannerCatalog())
+    ),
+    CatalogItem(
+      id: "section",
+      title: "Section",
+      section: .v3Components,
+      destination: AnyView(SectionCatalog())
+    ),
+    CatalogItem(
+      id: "section-item",
+      title: "SectionItem",
+      section: .v3Components,
+      destination: AnyView(SectionItemCatalog())
+    ),
+    CatalogItem(
+      id: "floating-banner",
+      title: "FloatingBanner",
+      section: .v3Components,
+      destination: AnyView(FloatingBannerCatalog())
     ),
     // MARK: - Legacy Components
     CatalogItem(
