@@ -22,7 +22,7 @@ public struct SUBezierButton: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
   /// V3 버튼을 생성한다. `size`·`variant`·`semantic`은 필수이고, 콘텐츠(`title`·`leadingIcon`·`trailingIcon`)와
-  /// `isLoading`은 선택이다. `action`은 탭 시 실행된다.
+  /// `isLoading`은 선택이다. `action`은 탭 시 실행되며, `isLoading`이 `true`인 동안에는 실행되지 않는다.
   public init(
     size: BezierButtonSize,
     variant: BezierButtonVariant,

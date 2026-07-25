@@ -18,7 +18,7 @@ public struct SUBezierIconButton: View, Themeable {
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.colorScheme) public var colorScheme
 
-  /// 크기·강조도·위계와 아이콘, 탭 시 실행할 `action`을 지정해 아이콘 버튼을 만든다. `isActive`는 toggle ON 상태를, `isLoading`은 스피너 표시를 제어한다. 기본 조합은 `ghost`×`secondary`.
+  /// 크기·강조도·위계와 아이콘, 탭 시 실행할 `action`을 지정해 아이콘 버튼을 만든다. `isActive`는 toggle ON(선택) 상태를, `isLoading`은 스피너 표시 여부를 지정한다. 기본 조합은 `ghost`×`secondary`.
   public init(
     size: BezierIconButtonSize = .medium,
     variant: BezierIconButtonVariant = .ghost,

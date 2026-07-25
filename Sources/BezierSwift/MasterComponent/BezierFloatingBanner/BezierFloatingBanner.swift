@@ -5,7 +5,7 @@
 
 import UIKit
 
-/// 화면 위에 떠 있는 플로팅 배너 (UIKit). `surfaceHighest`(흰색) 배경과 그림자(elevation)로 다른 콘텐츠 위에 부유하는 스낵바형 지속 메시지를 표현한다. 체험판 만료·긴급 공지처럼 강하게 부각할 상태 안내에 쓴다. 화면 내 고정 인라인 배너는 `BezierBanner`, 자동 소멸하는 즉각 피드백은 `BezierToast`를 쓴다. SwiftUI에서는 `SUBezierFloatingBanner`를 사용한다.
+/// 화면 위에 떠 있는 플로팅 배너 (UIKit). `surfaceHighest` 배경과 그림자(elevation)로 다른 콘텐츠 위에 부유하는 스낵바형 지속 메시지를 표현한다. 체험판 만료·긴급 공지처럼 강하게 부각할 상태 안내에 쓴다. 화면 내 고정 인라인 배너는 `BezierBanner`, 자동 소멸하는 즉각 피드백은 `BezierToast`를 쓴다. SwiftUI에서는 `SUBezierFloatingBanner`를 사용한다.
 public final class BezierFloatingBanner: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
