@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// leading·center·trailing 3영역으로 구성되는 리스트 행 아이템 (SwiftUI). 세 영역의 뷰를 `@ViewBuilder`로 채운다. UIKit에서는 `BezierBaseItem`을 사용한다.
 public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
   @Environment(\.isEnabled) private var isEnabled
@@ -17,6 +18,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
   private let centerSlot: CenterSlot
   private let trailing: Trailing
 
+  /// 텍스트·크기·탭 동작과 함께 leading·centerSlot·trailing 세 슬롯 뷰를 지정해 생성한다. `description`은 `size`가 `.small`이면 무시되고, `onTap`이 `nil`이면 정적인 행이 된다.
   public init(
     size: BezierBaseItemSize = .medium,
     title: String,
@@ -112,6 +114,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
 // MARK: - Convenience init (centerSlot 생략)
 
 extension SUBezierBaseItem where CenterSlot == EmptyView {
+  /// centerSlot을 생략하고 leading·trailing만으로 생성하는 편의 이니셜라이저.
   public init(
     size: BezierBaseItemSize = .medium,
     title: String,

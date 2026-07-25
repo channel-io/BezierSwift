@@ -7,6 +7,7 @@ import SwiftUI
 import UIKit
 
 extension View {
+  /// 이 뷰 위에 `SUBezierConfirmModal`을 dim 배경과 함께 띄우는 modifier. `isPresented` 바인딩으로 표시·해제를 제어한다.
   public func bezierConfirmModal(
     isPresented: Binding<Bool>,
     title: String,
@@ -30,6 +31,7 @@ extension View {
     )
   }
 
+  /// 커스텀 콘텐츠를 추가로 담아 `SUBezierConfirmModal`을 띄우는 modifier 오버로드.
   public func bezierConfirmModal<CustomContent: View>(
     isPresented: Binding<Bool>,
     title: String,

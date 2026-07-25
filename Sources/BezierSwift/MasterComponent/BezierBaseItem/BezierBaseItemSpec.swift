@@ -7,9 +7,13 @@ import Foundation
 
 // MARK: - Size
 
+/// 행(row) 아이템의 크기. Figma `_BaseItem` 컴포넌트의 `size` 프로퍼티에 대응 (case 이름 = Figma 값).
 public enum BezierBaseItemSize: CaseIterable {
+  /// 항목을 더 촘촘히 많이 노출할 때 쓴다. 단 `description`을 지원하지 않으므로, 설명이 필요하면 `medium`을 쓴다.
   case small
+  /// 대부분의 리스트 행에 쓰는 기본값.
   case medium
+  /// `leadingContent`(Avatar 등)가 커져 더 큰 행 높이가 필요할 때만 쓴다.
   case large
 
   var minHeight: CGFloat {

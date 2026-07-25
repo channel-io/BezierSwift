@@ -6,6 +6,7 @@
 import UIKit
 
 extension BezierModalViewController {
+  /// 확인 모달을 카드로 감싸 dim 배경과 함께 띄울 수 있는 컨트롤러를 만든다. 각 버튼 액션은 탭 시 모달을 먼저 닫은 뒤 핸들러를 실행한다.
   public static func confirm(
     title: String,
     description: String? = nil,

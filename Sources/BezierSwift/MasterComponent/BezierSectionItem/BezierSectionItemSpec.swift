@@ -7,9 +7,13 @@ import CoreGraphics
 
 // MARK: - Size
 
+/// 섹션 아이템의 크기. Figma `Internal/SectionItem`의 `size` 프로퍼티에 대응 (case 이름 = Figma 값). 행 높이·leading 크기·description 배치 구조를 결정한다.
 public enum BezierSectionItemSize: CaseIterable {
+  /// 최소 높이 40, leading 24×24. 조밀한 리스트에 쓴다.
   case small
+  /// 최소 높이 48, leading 24×24. 대부분의 섹션 행에 쓰는 기본값이다.
   case medium
+  /// 최소 높이 52, leading 36×36. description을 label 아래 nested로 배치한다. 아바타·설명이 함께 있는 행에 쓴다.
   case large
 
   var minHeight: CGFloat {
@@ -49,10 +53,15 @@ public enum BezierSectionItemSize: CaseIterable {
 
 // MARK: - Leading
 
+/// 섹션 아이템의 leading(좌측) 콘텐츠 유형. Figma `Internal/SectionItem`의 `leadingType` 프로퍼티에 대응 (case 이름 = Figma 값). `Content`는 avatar/custom 슬롯에 넣을 뷰 타입이다.
 public enum BezierSectionItemLeading<Content> {
+  /// leading 없이 텍스트만 시작하는 행.
   case none
+  /// `BezierIcon` 자산을 leading 아이콘으로 표시한다.
   case icon(BezierIcon)
+  /// 아바타 뷰를 leading에 배치한다 (Figma는 Avatar 인스턴스).
   case avatar(Content)
+  /// 임의의 뷰를 leading에 배치하는 자유 구조. 이때 label·description·centerSlot 대신 `customCenterContent`로 중앙을 채운다.
   case custom(Content)
 
   var isCustom: Bool {
@@ -72,13 +81,21 @@ public enum BezierSectionItemLeading<Content> {
 
 // MARK: - Accessory
 
+/// 섹션 아이템 우측 accessory 유형. Figma `Internal/SectionItemAccessory`의 `type` 프로퍼티에 대응 (case 이름 = Figma 값). 모두 탭 불가한 상태 표시자다 (단일 탭 타겟 불변식).
 public enum BezierSectionItemAccessory<Content> {
+  /// `chevronSmallRight` 아이콘. 다음 화면으로 이동하는 행에 쓴다.
   case navigation
+  /// `arrowRightUpSmall` 아이콘. 외부 링크로 나가는 행에 쓴다.
   case outlink
+  /// 선택된 값 텍스트 + `chevronUpdown`. 단일 선택 값을 보여줄 때 쓴다.
   case select(value: String)
+  /// 값들을 콤마로 이어 붙인 텍스트 + `chevronUpdown`. 다중 선택 값을 보여줄 때 쓴다.
   case multiselect(values: [String])
+  /// 값 텍스트만 표시한다. 편집 없이 현재 값만 보여줄 때 쓴다.
   case display(value: String)
+  /// 켜짐/꺼짐 상태를 나타내는 비인터랙티브 토글 표시자.
   case toggle(isOn: Bool)
+  /// 임의의 뷰를 accessory로 배치한다 (포커서블 컨트롤 금지).
   case custom(Content)
 }
 

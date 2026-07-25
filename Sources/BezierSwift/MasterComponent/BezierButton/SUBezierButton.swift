@@ -5,6 +5,8 @@
 
 import SwiftUI
 
+/// Bezier 디자인 시스템 V3 버튼 (SwiftUI). `size`·`variant`·`semantic` 세 축으로 형태를 지정하고,
+/// 아이콘과 로딩 상태를 지원한다. UIKit에서는 `BezierButton`을 사용한다.
 public struct SUBezierButton: View, Themeable {
   private let size: BezierButtonSize
   private let variant: BezierButtonVariant
@@ -19,6 +21,8 @@ public struct SUBezierButton: View, Themeable {
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.colorScheme) public var colorScheme
 
+  /// V3 버튼을 생성한다. `size`·`variant`·`semantic`은 필수이고, 콘텐츠(`title`·`leadingIcon`·`trailingIcon`)와
+  /// `isLoading`은 선택이다. `action`은 탭 시 실행되며, `isLoading`이 `true`인 동안에는 실행되지 않는다.
   public init(
     size: BezierButtonSize,
     variant: BezierButtonVariant,

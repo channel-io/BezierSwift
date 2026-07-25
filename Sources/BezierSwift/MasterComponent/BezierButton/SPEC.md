@@ -141,3 +141,13 @@ size 별 raw 값:
 - 크기 축소(§7 크기 표)는 label 색 스피너가 발생시키는 시선 강탈을 완화하기 위한 후속 조정이다.
 
 > Spinner 색은 GitHub design-team `Button-spec.md §6`(v1.1, "Spinner 색 = 라벨 텍스트 색" 원칙)과 일치한다. 크기(§7 크기 표)는 MOB-5322에서 확정한 값을 유지한다.
+
+## 8. 매핑되는 코드 심볼
+
+| 정의 | 파일 |
+|---|---|
+| UIKit 구현 | `BezierButton.swift` (`UIControl`, `BezierComponentable`) |
+| SwiftUI 구현 | `SUBezierButton.swift` (`View`, `Themeable`) |
+| size / variant / semantic 정의 | `BezierButtonSpec.swift` (`BezierButtonSize`, `BezierButtonVariant`, `BezierButtonSemantic`, `BezierButtonConstant`) |
+
+> 코드 측에 본 spec의 SSOT(Figma)와 어긋나는 정의가 존재한다면, 그것은 코드 측의 정리 대상이며 spec에 반영하지 않는다.

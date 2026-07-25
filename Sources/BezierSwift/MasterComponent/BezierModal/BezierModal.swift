@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 현재 맥락을 유지한 채 집중 작업(설정·폼·정보 확인)을 담는 모달 카드 (UIKit). 단순 확인 흐름은 `BezierConfirmModal`을 쓴다. Figma의 `size`(420/540 등 너비 프리셋)는 Figma 전용이라 코드에는 prop이 없고, 컨테이너에서 너비를 직접 지정한다. SwiftUI에서는 `SUBezierModal`을 사용한다.
 public final class BezierModal: UIView, BezierComponentable {
   // 프레젠테이션 확장 제약(BezierModalPresentationConstant)이 이 값을 기준으로 +1 우선순위를 계산한다
   static let widthConstraintPriority: UILayoutPriority = .defaultHigh
@@ -18,6 +19,7 @@ public final class BezierModal: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 모달 카드 안쪽에 콘텐츠를 담는 컨테이너. 이 뷰에 서브뷰를 추가해 모달 본문을 구성한다.
   public let contentView = UIView()
 
   // MARK: - Subviews
@@ -26,6 +28,7 @@ public final class BezierModal: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 빈 모달 카드를 생성한다. 선택 옵션이 없어 인자를 받지 않으며, 본문은 `contentView`에 직접 구성한다.
   public init() {
     super.init(frame: .zero)
     self.setUp()

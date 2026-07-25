@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 관련 행을 의미 단위로 묶는 섹션 컨테이너 (SwiftUI). 데이터 컬렉션을 받아 헤더(`SUBezierSectionLabel`) + 행 목록을 그리며 행에는 `SUBezierSectionItem`을 넣는다. `ScrollView`+`LazyVStack` 안에서 쓴다. UIKit에서는 `BezierSection`(정적) 또는 `BezierSectionLayout`(동적)을 사용한다.
 public struct SUBezierSection<Data: RandomAccessCollection, ID: Hashable, Row: View, LabelTrailing: View>: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
@@ -16,6 +17,7 @@ public struct SUBezierSection<Data: RandomAccessCollection, ID: Hashable, Row: V
   private let labelTrailing: LabelTrailing
   private let rowContent: (Data.Element) -> Row
 
+  /// 데이터 컬렉션·식별 keyPath·variant·헤더로 섹션을 만든다. `rowContent`로 각 원소의 행 뷰를, `labelTrailing`으로 헤더 우측 액션을 구성한다.
   public init(
     _ data: Data,
     id: KeyPath<Data.Element, ID>,
@@ -127,6 +129,7 @@ public struct SUBezierSection<Data: RandomAccessCollection, ID: Hashable, Row: V
 // MARK: - Convenience init
 
 extension SUBezierSection where LabelTrailing == EmptyView {
+  /// 헤더 우측 액션 없이 만드는 편의 이니셜라이저.
   public init(
     _ data: Data,
     id: KeyPath<Data.Element, ID>,
@@ -148,6 +151,7 @@ extension SUBezierSection where LabelTrailing == EmptyView {
 }
 
 extension SUBezierSection where Data.Element: Identifiable, ID == Data.Element.ID {
+  /// 원소가 `Identifiable`일 때 `id` keyPath를 생략하는 편의 이니셜라이저.
   public init(
     _ data: Data,
     variant: BezierSectionVariant = .solid,
@@ -169,6 +173,7 @@ extension SUBezierSection where Data.Element: Identifiable, ID == Data.Element.I
 }
 
 extension SUBezierSection where Data.Element: Identifiable, ID == Data.Element.ID, LabelTrailing == EmptyView {
+  /// 원소가 `Identifiable`이고 헤더 우측 액션이 없을 때 쓰는 편의 이니셜라이저.
   public init(
     _ data: Data,
     variant: BezierSectionVariant = .solid,

@@ -5,6 +5,8 @@
 
 import UIKit
 
+/// Bezier 디자인 시스템 V3 버튼 (UIKit). `size`·`variant`·`semantic` 세 축으로 형태를 지정하고,
+/// 아이콘과 로딩 상태를 지원한다. SwiftUI에서는 `SUBezierButton`을 사용한다.
 public final class BezierButton: UIControl, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,30 +17,37 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 버튼 크기. 기본값 `.medium`.
   public var size: BezierButtonSize = .medium {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
 
+  /// 시각적 강조도. 기본값 `.filled`.
   public var variant: BezierButtonVariant = .filled {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
+  /// 의미론적 색상 역할. 기본값 `.primary`.
   public var semantic: BezierButtonSemantic = .primary {
     didSet { if oldValue != self.semantic { self.refreshAppearance() } }
   }
 
+  /// 버튼 라벨. `nil`이거나 빈 문자열이면 텍스트를 숨긴다.
   public var title: String? {
     didSet { if oldValue != self.title { self.refreshContent() } }
   }
 
+  /// 라벨 왼쪽에 표시되는 아이콘. `nil`이면 숨긴다.
   public var leadingIcon: UIImage? {
     didSet { self.refreshContent() }
   }
 
+  /// 라벨 오른쪽에 표시되는 아이콘. `nil`이면 숨긴다.
   public var trailingIcon: UIImage? {
     didSet { self.refreshContent() }
   }
 
+  /// `true`면 스피너를 표시하고 콘텐츠를 숨기며 탭을 차단한다. 비동기 작업 트리거 시 사용.
   public var isLoading: Bool = false {
     didSet { if oldValue != self.isLoading { self.refreshLoading() } }
   }
@@ -103,6 +112,8 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   // MARK: - Init
 
+  /// 버튼을 생성한다. 콘텐츠(`title`·`leadingIcon`·`trailingIcon`)와 상태(`isLoading` 등)는
+  /// 생성 후 property로 설정한다.
   public init(
     size: BezierButtonSize = .medium,
     variant: BezierButtonVariant = .filled,

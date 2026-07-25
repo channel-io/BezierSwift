@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 짧은 상태·속성을 색으로 구분해 보여주는 배지 컴포넌트 (SwiftUI). 서로 다른 성격의 값을 구분하는 용도이며, 동일 성격의 나열이나 dismiss 가능한 라벨에는 `SUBezierTag`를 쓴다. UIKit에서는 `BezierBadge`를 사용한다.
 public struct SUBezierBadge: View, Themeable {
   private let size: BezierBadgeSize
   private let variant: BezierBadgeVariant
@@ -13,6 +14,7 @@ public struct SUBezierBadge: View, Themeable {
 
   @Environment(\.colorScheme) public var colorScheme
 
+  /// 크기·색상 변형과 함께 표시할 텍스트(`label`)·아이콘(`leadingIcon`)을 지정해 배지를 만든다.
   public init(
     size: BezierBadgeSize = .small,
     variant: BezierBadgeVariant = .default,

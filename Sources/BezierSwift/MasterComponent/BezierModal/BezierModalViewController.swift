@@ -15,6 +15,7 @@ enum BezierModalPresentationConstant {
   static let widthExpansionPriority = UILayoutPriority(BezierModal.widthConstraintPriority.rawValue + 1)
 }
 
+/// `BezierModal` 카드를 화면 중앙에 dim 배경과 함께 띄우는 프레젠테이션 컨트롤러. `present(_:animated:)`로 표시한다.
 public final class BezierModalViewController: UIViewController, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -25,6 +26,7 @@ public final class BezierModalViewController: UIViewController, BezierComponenta
 
   // MARK: - Public Properties
 
+  /// 화면에 띄우는 모달 뷰. `BezierModal` 또는 그 카드를 감싼 뷰가 들어간다.
   public let modalView: UIView
 
   // MARK: - Subviews
@@ -33,6 +35,7 @@ public final class BezierModalViewController: UIViewController, BezierComponenta
 
   // MARK: - Init
 
+  /// 이미 구성된 모달 뷰를 그대로 받아 표시하는 이니셜라이저. dim 배경·중앙 정렬·crossDissolve 전환이 함께 설정된다.
   public init(modalView: UIView) {
     self.modalView = modalView
     super.init(nibName: nil, bundle: nil)
@@ -40,6 +43,7 @@ public final class BezierModalViewController: UIViewController, BezierComponenta
     self.modalTransitionStyle = .crossDissolve
   }
 
+  /// 임의의 콘텐츠 뷰를 기본 `BezierModal` 카드로 감싸 표시하는 편의 이니셜라이저.
   public convenience init(contentView: UIView) {
     let modal = BezierModal()
     contentView.translatesAutoresizingMaskIntoConstraints = false

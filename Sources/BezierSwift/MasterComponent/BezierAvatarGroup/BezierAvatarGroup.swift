@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 여러 아바타를 겹치거나 나란히 묶어 보여주는 그룹 (UIKit). 최대 3명까지 표시하고 초과분은 아이콘·카운트로 나타낸다. SwiftUI에서는 `SUBezierAvatarGroup`을 사용한다.
 public final class BezierAvatarGroup: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,14 +16,17 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 표시할 아바타 이미지 목록. 최대 3개까지 보이고 나머지는 초과 표식으로 접힌다.
   public var avatars: [UIImage?] = [] {
     didSet { self.refresh() }
   }
 
+  /// 아바타 크기. 기본값은 `.size20`이다.
   public var size: BezierAvatarGroupSize = .size20 {
     didSet { if oldValue != self.size { self.refresh() } }
   }
 
+  /// 초과 인원 표현 방식. 기본값은 `.icon`이다.
   public var ellipsisType: BezierAvatarGroupEllipsisType = .icon {
     didSet { if oldValue != self.ellipsisType { self.refresh() } }
   }
@@ -41,6 +45,7 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 아바타 이미지 목록·크기·초과 표현·겹침 여부를 지정해 그룹을 만든다.
   public init(
     avatars: [UIImage?] = [],
     size: BezierAvatarGroupSize = .size20,

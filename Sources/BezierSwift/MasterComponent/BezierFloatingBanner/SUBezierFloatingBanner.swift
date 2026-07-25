@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// 화면 위에 떠 있는 플로팅 배너 (SwiftUI). `surfaceHighest` 배경과 그림자로 콘텐츠 위에 부유하는 스낵바형 지속 메시지를 표현한다. 긴급·강조 상태 안내에 쓰며, 화면 내 고정 인라인 배너는 `SUBezierBanner`, 자동 소멸하는 즉각 피드백은 `SUBezierToast`를 쓴다. UIKit에서는 `BezierFloatingBanner`를 사용한다.
 public struct SUBezierFloatingBanner: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
@@ -14,6 +15,7 @@ public struct SUBezierFloatingBanner: View, Themeable {
   private let description: String
   private let clickArea: BezierFloatingBannerClickArea
 
+  /// leading 아이콘·제목·본문·탭 동작을 지정해 배너를 만든다. `description`만 필수이며 나머지는 선택이다.
   public init(
     leadingIcon: BezierIcon? = nil,
     leadingIconColor: BCSemanticToken = BezierFloatingBannerConstant.defaultLeadingIconColor,

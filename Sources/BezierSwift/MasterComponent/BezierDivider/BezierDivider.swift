@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 콘텐츠를 구분하는 가로 구분선 (UIKit). Figma `Divider`의 `orientation` 중 가로(horizontal)만 지원하며 세로(vertical)는 제공하지 않는다. SwiftUI에서는 `SUBezierDivider`를 사용한다.
 public final class BezierDivider: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,10 +16,12 @@ public final class BezierDivider: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 좌우 끝의 여백 적용 여부. Figma `Divider`의 `sideIndent` BOOLEAN 프로퍼티에 대응. 기본값 `true`.
   public var sideIndent: Bool = true {
     didSet { if oldValue != self.sideIndent { self.refreshLayout() } }
   }
 
+  /// 선 위아래(상하) 여백 적용 여부. Figma `Divider`의 `parallelIndent` BOOLEAN 프로퍼티에 대응. 기본값 `true`.
   public var parallelIndent: Bool = true {
     didSet { if oldValue != self.parallelIndent { self.refreshLayout() } }
   }
@@ -34,6 +37,7 @@ public final class BezierDivider: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 좌우(`sideIndent`)·상하(`parallelIndent`) 여백 적용 여부를 지정해 생성한다. 두 값 모두 기본 `true`다.
   public init(sideIndent: Bool = true, parallelIndent: Bool = true) {
     self.sideIndent = sideIndent
     self.parallelIndent = parallelIndent

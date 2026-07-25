@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 화면 흐름 안내용 인라인(Inner) 배너 컴포넌트 (UIKit). 콘텐츠 영역 안에 놓여 상황을 안내한다. SwiftUI에서는 `SUBezierBanner`를 사용한다.
 public final class BezierBanner: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,22 +16,27 @@ public final class BezierBanner: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 배너의 색상 계열. 기본값 `.default`.
   public var variant: BezierBannerVariant = .default {
     didSet { if oldValue != self.variant { self.refreshAppearance() } }
   }
 
+  /// 좌측에 표시할 아이콘. 기본값 `nil`.
   public var leadingIcon: BezierIcon? {
     didSet { if oldValue != self.leadingIcon { self.refreshContent() } }
   }
 
+  /// 배너 제목(볼드). 기본값 `nil`.
   public var title: String? {
     didSet { if oldValue != self.title { self.refreshContent() } }
   }
 
+  /// 배너 본문 텍스트. 기본값은 빈 문자열.
   public var bannerDescription: String = "" {
     didSet { if oldValue != self.bannerDescription { self.refreshContent() } }
   }
 
+  /// 배너의 클릭(탭) 동작 영역. 기본값 `.none`.
   public var clickArea: BezierBannerClickArea = .none {
     didSet { self.refreshClickArea() }
   }
@@ -92,6 +98,7 @@ public final class BezierBanner: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// 색상 계열·아이콘·제목·본문·클릭 영역을 지정해 배너를 생성한다.
   public init(
     variant: BezierBannerVariant = .default,
     leadingIcon: BezierIcon? = nil,

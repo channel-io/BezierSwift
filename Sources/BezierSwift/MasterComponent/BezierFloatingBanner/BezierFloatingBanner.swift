@@ -5,6 +5,7 @@
 
 import UIKit
 
+/// 화면 위에 떠 있는 플로팅 배너 (UIKit). `surfaceHighest` 배경과 그림자(elevation)로 다른 콘텐츠 위에 부유하는 스낵바형 지속 메시지를 표현한다. 체험판 만료·긴급 공지처럼 강하게 부각할 상태 안내에 쓴다. 화면 내 고정 인라인 배너는 `BezierBanner`, 자동 소멸하는 즉각 피드백은 `BezierToast`를 쓴다. SwiftUI에서는 `SUBezierFloatingBanner`를 사용한다.
 public final class BezierFloatingBanner: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -15,22 +16,27 @@ public final class BezierFloatingBanner: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
+  /// 좌측에 표시할 아이콘. `nil`이면 아이콘 영역을 숨긴다 (기본값 `nil`).
   public var leadingIcon: BezierIcon? {
     didSet { if oldValue != self.leadingIcon { self.refreshContent() } }
   }
 
+  /// leading 아이콘의 tint 색. 아이콘 색으로 상태(성공·경고 등) 의미를 암시한다 (기본값 `iconNeutral`).
   public var leadingIconColor: BCSemanticToken = BezierFloatingBannerConstant.defaultLeadingIconColor {
     didSet { if oldValue != self.leadingIconColor { self.refreshAppearance() } }
   }
 
+  /// 본문 위에 굵게 표시하는 제목. Figma Floating 타입에는 없는 코드 전용 확장이며 `nil`이면 숨긴다 (기본값 `nil`).
   public var title: String? {
     didSet { if oldValue != self.title { self.refreshContent() } }
   }
 
+  /// 배너 본문 텍스트. init의 `description` 파라미터로 주입되는 필수 메시지다.
   public var bannerDescription: String = "" {
     didSet { if oldValue != self.bannerDescription { self.refreshContent() } }
   }
 
+  /// 배너의 탭 동작(none/full/actionIcon) (기본값 `.none`).
   public var clickArea: BezierFloatingBannerClickArea = .none {
     didSet { self.refreshClickArea() }
   }
@@ -92,6 +98,7 @@ public final class BezierFloatingBanner: UIView, BezierComponentable {
 
   // MARK: - Init
 
+  /// leading 아이콘·제목·본문·탭 동작을 지정해 배너를 만든다. `description`만 필수이며 나머지는 선택이다.
   public init(
     leadingIcon: BezierIcon? = nil,
     leadingIconColor: BCSemanticToken = BezierFloatingBannerConstant.defaultLeadingIconColor,
