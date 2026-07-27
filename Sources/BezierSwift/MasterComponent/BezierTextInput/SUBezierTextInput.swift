@@ -67,6 +67,8 @@ public struct SUBezierTextInput<Leading: View, Trailing: View>: View, Themeable 
         .fill(self.palette(BezierBaseInputAppearance.backgroundColor(variant: self.variant.base, state: self.state)))
     )
     .overlay { self.borderOverlay }
+    // opacity는 per-view 곱이라 배경·보더가 겹치는 링 영역이 이중 블렌딩됨 — 합성 후 1회 적용 (UIKit self.alpha와 동일 결과)
+    .compositingGroup()
     .opacity(self.state == .disabled ? BezierBaseInputConstant.disabledOpacity : 1)
     .contentShape(Rectangle())
     .onTapGesture {

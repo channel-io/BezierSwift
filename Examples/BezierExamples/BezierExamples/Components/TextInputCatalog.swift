@@ -175,13 +175,24 @@ private struct TextInputUIKitRepresentable: UIViewRepresentable {
     Coordinator()
   }
 
-  func makeUIView(context: Context) -> BezierTextInput {
+  // BezierTextInput을 representable 루트로 직접 반환하면 SwiftUI가 프레임을 직접 지정하는 과정에서
+  // 내부 스택의 trailing 제약이 재해석되지 않아 콘텐츠가 hug 폭으로 붙는다. wrapper에 pin해 우회한다.
+  func makeUIView(context: Context) -> UIView {
+    let wrapper = UIView()
     let input = BezierTextInput(placeholder: "예: hong@company.com")
     input.onTextChanged = { self.text = $0 }
-    return input
+    wrapper.addSubview(input)
+    NSLayoutConstraint.activate([
+      input.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
+      input.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor),
+      input.topAnchor.constraint(equalTo: wrapper.topAnchor),
+      input.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor),
+    ])
+    return wrapper
   }
 
-  func updateUIView(_ input: BezierTextInput, context: Context) {
+  func updateUIView(_ wrapper: UIView, context: Context) {
+    guard let input = wrapper.subviews.compactMap({ $0 as? BezierTextInput }).first else { return }
     input.variant = self.variant
     input.size = self.size
     input.hasError = self.hasError
@@ -202,7 +213,7 @@ private struct TextInputUIKitRepresentable: UIViewRepresentable {
     }
   }
 
-  func sizeThatFits(_ proposal: ProposedViewSize, uiView: BezierTextInput, context: Context) -> CGSize? {
+  func sizeThatFits(_ proposal: ProposedViewSize, uiView: UIView, context: Context) -> CGSize? {
     let width = proposal.width ?? 320
     let fitting = uiView.systemLayoutSizeFitting(
       CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
