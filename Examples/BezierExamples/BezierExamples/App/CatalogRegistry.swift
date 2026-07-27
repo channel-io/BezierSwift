@@ -119,6 +119,12 @@ enum CatalogRegistry {
       destination: AnyView(SectionItemCatalog())
     ),
     CatalogItem(
+      id: "collapsible-section",
+      title: "CollapsibleSection",
+      section: .v3Components,
+      destination: AnyView(CollapsibleSectionCatalog())
+    ),
+    CatalogItem(
       id: "floating-banner",
       title: "FloatingBanner",
       section: .v3Components,
