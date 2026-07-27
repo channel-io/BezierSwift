@@ -43,12 +43,20 @@ public final class BezierDropdownMenuItem: UIView, BezierComponentable {
 
   /// 제목 우측에 인라인으로 붙는 슬롯 뷰(높이 24, 초과 시 잘린다). `nil`이면 비운다.
   public var centerSlot: UIView? {
-    didSet { self.baseItem.centerSlot = self.centerSlot.map { self.makeFixedHeightSlot($0) } }
+    didSet {
+      self.baseItem.centerSlot = self.centerSlot.map {
+        self.makeFixedHeightSlot($0, alignment: .leading)
+      }
+    }
   }
 
   /// 우측 슬롯 뷰(높이 24) — 단축키 텍스트·배지 등 읽기 전용 보조 정보 전용. `nil`이면 비운다.
   public var trailingContent: UIView? {
-    didSet { self.baseItem.trailingContent = self.trailingContent.map { self.makeFixedHeightSlot($0) } }
+    didSet {
+      self.baseItem.trailingContent = self.trailingContent.map {
+        self.makeFixedHeightSlot($0, alignment: .trailing)
+      }
+    }
   }
 
   /// 항목 탭 핸들러. `nil`이면 비인터랙티브(pressed 없음)가 된다.
@@ -119,17 +127,35 @@ public final class BezierDropdownMenuItem: UIView, BezierComponentable {
 
   // MARK: - Slot
 
-  private func makeFixedHeightSlot(_ view: UIView) -> UIView {
+  private enum SlotAlignment {
+    case leading
+    case trailing
+  }
+
+  // 슬롯 컨테이너는 intrinsic width가 없어 BaseItem 행의 여분 폭이 hugging 설정과 무관하게
+  // 이 컨테이너로 분배될 수 있다 (시뮬레이터 실측). 콘텐츠를 컨테이너 안에서 슬롯 방향으로
+  // 정렬해 컨테이너가 늘어나도 시각 결과가 Figma(trailing 우측 끝·centerSlot label 옆)와 같게 한다.
+  private func makeFixedHeightSlot(_ view: UIView, alignment: SlotAlignment) -> UIView {
     let container = UIView()
     container.clipsToBounds = true
+    container.setContentHuggingPriority(.required, for: .horizontal)
+    container.setContentCompressionResistancePriority(.required, for: .horizontal)
     view.translatesAutoresizingMaskIntoConstraints = false
     container.addSubview(view)
-    NSLayoutConstraint.activate([
+
+    var constraints = [
       container.heightAnchor.constraint(equalToConstant: BezierDropdownMenuItemConstant.slotHeight),
-      view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-      view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
       view.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-    ])
+    ]
+    switch alignment {
+    case .leading:
+      constraints.append(view.leadingAnchor.constraint(equalTo: container.leadingAnchor))
+      constraints.append(view.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor))
+    case .trailing:
+      constraints.append(view.trailingAnchor.constraint(equalTo: container.trailingAnchor))
+      constraints.append(view.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor))
+    }
+    NSLayoutConstraint.activate(constraints)
     return container
   }
 
