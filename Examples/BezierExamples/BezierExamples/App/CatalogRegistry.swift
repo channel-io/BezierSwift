@@ -124,6 +124,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(FloatingBannerCatalog())
     ),
+    CatalogItem(
+      id: "text-input",
+      title: "TextInput",
+      section: .v3Components,
+      destination: AnyView(TextInputCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
