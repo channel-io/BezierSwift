@@ -46,6 +46,8 @@ public struct SUBezierCheckbox: View, Themeable {
       .contentShape(Rectangle())
     }
     .buttonStyle(SUBezierCheckboxButtonStyle())
+    // 레이어별 opacity 개별 적용 시 박스 fill·border 겹침이 이음새로 비쳐 flatten 후 일괄 적용
+    .compositingGroup()
     .opacity(self.isEnabled ? 1 : BezierCheckboxConstant.disabledOpacity)
   }
 

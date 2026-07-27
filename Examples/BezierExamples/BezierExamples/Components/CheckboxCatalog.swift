@@ -62,13 +62,15 @@ struct CheckboxCatalog: View {
   }
 
   private var uiKitPreview: some View {
-    CheckboxUIKitRepresentable(hasError: self.hasError, isEnabled: self.isEnabled)
+    // UIViewRepresentable 안 UIControl.isEnabled는 SwiftUI가 environment로 강제 동기화하므로
+    // updateUIView 수동 주입 대신 .disabled()로 제어한다.
+    CheckboxUIKitRepresentable(hasError: self.hasError)
+      .disabled(!self.isEnabled)
   }
 }
 
 private struct CheckboxUIKitRepresentable: UIViewRepresentable {
   let hasError: Bool
-  let isEnabled: Bool
 
   func makeUIView(context: Context) -> UIView {
     let wrapper = UIView()
@@ -115,7 +117,9 @@ private struct CheckboxUIKitRepresentable: UIViewRepresentable {
     guard let stackView = wrapper.subviews.first as? UIStackView else { return }
     for case let checkbox as BezierCheckbox in stackView.arrangedSubviews {
       checkbox.hasError = self.hasError
-      checkbox.isEnabled = self.isEnabled
+      // root가 UIControl이 아니라 SwiftUI의 isEnabled 자동 동기화가 nested control까지 닿지 않음
+      // → environment 값을 직접 주입 (.disabled() modifier와 일관)
+      checkbox.isEnabled = context.environment.isEnabled
     }
   }
 
