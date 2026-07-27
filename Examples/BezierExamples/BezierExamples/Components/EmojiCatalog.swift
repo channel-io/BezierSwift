@@ -6,7 +6,7 @@ struct EmojiCatalog: View {
   @State private var name: String = "grinning"
   @State private var size: BezierEmojiSize = .size48
 
-  private let sampleNames = ["grinning", "smiley", "thumbsup", "heart", "tada"]
+  private let sampleNames = ["grinning", "smiley", "wave", "heart", "tada"]
 
   var body: some View {
     CatalogScreen(title: "Emoji") {

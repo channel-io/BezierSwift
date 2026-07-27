@@ -85,7 +85,7 @@ struct SUBezierEmoji_Previews: PreviewProvider {
           .font(.caption.weight(.semibold))
           .foregroundColor(.secondary)
         HStack(spacing: 12) {
-          ForEach(["grinning", "smiley", "thumbsup"], id: \.self) { name in
+          ForEach(["grinning", "smiley", "wave"], id: \.self) { name in
             SUBezierEmoji(name: name, size: .size48)
           }
         }
