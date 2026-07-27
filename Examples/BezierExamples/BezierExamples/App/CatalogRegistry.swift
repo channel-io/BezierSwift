@@ -71,6 +71,12 @@ enum CatalogRegistry {
       destination: AnyView(AvatarGroupCatalog())
     ),
     CatalogItem(
+      id: "emoji",
+      title: "Emoji",
+      section: .v3Components,
+      destination: AnyView(EmojiCatalog())
+    ),
+    CatalogItem(
       id: "spinner",
       title: "Spinner",
       section: .v3Components,
