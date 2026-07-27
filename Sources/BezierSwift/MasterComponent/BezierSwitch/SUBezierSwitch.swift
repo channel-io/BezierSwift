@@ -59,6 +59,8 @@ public struct SUBezierSwitch: View, Themeable {
       )
     }
     .buttonStyle(SUBezierSwitchButtonStyle())
+    // compositingGroup 없이는 opacity가 per-view 곱으로 렌더돼 thumb 아래 트랙이 비침 — Figma·UIKit(그룹 opacity)과 동일한 flatten 강제
+    .compositingGroup()
     .opacity(self.isEnabled ? 1 : BezierSwitchConstant.disabledOpacity)
   }
 

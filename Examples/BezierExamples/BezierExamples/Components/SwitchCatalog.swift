@@ -57,10 +57,11 @@ struct SwitchCatalog: View {
         update: { (bezierSwitch: BezierSwitch) in
           bezierSwitch.setOn(self.isOn, animated: true)
           bezierSwitch.hasError = self.hasError
-          bezierSwitch.isEnabled = self.isEnabled
         }
       )
       .fixedSize()
+      // SwiftUI가 environment isEnabled를 UIControl.isEnabled로 강제 동기화 — 직접 설정 대신 .disabled로 제어
+      .disabled(!self.isEnabled)
       Spacer()
     }
     .padding(.vertical, 8)
@@ -88,14 +89,10 @@ struct SwitchCatalog: View {
           .fixedSize()
       }
       self.matrixRow(title: "disabled") { isOn in
-        UIKitWrap(
-          {
-            let bezierSwitch = BezierSwitch(isOn: isOn)
-            bezierSwitch.isEnabled = false
-            return bezierSwitch
-          }
-        )
-        .fixedSize()
+        UIKitWrap({ BezierSwitch(isOn: isOn) })
+          .fixedSize()
+          // SwiftUI가 environment isEnabled를 UIControl.isEnabled로 강제 동기화 — 직접 설정 대신 .disabled로 제어
+          .disabled(true)
       }
       self.matrixRow(title: "hasError") { isOn in
         UIKitWrap({ BezierSwitch(isOn: isOn, hasError: true) })
