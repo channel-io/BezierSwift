@@ -17,15 +17,21 @@ public struct SUBezierOverlay<Content: View>: View, Themeable {
   }
 
   public var body: some View {
-    self.content
+    // content가 EmptyView여도 카드가 그려지도록 실체가 있는 컨테이너(VStack)로 감싼다 (EmptyView는 모디파이어 체인 전체를 소거함).
+    VStack(alignment: .leading, spacing: 0) { self.content }
       .frame(maxWidth: .infinity, alignment: .topLeading)
       .padding(BezierOverlayConstant.padding)
       .frame(width: BezierOverlayConstant.width)
-      .background(
-        RoundedRectangle(cornerRadius: BezierOverlayConstant.cornerRadius)
-          .fill(self.palette(BezierOverlayConstant.backgroundColor))
-      )
+      .background(self.backgroundView)
       .applyBezierElevation(BezierOverlayConstant.elevation)
+  }
+
+  private var backgroundView: some View {
+    GeometryReader { geometry in
+      // cornerRadius(32)가 높이/2를 넘으면 RoundedRectangle이 렌즈형 아티팩트를 그리므로 절반까지로 클램프한다 (Figma 렌더 동작과 동일).
+      RoundedRectangle(cornerRadius: min(BezierOverlayConstant.cornerRadius, geometry.size.height / 2))
+        .fill(self.palette(BezierOverlayConstant.backgroundColor))
+    }
   }
 }
 

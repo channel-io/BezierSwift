@@ -41,6 +41,27 @@ struct BezierOverlayLayoutTests {
     #expect(overlay.frame.height == 20)
   }
 
+  @Test("높이가 64 미만이면 cornerRadius가 높이 절반으로 클램프된다")
+  func cornerRadiusClampsToHalfHeight() {
+    let overlay = BezierOverlay()
+
+    Self.layout(overlay)
+
+    #expect(overlay.layer.cornerRadius == 10)
+  }
+
+  @Test("높이가 64 이상이면 cornerRadius 32가 유지된다")
+  func cornerRadiusStaysAtSpecValue() {
+    let content = UIView()
+    content.translatesAutoresizingMaskIntoConstraints = false
+    content.heightAnchor.constraint(equalToConstant: 100).isActive = true
+    let overlay = BezierOverlay(content: content)
+
+    Self.layout(overlay)
+
+    #expect(overlay.layer.cornerRadius == 32)
+  }
+
   @Test("content 교체 시 이전 뷰가 제거된다")
   func replacingContentRemovesOldView() {
     let first = UIView()

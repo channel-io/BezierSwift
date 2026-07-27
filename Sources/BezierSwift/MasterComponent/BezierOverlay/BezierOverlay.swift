@@ -83,9 +83,12 @@ public final class BezierOverlay: UIView, BezierComponentable {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
+    // cornerRadius(32)가 높이/2를 넘으면 CALayer·UIBezierPath가 렌즈형 아티팩트를 그리므로 절반까지로 클램프한다 (Figma 렌더 동작과 동일).
+    let cornerRadius = min(BezierOverlayConstant.cornerRadius, self.bounds.height / 2)
+    self.layer.cornerRadius = cornerRadius
     self.layer.shadowPath = UIBezierPath(
       roundedRect: self.bounds,
-      cornerRadius: BezierOverlayConstant.cornerRadius
+      cornerRadius: cornerRadius
     ).cgPath
   }
 

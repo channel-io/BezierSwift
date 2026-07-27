@@ -75,6 +75,8 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
 3. **Elevation은 기존 `BezierElevation.mEv3` 재사용** — 정의(semanticColor `.elevationLarge`, y 4, blur 20)가 Figma `Elevation/Mobile/3`과 동일.
 4. **폭 240pt는 내부 고정** — public resizing/width API를 노출하지 않는다 (배치는 컨테이너 책임 원칙).
 5. **description width 불일치 처리**: §7의 "HUG min160/max280" 항목은 노드 실측(FIXED 240pt · SLOT 220pt)과 어긋난다. 구현은 노드 실측을 따른다. (description이 stale하다는 근거는 외부 저장소 team-design Overlay-spec에서 확인한 사항으로, Figma 안에서는 검증 불가)
+6. **cornerRadius 클램프**: 카드 높이가 64pt(= 32×2) 미만이면 radius를 높이/2로 클램프한다. CALayer·UIBezierPath·RoundedRectangle 모두 radius > 높이/2에서 렌즈형 아티팩트를 그리는 반면 Figma는 렌더 시 자동 클램프하므로, 클램프가 Figma 렌더 결과와 일치한다.
+7. **빈 슬롯 최소 높이**: content가 비어도 패딩 합(20pt) 높이의 카드를 유지한다 — Figma auto-layout 프레임이 자식 없이도 패딩을 유지하는 동작과 동일 (UIKit `heightAnchor ≥ 20`, SwiftUI는 VStack 래핑으로 EmptyView 소거 방지).
 
 ## 10. Variant 매트릭스
 
