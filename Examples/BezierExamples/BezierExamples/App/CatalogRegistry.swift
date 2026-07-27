@@ -83,6 +83,12 @@ enum CatalogRegistry {
       destination: AnyView(DividerCatalog())
     ),
     CatalogItem(
+      id: "progress-bar",
+      title: "ProgressBar",
+      section: .v3Components,
+      destination: AnyView(ProgressBarCatalog())
+    ),
+    CatalogItem(
       id: "modal",
       title: "Modal",
       section: .v3Components,
