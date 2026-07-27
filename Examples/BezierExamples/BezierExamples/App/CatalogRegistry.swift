@@ -124,6 +124,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(FloatingBannerCatalog())
     ),
+    CatalogItem(
+      id: "overlay",
+      title: "Overlay",
+      section: .v3Components,
+      destination: AnyView(OverlayCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
