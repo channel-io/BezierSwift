@@ -136,6 +136,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(SwitchCatalog())
     ),
+    CatalogItem(
+      id: "checkbox",
+      title: "Checkbox",
+      section: .v3Components,
+      destination: AnyView(CheckboxCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
