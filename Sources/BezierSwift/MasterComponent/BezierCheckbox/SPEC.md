@@ -48,7 +48,7 @@ Figma `Checkbox`(4838:126) property 정의 전수.
 
 ### Anatomy
 
-```
+```text
 Checkbox (H, items-center, gap 8, py 8, 높이 40)
   ├─ indicator (22×22, radius 10)
   │    ├─ _ring (28×28, radius 13, stroke 1.5)        [hasError=true 만]
