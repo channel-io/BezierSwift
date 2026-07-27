@@ -163,6 +163,7 @@ private struct DropdownMenuUIKitRepresentable: UIViewRepresentable {
     if self.showsTrigger {
       let trigger = BezierIconButton()
       trigger.icon = BezierIcon.moreVertical.uiImage
+      trigger.isEnabled = self.isEnabled
       menu.trigger = trigger
     } else {
       menu.trigger = nil

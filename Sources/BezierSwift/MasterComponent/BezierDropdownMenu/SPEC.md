@@ -220,7 +220,7 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
 
 ## 10. Variant 매트릭스
 
-```
+```text
 DropdownMenu           = 2070:19                       (총 1 — 축 없음)
 Internal/DropdownMenuItem (4676:12682, 18):
   variant=neutral,     leadingType=none,   state=default|pressed|disabled = 4676:12586 | 4676:12590 | 4676:12594
