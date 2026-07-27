@@ -125,6 +125,12 @@ enum CatalogRegistry {
       destination: AnyView(FloatingBannerCatalog())
     ),
     CatalogItem(
+      id: "overlay",
+      title: "Overlay",
+      section: .v3Components,
+      destination: AnyView(OverlayCatalog())
+    ),
+    CatalogItem(
       id: "text-input",
       title: "TextInput",
       section: .v3Components,
