@@ -131,6 +131,12 @@ enum CatalogRegistry {
       destination: AnyView(OverlayCatalog())
     ),
     CatalogItem(
+      id: "switch",
+      title: "Switch",
+      section: .v3Components,
+      destination: AnyView(SwitchCatalog())
+    ),
+    CatalogItem(
       id: "checkbox",
       title: "Checkbox",
       section: .v3Components,
