@@ -166,7 +166,7 @@
 
 총 instance: variant 2 × size 2 × state 5 × hasValue 2 = **40개**
 
-```
+```text
 variant=primary,   size=small,  state=default,  hasValue=false = 1105:3
 variant=primary,   size=small,  state=default,  hasValue=true  = 2451:146
 variant=primary,   size=small,  state=focused,  hasValue=false = 1105:5

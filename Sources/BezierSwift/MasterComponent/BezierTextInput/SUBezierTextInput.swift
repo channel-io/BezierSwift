@@ -108,7 +108,7 @@ public struct SUBezierTextInput<Leading: View, Trailing: View>: View, Themeable 
           BezierBaseInputConstant.textTypography,
           semanticColorToken: self.text.isEmpty
             ? BezierBaseInputConstant.placeholderColor
-            : BezierBaseInputConstant.readOnlyTextColor
+            : BezierBaseInputAppearance.textColor(state: self.state)
         )
         .lineLimit(1)
         .truncationMode(.tail)
