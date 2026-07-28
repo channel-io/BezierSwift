@@ -107,6 +107,12 @@ enum CatalogRegistry {
       destination: AnyView(BannerCatalog())
     ),
     CatalogItem(
+      id: "card",
+      title: "Card",
+      section: .v3Components,
+      destination: AnyView(CardCatalog())
+    ),
+    CatalogItem(
       id: "section",
       title: "Section",
       section: .v3Components,
