@@ -154,6 +154,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(TextInputCatalog())
     ),
+    CatalogItem(
+      id: "dropdown-menu",
+      title: "DropdownMenu",
+      section: .v3Components,
+      destination: AnyView(DropdownMenuCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
