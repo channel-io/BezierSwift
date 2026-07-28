@@ -83,7 +83,7 @@ Figma에 없는 구현 결정은 아래에 분리 표기한다. SSOT 값이 아�
 
 총 instance: 2 × 2 = **4개**
 
-```
+```text
 variant=default,  size=medium = 3413:2
 variant=overlaid, size=medium = 3413:4
 variant=default,  size=small  = 3413:6

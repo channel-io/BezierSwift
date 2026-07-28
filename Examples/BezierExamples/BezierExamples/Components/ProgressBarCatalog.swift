@@ -59,15 +59,17 @@ struct ProgressBarCatalog: View {
   }
 
   private var swiftUIPreview: some View {
-    self.demoSurface {
+    self.demoSurface(variant: self.variant) {
       SUBezierProgressBar(value: self.value, variant: self.variant, size: self.size)
     }
+    .padding(.vertical, 8)
   }
 
   private var uiKitPreview: some View {
-    self.demoSurface {
+    self.demoSurface(variant: self.variant) {
       ProgressBarUIKitRepresentable(value: self.value, variant: self.variant, size: self.size)
     }
+    .padding(.vertical, 8)
   }
 
   private var swiftUIMatrix: some View {
@@ -76,7 +78,9 @@ struct ProgressBarCatalog: View {
         ForEach(BezierProgressBarSize.allCases, id: \.self) { size in
           VStack(alignment: .leading, spacing: 4) {
             self.matrixLabel(variant: variant, size: size)
-            SUBezierProgressBar(value: self.value, variant: variant, size: size)
+            self.demoSurface(variant: variant) {
+              SUBezierProgressBar(value: self.value, variant: variant, size: size)
+            }
           }
         }
       }
@@ -90,7 +94,9 @@ struct ProgressBarCatalog: View {
         ForEach(BezierProgressBarSize.allCases, id: \.self) { size in
           VStack(alignment: .leading, spacing: 4) {
             self.matrixLabel(variant: variant, size: size)
-            ProgressBarUIKitRepresentable(value: self.value, variant: variant, size: size)
+            self.demoSurface(variant: variant) {
+              ProgressBarUIKitRepresentable(value: self.value, variant: variant, size: size)
+            }
           }
         }
       }
@@ -106,15 +112,17 @@ struct ProgressBarCatalog: View {
 
   // overlaid variant는 콘텐츠 위 겹침 용도라 회색 콘텐츠 배경을 깔아 사용 맥락을 재현한다.
   @ViewBuilder
-  private func demoSurface<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-    if self.variant == .overlaid {
+  private func demoSurface<Content: View>(
+    variant: BezierProgressBarVariant,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    if variant == .overlaid {
       content()
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemGray3)))
-        .padding(.vertical, 8)
     } else {
       content()
-        .padding(.vertical, 12)
+        .padding(.vertical, 4)
     }
   }
 }
