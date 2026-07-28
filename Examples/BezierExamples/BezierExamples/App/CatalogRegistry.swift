@@ -166,6 +166,12 @@ enum CatalogRegistry {
       section: .v3Components,
       destination: AnyView(DropdownMenuCatalog())
     ),
+    CatalogItem(
+      id: "form-group",
+      title: "FormGroup",
+      section: .v3Components,
+      destination: AnyView(FormGroupCatalog())
+    ),
     // MARK: - Legacy Components
     CatalogItem(
       id: "legacy-button",
