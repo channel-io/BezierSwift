@@ -64,6 +64,42 @@ BezierPressFeedback.reset(self)
 
 사용 예시는 `BezierSectionItem.swift`. public 승격과 `BezierBaseItem` 마이그레이션은 MOB-6471에서 다룬다.
 
+## `UITextView`는 TextKit 1로 만들어야 line height 토큰이 먹는다
+
+iOS 16+ `UITextView`의 기본 엔진인 TextKit 2는 `paragraphStyle.minimumLineHeight`를 무시한다
+(`maximumLineHeight`를 함께 지정해도 마찬가지 — 실측 확인). 그래서 `BTSemanticToken.attributes()`가
+지정한 토큰 lineHeight(`textXLarge` = 24pt)가 아니라 폰트 고유 행높이(16pt 기준 약 22.67pt)로
+렌더돼, 고정 높이 안에 예상보다 많은 행이 걸친다.
+
+```swift
+let textView = UITextView(usingTextLayoutManager: false)   // TextKit 1
+```
+
+`UILabel`은 TextKit 1이라 같은 attributes로 24pt가 정상 적용된다. 한 컴포넌트가 `UITextView`와
+`UILabel`을 함께 쓰면(입력 뷰 + placeholder 라벨) 둘의 행 높이만 어긋나므로 특히 찾기 어렵다.
+실례: `BezierTextArea.swift` — 160pt 안에 6행이 아니라 7행이 걸치는 증상으로 발견.
+
+## 입력 중 `textStorage` 전 구간 재지정은 캐럿을 튀게 한다
+
+토큰 attributes를 `UITextView`에 입히려고 `textViewDidChange`에서 `textStorage.setAttributes(_:range:)`
+를 전 구간에 부르면 TextKit 1이 전체 레이아웃을 무효화한다. 그 프레임에는 캐럿이 아직 재구성되지 않은
+레이아웃 위에 그려져 **엉뚱한 y로 한 프레임 튀었다가 제자리로 돌아온다**(실측: 컨테이너 상단
++45pt에 고정 출현, 성장 전환 6회 중 4회). 정지 스크린샷으로는 안 잡히고 영상 프레임 추출로만 보인다.
+
+```swift
+func textViewDidChange(_ textView: UITextView) {
+  self.textView.typingAttributes = attributes   // 삽입되는 글자가 상속 → 이걸로 충분
+}
+```
+
+- **입력 경로에서는 `typingAttributes`만 갱신한다.** 사용자 입력·붙여넣기·자동완성·받아쓰기는 모두
+  `typingAttributes`를 상속한다(`allowsEditingTextAttributes` 기본값 `false`라 rich text도 평문화)
+- 전 구간 재지정이 실제로 필요한 경로는 두 개뿐이다 — `text` 대입(`UITextView`가 스토리지 속성을
+  자체 기본값으로 덮는다)과 state·trait 변경(이미 굳은 속성은 갱신되지 않는다)
+- 빈 문자열이 되면 `typingAttributes`가 시스템 기본값으로 되돌아갈 수 있으니 입력 경로의 갱신 자체는
+  빼지 말 것
+- 실례: `BezierTextArea.swift` — 소프트 키보드 Enter로 줄바꿈할 때 캐럿이 위로 튀는 증상으로 발견
+
 ## 레이아웃 테스트
 
 UIKit 뷰의 압축·크기 거동은 `UIWindow`에 붙여야 측정이 유효하다. 상세는
