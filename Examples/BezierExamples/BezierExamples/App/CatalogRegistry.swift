@@ -27,6 +27,7 @@ enum CatalogRegistry {
     .init(id: "dropdown-menu", title: "DropdownMenu", section: .v3Components, destination: AnyView(DropdownMenuCatalog())),
     .init(id: "emoji", title: "Emoji", section: .v3Components, destination: AnyView(EmojiCatalog())),
     .init(id: "floating-banner", title: "FloatingBanner", section: .v3Components, destination: AnyView(FloatingBannerCatalog())),
+    .init(id: "form", title: "Form", section: .v3Components, destination: AnyView(FormCatalog())),
     .init(id: "form-group", title: "FormGroup", section: .v3Components, destination: AnyView(FormGroupCatalog())),
     .init(id: "icon-button", title: "IconButton", section: .v3Components, destination: AnyView(IconButtonCatalog())),
     .init(id: "modal", title: "Modal", section: .v3Components, destination: AnyView(ModalCatalog())),
