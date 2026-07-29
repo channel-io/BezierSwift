@@ -78,6 +78,22 @@ struct BezierEmojiCDNTests {
   @Test("URL에 부적합한 문자는 percent-encoding된다")
   func percentEncoding() {
     BezierEmojiCDN.environment = .production
+    let url = BezierEmojiCDN.imageURL(name: "my emoji", size: .size24)
+
+    #expect(url?.absoluteString == "https://cf.channel.io/asset/emoji/images/80/my%20emoji.png")
+  }
+
+  @Test("name의 /는 경로를 쪼개지 않고 인코딩된다")
+  func pathSeparatorEncoding() {
+    BezierEmojiCDN.environment = .production
+    let url = BezierEmojiCDN.imageURL(name: "foo/bar", size: .size24)
+
+    #expect(url?.absoluteString == "https://cf.channel.io/asset/emoji/images/80/foo%2Fbar.png")
+  }
+
+  @Test("path에 유효한 문자를 포함한 이름은 그대로 유지된다")
+  func pathSafeNameIsPreserved() {
+    BezierEmojiCDN.environment = .production
     let url = BezierEmojiCDN.imageURL(name: "+1", size: .size24)
 
     #expect(url?.absoluteString == "https://cf.channel.io/asset/emoji/images/80/+1.png")

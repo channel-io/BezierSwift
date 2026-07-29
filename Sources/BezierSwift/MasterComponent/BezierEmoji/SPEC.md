@@ -72,7 +72,7 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
    - 프로덕션 `https://cf.channel.io`, 개발 `https://cf.exp.channel.io`
    - 에셋 해상도: size ≥ 60 → `160`, 미만 → `80` (design spec doc §4)
 2. **CDN 환경 전역 설정**: 라이브러리는 소비자 앱의 환경을 알 수 없으므로 `BezierEmojiCDN.environment` 전역 설정(기본 `.production`)으로 분기한다. web도 개발/프로덕션 환경별 CDN URL을 분기한다 (design spec doc §7).
-3. **이미지 로딩 = 내장 `URLSession` + `NSCache`** (internal `BezierEmojiImageLoader`): BezierSwift는 zero-dependency 패키지 — 외부 이미지 라이브러리를 도입하지 않는다. 로드 실패 시 빈 영역 유지 (web의 broken image 대응, design spec doc §5).
+3. **이미지 로딩 = 내장 `URLSession` + `NSCache`** (internal `BezierEmojiImageLoader`): BezierSwift는 zero-dependency 패키지 — 외부 이미지 라이브러리를 도입하지 않는다. 로드 실패 시 빈 영역 유지 (web의 broken image 대응, design spec doc §5). 같은 이모지가 목록에 여러 번 렌더되는 것이 정상 사용 패턴이므로, 로더는 URL별 in-flight 요청을 공유해 중복 다운로드를 막는다.
 4. **접근성**: web `role="img"` + `aria-description={name}` → iOS `accessibilityTraits = .image` + `accessibilityLabel = name`.
 5. **기본값**: `size` 기본 `.size24` (§1 비고 — design spec doc §4 "올바른 기본값은 24").
 6. **`imageUrl` prop 미도입**: web에서 deprecated (design spec doc §9 anti-pattern) — iOS는 처음부터 도입하지 않는다.

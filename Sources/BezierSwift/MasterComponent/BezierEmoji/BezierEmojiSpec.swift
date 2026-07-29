@@ -66,10 +66,18 @@ public enum BezierEmojiCDN {
   /// 현재 CDN 환경. 기본값은 `.production`이다.
   public static var environment: Environment = .production
 
+  /// `.urlPathAllowed`는 `/`를 통과시켜 name 하나가 여러 경로 세그먼트로 쪼개진다.
+  /// name은 단일 세그먼트여야 하므로 `/`를 인코딩 대상에 포함시킨다.
+  private static let pathSegmentAllowed: CharacterSet = {
+    var allowed = CharacterSet.urlPathAllowed
+    allowed.remove("/")
+    return allowed
+  }()
+
   static func imageURL(name: String, size: BezierEmojiSize) -> URL? {
     guard
       !name.isEmpty,
-      let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+      let encodedName = name.addingPercentEncoding(withAllowedCharacters: self.pathSegmentAllowed)
     else { return nil }
 
     return URL(
