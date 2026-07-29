@@ -32,6 +32,7 @@ enum CatalogRegistry {
     .init(id: "modal", title: "Modal", section: .v3Components, destination: AnyView(ModalCatalog())),
     .init(id: "overlay", title: "Overlay", section: .v3Components, destination: AnyView(OverlayCatalog())),
     .init(id: "progress-bar", title: "ProgressBar", section: .v3Components, destination: AnyView(ProgressBarCatalog())),
+    .init(id: "search", title: "Search", section: .v3Components, destination: AnyView(SearchCatalog())),
     .init(id: "section", title: "Section", section: .v3Components, destination: AnyView(SectionCatalog())),
     .init(id: "section-item", title: "SectionItem", section: .v3Components, destination: AnyView(SectionItemCatalog())),
     .init(id: "spinner", title: "Spinner", section: .v3Components, destination: AnyView(SpinnerCatalog())),
