@@ -34,6 +34,7 @@ enum CatalogRegistry {
     .init(id: "progress-bar", title: "ProgressBar", section: .v3Components, destination: AnyView(ProgressBarCatalog())),
     .init(id: "section", title: "Section", section: .v3Components, destination: AnyView(SectionCatalog())),
     .init(id: "section-item", title: "SectionItem", section: .v3Components, destination: AnyView(SectionItemCatalog())),
+    .init(id: "select", title: "Select", section: .v3Components, destination: AnyView(SelectCatalog())),
     .init(id: "spinner", title: "Spinner", section: .v3Components, destination: AnyView(SpinnerCatalog())),
     .init(id: "switch", title: "Switch", section: .v3Components, destination: AnyView(SwitchCatalog())),
     .init(id: "tag", title: "Tag", section: .v3Components, destination: AnyView(TagCatalog())),

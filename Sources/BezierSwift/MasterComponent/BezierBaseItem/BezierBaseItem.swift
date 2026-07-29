@@ -273,10 +273,11 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
     self.leadingWidthConstraint?.constant = self.size.leadingLength
     self.leadingHeightConstraint?.constant = self.size.leadingLength
     self.minHeightConstraint?.constant = self.size.minHeight
+    let verticalPadding = self.style.verticalPadding ?? self.size.verticalPadding
     self.directionalLayoutMargins = NSDirectionalEdgeInsets(
-      top: self.size.verticalPadding,
+      top: verticalPadding,
       leading: self.style.horizontalPadding,
-      bottom: self.size.verticalPadding,
+      bottom: verticalPadding,
       trailing: self.style.horizontalPadding
     )
     self.centerStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(

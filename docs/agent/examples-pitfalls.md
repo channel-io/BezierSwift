@@ -6,30 +6,49 @@
 
 ## UIKit 브리지
 
-### `UIControl.isEnabled`는 직접 설정해도 되돌려진다
+### disabled를 넘기는 방향은 representable 루트 타입이 가른다
 
-SwiftUI는 `UIViewRepresentable` 안의 `UIControl.isEnabled`를 environment `\.isEnabled`로
-**강제 동기화**한다. factory/update 클로저에서 `isEnabled = false`를 넣어도 즉시 true로
-돌아온다. 데모의 disabled 제어는 representable 바깥에 `.disabled(...)`를 건다.
+SwiftUI의 `\.isEnabled` 강제 동기화는 **representable이 반환하는 루트가 `UIControl`일 때만**
+동작한다. 루트 타입에 따라 조치가 정반대이므로 무엇을 반환하는지부터 확인한다.
+
+| representable 루트 | 증상 | 조치 | 실례 |
+|---|---|---|---|
+| `UIControl` 자신 | factory/update에서 `isEnabled = false`를 넣어도 즉시 true로 되돌려짐 | 바깥에 `.disabled(...)`를 건다 | `CheckboxCatalog.swift` |
+| plain `UIView` wrapper (내부에 `UIControl` 중첩) | `.disabled(...)`가 **중첩된 `UIControl`까지 내려가지 않아** disabled가 아예 시연되지 않음 | 컴포넌트에 `isEnabled`를 직접 주입한다 | `DropdownMenuCatalog.swift` · `SelectCatalog.swift` |
 
 ```swift
+// 루트가 UIControl — 바깥에서 건다
 UIKitWrap({ BezierCheckbox() }, update: { ... })
   .disabled(!self.isEnabled)
+
+// 루트가 wrapper — 안쪽 컴포넌트에 직접 주입한다 (updateUIView)
+option.isEnabled = self.isEnabled
 ```
 
-순수 UIKit 소비자는 영향이 없다 — representable 경로만 해당한다.
+두 번째 케이스는 레이아웃이 멀쩡해 **색으로만 검출된다** — disabled인데 픽셀이 enabled와
+같으면 의심한다. Select에서 슬롯 배지가 `(255,128,0)` 그대로였고, 주입 후 `(247,196,148)`
+= opacity 0.4 합성값이 됐다.
 
-### 폭이 무너지는 두 반대 케이스
+순수 UIKit 소비자는 어느 쪽도 영향이 없다 — representable 경로만 해당한다.
+
+### 폭이 무너지는 세 케이스
 
 `UIKitWrap`은 `systemLayoutSizeFitting(..., withHorizontalFittingPriority: .fittingSizeLevel)`로
-크기를 낸다. 여기서 컴포넌트의 intrinsic width 유무에 따라 정반대 증상이 나온다.
+크기를 낸다. 여기서 컴포넌트의 intrinsic width 유무와 wrapper의 제약 방식에 따라 서로 다른
+증상이 나온다.
 
 | 증상 | 원인 | 조치 | 실례 |
 |---|---|---|---|
 | 아예 안 보임(width 0) | intrinsic width 없는 full-width 뷰(`BezierDivider`) | 전용 representable에서 `sizeThatFits`가 `proposal.width`를 반환 | `DividerCatalog.swift` |
 | full-width로 안 늘어남 | content를 hug하는 intrinsic width 보유(`BezierBanner`) | `makeUIView`가 빈 `UIView` wrapper를 반환하고 컴포넌트를 leading·trailing·top·bottom pin | `BannerCatalog.swift` |
+| 콘텐츠 폭으로 접혀 라벨이 잘림 | intrinsic width 없는 뷰를 wrapper에 `centerXAnchor` + `>=`/`<=`로만 고정 — 부등호는 폭을 **강제하지 못해** hug으로 붕괴한다 | 폭 거동이 다른 variant끼리 제약 세트를 나눠 `updateUIView`에서 교체 | `SelectCatalog.swift` |
 
-`.frame(maxWidth: .infinity)`로는 둘 다 해결되지 않는다 — representable의 렌더 크기는
+세 번째는 폭이 variant마다 다를 때(`BezierSelect`의 `page` = FILL / `overlay` = 240pt 고정)
+나온다. 고정 폭 variant를 center로 두려고 부등호 제약을 쓰면 FILL variant까지 같이 접히므로,
+한 세트로 뭉치지 말고 variant별 제약을 만들어 두고 갈아끼운다. Select에서는 이 붕괴로 옵션
+라벨이 `한국어` 전체 소실 · `En…`으로 잘렸는데, 빌드·코드 리뷰로는 드러나지 않았다.
+
+`.frame(maxWidth: .infinity)`로는 어느 것도 해결되지 않는다 — representable의 렌더 크기는
 `sizeThatFits` 반환값이 지배하고 frame modifier는 UIView의 실제 bounds를 강제하지 못한다.
 wrapper 방식에서 컴포넌트 내부 content가 남는 폭을 채우게 하려면 content의 가로
 `setContentHuggingPriority`를 최저(`UILayoutPriority(1)`)로 둔다 — `.defaultLow`로는 부족하다.
