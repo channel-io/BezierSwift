@@ -21,6 +21,7 @@ enum CatalogRegistry {
     .init(id: "button", title: "Button", section: .v3Components, destination: AnyView(ButtonCatalog())),
     .init(id: "card", title: "Card", section: .v3Components, destination: AnyView(CardCatalog())),
     .init(id: "checkbox", title: "Checkbox", section: .v3Components, destination: AnyView(CheckboxCatalog())),
+    .init(id: "collapsible-section", title: "CollapsibleSection", section: .v3Components, destination: AnyView(CollapsibleSectionCatalog())),
     .init(id: "confirm-modal", title: "ConfirmModal", section: .v3Components, destination: AnyView(ConfirmModalCatalog())),
     .init(id: "divider", title: "Divider", section: .v3Components, destination: AnyView(DividerCatalog())),
     .init(id: "dropdown-menu", title: "DropdownMenu", section: .v3Components, destination: AnyView(DropdownMenuCatalog())),
