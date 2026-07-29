@@ -24,6 +24,7 @@ enum CatalogRegistry {
     .init(id: "confirm-modal", title: "ConfirmModal", section: .v3Components, destination: AnyView(ConfirmModalCatalog())),
     .init(id: "divider", title: "Divider", section: .v3Components, destination: AnyView(DividerCatalog())),
     .init(id: "dropdown-menu", title: "DropdownMenu", section: .v3Components, destination: AnyView(DropdownMenuCatalog())),
+    .init(id: "emoji", title: "Emoji", section: .v3Components, destination: AnyView(EmojiCatalog())),
     .init(id: "floating-banner", title: "FloatingBanner", section: .v3Components, destination: AnyView(FloatingBannerCatalog())),
     .init(id: "form-group", title: "FormGroup", section: .v3Components, destination: AnyView(FormGroupCatalog())),
     .init(id: "icon-button", title: "IconButton", section: .v3Components, destination: AnyView(IconButtonCatalog())),
