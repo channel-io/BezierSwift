@@ -106,6 +106,8 @@ final class BezierCollapsibleSectionLabel: UIControl, BezierComponentable {
 
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
+    self.isAccessibilityElement = true
+    self.accessibilityTraits = .button
     self.layer.cornerRadius = BezierSectionConstant.labelCornerRadius
     self.layer.masksToBounds = true
     self.directionalLayoutMargins = NSDirectionalEdgeInsets(
@@ -214,6 +216,8 @@ final class BezierCollapsibleSectionLabel: UIControl, BezierComponentable {
   }
 
   private func refreshText() {
+    self.accessibilityLabel = self.text
+
     if !self.text.isEmpty {
       self.textLabel.attributedText = BezierSectionConstant.labelTypography.attributedString(
         self,

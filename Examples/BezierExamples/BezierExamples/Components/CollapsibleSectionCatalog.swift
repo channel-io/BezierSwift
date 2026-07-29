@@ -131,7 +131,7 @@ private struct CollapsibleSectionRepresentable: UIViewRepresentable {
     let wrapper = UIView()
     let section = BezierCollapsibleSection(labelText: "고객 정보", isOpen: self.isOpen)
     section.onOpenChange = { open in
-      withAnimation(.easeInOut(duration: 0.25)) {
+      withAnimation(.easeInOut(duration: BezierCollapsibleSectionConstant.openAnimationDuration)) {
         self.isOpen = open
       }
     }

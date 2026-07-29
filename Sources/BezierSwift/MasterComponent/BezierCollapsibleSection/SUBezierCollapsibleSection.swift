@@ -65,6 +65,7 @@ public struct SUBezierCollapsibleSection<
       self.headerContent
     }
     .buttonStyle(SUBezierCollapsibleSectionLabelStyle())
+    .accessibilityLabel(self.labelText)
   }
 
   private var headerContent: some View {
