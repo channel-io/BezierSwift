@@ -85,6 +85,15 @@ xcodebuild -project Examples/BezierExamples/BezierExamples.xcodeproj -scheme Bez
 - doc comment/주석만 바꾼 작업은 빌드 대신 `git diff`로 검증한다(추가분이 전부 `///`이고
   삭제가 0이면 코드 무변경이 증명된다). 컴파일에 영향이 없어 빌드는 우회 증명일 뿐이다
 
+## 브랜치·PR
+
+- 브랜치 `feature/MOB-{번호}-{component}` (문서·설정 작업은 `etc/`), 커밋·PR 제목 `[MOB-{번호}] {요약}`
+- **PR base는 `develop`** — `master` 아니다. origin(fork)에 push하고 upstream으로 cross-fork PR을 연다
+
+```bash
+gh pr create --repo channel-io/BezierSwift --base develop
+```
+
 ## 상세 문서 (해당 작업을 할 때만 읽을 것)
 
 | 문서 | 언제 |
