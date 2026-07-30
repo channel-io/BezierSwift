@@ -5,6 +5,9 @@
 
 import Foundation
 
+// `custom(light:dark:)`이 associated value를 가져 컴파일러가 `allCases`를 합성하지 못한다.
+// 게다가 `BCSemanticToken.swift`는 자동 생성 파일이라 배열을 그쪽에 둘 수도 없다(다음 토큰
+// sync가 덮어쓴다). 그래서 배열을 손으로 쓰고, 선언과의 정합성은 테스트가 지킨다.
 extension BCSemanticToken: CaseIterable {
   /// 열거 가능한 semantic 색 토큰 전체. 선언 순서(Border → Dim → Elevation → Fill → …)를 따른다.
   ///

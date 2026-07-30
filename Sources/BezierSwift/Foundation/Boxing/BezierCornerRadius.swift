@@ -52,6 +52,11 @@ public enum BezierCornerRadius {
       return length * CGFloat(0.42)
     }
   }
+
+  /// 코너 반경(pt). UIKit에서는 `layer.cornerRadius`에 직접 넣는다.
+  ///
+  /// SwiftUI에서는 이 값을 직접 쓰지 않고 `applyBezierCornerRadius(type:correction:)`을 쓴다.
+  public var pointValue: CGFloat { self.rawValue }
 }
 
 

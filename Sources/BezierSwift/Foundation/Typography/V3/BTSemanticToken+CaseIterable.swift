@@ -5,6 +5,8 @@
 
 import Foundation
 
+// `text*`·`caption*` 9개가 `weight` associated value를 가져 컴파일러가 `allCases`를 합성하지
+// 못한다. 그래서 배열을 손으로 쓰고, 선언과의 정합성은 테스트가 지킨다.
 extension BTSemanticToken: CaseIterable {
   /// 열거 가능한 타이포 semantic 토큰 22개. 선언 순서(Display → Heading → Text → Label →
   /// Caption → Code)를 따른다.

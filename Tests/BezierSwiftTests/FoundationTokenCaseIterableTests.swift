@@ -7,10 +7,12 @@ import Testing
 import CoreGraphics
 @testable import BezierSwift
 
-// 아래 `shouldBeEnumerated`는 전부 default 없는 exhaustive switch다. Foundation 토큰 enum들은
-// associated value case(`custom`, `weight:`, `roundHalf(length:)`)를 가져 컴파일러가 `allCases`를
-// 합성하지 못하고 수동 배열에 의존하므로, 이 장치 없이는 새 토큰이 추가돼도 배열에서 조용히 빠진다.
+// 아래 `shouldBeEnumerated`는 전부 default 없는 exhaustive switch다. 이 세 enum은 associated
+// value case(`custom`, `weight:`, `roundHalf(length:)`)를 가져 컴파일러가 `allCases`를 합성하지
+// 못하고 수동 배열에 의존하므로, 이 장치 없이는 새 토큰이 추가돼도 배열에서 조용히 빠진다.
 // 새 case가 생기면 이 파일이 컴파일되지 않아 `allCases` 갱신이 강제된다.
+//
+// `BezierElevation`은 단순 case만 있어 컴파일러가 합성한다. 갱신 누락이 불가능하므로 제외했다.
 
 private extension BCSemanticToken {
   var shouldBeEnumerated: Bool {
@@ -99,15 +101,6 @@ private extension BezierCornerRadius {
   }
 }
 
-private extension BezierElevation {
-  var shouldBeEnumerated: Bool {
-    switch self {
-    case .mEv1, .mEv2, .mEv3, .mEv4, .mEv5, .mEv6:
-      return true
-    }
-  }
-}
-
 // MARK: - Color
 
 @Suite("BCSemanticToken.allCases")
@@ -166,12 +159,6 @@ struct BezierCornerRadiusCaseIterableTests {
 
 @Suite("BezierElevation.allCases")
 struct BezierElevationCaseIterableTests {
-  @Test("6개 토큰 전체를 담는다")
-  func containsEveryCase() {
-    #expect(BezierElevation.allCases.count == 6)
-    #expect(BezierElevation.allCases.allSatisfy { $0.shouldBeEnumerated })
-  }
-
   @Test("단계가 오를수록 그림자가 커진다")
   func shadowGrowsWithLevel() {
     let blurs = BezierElevation.allCases.map { $0.shadow.blur }

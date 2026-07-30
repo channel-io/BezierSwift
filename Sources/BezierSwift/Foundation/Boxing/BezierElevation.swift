@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum BezierElevation {
+public enum BezierElevation: CaseIterable {
   case mEv1
   case mEv2
   case mEv3
@@ -24,6 +24,15 @@ public enum BezierElevation {
     case .mEv5: return (.elevationXlarge, 0, 6, 40)
     case .mEv6: return (.elevationXlarge, 0, 12, 60)
     }
+  }
+
+  /// 그림자 구성값. UIKit에서는 `CALayer`의 그림자 프로퍼티에 직접 넣는다.
+  /// `color`는 semantic 토큰이므로 `palette(_:)`로 해석해 쓴다.
+  ///
+  /// SwiftUI에서는 이 값을 직접 쓰지 않고 `applyBezierElevation(_:)`을 쓴다.
+  public var shadow: (color: BCSemanticToken, offsetX: CGFloat, offsetY: CGFloat, blur: CGFloat) {
+    let raw = self.rawValue
+    return (color: raw.semanticColor, offsetX: raw.x, offsetY: raw.y, blur: raw.blur)
   }
 }
 
