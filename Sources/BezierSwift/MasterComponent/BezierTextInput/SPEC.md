@@ -161,6 +161,7 @@
 9. **UIKit 키보드 옵션**: 내부 UITextField가 캡슐화되어 접근 불가하므로 `keyboardType` / `returnKeyType` passthrough만 최소 제공.
 10. **TextInputAffix**: Figma의 size 축(medium/large)은 두 값의 typography가 동일해 코드에서는 축 없이 단일 뷰로 제공. 슬롯 콘텐츠는 소비자가 생성해 주입하므로 public 타입으로 노출한다 (`Internal/SectionLabel` → public `BezierSectionLabel`과 동일 패턴). Figma description "Do not place standalone"은 doc comment의 단독 배치 금지 안내로 전달한다.
 11. **웹 전용 요소 스코프 제외**: copyButton(웹 전용, Mobile CS에 레이어 없음)·type/selectAllOn*/Ref API 등 bezier-react 전용 props는 미구현.
+12. **readOnly 캐럿 숨김 (UIKit)**: 6의 delegate 차단은 편집만 막고 포커스는 그대로 허용해, 텍스트를 직접 탭하면 캐럿이 깜빡여 편집 가능한 것처럼 보였다. private `UITextField` 서브클래스에서 `caretRect(for:)`를 오버라이드해 readOnly일 때 크기 0 rect를 반환한다 — iOS 26 실측 결과 이 rect가 캐럿 뷰(`UIStandardTextCursorView`)의 frame으로 그대로 전달되므로 캐럿만 사라지고 선택 하이라이트·드래그 핸들은 남는다. 대안 배제 근거: `isEnabled = false`는 선택·복사까지 죽이고, `tintColor = .clear`는 캐럿뿐 아니라 선택 하이라이트·핸들까지 투명하게 만든다. **6과의 관계** — 6은 "편집 차단"(값 불변), 12는 "편집 가능해 보이는 시각 신호 제거"로 역할이 나뉘며 12는 6을 대체하지 않는다. 선택 시 뜨는 context menu는 유지한다(디자인 협의): Cut/Paste 항목이 보여도 6의 delegate 차단이 값 변경을 막아 텍스트가 불변임을 시뮬레이터에서 확인했다.
 
 ## 9. Variant 매트릭스
 

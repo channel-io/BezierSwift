@@ -129,8 +129,8 @@ public final class BezierTextInput: UIView, BezierComponentable {
 
   private let leadingContainer = UIView()
 
-  private let textField: UITextField = {
-    let textField = UITextField()
+  private let textField: BezierTextInputTextField = {
+    let textField = BezierTextInputTextField()
     textField.borderStyle = .none
     textField.backgroundColor = .clear
     textField.contentVerticalAlignment = .center
@@ -349,6 +349,7 @@ public final class BezierTextInput: UIView, BezierComponentable {
     self.textField.defaultTextAttributes = attributes
 
     self.clearButton.tintColor = BezierBaseInputConstant.iconColor.palette(self)
+    self.textField.hidesCaret = self.isReadOnly
 
     self.refreshPlaceholder()
   }
@@ -420,5 +421,28 @@ extension BezierTextInput: UITextFieldDelegate {
     guard !self.isReadOnly else { return false }
     self.onSubmit?()
     return true
+  }
+}
+
+// MARK: - Caret
+
+// readOnly에서 캐럿만 감추기 위한 서브클래스. isEnabled = false는 선택·복사까지 함께 죽이고
+// tintColor = .clear는 선택 하이라이트와 드래그 핸들까지 투명하게 만들어 둘 다 쓸 수 없다
+private final class BezierTextInputTextField: UITextField {
+  var hidesCaret: Bool = false {
+    didSet {
+      guard oldValue != self.hidesCaret, self.isFirstResponder else { return }
+      // 캐럿 뷰는 selection이 바뀔 때만 caretRect를 다시 묻는다 — 값만 갱신하면 떠 있던 캐럿이 그대로 남는다
+      let selectedTextRange = self.selectedTextRange
+      self.selectedTextRange = nil
+      self.selectedTextRange = selectedTextRange
+    }
+  }
+
+  override func caretRect(for position: UITextPosition) -> CGRect {
+    guard self.hidesCaret else { return super.caretRect(for: position) }
+    // 캐럿 뷰는 이 rect를 그대로 frame으로 받는다 — 크기를 0으로 접어 렌더 결과를 없앤다.
+    // origin은 살려 두어야 캐럿 위치 기준 스크롤 계산이 어긋나지 않는다
+    return CGRect(origin: super.caretRect(for: position).origin, size: .zero)
   }
 }
