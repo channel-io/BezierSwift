@@ -185,7 +185,7 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
       // 콘텐츠만 축소 — 배경은 full-size 유지 (press scale 피드백)
       .scaleEffect(self.contentScale)
       .padding(.horizontal, self.style.horizontalPadding)
-      .padding(.vertical, self.size.verticalPadding)
+      .padding(.vertical, self.style.verticalPadding ?? self.size.verticalPadding)
       .frame(minHeight: self.size.minHeight)
       .frame(maxWidth: .infinity, alignment: .leading)
       .background(
