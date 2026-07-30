@@ -5,17 +5,22 @@ import BezierSwift
 struct ColorTokenCatalog: View {
   var body: some View {
     CatalogScreen(title: "Color Token") {
-      ForEach(ColorTokenGroup.all) { group in
-        VStack(alignment: .leading, spacing: 8) {
-          Text(group.title)
-            .font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(.secondary)
-            .textCase(.uppercase)
-          CatalogSection(.swiftUI) {
-            SwiftUISwatchGrid(tokens: group.tokens)
-          }
-          CatalogSection(.uiKit) {
-            UIKitSwatchGrid(tokens: group.tokens)
+      // 174개 × (SwiftUI + UIKit) = 348개 스와치다. CatalogScreen의 VStack은 lazy하지 않아
+      // 그룹 전체를 한꺼번에 레이아웃하고, 그러면 스킴을 바꿀 때 UIKit 뷰 update가 전부
+      // 재실행돼 화면이 수 초 비어 있다. 보이는 그룹만 처리하도록 여기서 한 겹 감싼다.
+      LazyVStack(alignment: .leading, spacing: 24) {
+        ForEach(ColorTokenGroup.all) { group in
+          VStack(alignment: .leading, spacing: 8) {
+            Text(group.title)
+              .font(.system(size: 13, weight: .semibold))
+              .foregroundStyle(.secondary)
+              .textCase(.uppercase)
+            CatalogSection(.swiftUI) {
+              SwiftUISwatchGrid(tokens: group.tokens)
+            }
+            CatalogSection(.uiKit) {
+              UIKitSwatchGrid(tokens: group.tokens)
+            }
           }
         }
       }
@@ -115,14 +120,17 @@ private struct UIKitSwatchGrid: View {
     LazyVGrid(columns: self.columns, spacing: 12) {
       ForEach(self.tokens) { spec in
         VStack(alignment: .leading, spacing: 6) {
-          UIKitWrap {
+          UIKitSizedWrap({
             let view = UIView()
-            view.backgroundColor = spec.token.palette(BezierExamplesComponent.shared)
             view.layer.cornerRadius = 6
             view.layer.borderWidth = 1
-            view.layer.borderColor = UIColor.separator.cgColor
             return view
-          }
+          }, update: { (view: UIView) in
+            view.backgroundColor = spec.token.palette(BezierExamplesComponent.shared)
+            // CGColor는 dynamic UIColor를 만든 시점의 trait로 굳는다. 스킴이 바뀌면 다시 넣어야 한다.
+            view.layer.borderColor = UIColor.separator
+              .resolvedColor(with: view.traitCollection).cgColor
+          })
           .frame(height: 44)
           Text(spec.name)
             .font(.system(size: 10))

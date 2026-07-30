@@ -100,7 +100,7 @@ private struct UIKitCornerRadiusGrid: View {
     LazyVGrid(columns: self.columns, spacing: 12) {
       ForEach(self.specs) { spec in
         VStack(spacing: 6) {
-          UIKitWrap {
+          UIKitSizedWrap {
             let view = UIView()
             view.backgroundColor = UIColor.tintColor.withAlphaComponent(0.3)
             view.layer.cornerRadius = spec.type.pointValue
@@ -159,7 +159,7 @@ private struct UIKitElevationGrid: View {
     LazyVGrid(columns: self.columns, spacing: 24) {
       ForEach(elevationSpecs) { spec in
         VStack(spacing: 8) {
-          UIKitWrap({
+          UIKitSizedWrap({
             let shadow = spec.elevation.shadow
             let view = UIView()
             view.backgroundColor = .systemBackground
