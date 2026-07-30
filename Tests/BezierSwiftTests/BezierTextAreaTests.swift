@@ -160,6 +160,58 @@ struct BezierTextAreaTextViewConfigurationTests {
   }
 }
 
+// MARK: - placeholder 접근성 노출
+
+// UILabel은 기본이 접근성 요소라, 별도 라벨로 그린 placeholder는 입력 요소와 무관한 항목으로 읽힌다.
+// 노출 창구를 textView로 단일화한 규약을 잠근다. 라벨 쪽 isAccessibilityElement = false는 여기서
+// 검증하지 않는다 — 유닛 테스트 프로세스에는 UIKit 접근성 번들이 주입되지 않아 기본값도 false로
+// 읽히므로, 구현을 지워도 통과하는 무의미한 단언이 된다
+@Suite("BezierTextArea placeholder 접근성")
+@MainActor
+struct BezierTextAreaAccessibilityTests {
+  @Test("placeholder를 textView의 accessibilityLabel로 노출한다")
+  func placeholderBecomesLabel() throws {
+    let textArea = BezierTextArea(placeholder: "채널의 특징을 간략히 소개해보세요")
+    let textView = try #require(findTextView(in: textArea))
+
+    #expect(textView.accessibilityLabel == "채널의 특징을 간략히 소개해보세요")
+  }
+
+  // UITextView는 입력값을 accessibilityValue로 내보낸다 — 값이 찼다고 label을 비우면 그 시점부터
+  // 이 필드가 무엇을 받는 칸인지 알 수 없어진다. placeholder가 보이지 않게 되는 것과 무관하게 유지한다
+  @Test("값이 있어도 accessibilityLabel은 placeholder를 유지한다")
+  func labelSurvivesTextEntry() throws {
+    let textArea = BezierTextArea(placeholder: "안내")
+    let textView = try #require(findTextView(in: textArea))
+
+    textArea.text = "입력한 값"
+    #expect(textView.accessibilityLabel == "안내")
+
+    textArea.textViewDidChange(textView)
+    #expect(textView.accessibilityLabel == "안내")
+  }
+
+  @Test("placeholder를 바꾸면 accessibilityLabel도 따라간다")
+  func labelFollowsPlaceholderUpdate() throws {
+    let textArea = BezierTextArea(placeholder: "이전 안내")
+    let textView = try #require(findTextView(in: textArea))
+
+    textArea.placeholder = "새 안내"
+
+    #expect(textView.accessibilityLabel == "새 안내")
+  }
+
+  @Test("placeholder가 비면 accessibilityLabel은 nil이다 (빈 문자열 낭독 방지)")
+  func emptyPlaceholderClearsLabel() throws {
+    let textArea = BezierTextArea(placeholder: "안내")
+    let textView = try #require(findTextView(in: textArea))
+
+    textArea.placeholder = ""
+
+    #expect(textView.accessibilityLabel == nil)
+  }
+}
+
 // MARK: - 콜백
 
 @Suite("BezierTextArea 콜백")

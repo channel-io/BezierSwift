@@ -136,6 +136,11 @@ variant 축이 없으므로 모든 셀이 단일 열이다.
     - `TextField(axis: .vertical)`: 하드웨어 Return을 제출로 처리해 §8-7을 위반하고 포커스까지 잃는다 (실측: 2자 → Return → 2자 = 2자·1행·포커스 상실). 최소 지원이 iOS 16이라 `onKeyPress`(iOS 17+)로 가로챌 수도 없고, `onSubmit`에서 개행을 덧붙이는 우회는 캐럿이 문장 중간일 때 잘못된 위치에 삽입된다.
     - `TextEditor`: 내부 `textContainerInset`·`lineFragmentPadding`을 노출하지 않아 §2의 좌우 10pt·상하 8pt 패딩을 문서화된 수단으로 맞출 수 없다 (`contentMargins`는 iOS 17+). 콘텐츠 높이로 hug하지도 않아 §8-8의 64~160pt 모델에 별도 측정용 미러 뷰가 필요하다.
     - 대가: `.keyboardType` 등 SwiftUI 텍스트 입력 환경 modifier가 전파되지 않는다. UIKit과 동일하게 `keyboardType`을 init 파라미터로 노출해 대체한다.
+15. **placeholder 접근성 노출 = 입력 뷰의 `accessibilityLabel`**: Figma에 접근성 규정이 없는 코드 전용 결정이다. `UITextField`는 `placeholder`를 자기 accessibility label로 흡수하지만 `UITextView`에는 placeholder 개념 자체가 없어(§8-10), 별도 뷰로 그린 placeholder는 입력 요소와 무관한 항목으로 따로 읽힌다. 노출 창구를 입력 뷰 하나로 단일화한다.
+    - placeholder는 **입력 뷰의 `accessibilityLabel`** 로 싣는다. 입력값은 `UITextView`가 `accessibilityValue`로 이미 내보내므로 슬롯이 겹치지 않고, `accessibilityHint`는 사용자가 끌 수 있어 필드 정체성을 담을 수 없다.
+    - **값이 차도 label을 유지한다** — placeholder가 화면에서 사라지는 것과 무관하다. 비우면 입력 직후부터 이 필드가 무엇을 받는 칸인지 알 수 없어지고, `UITextField`를 쓰는 형제(`BezierTextInput`·`BezierSearch`)의 폴백 동작과도 어긋난다. placeholder가 빈 문자열이면 label은 `nil`이다.
+    - placeholder를 그리는 뷰는 접근성에서 제외한다 (UIKit `placeholderLabel.isAccessibilityElement = false`, SwiftUI 오버레이 `.accessibilityHidden(true)`).
+    - SwiftUI readOnly 분기는 placeholder가 별도 뷰가 아니라 `Text`의 내용이라(§8-6), 같은 규약(label = placeholder, value = 입력값)을 modifier로 맞춘다. placeholder가 없을 때는 표시 중인 문자열을 그대로 label로 남겨 빈 label이 낭독을 지우지 않게 한다.
 
 ## 9. Variant 매트릭스
 

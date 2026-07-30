@@ -75,12 +75,16 @@ public struct SUBezierTextArea: View, Themeable {
     self.text.isEmpty ? BezierTextAreaConstant.minLineCount : BezierTextAreaConstant.maxLineCount
   }
 
+  private var readOnlyDisplayText: String {
+    self.text.isEmpty ? self.placeholder : self.text
+  }
+
   // MARK: - Subviews
 
   @ViewBuilder
   private var fieldView: some View {
     if self.isReadOnly {
-      Text(self.text.isEmpty ? self.placeholder : self.text)
+      Text(self.readOnlyDisplayText)
         .applyBezierFontStyle(
           BezierBaseInputConstant.textTypography,
           semanticColorToken: self.text.isEmpty
@@ -92,12 +96,18 @@ public struct SUBezierTextArea: View, Themeable {
         .lineLimit(BezierTextAreaConstant.minLineCount...self.readOnlyMaxLineCount)
         .truncationMode(.tail)
         .textSelection(.enabled)
+        // 편집 분기·UIKit과 같은 규약(label = placeholder, value = 입력값)으로 맞춘다. 여기서는
+        // placeholder가 별도 뷰가 아니라 Text의 내용이라, 빈 문자열을 label로 넣어 낭독을 지우는
+        // 일이 없도록 placeholder가 없을 때만 표시 중인 문자열을 그대로 label로 남긴다
+        .accessibilityLabel(self.placeholder.isEmpty ? self.readOnlyDisplayText : self.placeholder)
+        .accessibilityValue(self.placeholder.isEmpty ? "" : self.text)
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .padding(.horizontal, BezierBaseInputConstant.horizontalPadding)
         .padding(.vertical, BezierTextAreaConstant.verticalPadding)
     } else {
       BezierTextAreaTextEntry(
         text: self.$text,
+        placeholder: self.placeholder,
         textColor: UIColor(self.palette(BezierBaseInputConstant.textColor)),
         keyboardType: self.keyboardType,
         isEnabled: self.isEnabled,
@@ -128,6 +138,9 @@ public struct SUBezierTextArea: View, Themeable {
         .padding(.horizontal, BezierBaseInputConstant.horizontalPadding)
         .padding(.vertical, BezierTextAreaConstant.verticalPadding)
         .allowsHitTesting(false)
+        // 노출은 입력 뷰가 전담한다 — 켜두면 입력 요소와 무관한 별도 항목으로 읽힌다
+        // (UIKit placeholderLabel.isAccessibilityElement = false와 동형)
+        .accessibilityHidden(true)
     }
   }
 
@@ -149,6 +162,7 @@ public struct SUBezierTextArea: View, Themeable {
 // (contentMargins는 iOS 17+) 콘텐츠 높이로 hug하지도 않는다. UITextView를 직접 감싼다
 private struct BezierTextAreaTextEntry: UIViewRepresentable {
   @Binding var text: String
+  let placeholder: String
   let textColor: UIColor
   let keyboardType: UIKeyboardType
   let isEnabled: Bool
@@ -183,6 +197,10 @@ private struct BezierTextAreaTextEntry: UIViewRepresentable {
     uiView.keyboardType = self.keyboardType
     uiView.isEditable = self.isEnabled
     uiView.isUserInteractionEnabled = self.isEnabled
+
+    // 값이 차 있어도 유지한다 — UITextView는 입력값을 accessibilityValue로 내보내므로 label을 비우면
+    // 입력 후 이 필드가 무엇을 받는 칸인지 알 수 없어진다 (UIKit BezierTextArea와 동형)
+    uiView.accessibilityLabel = self.placeholder.isEmpty ? nil : self.placeholder
 
     // isUserInteractionEnabled = false는 first responder를 해제하는 게 아니라 유예한다 — 명시적으로
     // resign하지 않으면 비활성 상태에서도 키보드가 남고 하드웨어 입력이 반영된다. 갱신 사이클 안에서

@@ -103,6 +103,9 @@ public final class BezierTextArea: UIView, BezierComponentable {
     let label = UILabel()
     label.numberOfLines = BezierTextAreaConstant.minLineCount
     label.isUserInteractionEnabled = false
+    // UILabel은 기본이 접근성 요소다 — 켜둔 채로 두면 UITextField가 placeholder를 자기 label로
+    // 흡수하는 것과 달리 입력 요소와 무관한 별도 항목으로 읽힌다. 노출은 textView가 전담한다
+    label.isAccessibilityElement = false
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -299,6 +302,10 @@ public final class BezierTextArea: UIView, BezierComponentable {
       attributes: attributes
     )
     self.placeholderLabel.isHidden = !self.text.isEmpty
+
+    // 값이 차 있어도 유지한다 — UITextView는 입력값을 accessibilityValue로 내보내므로 label을 비우면
+    // 입력 후 이 필드가 무엇을 받는 칸인지 알 수 없어진다 (UITextField.placeholder 폴백과 동일한 규약)
+    self.textView.accessibilityLabel = self.placeholder.isEmpty ? nil : self.placeholder
   }
 
   private func refreshHeight() {
