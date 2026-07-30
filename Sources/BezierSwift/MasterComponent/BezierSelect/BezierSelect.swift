@@ -24,7 +24,7 @@ public final class BezierSelect: UIView, BezierComponentable {
     didSet { if oldValue != self.container { self.rebuildContainer() } }
   }
 
-  /// 목록 상단 라벨 텍스트. `nil`이면 라벨을 숨긴다 (기본값 `nil`).
+  /// 목록 상단 라벨 텍스트. `nil`이면 라벨을 숨긴다 (기본값 `nil`). `container`가 `.overlay`면 렌더되지 않는다 — 오버레이 안에서 라벨이 필요하면 `BezierSelectGroup`의 `labelText`를 쓴다.
   public var labelText: String? {
     didSet { if oldValue != self.labelText { self.refreshLabel() } }
   }
@@ -104,8 +104,9 @@ public final class BezierSelect: UIView, BezierComponentable {
   }
 
   private func refreshLabel() {
-    self.sectionLabel.text = self.labelText ?? ""
-    self.sectionLabel.isHidden = (self.labelText?.isEmpty ?? true)
+    let text = self.labelText ?? ""
+    self.sectionLabel.text = text
+    self.sectionLabel.isHidden = text.isEmpty || self.container != .page
   }
 
   private func rebuildContainer() {
@@ -135,5 +136,6 @@ public final class BezierSelect: UIView, BezierComponentable {
       ]
     }
     NSLayoutConstraint.activate(self.containerConstraints)
+    self.refreshLabel()
   }
 }

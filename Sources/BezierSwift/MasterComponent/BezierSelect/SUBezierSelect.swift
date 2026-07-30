@@ -11,7 +11,7 @@ public struct SUBezierSelect<Content: View>: View {
   private let labelText: String?
   private let content: Content
 
-  /// 표현 방식·라벨 텍스트·목록 빌더로 목록을 만든다. 라벨은 목록 전체의 맥락을 나타내며, 그룹별 라벨이 필요하면 `SUBezierSelectGroup`의 `labelText`를 쓴다.
+  /// 표현 방식·라벨 텍스트·목록 빌더로 목록을 만든다. 라벨은 목록 전체의 맥락을 나타내며 `container`가 `.page`일 때만 렌더된다 — `.overlay`에서 라벨이 필요하면 `SUBezierSelectGroup`의 `labelText`를 쓴다.
   public init(
     container: BezierSelectContainer = .page,
     labelText: String? = nil,
@@ -25,15 +25,15 @@ public struct SUBezierSelect<Content: View>: View {
   public var body: some View {
     switch self.container {
     case .page:
-      self.list
+      self.list(showsLabel: true)
     case .overlay:
-      SUBezierOverlay { self.list }
+      SUBezierOverlay { self.list(showsLabel: false) }
     }
   }
 
-  private var list: some View {
+  private func list(showsLabel: Bool) -> some View {
     VStack(alignment: .leading, spacing: 0) {
-      if let labelText = self.labelText, !labelText.isEmpty {
+      if showsLabel, let labelText = self.labelText, !labelText.isEmpty {
         SUBezierSectionLabel(labelText, color: .neutralLight)
       }
 
