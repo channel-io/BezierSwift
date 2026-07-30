@@ -34,8 +34,9 @@ public struct SUBezierMultiSelectOption<CenterSlot: View>: View, Themeable {
   }
 
   public var body: some View {
-    // leading 유무를 여기서 분기해 빈 슬롯이 리터럴 EmptyView 타입이 되게 한다
-    // (BaseItem이 타입으로 슬롯 렌더를 거르므로, 옵셔널 뷰를 넘기면 빈 24pt 박스가 남는다).
+    // 빈 슬롯은 리터럴 EmptyView 타입으로 넘겨야 한다 — BaseItem이 슬롯 타입으로 렌더를 거르는데
+    // @ViewBuilder의 if는 결과를 Optional로 감싸 EmptyView로 특수화되지 않고, 그러면 BaseItem이
+    // 슬롯을 제거하지 못한다. leading은 여기서, centerSlot은 item(leading:)에서 분기한다.
     switch self.leading {
     case .none:
       self.item(leading: { EmptyView() })
@@ -46,8 +47,20 @@ public struct SUBezierMultiSelectOption<CenterSlot: View>: View, Themeable {
     }
   }
 
+  @ViewBuilder
   private func item<Leading: View>(
     @ViewBuilder leading: () -> Leading
+  ) -> some View {
+    if CenterSlot.self == EmptyView.self {
+      self.baseItem(leading: leading, centerSlot: { EmptyView() })
+    } else {
+      self.baseItem(leading: leading, centerSlot: { self.centerSlotView })
+    }
+  }
+
+  private func baseItem<Leading: View, Center: View>(
+    @ViewBuilder leading: () -> Leading,
+    @ViewBuilder centerSlot: () -> Center
   ) -> some View {
     SUBezierBaseItem(
       style: BezierMultiSelectOptionConstant.baseItemStyle,
@@ -56,7 +69,7 @@ public struct SUBezierMultiSelectOption<CenterSlot: View>: View, Themeable {
       description: self.itemDescription,
       onTap: self.onToggle,
       leading: leading,
-      centerSlot: { self.centerSlotView },
+      centerSlot: centerSlot,
       trailing: { self.checkView }
     )
   }
@@ -69,13 +82,10 @@ public struct SUBezierMultiSelectOption<CenterSlot: View>: View, Themeable {
       .foregroundColor(self.palette(BezierMultiSelectOptionConstant.leadingIconColor))
   }
 
-  @ViewBuilder
   private var centerSlotView: some View {
-    if CenterSlot.self != EmptyView.self {
-      self.centerSlot
-        .frame(height: BezierMultiSelectOptionConstant.centerSlotHeight)
-        .clipped()
-    }
+    self.centerSlot
+      .frame(height: BezierMultiSelectOptionConstant.centerSlotHeight)
+      .clipped()
   }
 
   @ViewBuilder

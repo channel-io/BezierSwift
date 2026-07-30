@@ -11,9 +11,11 @@
 
 | Figma property key | Type | Default | 옵션 / 값 | 구현 매핑 |
 |---|---|---|---|---|
-| `container` | VARIANT | page | page / bottomsheet / overlay | `BezierMultiSelectContainer` (§9-2) |
+| `container` | VARIANT | page | page / bottomsheet / overlay | `BezierMultiSelectContainer` — `page`·`overlay`만 제공. **`bottomsheet`는 Figma에만 있고 코드 API에 없다** (§9-2) |
 | `hasLabel` | BOOLEAN | false | on / off | 라벨 유무 (`container=page`에서만 렌더) |
 | `content` | SLOT | — | `Internal/MultiSelectGroup` / `Internal/MultiSelectOption` 배치 | content |
+
+> §1~§5는 Figma 거울이라 Figma에 존재하는 variant를 모두 싣는다. **"구현 매핑" 열에 미제공이라고 적힌 값은 코드 API에 없다** — 지원 범위는 §9의 구현 결정이 결정한다.
 
 총 instance: `container(3) = 3개`
 
@@ -213,6 +215,8 @@ MultiSelect / Internal/MultiSelectGroup / Internal/MultiSelectGroupLabel에는 s
 - width: content SLOT에 맞춰 HUG, min 160 / max 280px 클램프 · position 기본 bottom-start, 트리거와 8px 간격, 화면 밖이면 flip, 가장자리 마진 16px (코드 구현 참고용) · backdrop 없음 · 외부 탭 시 닫힘 · 드래그 딜미스 없음.
 - Mobile Select/MultiSelect의 container=overlay variant가 backdrop 없는 앵커형 팝오버로 옵션 목록을 표시할 때 이 셸을 내장한다.
 
+> **폭 값 충돌 아님 — 대상이 다르다.** 위 `HUG 160~280px`는 **쉘 컴포넌트 단독(`5078:2253`)의 description 문구**다. `container=overlay`(`5150:2921`)가 실제로 내장한 인스턴스는 §2 실측대로 **폭 `240pt` FIXED**(content `220pt`)이고, 구현 계약도 이쪽이다(`BezierOverlayConstant.width = 240`). 이 절은 description 인용이므로, 레이아웃 값이 §2와 다를 때는 **§2 실측이 우선한다** (§9-15).
+
 ## 8. 매핑되는 코드 심볼
 
 | 정의 | 파일 |
@@ -245,6 +249,7 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
 12. **label은 1줄 truncate**: §2대로 Figma MultiSelectOption의 label 텍스트에는 truncation 설정이 없어 폭이 부족하면 여러 줄로 흐른다. 구현은 `BezierBaseItem`/`SUBezierBaseItem`의 title 렌더(`numberOfLines = 1` · `.lineLimit(1)` + tail truncate)를 그대로 상속해 1줄로 자른다. 근거: ① 선택 목록의 행 높이가 항목 텍스트 길이에 따라 들쭉날쭉해지면 스캔이 어렵다 ② 형제 그룹 라벨은 같은 Figma 파일에서 명시적으로 nowrap+ellipsis다 ③ BaseItem은 공유 레이어라 이 컴포넌트를 위해 title 줄 수 정책을 바꾸지 않는다. description은 BaseItem이 `numberOfLines = 0`으로 wrap하며 이는 Figma의 wrap 거동과 일치한다.
 13. **`labelText`는 `container=.page`에서만 렌더**: §2대로 Figma `hasLabel`은 page variant에만 노출되고 overlay variant에는 라벨 노드 자체가 없다. 코드의 `labelText`는 두 container에 공통 프로퍼티로 두되(container를 런타임에 바꿀 수 있어야 하므로) 렌더는 `.page`에서만 한다. `.overlay`에서 라벨이 필요하면 Figma가 그 맥락에서 쓰는 경로 — `BezierMultiSelectGroup`/`SUBezierMultiSelectGroup`의 `labelText` — 를 쓴다. doc comment에 이 조건을 명시해 조용한 no-op이 되지 않게 했다.
 14. **centerSlot 고정 높이 클리핑**: Figma는 centerSlot을 높이 FIXED 24pt로 두지만 clip 속성은 부모 `centerContent`에만 있다(§2). 구현은 슬롯 컨테이너 자체에 24pt 고정 + 클리핑을 걸어 초과 콘텐츠가 행 높이를 밀지 않게 한다 — 고정 높이를 실제로 강제하는 수단이며, SwiftUI `.frame(height:)`는 단독으로는 초과 콘텐츠를 넘치게 그린다.
+15. **overlay 폭은 §2 실측 240pt 고정**: §7이 인용한 쉘 description은 폭을 `HUG · min 160 / max 280px`로 적지만, 이는 `overlay`(`5078:2253`) 컴포넌트 단독의 일반 계약이다. MultiSelect가 내장한 인스턴스(`5150:2921`)는 §2 실측대로 `240pt` FIXED이고 `BezierOverlay`도 `BezierOverlayConstant.width = 240`으로 이미 고정돼 있어, 구현은 240pt를 따른다. 앵커 폭에 맞춰 늘어나는 HUG 오버레이가 필요해지면 `BezierOverlay` 쪽 결정 사항이지 이 컴포넌트에서 갈라질 값이 아니다.
 
 ## 10. Variant 매트릭스
 
