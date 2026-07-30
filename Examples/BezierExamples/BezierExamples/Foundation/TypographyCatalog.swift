@@ -51,32 +51,33 @@ private struct TypographyTokenSpec: Identifiable {
   private static let sampleText = "The quick brown fox 다람쥐 헌 쳇바퀴"
   private static let codeSampleText = "let greeting = \"Hello\""
 
-  static let all: [TypographyTokenSpec] = [
-    .init(token: .displayLarge,                 name: "display-large",          detail: "36pt / Bold",                  sample: Self.sampleText),
-    .init(token: .displayMedium,                name: "display-medium",         detail: "30pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingXLarge,                name: "heading-xlarge",         detail: "24pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingLarge,                 name: "heading-large",          detail: "22pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingMedium,                name: "heading-medium",         detail: "18pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingSmall,                 name: "heading-small",          detail: "17pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingXSmall,                name: "heading-xsmall",         detail: "16pt / Bold",                  sample: Self.sampleText),
-    .init(token: .headingXXSmall,               name: "heading-xxsmall",        detail: "15pt / Bold",                  sample: Self.sampleText),
-    .init(token: .textXXLarge(),                name: "text-xxlarge",           detail: "17pt / Regular",               sample: Self.sampleText),
-    .init(token: .textXXLarge(weight: .bold),   name: "text-xxlarge (bold)",    detail: "17pt / Bold",                  sample: Self.sampleText),
-    .init(token: .textXLarge(),                 name: "text-xlarge",            detail: "16pt / Regular",               sample: Self.sampleText),
-    .init(token: .textLarge(),                  name: "text-large",             detail: "15pt / Regular",               sample: Self.sampleText),
-    .init(token: .textMedium(),                 name: "text-medium",            detail: "14pt / Regular",               sample: Self.sampleText),
-    .init(token: .textMedium(weight: .bold),    name: "text-medium (bold)",     detail: "14pt / Bold",                  sample: Self.sampleText),
-    .init(token: .textSmall(),                  name: "text-small",             detail: "13pt / Regular",               sample: Self.sampleText),
-    .init(token: .textXSmall(),                 name: "text-xsmall",            detail: "12pt / Regular",               sample: Self.sampleText),
-    .init(token: .textXXSmall(),                name: "text-xxsmall",           detail: "11pt / Regular",               sample: Self.sampleText),
-    .init(token: .labelLarge,                   name: "label-large",            detail: "14pt / Bold",                  sample: Self.sampleText),
-    .init(token: .labelMedium,                  name: "label-medium",           detail: "13pt / Bold",                  sample: Self.sampleText),
-    .init(token: .labelSmall,                   name: "label-small",            detail: "12pt / Bold",                  sample: Self.sampleText),
-    .init(token: .captionMedium(),              name: "caption-medium",         detail: "12pt / Regular",               sample: Self.sampleText),
-    .init(token: .captionMedium(weight: .bold), name: "caption-medium (bold)",  detail: "12pt / Bold",                  sample: Self.sampleText),
-    .init(token: .captionSmall(),               name: "caption-small",          detail: "11pt / Regular",               sample: Self.sampleText),
-    .init(token: .captionSmall(weight: .bold),  name: "caption-small (bold)",   detail: "11pt / Bold",                  sample: Self.sampleText),
-    .init(token: .codeMedium,                   name: "code-medium",            detail: "14pt / Regular / Monospace",   sample: Self.codeSampleText),
-    .init(token: .codeSmall,                    name: "code-small",             detail: "13pt / Regular / Monospace",   sample: Self.codeSampleText),
-  ]
+  static let all: [TypographyTokenSpec] = BTSemanticToken.allCases.flatMap { token in
+    // boldPair가 자기 자신이 아니면 weight를 고를 수 있는 토큰이다 — regular 행에 bold 행을 잇는다.
+    token.boldPair == token
+      ? [TypographyTokenSpec(token)]
+      : [TypographyTokenSpec(token), TypographyTokenSpec(token.boldPair, isBoldVariant: true)]
+  }
+
+  private init(_ token: BTSemanticToken, isBoldVariant: Bool = false) {
+    self.token = token
+    self.name = TokenName.kebab(token) + (isBoldVariant ? " (bold)" : "")
+    self.detail = Self.detailText(of: token)
+    self.sample = token.isMonospace ? Self.codeSampleText : Self.sampleText
+  }
+
+  private static func detailText(of token: BTSemanticToken) -> String {
+    var parts = [
+      Self.ptText(token.fontSize),
+      TokenName.caseName(token.resolvedWeight).capitalized,
+      "line \(Self.ptText(token.lineHeight))",
+    ]
+    if token.isMonospace {
+      parts.append("Monospace")
+    }
+    return parts.joined(separator: " / ")
+  }
+
+  private static func ptText(_ value: CGFloat) -> String {
+    value == value.rounded() ? "\(Int(value))pt" : String(format: "%gpt", Double(value))
+  }
 }

@@ -25,118 +25,53 @@ struct ColorTokenCatalog: View {
 
 // MARK: - Group definition
 
+private struct ColorTokenSpec: Identifiable {
+  let token: BCSemanticToken
+  let name: String
+  let segments: [String]
+  var id: String { self.name }
+
+  init(_ token: BCSemanticToken) {
+    let segments = TokenName.segments(token)
+    self.token = token
+    self.segments = segments
+    self.name = segments.joined(separator: "-")
+  }
+}
+
 private struct ColorTokenGroup: Identifiable {
   let title: String
   let tokens: [ColorTokenSpec]
   var id: String { self.title }
 
-  static let all: [ColorTokenGroup] = [
-    ColorTokenGroup(title: "Surface", tokens: [
-      ColorTokenSpec(.surface,        "surface"),
-      ColorTokenSpec(.surfaceLow,     "surface-low"),
-      ColorTokenSpec(.surfaceHigh,    "surface-high"),
-      ColorTokenSpec(.surfaceHigher,  "surface-higher"),
-      ColorTokenSpec(.surfaceHighest, "surface-highest"),
-    ]),
-    ColorTokenGroup(title: "Border", tokens: [
-      ColorTokenSpec(.borderAbsoluteWhite,   "border-absolute-white"),
-      ColorTokenSpec(.borderNeutral,         "border-neutral"),
-      ColorTokenSpec(.borderNeutralHeavy,    "border-neutral-heavy"),
-      ColorTokenSpec(.borderNeutralHeavier,  "border-neutral-heavier"),
-    ]),
-    ColorTokenGroup(title: "Fill (Absolute)", tokens: [
-      ColorTokenSpec(.fillAbsoluteBlack,      "fill-absolute-black"),
-      ColorTokenSpec(.fillAbsoluteBlackLight, "fill-absolute-black-light"),
-      ColorTokenSpec(.fillAbsoluteWhite,      "fill-absolute-white"),
-      ColorTokenSpec(.fillAbsoluteWhiteLight, "fill-absolute-white-light"),
-    ]),
-    ColorTokenGroup(title: "Fill (Neutral)", tokens: [
-      ColorTokenSpec(.fillNeutral,          "fill-neutral"),
-      ColorTokenSpec(.fillNeutralLightest,  "fill-neutral-lightest"),
-      ColorTokenSpec(.fillNeutralLighter,   "fill-neutral-lighter"),
-      ColorTokenSpec(.fillNeutralLight,     "fill-neutral-light"),
-      ColorTokenSpec(.fillNeutralHeavy,     "fill-neutral-heavy"),
-      ColorTokenSpec(.fillNeutralHeavier,   "fill-neutral-heavier"),
-      ColorTokenSpec(.fillNeutralHeaviest,  "fill-neutral-heaviest"),
-    ]),
-    ColorTokenGroup(title: "Fill (Accent)", tokens: [
-      ColorTokenSpec(.fillAccentBlue,   "fill-accent-blue"),
-      ColorTokenSpec(.fillAccentCobalt, "fill-accent-cobalt"),
-      ColorTokenSpec(.fillAccentGreen,  "fill-accent-green"),
-      ColorTokenSpec(.fillAccentNavy,   "fill-accent-navy"),
-      ColorTokenSpec(.fillAccentOlive,  "fill-accent-olive"),
-      ColorTokenSpec(.fillAccentOrange, "fill-accent-orange"),
-      ColorTokenSpec(.fillAccentPink,   "fill-accent-pink"),
-      ColorTokenSpec(.fillAccentPurple, "fill-accent-purple"),
-      ColorTokenSpec(.fillAccentRed,    "fill-accent-red"),
-      ColorTokenSpec(.fillAccentTeal,   "fill-accent-teal"),
-      ColorTokenSpec(.fillAccentYellow, "fill-accent-yellow"),
-    ]),
-    ColorTokenGroup(title: "Fill (Status)", tokens: [
-      ColorTokenSpec(.fillAction,    "fill-action"),
-      ColorTokenSpec(.fillCritical,  "fill-critical"),
-      ColorTokenSpec(.fillHighlight, "fill-highlight"),
-      ColorTokenSpec(.fillSuccess,   "fill-success"),
-      ColorTokenSpec(.fillWarning,   "fill-warning"),
-    ]),
-    ColorTokenGroup(title: "Text", tokens: [
-      ColorTokenSpec(.textNeutral,         "text-neutral"),
-      ColorTokenSpec(.textNeutralLight,    "text-neutral-light"),
-      ColorTokenSpec(.textNeutralLighter,  "text-neutral-lighter"),
-      ColorTokenSpec(.textNeutralHeaviest, "text-neutral-heaviest"),
-      ColorTokenSpec(.textInverse,         "text-inverse"),
-      ColorTokenSpec(.textAction,          "text-action"),
-      ColorTokenSpec(.textCritical,        "text-critical"),
-      ColorTokenSpec(.textHighlight,       "text-highlight"),
-      ColorTokenSpec(.textSuccess,         "text-success"),
-      ColorTokenSpec(.textWarning,         "text-warning"),
-    ]),
-    ColorTokenGroup(title: "Icon", tokens: [
-      ColorTokenSpec(.iconNeutral,         "icon-neutral"),
-      ColorTokenSpec(.iconNeutralHeavy,    "icon-neutral-heavy"),
-      ColorTokenSpec(.iconNeutralHeavier,  "icon-neutral-heavier"),
-      ColorTokenSpec(.iconAction,          "icon-action"),
-      ColorTokenSpec(.iconCritical,        "icon-critical"),
-      ColorTokenSpec(.iconHighlight,       "icon-highlight"),
-      ColorTokenSpec(.iconSuccess,         "icon-success"),
-      ColorTokenSpec(.iconWarning,         "icon-warning"),
-    ]),
-    ColorTokenGroup(title: "Dim", tokens: [
-      ColorTokenSpec(.dimAbsoluteBlack,      "dim-absolute-black"),
-      ColorTokenSpec(.dimAbsoluteBlackHeavy, "dim-absolute-black-heavy"),
-      ColorTokenSpec(.dimAbsoluteWhite,      "dim-absolute-white"),
-      ColorTokenSpec(.dimAbsoluteWhiteHeavy, "dim-absolute-white-heavy"),
-    ]),
-    ColorTokenGroup(title: "State", tokens: [
-      ColorTokenSpec(.stateAction,       "state-action"),
-      ColorTokenSpec(.stateActionLight,  "state-action-light"),
-      ColorTokenSpec(.stateActive,       "state-active"),
-      ColorTokenSpec(.stateDefault,      "state-default"),
-      ColorTokenSpec(.stateWarning,      "state-warning"),
-      ColorTokenSpec(.stateWarningLight, "state-warning-light"),
-    ]),
-    ColorTokenGroup(title: "Chart", tokens: [
-      ColorTokenSpec(.chartThemeDefault01, "chart-theme-default-01"),
-      ColorTokenSpec(.chartThemeDefault02, "chart-theme-default-02"),
-      ColorTokenSpec(.chartThemeDefault03, "chart-theme-default-03"),
-      ColorTokenSpec(.chartThemeDefault04, "chart-theme-default-04"),
-      ColorTokenSpec(.chartThemeDefault05, "chart-theme-default-05"),
-      ColorTokenSpec(.chartThemeDefault06, "chart-theme-default-06"),
-      ColorTokenSpec(.chartThemeDefault07, "chart-theme-default-07"),
-      ColorTokenSpec(.chartThemeDefault08, "chart-theme-default-08"),
-      ColorTokenSpec(.chartThemeDefault09, "chart-theme-default-09"),
-      ColorTokenSpec(.chartThemeDefault10, "chart-theme-default-10"),
-    ]),
-  ]
-}
+  /// 그룹이 이보다 커지면 세그먼트를 한 단계 더 써서 쪼갠다. 지금은 `fill` 83개만 걸린다.
+  private static let maxTokensPerGroup = 48
 
-private struct ColorTokenSpec: Identifiable {
-  let token: BCSemanticToken
-  let name: String
-  var id: String { self.name }
-  init(_ token: BCSemanticToken, _ name: String) {
-    self.token = token
-    self.name = name
+  static let all: [ColorTokenGroup] = Self.grouped(
+    BCSemanticToken.allCases.map(ColorTokenSpec.init),
+    depth: 1
+  )
+
+  private static func grouped(_ specs: [ColorTokenSpec], depth: Int) -> [ColorTokenGroup] {
+    var keysInOrder: [String] = []
+    var buckets: [String: [ColorTokenSpec]] = [:]
+
+    for spec in specs {
+      let key = spec.segments.prefix(depth).joined(separator: " ")
+      if buckets[key] == nil {
+        keysInOrder.append(key)
+      }
+      buckets[key, default: []].append(spec)
+    }
+
+    return keysInOrder.flatMap { key -> [ColorTokenGroup] in
+      let bucket = buckets[key] ?? []
+      let hasDeeperSegment = bucket.contains { $0.segments.count > depth }
+      if bucket.count > Self.maxTokensPerGroup, hasDeeperSegment {
+        return Self.grouped(bucket, depth: depth + 1)
+      }
+      return [ColorTokenGroup(title: key.capitalized, tokens: bucket)]
+    }
   }
 }
 
