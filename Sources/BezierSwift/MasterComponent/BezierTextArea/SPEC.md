@@ -123,17 +123,19 @@ variant 축이 없으므로 모든 셀이 단일 열이다.
 2. **높이 자동 확장 구현**: 콘텐츠 높이를 64~160pt 범위로 clamp. 160pt 초과분은 §2의 clip 대신 내부 스크롤로 노출해 캐럿 가시성을 유지한다.
 3. **state 우선순위**: Figma state 축은 배타적 단일 축. 코드 상태 조합의 해석 순서는 `disabled > readOnly > error > focused > default` (`BezierBaseInputState.resolve` 재사용).
 4. **INNER_SHADOW → 보더 구현**: spread 1.5 / blur 0 / offset (0,0)의 INNER_SHADOW는 안쪽 1.5pt 라인과 동일 — UIKit `layer.borderWidth = 1.5` (bounds 안쪽 렌더), SwiftUI `strokeBorder(lineWidth: 1.5)` (inset stroke)로 구현.
-5. **line-height 24pt 적용**: 높이 모델(2행=48, 6행=144)이 lh24 기준이므로 line height를 실제 적용한다. UIKit은 `BTSemanticToken.attributes()`(paragraphStyle `minimumLineHeight` + baselineOffset), SwiftUI는 `applyBezierFontStyle`(lineSpacing + verticalPadding 보정)로 N행 블록 높이 = N×24pt.
-6. **readOnly 동작**: UIKit은 `isEditable = false`(선택·복사·스크롤 유지), SwiftUI는 `TextField` 대신 `.textSelection(.enabled)` `Text`로 렌더 (SwiftUI TextField에 readOnly가 없음). SwiftUI readOnly에서 6행 초과분은 tail truncation.
-7. **Enter = 줄 바꿈**: design spec doc §7 키보드 — Enter는 줄 바꿈이므로 `onSubmit`/`returnKeyType`을 제공하지 않는다. UIKit은 `keyboardType` passthrough만 최소 제공.
-8. **높이 상한 구현 (패러다임별 기제가 다름)**: 두 패러다임 모두 상한을 **pt 높이(160)** 로 건다 — 행 수 API로는 상한을 걸 수 없다.
-   - SwiftUI: `TextField(axis: .vertical)` + `lineLimit(2...)`(하한만) + 컨테이너 `maxHeight`. `lineLimit`의 상한은 폰트 고유 행높이로 높이를 예산 잡는데 실제 렌더는 `lineSpacing`이 실려 24pt 피치라, `2...6`을 주면 6행이 아니라 5행만 보인다 (시뮬레이터 실측 135.3pt).
-   - UIKit: `UITextView` 래핑 + 높이 제약 갱신. iOS 16+ 기본인 TextKit 2가 `paragraphStyle.minimumLineHeight`를 무시해 행 피치가 폰트 고유값(약 22.7pt)으로 좁아지므로 `UITextView(usingTextLayoutManager: false)`로 TextKit 1을 쓴다. 그래야 공유 타이포 헬퍼가 `UILabel`에서와 동일하게 24pt 행 높이를 만든다.
+5. **line-height 24pt 적용**: 높이 모델(2행=48, 6행=144)이 lh24 기준이므로 line height를 실제 적용한다. 편집 경로는 양쪽 모두 `BTSemanticToken.sizeAttributes()`/`attributes()`(paragraphStyle `minimumLineHeight` + baselineOffset), SwiftUI의 `Text` 경로(placeholder·readOnly)는 `applyBezierFontStyle`(lineSpacing + verticalPadding 보정)로 N행 블록 높이 = N×24pt.
+6. **readOnly 동작**: UIKit은 `isEditable = false`(선택·복사·스크롤 유지), SwiftUI는 편집용 텍스트 뷰(§8-14) 대신 `.textSelection(.enabled)` `Text`로 렌더. SwiftUI readOnly에서 6행 초과분은 tail truncation.
+7. **Enter = 줄 바꿈**: design spec doc §7 키보드 — Enter는 줄 바꿈이므로 `onSubmit`/`returnKeyType`을 제공하지 않는다. 양쪽 모두 `UITextView`가 Return을 개행으로 처리한다 (§8-14). `keyboardType`은 두 구현 모두 최소 제공.
+8. **높이 상한 구현**: 두 구현 모두 상한을 **pt 높이(160)** 로 건다 — 행 수 API로는 상한을 걸 수 없다. `UITextView.sizeThatFits`로 콘텐츠 높이를 구해 64~160pt로 clamp하고, SwiftUI는 그 값을 `UIViewRepresentable.sizeThatFits`로, UIKit은 높이 제약 상수로 반영한다. iOS 16+ 기본인 TextKit 2가 `paragraphStyle.minimumLineHeight`를 무시해 행 피치가 폰트 고유값(약 22.7pt)으로 좁아지므로 양쪽 모두 `UITextView(usingTextLayoutManager: false)`로 TextKit 1을 쓴다. 그래야 공유 타이포 헬퍼가 `UILabel`에서와 동일하게 24pt 행 높이를 만든다.
 9. **콜백 API**: UIKit은 `onTextChanged` / `onEditingChanged` 클로저, 포커스 제어는 `becomeFirstResponder()`/`resignFirstResponder()` 포워딩. SwiftUI는 `Binding<String>`.
-10. **SwiftUI placeholder 렌더 방식**: `TextField(prompt:)`는 `Text`만 받아 View modifier인 `lineSpacing`을 실을 수 없다. 여러 줄 placeholder의 행 높이를 24pt로 세우려면 `prompt`를 쓰지 않고 `.overlay`로 직접 그려야 한다 (UIKit의 별도 `placeholderLabel`과 동형).
+10. **SwiftUI placeholder 렌더 방식**: `UITextView`에는 placeholder 개념이 없다. SwiftUI는 `.overlay`로 직접 그린다 (UIKit의 별도 `placeholderLabel`과 동형). 오버레이는 `Text` 경로라 leading 배분이 `Text` 규칙(위아래 절반)을 따르므로, UIKit placeholder보다 약 1.3pt 위에 그려진다 — 시각적으로 무시 가능한 차이로 두고 값 텍스트만 픽셀 일치시킨다.
 11. **placeholder 행 수 상한 2행 + 말줄임**: Figma는 placeholder를 한 줄로만 그려 행 수 규정이 없다. 컨테이너 높이는 **값** 기준으로만 자라므로(값이 비면 §2의 기본 높이 64pt=2행에 고정) placeholder를 막지 않으면 2행을 넘는 순간 UIKit은 `masksToBounds`에 잘리고 SwiftUI 오버레이는 라운드 박스 밖으로 그려진다. 양쪽 모두 2행 + tail 말줄임으로 막는다 (UIKit `numberOfLines` + paragraphStyle `.byTruncatingTail`, SwiftUI `.lineLimit(2)` + `.truncationMode(.tail)`). placeholder가 컨테이너를 키우지는 않는다.
-12. **스크롤 인디케이터 숨김**: Figma는 오버플로 상태를 그리지 않아(전 인스턴스 height=64, 자식은 텍스트 레이어뿐) 인디케이터 규정이 없다 — 코드 전용 결정이다. 내부 스크롤(§8-2)은 인디케이터 없이 동작한다. SwiftUI `TextField(axis: .vertical)`는 내부 스크롤 뷰 접근 수단이 없어 인디케이터를 켤 수 없으므로, 패리티는 UIKit `showsVerticalScrollIndicator = false`로 맞춘다. 컴포넌트 내부의 부수적 오버플로 스크롤은 인디케이터를 숨기는 저장소 관례와도 일치한다.
+12. **스크롤 인디케이터 숨김**: Figma는 오버플로 상태를 그리지 않아(전 인스턴스 height=64, 자식은 텍스트 레이어뿐) 인디케이터 규정이 없다 — 코드 전용 결정이다. 내부 스크롤(§8-2)은 인디케이터 없이 동작한다. 양쪽 모두 `showsVerticalScrollIndicator = false`. 컴포넌트 내부의 부수적 오버플로 스크롤은 인디케이터를 숨기는 저장소 관례와도 일치한다.
 13. **웹 전용 요소 스코프 제외**: `minRows`/`maxRows` prop(웹 `TextAreaHeight` 3|6|10|16|24|36)·`autoFocus`·IME 키 잠금은 bezier-react 전용 — 모바일 Figma 높이 모델(2행/6행 고정)만 구현한다.
+14. **SwiftUI 입력 프리미티브 = `UITextView` 래핑**: SwiftUI가 제공하는 여러 줄 입력 프리미티브 둘 다 이 SPEC을 만족시키지 못해, 편집 표면만 private `UIViewRepresentable`로 감싼다 (배경·보더·placeholder·상태 해석은 SwiftUI가 그대로 담당).
+    - `TextField(axis: .vertical)`: 하드웨어 Return을 제출로 처리해 §8-7을 위반하고 포커스까지 잃는다 (실측: 2자 → Return → 2자 = 2자·1행·포커스 상실). 최소 지원이 iOS 16이라 `onKeyPress`(iOS 17+)로 가로챌 수도 없고, `onSubmit`에서 개행을 덧붙이는 우회는 캐럿이 문장 중간일 때 잘못된 위치에 삽입된다.
+    - `TextEditor`: 내부 `textContainerInset`·`lineFragmentPadding`을 노출하지 않아 §2의 좌우 10pt·상하 8pt 패딩을 문서화된 수단으로 맞출 수 없다 (`contentMargins`는 iOS 17+). 콘텐츠 높이로 hug하지도 않아 §8-8의 64~160pt 모델에 별도 측정용 미러 뷰가 필요하다.
+    - 대가: `.keyboardType` 등 SwiftUI 텍스트 입력 환경 modifier가 전파되지 않는다. UIKit과 동일하게 `keyboardType`을 init 파라미터로 노출해 대체한다.
 
 ## 9. Variant 매트릭스
 
