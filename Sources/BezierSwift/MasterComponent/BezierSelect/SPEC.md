@@ -232,6 +232,7 @@ Figma에 없는 구현 아키텍처 결정은 아래에 분리 표기한다. SSO
 11. **그룹 라벨 높이는 min-height 32 + HUG 하나로 통일**: §2대로 Figma는 `Internal/SelectGroup` 내부 라벨 인스턴스(`4648:130`)만 FIXED 32로 오버라이드하고 마스터·page 사용처는 min-height 32 + HUG다. 재사용하는 `BezierSectionLabel`/`SUBezierSectionLabel`은 맥락 구분 없이 min-height 32 + HUG만 제공하며, 라벨이 1줄 고정(ellipsis)이라 두 경우의 렌더 높이가 32pt로 같다. 구분을 코드에 재현하지 않는다.
 12. **description 행 높이는 line-height 16 기준 56pt**: Figma 인스턴스 실측 높이는 55pt지만 이는 description 텍스트 노드가 glyph box(15)로 잡힌 값이고, 노드에 바인딩된 `caption/line-height/medium`은 16이다. iOS는 `BTSemanticToken.captionMedium`의 line-height 16을 그대로 쓰므로 행 높이가 56pt가 된다(시뮬레이터 실측 UIKit·SwiftUI 모두 56.0/56.33pt). 형제 컴포넌트 `BezierDropdownMenu` SPEC도 line-height 16 기준(6+24+16+6=52)으로 기재돼 있다.
 13. **`leadingType=avatar`와 `custom`의 렌더 경로 공유**: Figma는 두 축을 분리하지만 레이아웃은 둘 다 24×24 슬롯으로 동일하다. 코드도 두 case를 모두 제공해 Figma 축을 보존하되 렌더는 같은 경로를 쓴다 — case 구분은 "무엇을 넣는가"(Avatar / 임의 뷰)의 문서적 구분이다.
+14. **`labelText`는 `container=.page`에서만 렌더**: §2대로 Figma `hasLabel`(`4870:1`)에 바인딩된 노드는 page variant의 루트 라벨(`1331:11`)뿐이고 overlay variant에는 라벨 노드 자체가 없다 — overlay 안에 보이는 라벨은 `Internal/SelectGroup`이 소유한 별개 축(`hasLabel#4665:1`)이다. 코드의 `labelText`는 두 container에 공통 프로퍼티로 두되(container를 런타임에 바꿀 수 있어야 하므로) 렌더는 `.page`에서만 한다. `.overlay`에서 라벨이 필요하면 Figma가 그 맥락에서 쓰는 경로 — `BezierSelectGroup`/`SUBezierSelectGroup`의 `labelText` — 를 쓴다. doc comment에 이 조건을 명시해 조용한 no-op이 되지 않게 했다 (`BezierMultiSelect` SPEC §9-13과 동일 결정).
 
 ## 10. Variant 매트릭스
 
