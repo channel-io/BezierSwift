@@ -31,6 +31,7 @@ enum CatalogRegistry {
     .init(id: "form-group", title: "FormGroup", section: .v3Components, destination: AnyView(FormGroupCatalog())),
     .init(id: "icon-button", title: "IconButton", section: .v3Components, destination: AnyView(IconButtonCatalog())),
     .init(id: "modal", title: "Modal", section: .v3Components, destination: AnyView(ModalCatalog())),
+    .init(id: "multi-select", title: "MultiSelect", section: .v3Components, destination: AnyView(MultiSelectCatalog())),
     .init(id: "overlay", title: "Overlay", section: .v3Components, destination: AnyView(OverlayCatalog())),
     .init(id: "progress-bar", title: "ProgressBar", section: .v3Components, destination: AnyView(ProgressBarCatalog())),
     .init(id: "search", title: "Search", section: .v3Components, destination: AnyView(SearchCatalog())),
