@@ -719,12 +719,4 @@ public enum BCGlobalToken {
       return ColorComponentsWithAlpha(red: 0x9E, green: 0x75, blue: 0x04, alpha: 1)
     }
   }
-
-  public var color: Color {
-    self.value.color
-  }
-
-  public var uiColor: UIColor {
-    self.value.uiColor
-  }
 }
