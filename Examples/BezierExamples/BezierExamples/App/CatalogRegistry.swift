@@ -40,6 +40,7 @@ enum CatalogRegistry {
     .init(id: "spinner", title: "Spinner", section: .v3Components, destination: AnyView(SpinnerCatalog())),
     .init(id: "switch", title: "Switch", section: .v3Components, destination: AnyView(SwitchCatalog())),
     .init(id: "tag", title: "Tag", section: .v3Components, destination: AnyView(TagCatalog())),
+    .init(id: "text-area", title: "TextArea", section: .v3Components, destination: AnyView(TextAreaCatalog())),
     .init(id: "text-input", title: "TextInput", section: .v3Components, destination: AnyView(TextInputCatalog())),
     .init(id: "toast", title: "Toast", section: .v3Components, destination: AnyView(ToastCatalog())),
   ]

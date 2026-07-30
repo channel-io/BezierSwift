@@ -57,13 +57,20 @@ public final class BezierSearch: UIView, BezierComponentable {
   /// 키보드 타입. 내부 텍스트 필드에 그대로 전달된다.
   public var keyboardType: UIKeyboardType {
     get { self.textField.keyboardType }
-    set { self.textField.keyboardType = newValue }
+    set {
+      self.textField.keyboardType = newValue
+      // 이미 올라와 있는 키보드는 입력 trait을 다시 읽지 않는다 — 표시 중일 때만 재조회를 강제한다
+      if self.textField.isFirstResponder { self.textField.reloadInputViews() }
+    }
   }
 
   /// 리턴 키 타입. 기본값 `.search`.
   public var returnKeyType: UIReturnKeyType {
     get { self.textField.returnKeyType }
-    set { self.textField.returnKeyType = newValue }
+    set {
+      self.textField.returnKeyType = newValue
+      if self.textField.isFirstResponder { self.textField.reloadInputViews() }
+    }
   }
 
   // MARK: - Callbacks
@@ -197,6 +204,7 @@ public final class BezierSearch: UIView, BezierComponentable {
     tapGesture.cancelsTouchesInView = false
     self.fieldView.addGestureRecognizer(tapGesture)
 
+    self.refreshEnabled()
     self.refreshClearButton()
     self.refreshCancelButton()
     self.refreshAppearance()
@@ -256,13 +264,18 @@ public final class BezierSearch: UIView, BezierComponentable {
 
   // MARK: - First Responder
 
-  public override var canBecomeFirstResponder: Bool { self.textField.canBecomeFirstResponder }
+  // isUserInteractionEnabled는 터치만 막는다 — 프로그램적 포커스 요청은 이 경로로 들어오고 하드웨어
+  // 키보드 입력은 hit test를 거치지 않으므로, 여기서 막지 않으면 비활성 상태에서도 입력이 반영된다
+  public override var canBecomeFirstResponder: Bool {
+    self.isEnabled && self.textField.canBecomeFirstResponder
+  }
 
   public override var isFirstResponder: Bool { self.textField.isFirstResponder }
 
   @discardableResult
   public override func becomeFirstResponder() -> Bool {
-    self.textField.becomeFirstResponder()
+    guard self.isEnabled else { return false }
+    return self.textField.becomeFirstResponder()
   }
 
   @discardableResult
@@ -291,6 +304,9 @@ public final class BezierSearch: UIView, BezierComponentable {
   // MARK: - Refresh
 
   private func refreshEnabled() {
+    // isUserInteractionEnabled = false는 first responder를 해제하는 게 아니라 유예한다 — 명시적으로
+    // resign하지 않으면 다시 활성화되는 순간 사용자 조작 없이 포커스와 키보드가 되살아난다
+    if !self.isEnabled { self.textField.resignFirstResponder() }
     self.textField.isEnabled = self.isEnabled
     self.isUserInteractionEnabled = self.isEnabled
     self.refreshClearButton()

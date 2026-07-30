@@ -81,13 +81,20 @@ public final class BezierTextInput: UIView, BezierComponentable {
   /// 키보드 타입. 내부 텍스트 필드에 그대로 전달된다.
   public var keyboardType: UIKeyboardType {
     get { self.textField.keyboardType }
-    set { self.textField.keyboardType = newValue }
+    set {
+      self.textField.keyboardType = newValue
+      // 이미 올라와 있는 키보드는 입력 trait을 다시 읽지 않는다 — 표시 중일 때만 재조회를 강제한다
+      if self.textField.isFirstResponder { self.textField.reloadInputViews() }
+    }
   }
 
   /// 리턴 키 타입. 내부 텍스트 필드에 그대로 전달된다.
   public var returnKeyType: UIReturnKeyType {
     get { self.textField.returnKeyType }
-    set { self.textField.returnKeyType = newValue }
+    set {
+      self.textField.returnKeyType = newValue
+      if self.textField.isFirstResponder { self.textField.reloadInputViews() }
+    }
   }
 
   // MARK: - Callbacks
@@ -122,8 +129,8 @@ public final class BezierTextInput: UIView, BezierComponentable {
 
   private let leadingContainer = UIView()
 
-  private let textField: UITextField = {
-    let textField = UITextField()
+  private let textField: BezierTextInputTextField = {
+    let textField = BezierTextInputTextField()
     textField.borderStyle = .none
     textField.backgroundColor = .clear
     textField.contentVerticalAlignment = .center
@@ -260,13 +267,18 @@ public final class BezierTextInput: UIView, BezierComponentable {
 
   // MARK: - First Responder
 
-  public override var canBecomeFirstResponder: Bool { self.textField.canBecomeFirstResponder }
+  // isUserInteractionEnabled는 터치만 막는다 — 프로그램적 포커스 요청은 이 경로로 들어오고 하드웨어
+  // 키보드 입력은 hit test를 거치지 않으므로, 여기서 막지 않으면 비활성 상태에서도 입력이 반영된다
+  public override var canBecomeFirstResponder: Bool {
+    self.isEnabled && self.textField.canBecomeFirstResponder
+  }
 
   public override var isFirstResponder: Bool { self.textField.isFirstResponder }
 
   @discardableResult
   public override func becomeFirstResponder() -> Bool {
-    self.textField.becomeFirstResponder()
+    guard self.isEnabled else { return false }
+    return self.textField.becomeFirstResponder()
   }
 
   @discardableResult
@@ -303,6 +315,9 @@ public final class BezierTextInput: UIView, BezierComponentable {
   }
 
   private func refreshEnabled() {
+    // isUserInteractionEnabled = false는 first responder를 해제하는 게 아니라 유예한다 — 명시적으로
+    // resign하지 않으면 다시 활성화되는 순간 사용자 조작 없이 포커스와 키보드가 되살아난다
+    if !self.isEnabled { self.textField.resignFirstResponder() }
     self.textField.isEnabled = self.isEnabled
     self.isUserInteractionEnabled = self.isEnabled
     self.refreshClearButton()
@@ -334,6 +349,7 @@ public final class BezierTextInput: UIView, BezierComponentable {
     self.textField.defaultTextAttributes = attributes
 
     self.clearButton.tintColor = BezierBaseInputConstant.iconColor.palette(self)
+    self.textField.hidesCaret = self.isReadOnly
 
     self.refreshPlaceholder()
   }
@@ -362,7 +378,7 @@ public final class BezierTextInput: UIView, BezierComponentable {
   // MARK: - Action
 
   @objc private func handleTap() {
-    guard self.isEnabled, !self.textField.isEditing else { return }
+    guard self.isEnabled, !self.isReadOnly, !self.textField.isEditing else { return }
     self.textField.becomeFirstResponder()
   }
 
@@ -402,7 +418,31 @@ extension BezierTextInput: UITextFieldDelegate {
   }
 
   public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    guard !self.isReadOnly else { return false }
     self.onSubmit?()
     return true
+  }
+}
+
+// MARK: - Caret
+
+// readOnly에서 캐럿만 감추기 위한 서브클래스. isEnabled = false는 선택·복사까지 함께 죽이고
+// tintColor = .clear는 선택 하이라이트와 드래그 핸들까지 투명하게 만들어 둘 다 쓸 수 없다
+private final class BezierTextInputTextField: UITextField {
+  var hidesCaret: Bool = false {
+    didSet {
+      guard oldValue != self.hidesCaret, self.isFirstResponder else { return }
+      // 캐럿 뷰는 selection이 바뀔 때만 caretRect를 다시 묻는다 — 값만 갱신하면 떠 있던 캐럿이 그대로 남는다
+      let selectedTextRange = self.selectedTextRange
+      self.selectedTextRange = nil
+      self.selectedTextRange = selectedTextRange
+    }
+  }
+
+  override func caretRect(for position: UITextPosition) -> CGRect {
+    guard self.hidesCaret else { return super.caretRect(for: position) }
+    // 캐럿 뷰는 이 rect를 그대로 frame으로 받는다 — 크기를 0으로 접어 렌더 결과를 없앤다.
+    // origin은 살려 두어야 캐럿 위치 기준 스크롤 계산이 어긋나지 않는다
+    return CGRect(origin: super.caretRect(for: position).origin, size: .zero)
   }
 }
