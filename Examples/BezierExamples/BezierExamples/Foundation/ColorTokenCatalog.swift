@@ -5,7 +5,7 @@ import BezierSwift
 struct ColorTokenCatalog: View {
   var body: some View {
     CatalogScreen(title: "Color Token") {
-      // 174개 × (SwiftUI + UIKit) = 348개 스와치다. CatalogScreen의 VStack은 lazy하지 않아
+      // 170개 × (SwiftUI + UIKit) = 340개 스와치다. CatalogScreen의 VStack은 lazy하지 않아
       // 그룹 전체를 한꺼번에 레이아웃하고, 그러면 스킴을 바꿀 때 UIKit 뷰 update가 전부
       // 재실행돼 화면이 수 초 비어 있다. 보이는 그룹만 처리하도록 여기서 한 겹 감싼다.
       LazyVStack(alignment: .leading, spacing: 24) {
