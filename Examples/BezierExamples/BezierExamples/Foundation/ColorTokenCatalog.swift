@@ -108,12 +108,10 @@ private struct ColorTokenGroup: Identifiable {
       ColorTokenSpec(.dimAbsoluteWhiteHeavy, "dim-absolute-white-heavy"),
     ]),
     ColorTokenGroup(title: "State", tokens: [
-      ColorTokenSpec(.stateAction,       "state-action"),
-      ColorTokenSpec(.stateActionLight,  "state-action-light"),
-      ColorTokenSpec(.stateActive,       "state-active"),
-      ColorTokenSpec(.stateDefault,      "state-default"),
-      ColorTokenSpec(.stateWarning,      "state-warning"),
-      ColorTokenSpec(.stateWarningLight, "state-warning-light"),
+      ColorTokenSpec(.stateActive,  "state-active"),
+      ColorTokenSpec(.stateDefault, "state-default"),
+      ColorTokenSpec(.stateFocus,   "state-focus"),
+      ColorTokenSpec(.stateWarning, "state-warning"),
     ]),
     ColorTokenGroup(title: "Chart", tokens: [
       ColorTokenSpec(.chartThemeDefault01, "chart-theme-default-01"),
