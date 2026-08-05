@@ -51,6 +51,13 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
     didSet { self.updateSlot(container: self.trailingContainer, old: oldValue, new: self.trailingContent, fill: true) }
   }
 
+  // MARK: - Internal Style
+
+  /// 파생 `*Item` 컴포넌트가 composition 시 주입하는 내부 스타일. 기본값은 BaseItem 자체 스펙과 동일하다.
+  var style = BezierBaseItemStyle() {
+    didSet { self.applyStyle() }
+  }
+
   // MARK: - State
 
   public override var isHighlighted: Bool {
@@ -155,7 +162,7 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
 
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.layer.cornerRadius = BezierBaseItemConstant.cornerRadius
+    self.layer.cornerRadius = self.style.cornerRadius
     self.layer.masksToBounds = true
 
     self.setUpLeading()
@@ -266,14 +273,26 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
     self.leadingWidthConstraint?.constant = self.size.leadingLength
     self.leadingHeightConstraint?.constant = self.size.leadingLength
     self.minHeightConstraint?.constant = self.size.minHeight
+    let verticalPadding = self.style.verticalPadding ?? self.size.verticalPadding
     self.directionalLayoutMargins = NSDirectionalEdgeInsets(
-      top: self.size.verticalPadding,
-      leading: BezierBaseItemConstant.horizontalPadding,
-      bottom: self.size.verticalPadding,
-      trailing: BezierBaseItemConstant.horizontalPadding
+      top: verticalPadding,
+      leading: self.style.horizontalPadding,
+      bottom: verticalPadding,
+      trailing: self.style.horizontalPadding
+    )
+    self.centerStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+      top: 0,
+      leading: self.style.centerLeadingInset,
+      bottom: 0,
+      trailing: 0
     )
     self.refreshText()
     self.setNeedsLayout()
+  }
+
+  private func applyStyle() {
+    self.layer.cornerRadius = self.style.cornerRadius
+    self.refreshSize()
   }
 
   private func refreshText() {
@@ -281,7 +300,7 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
       self.titleLabel.attributedText = BezierBaseItemConstant.titleTypography.attributedString(
         self,
         text: self.title,
-        semanticColorToken: BezierBaseItemConstant.titleColor,
+        semanticColorToken: self.style.titleColor,
         alignment: .left,
         lineBreakMode: .byTruncatingTail
       )
@@ -291,8 +310,10 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
       self.titleLabel.isHidden = true
     }
 
-    // SPEC §2: description은 medium·large만 지원 (small variant엔 description 노드 자체가 없음)
-    if self.size != .small, let itemDescription = self.itemDescription, !itemDescription.isEmpty {
+    // SPEC §2: description은 medium·large만 지원 (small variant엔 description 노드 자체가 없음).
+    // 파생 스펙이 small에서 description을 정의하는 경우(DropdownMenuItem)만 style로 허용을 주입한다.
+    let supportsDescription = self.size != .small || self.style.allowsSmallDescription
+    if supportsDescription, let itemDescription = self.itemDescription, !itemDescription.isEmpty {
       self.descriptionLabel.attributedText = BezierBaseItemConstant.descriptionTypography.attributedString(
         self,
         text: itemDescription,

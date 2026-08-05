@@ -2,13 +2,12 @@
 //  BCSemanticToken.swift
 //  BezierSwift
 //
-//  Generated from BezierColorV3SemanticToken-Light.js and BezierColorV3SemanticToken-Dark.js
+//  core-bezier-system 의 specs/tokens 에서 자동 생성된 파일입니다. 직접 수정하지 마세요.
 //
 
 import UIKit
 
 public enum BCSemanticToken: Equatable {
-  // MARK: - Border
   case borderAbsoluteWhite
   case borderDetach
   case borderDetachHigh
@@ -18,104 +17,89 @@ public enum BCSemanticToken: Equatable {
   case borderNeutral
   case borderNeutralHeavier
   case borderNeutralHeavy
-
-  // MARK: - Dim
+  case chartThemeDefault01
+  case chartThemeDefault02
+  case chartThemeDefault03
+  case chartThemeDefault04
+  case chartThemeDefault05
+  case chartThemeDefault06
+  case chartThemeDefault07
+  case chartThemeDefault08
+  case chartThemeDefault09
+  case chartThemeDefault10
   case dimAbsoluteBlack
   case dimAbsoluteBlackHeavy
   case dimAbsoluteWhite
   case dimAbsoluteWhiteHeavy
-
-  // MARK: - Elevation
   case elevationBase
   case elevationBaseInner
   case elevationLarge
   case elevationMedium
   case elevationSmall
   case elevationXlarge
-
-  // MARK: - Fill Absolute
   case fillAbsoluteBlack
   case fillAbsoluteBlackLight
   case fillAbsoluteBlackTransparent
   case fillAbsoluteWhite
   case fillAbsoluteWhiteLight
   case fillAbsoluteWhiteTransparent
-
-  // MARK: - Fill Accent Blue
   case fillAccentBlue
   case fillAccentBlueHeavier
   case fillAccentBlueHeavy
   case fillAccentBlueTransparent
-
-  // MARK: - Fill Accent Cobalt
   case fillAccentCobalt
   case fillAccentCobaltHeavier
   case fillAccentCobaltHeavy
   case fillAccentCobaltTransparent
-
-  // MARK: - Fill Accent Green
   case fillAccentGreen
   case fillAccentGreenHeavier
   case fillAccentGreenHeavy
   case fillAccentGreenTransparent
-
-  // MARK: - Fill Accent Navy
   case fillAccentNavy
   case fillAccentNavyHeavier
   case fillAccentNavyHeavy
   case fillAccentNavyTransparent
-
-  // MARK: - Fill Accent Olive
   case fillAccentOlive
   case fillAccentOliveHeavier
   case fillAccentOliveHeavy
   case fillAccentOliveTransparent
-
-  // MARK: - Fill Accent Orange
   case fillAccentOrange
   case fillAccentOrangeHeavier
   case fillAccentOrangeHeavy
   case fillAccentOrangeTransparent
-
-  // MARK: - Fill Accent Pink
   case fillAccentPink
   case fillAccentPinkHeavier
   case fillAccentPinkHeavy
   case fillAccentPinkTransparent
-
-  // MARK: - Fill Accent Purple
   case fillAccentPurple
   case fillAccentPurpleHeavier
   case fillAccentPurpleHeavy
   case fillAccentPurpleTransparent
-
-  // MARK: - Fill Accent Red
   case fillAccentRed
   case fillAccentRedHeavier
   case fillAccentRedHeavy
   case fillAccentRedTransparent
-
-  // MARK: - Fill Accent Teal
   case fillAccentTeal
   case fillAccentTealHeavier
   case fillAccentTealHeavy
   case fillAccentTealTransparent
-
-  // MARK: - Fill Accent Yellow
   case fillAccentYellow
   case fillAccentYellowHeavier
   case fillAccentYellowHeavy
   case fillAccentYellowTransparent
-
-  // MARK: - Fill Semantic
   case fillAction
   case fillActionLight
   case fillActionLighter
   case fillActionTransparent
+  case fillBright
   case fillCritical
   case fillCriticalLight
   case fillCriticalLighter
   case fillCriticalTransparent
+  case fillGrey
+  case fillGreyHeavier
+  case fillGreyHeavy
+  case fillGreyLight
   case fillHighlight
   case fillHighlightLight
   case fillHighlightLighter
@@ -136,19 +120,6 @@ public enum BCSemanticToken: Equatable {
   case fillWarningLight
   case fillWarningLighter
   case fillWarningTransparent
-
-  // MARK: - Fill Grey
-  case fillBright
-  case fillGrey
-  case fillGreyHeavier
-  case fillGreyHeavy
-  case fillGreyLight
-
-  // MARK: - Gradient
-  case gradientAccentGreen
-  case gradientAccentGreenLight
-
-  // MARK: - Icon
   case iconAbsoluteBlack
   case iconAbsoluteWhite
   case iconAccentBlue
@@ -165,22 +136,16 @@ public enum BCSemanticToken: Equatable {
   case iconAction
   case iconCritical
   case iconHighlight
+  case iconInverseHeavier
   case iconNeutral
   case iconNeutralHeavier
   case iconNeutralHeavy
   case iconSuccess
   case iconWarning
-  case iconInverseHeavier
-
-  // MARK: - State
-  case stateAction
-  case stateActionLight
   case stateActive
   case stateDefault
+  case stateFocus
   case stateWarning
-  case stateWarningLight
-
-  // MARK: - Surface
   case surface
   case surfaceGlass
   case surfaceGlassHigh
@@ -190,8 +155,6 @@ public enum BCSemanticToken: Equatable {
   case surfaceHigher
   case surfaceHighest
   case surfaceLow
-
-  // MARK: - Text
   case textAbsoluteBlack
   case textAbsoluteWhite
   case textAccentBlue
@@ -208,53 +171,22 @@ public enum BCSemanticToken: Equatable {
   case textAction
   case textCritical
   case textHighlight
+  case textInverse
   case textNeutral
   case textNeutralHeaviest
   case textNeutralLight
   case textNeutralLighter
   case textSuccess
   case textWarning
-  case textInverse
-
-  // MARK: - Chart
-  case chartThemeDefault01
-  case chartThemeDefault02
-  case chartThemeDefault03
-  case chartThemeDefault04
-  case chartThemeDefault05
-  case chartThemeDefault06
-  case chartThemeDefault07
-  case chartThemeDefault08
-  case chartThemeDefault09
-  case chartThemeDefault10
 
   case custom(light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
 }
 
-// MARK: - SemanticColorProtocol
-extension BCSemanticToken: SemanticColorProtocol {
-  public var light: ColorComponentsWithAlpha { self.paletteSet.light }
-  public var dark: ColorComponentsWithAlpha { self.paletteSet.dark }
-  
-}
-
-// MARK: - Pressed Color Method
-extension BCSemanticToken {
-  public var pressedColor: BCSemanticToken {
-    return .custom(
-      light: ColorUtils.getPressedColor(originalColor: self.light, colorTheme: .light),
-      dark: ColorUtils.getPressedColor(originalColor: self.dark, colorTheme: .dark)
-    )
-  }
-}
-
-// MARK: - Private Methods
 extension BCSemanticToken {
   typealias PaletteSet = (light: ColorComponentsWithAlpha, dark: ColorComponentsWithAlpha)
 
-  private var paletteSet: PaletteSet {
+  var paletteSet: PaletteSet {
     switch self {
-    // MARK: - Border
     case .borderAbsoluteWhite:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.white100.value)
     case .borderDetach:
@@ -273,8 +205,26 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
     case .borderNeutralHeavy:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
-
-    // MARK: - Dim
+    case .chartThemeDefault01:
+      return Self.chartColor(0x7C, 0x72, 0xFD)
+    case .chartThemeDefault02:
+      return Self.chartColor(0x81, 0xDF, 0xDD)
+    case .chartThemeDefault03:
+      return Self.chartColor(0xFC, 0x97, 0x83)
+    case .chartThemeDefault04:
+      return Self.chartColor(0xB1, 0x59, 0x6A)
+    case .chartThemeDefault05:
+      return Self.chartColor(0xFE, 0x71, 0xBA)
+    case .chartThemeDefault06:
+      return Self.chartColor(0xC9, 0x71, 0xEC)
+    case .chartThemeDefault07:
+      return Self.chartColor(0x4A, 0x75, 0xE3)
+    case .chartThemeDefault08:
+      return Self.chartColor(0x80, 0xB6, 0xFD)
+    case .chartThemeDefault09:
+      return Self.chartColor(0xFB, 0x90, 0xF1)
+    case .chartThemeDefault10:
+      return Self.chartColor(0xB4, 0xD6, 0xE5)
     case .dimAbsoluteBlack:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.black40.value)
     case .dimAbsoluteBlackHeavy:
@@ -283,8 +233,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.white40.value, dark: BCGlobalToken.white40.value)
     case .dimAbsoluteWhiteHeavy:
       return (light: BCGlobalToken.white60.value, dark: BCGlobalToken.white80.value)
-
-    // MARK: - Elevation
     case .elevationBase:
       return (light: BCGlobalToken.black5.value, dark: BCGlobalToken.black5.value)
     case .elevationBaseInner:
@@ -297,8 +245,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.black8.value, dark: BCGlobalToken.black8.value)
     case .elevationXlarge:
       return (light: BCGlobalToken.black30.value, dark: BCGlobalToken.black30.value)
-
-    // MARK: - Fill Absolute
     case .fillAbsoluteBlack:
       return (light: BCGlobalToken.black100.value, dark: BCGlobalToken.black100.value)
     case .fillAbsoluteBlackLight:
@@ -311,8 +257,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.white20.value, dark: BCGlobalToken.white20.value)
     case .fillAbsoluteWhiteTransparent:
       return (light: BCGlobalToken.white0.value, dark: BCGlobalToken.white0.value)
-
-    // MARK: - Fill Accent Blue
     case .fillAccentBlue:
       return (light: BCGlobalToken.blue400_10.value, dark: BCGlobalToken.blue300_18.value)
     case .fillAccentBlueHeavier:
@@ -321,8 +265,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.blue400_20.value, dark: BCGlobalToken.blue300_30.value)
     case .fillAccentBlueTransparent:
       return (light: BCGlobalToken.blue400_0.value, dark: BCGlobalToken.blue300_0.value)
-
-    // MARK: - Fill Accent Cobalt
     case .fillAccentCobalt:
       return (light: BCGlobalToken.cobalt400_10.value, dark: BCGlobalToken.cobalt300_18.value)
     case .fillAccentCobaltHeavier:
@@ -331,8 +273,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.cobalt400_20.value, dark: BCGlobalToken.cobalt300_30.value)
     case .fillAccentCobaltTransparent:
       return (light: BCGlobalToken.cobalt400_0.value, dark: BCGlobalToken.cobalt300_0.value)
-
-    // MARK: - Fill Accent Green
     case .fillAccentGreen:
       return (light: BCGlobalToken.green400_10.value, dark: BCGlobalToken.green300_18.value)
     case .fillAccentGreenHeavier:
@@ -341,8 +281,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.green400_20.value, dark: BCGlobalToken.green300_30.value)
     case .fillAccentGreenTransparent:
       return (light: BCGlobalToken.green400_0.value, dark: BCGlobalToken.green300_0.value)
-
-    // MARK: - Fill Accent Navy
     case .fillAccentNavy:
       return (light: BCGlobalToken.navy400_10.value, dark: BCGlobalToken.navy300_18.value)
     case .fillAccentNavyHeavier:
@@ -351,8 +289,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.navy400_20.value, dark: BCGlobalToken.navy300_30.value)
     case .fillAccentNavyTransparent:
       return (light: BCGlobalToken.navy400_0.value, dark: BCGlobalToken.navy300_0.value)
-
-    // MARK: - Fill Accent Olive
     case .fillAccentOlive:
       return (light: BCGlobalToken.olive400_10.value, dark: BCGlobalToken.olive300_18.value)
     case .fillAccentOliveHeavier:
@@ -361,8 +297,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.olive400_20.value, dark: BCGlobalToken.olive300_30.value)
     case .fillAccentOliveTransparent:
       return (light: BCGlobalToken.olive400_0.value, dark: BCGlobalToken.olive300_0.value)
-
-    // MARK: - Fill Accent Orange
     case .fillAccentOrange:
       return (light: BCGlobalToken.orange400_10.value, dark: BCGlobalToken.orange300_18.value)
     case .fillAccentOrangeHeavier:
@@ -371,8 +305,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.orange400_20.value, dark: BCGlobalToken.orange300_30.value)
     case .fillAccentOrangeTransparent:
       return (light: BCGlobalToken.orange400_0.value, dark: BCGlobalToken.orange300_0.value)
-
-    // MARK: - Fill Accent Pink
     case .fillAccentPink:
       return (light: BCGlobalToken.pink400_10.value, dark: BCGlobalToken.pink300_18.value)
     case .fillAccentPinkHeavier:
@@ -381,8 +313,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.pink400_20.value, dark: BCGlobalToken.pink300_30.value)
     case .fillAccentPinkTransparent:
       return (light: BCGlobalToken.pink400_0.value, dark: BCGlobalToken.pink300_0.value)
-
-    // MARK: - Fill Accent Purple
     case .fillAccentPurple:
       return (light: BCGlobalToken.purple400_10.value, dark: BCGlobalToken.purple300_18.value)
     case .fillAccentPurpleHeavier:
@@ -391,8 +321,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.purple400_20.value, dark: BCGlobalToken.purple300_30.value)
     case .fillAccentPurpleTransparent:
       return (light: BCGlobalToken.purple400_0.value, dark: BCGlobalToken.purple300_0.value)
-
-    // MARK: - Fill Accent Red
     case .fillAccentRed:
       return (light: BCGlobalToken.red400_10.value, dark: BCGlobalToken.red300_18.value)
     case .fillAccentRedHeavier:
@@ -401,8 +329,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.red400_20.value, dark: BCGlobalToken.red300_30.value)
     case .fillAccentRedTransparent:
       return (light: BCGlobalToken.red400_0.value, dark: BCGlobalToken.red300_0.value)
-
-    // MARK: - Fill Accent Teal
     case .fillAccentTeal:
       return (light: BCGlobalToken.teal400_10.value, dark: BCGlobalToken.teal300_18.value)
     case .fillAccentTealHeavier:
@@ -411,8 +337,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.teal400_20.value, dark: BCGlobalToken.teal300_30.value)
     case .fillAccentTealTransparent:
       return (light: BCGlobalToken.teal400_0.value, dark: BCGlobalToken.teal300_0.value)
-
-    // MARK: - Fill Accent Yellow
     case .fillAccentYellow:
       return (light: BCGlobalToken.yellow400_10.value, dark: BCGlobalToken.yellow300_18.value)
     case .fillAccentYellowHeavier:
@@ -421,8 +345,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.yellow400_20.value, dark: BCGlobalToken.yellow300_30.value)
     case .fillAccentYellowTransparent:
       return (light: BCGlobalToken.yellow400_0.value, dark: BCGlobalToken.yellow300_0.value)
-
-    // MARK: - Fill Semantic
     case .fillAction:
       return (light: BCGlobalToken.blue400.value, dark: BCGlobalToken.blue300.value)
     case .fillActionLight:
@@ -431,6 +353,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.blue400_10.value, dark: BCGlobalToken.blue300_18.value)
     case .fillActionTransparent:
       return (light: BCGlobalToken.blue400_0.value, dark: BCGlobalToken.blue300_0.value)
+    case .fillBright:
+      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey650.value)
     case .fillCritical:
       return (light: BCGlobalToken.red400.value, dark: BCGlobalToken.red300.value)
     case .fillCriticalLight:
@@ -439,6 +363,14 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.red400_10.value, dark: BCGlobalToken.red300_18.value)
     case .fillCriticalTransparent:
       return (light: BCGlobalToken.red400_0.value, dark: BCGlobalToken.red300_0.value)
+    case .fillGrey:
+      return (light: BCGlobalToken.grey50.value, dark: BCGlobalToken.grey850.value)
+    case .fillGreyHeavier:
+      return (light: BCGlobalToken.grey200.value, dark: BCGlobalToken.grey750.value)
+    case .fillGreyHeavy:
+      return (light: BCGlobalToken.grey100.value, dark: BCGlobalToken.grey800.value)
+    case .fillGreyLight:
+      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey900.value)
     case .fillHighlight:
       return (light: BCGlobalToken.cobalt400.value, dark: BCGlobalToken.cobalt300.value)
     case .fillHighlightLight:
@@ -479,26 +411,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.orange400_10.value, dark: BCGlobalToken.orange300_18.value)
     case .fillWarningTransparent:
       return (light: BCGlobalToken.orange400_0.value, dark: BCGlobalToken.orange300_0.value)
-
-    // MARK: - Fill Grey
-    case .fillBright:
-      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey650.value)
-    case .fillGrey:
-      return (light: BCGlobalToken.grey50.value, dark: BCGlobalToken.grey850.value)
-    case .fillGreyHeavier:
-      return (light: BCGlobalToken.grey200.value, dark: BCGlobalToken.grey750.value)
-    case .fillGreyHeavy:
-      return (light: BCGlobalToken.grey100.value, dark: BCGlobalToken.grey800.value)
-    case .fillGreyLight:
-      return (light: BCGlobalToken.grey25.value, dark: BCGlobalToken.grey900.value)
-
-    // MARK: - Gradient
-    case .gradientAccentGreen:
-      return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green400.value)
-    case .gradientAccentGreenLight:
-      return (light: BCGlobalToken.green300.value, dark: BCGlobalToken.green300.value)
-
-    // MARK: - Icon
     case .iconAbsoluteBlack:
       return (light: BCGlobalToken.black100.value, dark: BCGlobalToken.black100.value)
     case .iconAbsoluteWhite:
@@ -531,6 +443,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.red400.value, dark: BCGlobalToken.red300.value)
     case .iconHighlight:
       return (light: BCGlobalToken.cobalt400.value, dark: BCGlobalToken.cobalt300.value)
+    case .iconInverseHeavier:
+      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
     case .iconNeutral:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
     case .iconNeutralHeavier:
@@ -541,24 +455,14 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green300.value)
     case .iconWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
-    case .iconInverseHeavier:
-      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
-
-    // MARK: - State
-    case .stateAction:
-      return (light: BCGlobalToken.blue400.value, dark: BCGlobalToken.blue300.value)
-    case .stateActionLight:
-      return (light: BCGlobalToken.blue400_30.value, dark: BCGlobalToken.blue300_45.value)
     case .stateActive:
-      return (light: BCGlobalToken.black80.value, dark: BCGlobalToken.white80.value)
+      return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white40.value)
     case .stateDefault:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
+    case .stateFocus:
+      return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
     case .stateWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
-    case .stateWarningLight:
-      return (light: BCGlobalToken.orange400_30.value, dark: BCGlobalToken.orange300.value)
-
-    // MARK: - Surface
     case .surface:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey900.value)
     case .surfaceGlass:
@@ -577,8 +481,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey750.value)
     case .surfaceLow:
       return (light: BCGlobalToken.grey50.value, dark: BCGlobalToken.grey950.value)
-
-    // MARK: - Text
     case .textAbsoluteBlack:
       return (light: BCGlobalToken.black100.value, dark: BCGlobalToken.black100.value)
     case .textAbsoluteWhite:
@@ -611,6 +513,8 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.red400.value, dark: BCGlobalToken.red300.value)
     case .textHighlight:
       return (light: BCGlobalToken.cobalt400.value, dark: BCGlobalToken.cobalt300.value)
+    case .textInverse:
+      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
     case .textNeutral:
       return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white80.value)
     case .textNeutralHeaviest:
@@ -623,30 +527,6 @@ extension BCSemanticToken {
       return (light: BCGlobalToken.green400.value, dark: BCGlobalToken.green300.value)
     case .textWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
-    case .textInverse:
-      return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.black85.value)
-    // MARK: - Chart
-    // Figma SSOT에서 chart 토큰은 global 토큰 alias 없이 직접 색상값으로 정의됨 (light/dark 동일).
-    case .chartThemeDefault01:
-      return Self.chartColor(0x7C, 0x72, 0xFD)
-    case .chartThemeDefault02:
-      return Self.chartColor(0x81, 0xDF, 0xDD)
-    case .chartThemeDefault03:
-      return Self.chartColor(0xFC, 0x97, 0x83)
-    case .chartThemeDefault04:
-      return Self.chartColor(0xB1, 0x59, 0x6A)
-    case .chartThemeDefault05:
-      return Self.chartColor(0xFE, 0x71, 0xBA)
-    case .chartThemeDefault06:
-      return Self.chartColor(0xC9, 0x71, 0xEC)
-    case .chartThemeDefault07:
-      return Self.chartColor(0x4A, 0x75, 0xE3)
-    case .chartThemeDefault08:
-      return Self.chartColor(0x80, 0xB6, 0xFD)
-    case .chartThemeDefault09:
-      return Self.chartColor(0xFB, 0x90, 0xF1)
-    case .chartThemeDefault10:
-      return Self.chartColor(0xB4, 0xD6, 0xE5)
     case .custom(let light, let dark):
       return (light: light, dark: dark)
     }

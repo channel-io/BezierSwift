@@ -39,6 +39,19 @@ public enum BezierBaseItemSize: CaseIterable {
   }
 }
 
+// MARK: - Style (internal)
+
+/// 파생 `*Item` 컴포넌트가 BaseItem을 composition으로 소유할 때 주입하는 내부 스타일. 기본값은 BaseItem 자체(Figma `_BaseItem`) 스펙과 동일하며, public API로는 노출하지 않는다.
+struct BezierBaseItemStyle {
+  var horizontalPadding: CGFloat = BezierBaseItemConstant.horizontalPadding
+  /// `nil`이면 `BezierBaseItemSize.verticalPadding`을 그대로 쓴다.
+  var verticalPadding: CGFloat?
+  var cornerRadius: CGFloat = BezierBaseItemConstant.cornerRadius
+  var centerLeadingInset: CGFloat = BezierBaseItemConstant.centerLeadingInset
+  var titleColor: BCSemanticToken = BezierBaseItemConstant.titleColor
+  var allowsSmallDescription: Bool = false
+}
+
 // MARK: - Constant
 
 public enum BezierBaseItemConstant {

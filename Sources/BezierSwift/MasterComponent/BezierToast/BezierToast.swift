@@ -9,9 +9,9 @@ import UIKit
 public final class BezierToast: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 
-  // Toast는 항상 dark 표면. colorTheme을 .dark 상수로 고정하여 token.palette(self)가 dark 값을 해석하게 한다.
-  public var colorTheme: BezierColorTheme { .dark }
-  public var componentTheme: BezierComponentTheme = .normal {
+  public var colorTheme: BezierColorTheme { .systemBezierColorTheme() }
+  // Toast 표면은 앱 테마의 반전이다(웹 InvertedThemeProvider 대응). 다른 컴포넌트와 달리 기본값이 .inverted다.
+  public var componentTheme: BezierComponentTheme = .inverted {
     didSet { self.refreshAppearance() }
   }
 
@@ -86,7 +86,6 @@ public final class BezierToast: UIView, BezierComponentable {
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.layer.masksToBounds = true
-    self.overrideUserInterfaceStyle = .dark
 
     self.contentStackView.addArrangedSubview(self.iconImageView)
     self.contentStackView.addArrangedSubview(self.titleLabel)

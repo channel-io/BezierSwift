@@ -17,6 +17,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
   private let leading: Leading
   private let centerSlot: CenterSlot
   private let trailing: Trailing
+  private let style: BezierBaseItemStyle
 
   /// 텍스트·크기·탭 동작과 함께 leading·centerSlot·trailing 세 슬롯 뷰를 지정해 생성한다. `description`은 `size`가 `.small`이면 무시되고, `onTap`이 `nil`이면 정적인 행이 된다.
   public init(
@@ -28,6 +29,30 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
     @ViewBuilder centerSlot: () -> CenterSlot,
     @ViewBuilder trailing: () -> Trailing
   ) {
+    self.init(
+      style: BezierBaseItemStyle(),
+      size: size,
+      title: title,
+      description: description,
+      onTap: onTap,
+      leading: leading,
+      centerSlot: centerSlot,
+      trailing: trailing
+    )
+  }
+
+  /// 파생 `*Item` 컴포넌트가 composition 시 내부 스타일을 주입하는 이니셜라이저. public API로는 노출하지 않는다.
+  init(
+    style: BezierBaseItemStyle,
+    size: BezierBaseItemSize = .medium,
+    title: String,
+    description: String? = nil,
+    onTap: (() -> Void)? = nil,
+    @ViewBuilder leading: () -> Leading,
+    @ViewBuilder centerSlot: () -> CenterSlot,
+    @ViewBuilder trailing: () -> Trailing
+  ) {
+    self.style = style
     self.size = size
     self.title = title
     self.itemDescription = description
@@ -41,9 +66,11 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
     Group {
       if let onTap = self.onTap {
         Button(action: onTap) { self.row }
-          .buttonStyle(SUBezierBaseItemStyle(size: self.size))
+          .buttonStyle(SUBezierBaseItemStyle(size: self.size, style: self.style))
       } else {
-        self.row.modifier(SUBezierBaseItemContainer(size: self.size, isPressed: false))
+        self.row.modifier(
+          SUBezierBaseItemContainer(size: self.size, style: self.style, isPressed: false)
+        )
       }
     }
     .opacity(self.isEnabled ? 1 : BezierBaseItemConstant.disabledOpacity)
@@ -66,6 +93,10 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
     }
   }
 
+  private var supportsDescription: Bool {
+    self.size != .small || self.style.allowsSmallDescription
+  }
+
   private var centerView: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(spacing: BezierBaseItemConstant.titleRowSpacing) {
@@ -73,7 +104,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
           Text(self.title)
             .applyBezierFontStyle(
               BezierBaseItemConstant.titleTypography,
-              semanticColorToken: BezierBaseItemConstant.titleColor
+              semanticColorToken: self.style.titleColor
             )
             .lineLimit(1)
             .truncationMode(.tail)
@@ -82,7 +113,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
         Spacer(minLength: 0)
       }
 
-      if self.size != .small, let itemDescription = self.itemDescription, !itemDescription.isEmpty {
+      if self.supportsDescription, let itemDescription = self.itemDescription, !itemDescription.isEmpty {
         Text(itemDescription)
           .applyBezierFontStyle(
             BezierBaseItemConstant.descriptionTypography,
@@ -92,7 +123,7 @@ public struct SUBezierBaseItem<Leading: View, CenterSlot: View, Trailing: View>:
           .frame(maxWidth: .infinity, alignment: .leading)
       }
     }
-    .padding(.leading, BezierBaseItemConstant.centerLeadingInset)
+    .padding(.leading, self.style.centerLeadingInset)
     .frame(maxWidth: .infinity, alignment: .leading)
   }
 
@@ -142,6 +173,7 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   let size: BezierBaseItemSize
+  let style: BezierBaseItemStyle
   let isPressed: Bool
 
   private var contentScale: CGFloat {
@@ -152,8 +184,8 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
     content
       // 콘텐츠만 축소 — 배경은 full-size 유지 (press scale 피드백)
       .scaleEffect(self.contentScale)
-      .padding(.horizontal, BezierBaseItemConstant.horizontalPadding)
-      .padding(.vertical, self.size.verticalPadding)
+      .padding(.horizontal, self.style.horizontalPadding)
+      .padding(.vertical, self.style.verticalPadding ?? self.size.verticalPadding)
       .frame(minHeight: self.size.minHeight)
       .frame(maxWidth: .infinity, alignment: .leading)
       .background(
@@ -161,7 +193,7 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
           ? self.palette(BezierBaseItemConstant.pressedBackgroundColor)
           : Color.clear
       )
-      .clipShape(RoundedRectangle(cornerRadius: BezierBaseItemConstant.cornerRadius))
+      .clipShape(RoundedRectangle(cornerRadius: self.style.cornerRadius))
       .contentShape(Rectangle())
       .animation(.spring(response: 0.34, dampingFraction: 0.62), value: self.isPressed)
   }
@@ -171,10 +203,13 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
 
 private struct SUBezierBaseItemStyle: ButtonStyle {
   let size: BezierBaseItemSize
+  let style: BezierBaseItemStyle
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .modifier(SUBezierBaseItemContainer(size: self.size, isPressed: configuration.isPressed))
+      .modifier(
+        SUBezierBaseItemContainer(size: self.size, style: self.style, isPressed: configuration.isPressed)
+      )
   }
 }
 

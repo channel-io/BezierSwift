@@ -6,7 +6,7 @@
 화면 상단에 일시적으로 표시되는 비방해적 알림 (iOS 네이티브 관례).
 
 - **모양**: pill (완전 캡슐, radius = height / 2)
-- **표면 모드**: 항상 dark (라이트/다크 무관, 항상 어두운 표면)
+- **표면 모드**: 반전 (앱 테마의 반대 — 라이트에서 dark 표면, 다크에서 light 표면)
 - **위치**: 상단 고정 (`top`)
 - **동시 표시**: 1개 (새 Toast가 오면 기존 Toast 즉시 교체)
 
@@ -52,22 +52,26 @@ Toast는 size 축이 없다. preset(아이콘 유무)에 따라 수평 padding�
 
 ### Background / Text (공통)
 
-| Part | Token | Figma Variable | Raw (dark) |
-|---|---|---|---|
-| 배경 | `fillGreyHeavier` | `color/fill/grey/heavier` | `#313135` |
-| 텍스트 | `textNeutral` | `color/text/neutral` | `#ffffffcc` |
+토큰은 공통이고, 표면이 반전이므로 **앱 테마의 반대쪽 값**이 적용된다.
+
+| Part | Token | Figma Variable | 앱 light → 적용값 | 앱 dark → 적용값 |
+|---|---|---|---|---|
+| 배경 | `fillGreyHeavier` | `color/fill/grey/heavier` | `#313135` (grey750) | `#efeff0` (grey200) |
+| 텍스트 | `textNeutral` | `color/text/neutral` | `#ffffffcc` (white80) | `#000000d9` (black85) |
 
 > 배경 fill은 `color/fill/grey/heavier`(불투명). Figma에는 `Backdrop/small`(BACKGROUND_BLUR radius 6) 이펙트와 description "배경 blur(glass)"도 함께 존재하나, 바인딩된 배경 fill은 불투명이다.
 >
-> Toast는 항상 dark 표면이므로 Figma가 노출한 dark 값을 적용한다.
+> **반전 근거** — Figma의 preset 컴포넌트(`2089:2` / `2089:17` / `2089:25`)는 `2. semantic/color` 컬렉션을 `dark-theme` 모드로 `explicitVariableModes` pin하고 있고, 부모 COMPONENT_SET(`2090:17`)과 페이지는 pin 없이 컬렉션 기본값인 `light-theme`을 상속한다. 즉 Figma는 "light 컨텍스트에 놓인 Toast는 dark 표면"이라는 **반전 결과 1개 상태**를 목업으로 고정한 것이다. 대조군인 Banner 컴포넌트는 `semantic/typography`만 Mobile로 pin하고 `semantic/color`는 pin하지 않는다 — color pin은 Toast 고유다.
+>
+> Figma는 모드가 2개뿐이라 반전 자체를 표현할 수 없으므로, "항상 dark"가 아니라 "반전"으로 읽어야 한다. 코드는 `componentTheme = .inverted`(UIKit) / `palette(_:isInverted: true)`(SwiftUI)로 구현한다.
 
 ### Icon (preset별)
 
-| preset | 아이콘 | Token | Raw |
-|---|---|---|---|
-| `success` | `check-circle-filled` | `iconNeutralHeavy` | `#ffffff99` |
-| `error` | `error-diamond-filled` | `iconNeutralHeavy` | `#ffffff99` |
-| `info` | — *(없음)* | — | — |
+| preset | 아이콘 | Token | 앱 light → 적용값 | 앱 dark → 적용값 |
+|---|---|---|---|---|
+| `success` | `check-circle-filled` | `iconNeutralHeavy` | `#ffffff99` (white60) | `#00000099` (black60) |
+| `error` | `error-diamond-filled` | `iconNeutralHeavy` | `#ffffff99` (white60) | `#00000099` (black60) |
+| `info` | — *(없음)* | — | — | — |
 
 > 아이콘 색은 Figma **export SVG** 기준으로 확정한다 (`shape` path의 `fill="white" fill-opacity="0.6"` = `#ffffff99` = `iconNeutralHeavy`). success·error 동일. `get_variable_defs`가 반환하는 다중 변수는 아이콘 라이브러리 컴포넌트가 참조하는 변수 목록일 뿐, 이 인스턴스의 실제 렌더 색이 아니다.
 
