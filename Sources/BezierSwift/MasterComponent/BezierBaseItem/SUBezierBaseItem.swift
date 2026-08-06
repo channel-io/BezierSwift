@@ -170,20 +170,15 @@ extension SUBezierBaseItem where CenterSlot == EmptyView {
 
 private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
   @Environment(\.colorScheme) var colorScheme
-  @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   let size: BezierBaseItemSize
   let style: BezierBaseItemStyle
   let isPressed: Bool
 
-  private var contentScale: CGFloat {
-    (self.isPressed && !self.reduceMotion) ? BezierBaseItemConstant.pressScale : 1
-  }
-
   func body(content: Content) -> some View {
     content
-      // 콘텐츠만 축소 — 배경은 full-size 유지 (press scale 피드백)
-      .scaleEffect(self.contentScale)
+      // 콘텐츠만 축소 — pressed 배경은 full-size 유지
+      .bezierPressScale(isPressed: self.isPressed)
       .padding(.horizontal, self.style.horizontalPadding)
       .padding(.vertical, self.style.verticalPadding ?? self.size.verticalPadding)
       .frame(minHeight: self.size.minHeight)
@@ -195,7 +190,13 @@ private struct SUBezierBaseItemContainer: ViewModifier, Themeable {
       )
       .clipShape(RoundedRectangle(cornerRadius: self.style.cornerRadius))
       .contentShape(Rectangle())
-      .animation(.spring(response: 0.34, dampingFraction: 0.62), value: self.isPressed)
+      .animation(
+        .spring(
+          response: BezierPressFeedback.springResponse,
+          dampingFraction: BezierPressFeedback.springDampingFraction
+        ),
+        value: self.isPressed
+      )
   }
 }
 

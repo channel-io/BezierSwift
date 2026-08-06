@@ -54,15 +54,21 @@ border 위로 올라와야 하는 자식(badge·status indicator·overlay)이 �
 
 ## press 피드백은 `BezierPressFeedback`을 재사용한다
 
-`Sources/BezierSwift/Util/BezierPressFeedback.swift` (internal)에 UIKit·SwiftUI 양쪽 헬퍼가 있다.
+`Sources/BezierSwift/Util/BezierPressFeedback.swift` (public)에 UIKit·SwiftUI 양쪽 헬퍼가 있다.
 새로 만들지 말 것.
 
 ```swift
-BezierPressFeedback.apply(isPressed: true, to: self)   // UIKit
-BezierPressFeedback.reset(self)
+BezierPressFeedback.apply(isPressed: self.isHighlighted, to: self.rootStackView)   // UIKit
+BezierPressFeedback.reset(self.rootStackView)
+
+content.bezierPressScale(isPressed: configuration.isPressed)                       // SwiftUI
 ```
 
-사용 예시는 `BezierSectionItem.swift`. public 승격과 `BezierBaseItem` 마이그레이션은 MOB-6471에서 다룬다.
+**대상은 콘텐츠 뷰만이다.** 배경을 그리는 컴포넌트 루트(`self`)를 넘기면 pressed 배경까지 같이
+축소돼 행 경계가 수축한다. SwiftUI도 같은 이유로 `.padding`·`.background`보다 **앞**에 붙인다.
+계약과 사용 예시는 `BezierPressFeedback`의 doc comment에 있다.
+
+사용 예시는 `BezierBaseItem.swift`·`BezierSectionItem.swift`·`BezierCollapsibleSectionLabel.swift`.
 
 ## `UITextView`는 TextKit 1로 만들어야 line height 토큰이 먹는다
 

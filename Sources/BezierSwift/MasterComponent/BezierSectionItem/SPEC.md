@@ -175,7 +175,7 @@ Figma에 없는 구현 결정은 아래에 분리 표기한다. SSOT 값이 아�
 4. **toggle 표시자**: Switch 컴포넌트(`1095:19`)가 BezierSwift에 아직 없어, accessory 내부에 Switch의 Figma 실측값(50×28·radius 14·track off `fillNeutralHeavy`/on `fillNeutralHeaviest`·thumb 24 흰색, top 2, left 2/24)으로 비인터랙티브 시각을 직접 그린다. thumb 그림자 실측: offset (0, 2), blur 4, black 25% (thumb 벡터의 drop-shadow 필터). BezierSwitch 컴포넌트가 생기면 교체 대상.
 5. **description 인덴트 적용 규칙**: 구현은 de-nest 인덴트를 "leading 표시 시 34 / 없음(none) 0"으로 적용한다 (§2 표와 동일 — icon·avatar 공통 34).
 6. **BezierBaseItem 미재사용**: 좌우 패딩(6↔10)·radius(8↔0)·상하 패딩 축·description 배치 구조(de-nest/nested)가 BaseItem과 달라 코드 재사용 대신 동일 컨벤션의 독립 구현으로 간다.
-7. **press scale 적용**: Figma pressed state는 배경 fill 변화만 정의하나, BaseItem과 동일한 press scale 피드백(콘텐츠 0.97 축소 → release 오버슈트 복귀, reduce motion 시 비활성)을 협의로 적용한다 (2026-07-24). 구현은 internal 유틸 `BezierPressFeedback`(`Util/BezierPressFeedback.swift`) — public 승격·BaseItem 마이그레이션은 MOB-6471.
+7. **press scale 적용**: Figma pressed state는 배경 fill 변화만 정의하나, BaseItem과 동일한 press scale 피드백(콘텐츠 0.97 축소 → release 오버슈트 복귀, reduce motion 시 비활성)을 협의로 적용한다 (2026-07-24). 구현은 public 유틸 `BezierPressFeedback`(`Util/BezierPressFeedback.swift`) — BaseItem도 같은 유틸을 쓴다 (MOB-6471).
 8. **state 코드 매핑**: pressed → UIKit `isHighlighted` / SwiftUI ButtonStyle `isPressed`, disabled → `isEnabled`/`.disabled()`. `onTap == nil`이면 비인터랙티브(pressed 없음).
 9. **leading 아이콘 색 heavy 고정**: §3의 실측 편차(기본 variant만 heavy, 8개 variant는 neutral)에 대해 구현은 `iconNeutralHeavy`를 전 state·size에 고정 적용한다 — 근거: defaultVariant가 heavy이고, §5의 state 정의(배경/opacity만 변경)와 team-design Section-spec.md §13의 토큰 기재가 heavy를 지지.
 
