@@ -169,6 +169,51 @@ struct ConfirmModalCatalog: View {
       .fixedSize()
 
       UIKitWrap {
+        let modal = BezierConfirmModal(
+          title: "이메일을 확인해 주세요",
+          confirmAction: BezierConfirmModalAction(title: "확인"),
+          cancelAction: BezierConfirmModalAction(title: "취소")
+        )
+        modal.attributedDescription = BezierConfirmModalSpec.descriptionTypography.attributedString(
+          modal,
+          text: "<b>finn@channel.io</b>로 인증 메일을 보냈어요.<br />메일함을 확인해 주세요.",
+          semanticColorToken: BezierConfirmModalSpec.textColorToken,
+          alignment: .center,
+          hasTagProperty: true
+        )
+        return modal
+      }
+      .fixedSize()
+
+      UIKitWrap {
+        let button = BezierButton(size: .medium, variant: .filled, semantic: .primary)
+        button.title = "Present (rich text)"
+        button.addAction(
+          UIAction { [weak button] _ in
+            guard let button, let presenter = button.topPresentingViewController else { return }
+            let modalController = BezierModalViewController.confirm(
+              title: "섹션을 삭제할까요?",
+              attributedDescription: BezierConfirmModalSpec.descriptionTypography.attributedString(
+                button,
+                text: "<b>일반</b> 섹션의 팀 채팅이 모두 사라져요.<br />되돌릴 수 없어요.",
+                semanticColorToken: BezierConfirmModalSpec.textColorToken,
+                alignment: .center,
+                hasTagProperty: true
+              ),
+              type: .destructive,
+              buttonLayout: .vertical(altAction: nil),
+              confirmAction: BezierConfirmModalAction(title: "삭제"),
+              cancelAction: BezierConfirmModalAction(title: "취소")
+            )
+            presenter.present(modalController, animated: true)
+          },
+          for: .touchUpInside
+        )
+        return button
+      }
+      .fixedSize()
+
+      UIKitWrap {
         let button = BezierButton(size: .medium, variant: .filled, semantic: .primary)
         button.title = "Present (UIKit)"
         button.addAction(
