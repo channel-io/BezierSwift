@@ -69,9 +69,6 @@ struct ToastCatalog: View {
   }
 }
 
-// UIKitWrap의 .fittingSizeLevel 계산은 긴 제목에서 라벨 압축 저항(750)이 제안 폭(50)을 이겨
-// BezierToast가 maxWidth(460)까지 벌어지고 화면 폭을 넘는다. 표시 컨테이너(BezierToastManager)와
-// 같은 제약으로 제안 폭을 required로 고정한 wrapper 안에서 toast가 hug·개행하게 한다.
 private struct ToastUIKitRepresentable: UIViewRepresentable {
   let preset: BezierToastPreset
   let title: String

@@ -100,7 +100,6 @@ public final class BezierToast: UIView, BezierComponentable {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.layer.masksToBounds = true
     self.layer.cornerRadius = BezierToastSpec.cornerRadius.rawValue
-    // SwiftUI 쌍(applyBezierCornerRadius)이 .continuous 스타일로 클리핑하므로 UIKit도 곡률을 맞춘다.
     self.layer.cornerCurve = .continuous
 
     self.addSubview(self.blurView)
@@ -200,9 +199,6 @@ public final class BezierToast: UIView, BezierComponentable {
         semanticColorToken: BezierToastSpec.textToken,
         alignment: .left
       )
-      // 헬퍼에 lineBreakMode를 인자로 넘기면 .byWordWrapping일 때만 붙는 한글 줄바꿈 전략을 잃는다 —
-      // 전략은 남긴 채 말줄임만 켠다 (BezierTextArea와 동일 패턴). attributedText의 paragraphStyle이
-      // label.lineBreakMode보다 우선하므로 여기서 켜지 않으면 2줄 초과가 "…" 없이 하드 클립된다.
       if let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle)?
         .mutableCopy() as? NSMutableParagraphStyle {
         paragraphStyle.lineBreakMode = .byTruncatingTail
@@ -217,11 +213,7 @@ public final class BezierToast: UIView, BezierComponentable {
   }
 
   private func refreshAppearance() {
-    // 배경은 반투명 glass fill 아래에 backdrop blur가 깔리는 구조라(SPEC §3) fill을
-    // 뷰 자신이 아니라 blur 위 contentView에 칠한다.
     self.blurView.contentView.backgroundColor = BezierToastSpec.backgroundToken.palette(self)
-    // UIBlurEffect는 semantic 토큰을 받지 못하므로 palette와 동일한
-    // (componentTheme, colorTheme) 스위치로 반전을 직접 해석한다.
     switch (self.componentTheme, self.colorTheme) {
     case (.normal, .light), (.inverted, .dark):
       self.blurView.effect = UIBlurEffect(style: .systemThickMaterialLight)

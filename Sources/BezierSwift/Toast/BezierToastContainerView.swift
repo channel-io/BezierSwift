@@ -36,7 +36,6 @@ struct BezierToastContainerView: View, Themeable {
     case .legacy(let param):
       LegacyBezierToast(param: param)
     case .v3(let preset, let title):
-      // LegacyBezierToast는 자체 body에 좌우 10 inset을 갖고 있어 v3 셀에만 컨테이너 inset을 준다.
       SUBezierToast(preset: preset, title: title)
         .padding(.horizontal, Metric.horizontalInset)
     }
