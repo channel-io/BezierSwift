@@ -28,13 +28,14 @@ public struct SUBezierToast: View, Themeable {
           .resizable()
           .scaledToFit()
           .frame(width: BezierToastSpec.iconLength, height: BezierToastSpec.iconLength)
-          .foregroundColor(self.palette(self.preset.iconColor, isInverted: true))
+          .foregroundColor(self.preset.iconColor.map { self.palette($0, isInverted: true) })
       }
 
       Text(self.title)
         .applyBezierFontStyle(BezierToastSpec.typographyToken, semanticColorToken: BezierToastSpec.textToken)
         .lineLimit(BezierToastSpec.textLineLimit)
         .truncationMode(.tail)
+        .padding(.vertical, BezierToastSpec.textVerticalPadding)
     }
     .padding(.vertical, BezierToastSpec.verticalPadding)
     .padding(
@@ -42,8 +43,9 @@ public struct SUBezierToast: View, Themeable {
       self.preset.icon == nil ? BezierToastSpec.horizontalPaddingTextOnly : BezierToastSpec.horizontalPaddingWithIcon
     )
     .frame(minHeight: BezierToastSpec.minHeight)
-    .background(Capsule().fill(self.palette(BezierToastSpec.backgroundToken, isInverted: true)))
-    .clipShape(Capsule())
+    .background(self.palette(BezierToastSpec.backgroundToken, isInverted: true))
+    .applyBlurEffect()
+    .applyBezierCornerRadius(type: BezierToastSpec.cornerRadius)
     .frame(maxWidth: BezierToastSpec.maxWidth)
     // applyBezierFontStyle 내부 modifier가 자체 @Environment(\.colorScheme)로 텍스트 색을 해석해
     // isInverted를 받지 못하므로, 텍스트를 함께 반전시키려면 environment를 뒤집어 주입해야 한다.

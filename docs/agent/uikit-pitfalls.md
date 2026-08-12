@@ -106,6 +106,31 @@ func textViewDidChange(_ textView: UITextView) {
   빼지 말 것
 - 실례: `BezierTextArea.swift` — 소프트 키보드 Enter로 줄바꿈할 때 캐럿이 위로 튀는 증상으로 발견
 
+## attributedText의 paragraphStyle이 `label.lineBreakMode`를 덮어쓴다
+
+`UILabel.lineBreakMode = .byTruncatingTail`을 설정해도, `attributedText`에 `paragraphStyle`이
+들어 있으면 **그쪽 `lineBreakMode`(토큰 헬퍼 기본값 `.byWordWrapping`)가 우선**한다.
+line height 토큰을 쓰는 라벨은 항상 paragraphStyle을 갖고 있으므로, 줄 수 제한 초과 시
+말줄임표("…") 없이 하드 클립된다 — 짧은 데모 텍스트로는 안 보이고 2줄 초과에서만 드러난다.
+
+`BTSemanticToken.attributes(...)`에 `lineBreakMode` 인자를 직접 넘기는 것도 답이 아니다 —
+`.byWordWrapping`일 때만 붙는 한글 줄바꿈 전략(`hangulWordPriority`)을 잃는다.
+**전략은 남긴 채 paragraphStyle의 lineBreakMode만 사후 주입한다:**
+
+```swift
+var attributes = token.attributes(self, semanticColorToken: colorToken)
+if let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle)?
+  .mutableCopy() as? NSMutableParagraphStyle {
+  paragraphStyle.lineBreakMode = .byTruncatingTail
+  attributes[.paragraphStyle] = paragraphStyle
+}
+label.attributedText = NSAttributedString(string: text, attributes: attributes)
+```
+
+- 실례: `BezierTextArea.swift`(placeholder), `BezierToast.swift`(2줄 제한) — 동일 패턴 사용
+- SwiftUI는 `.lineLimit(n).truncationMode(.tail)`이 그대로 동작해 이 함정이 없다 — 두 구현의
+  패리티를 볼 때 UIKit 쪽만 의심할 것
+
 ## 레이아웃 테스트
 
 UIKit 뷰의 압축·크기 거동은 `UIWindow`에 붙여야 측정이 유효하다. 상세는
