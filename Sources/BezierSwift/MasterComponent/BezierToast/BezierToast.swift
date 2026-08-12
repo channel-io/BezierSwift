@@ -34,6 +34,12 @@ public final class BezierToast: UIView, BezierComponentable {
 
   // MARK: - Subviews
 
+  private let blurView: UIVisualEffectView = {
+    let view = UIVisualEffectView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   private let contentStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
@@ -52,10 +58,17 @@ public final class BezierToast: UIView, BezierComponentable {
     return imageView
   }()
 
+  private let titleContainerView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = BezierToastSpec.textLineLimit
     label.lineBreakMode = .byTruncatingTail
+    label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
 
@@ -86,9 +99,14 @@ public final class BezierToast: UIView, BezierComponentable {
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.layer.masksToBounds = true
+    self.layer.cornerRadius = BezierToastSpec.cornerRadius.rawValue
+    self.layer.cornerCurve = .continuous
 
+    self.addSubview(self.blurView)
+
+    self.titleContainerView.addSubview(self.titleLabel)
     self.contentStackView.addArrangedSubview(self.iconImageView)
-    self.contentStackView.addArrangedSubview(self.titleLabel)
+    self.contentStackView.addArrangedSubview(self.titleContainerView)
     self.addSubview(self.contentStackView)
 
     let hPadding = self.horizontalPadding
@@ -104,6 +122,10 @@ public final class BezierToast: UIView, BezierComponentable {
     let iconHeight = self.iconImageView.heightAnchor.constraint(equalToConstant: BezierToastSpec.iconLength)
 
     NSLayoutConstraint.activate([
+      self.blurView.topAnchor.constraint(equalTo: self.topAnchor),
+      self.blurView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      self.blurView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      self.blurView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
       stackLeading,
       stackTrailing,
       self.contentStackView.topAnchor.constraint(
@@ -114,6 +136,16 @@ public final class BezierToast: UIView, BezierComponentable {
         equalTo: self.bottomAnchor,
         constant: -BezierToastSpec.verticalPadding
       ),
+      self.titleLabel.topAnchor.constraint(
+        equalTo: self.titleContainerView.topAnchor,
+        constant: BezierToastSpec.textVerticalPadding
+      ),
+      self.titleLabel.bottomAnchor.constraint(
+        equalTo: self.titleContainerView.bottomAnchor,
+        constant: -BezierToastSpec.textVerticalPadding
+      ),
+      self.titleLabel.leadingAnchor.constraint(equalTo: self.titleContainerView.leadingAnchor),
+      self.titleLabel.trailingAnchor.constraint(equalTo: self.titleContainerView.trailingAnchor),
       iconWidth,
       iconHeight,
       self.widthAnchor.constraint(lessThanOrEqualToConstant: BezierToastSpec.maxWidth),
@@ -129,11 +161,6 @@ public final class BezierToast: UIView, BezierComponentable {
   }
 
   // MARK: - Layout
-
-  public override func layoutSubviews() {
-    super.layoutSubviews()
-    self.layer.cornerRadius = self.bounds.height / 2
-  }
 
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
@@ -155,7 +182,7 @@ public final class BezierToast: UIView, BezierComponentable {
   private func refreshContent() {
     if let icon = self.preset.icon {
       self.iconImageView.image = icon.uiImage?.withRenderingMode(.alwaysTemplate)
-      self.iconImageView.tintColor = self.preset.iconColor.palette(self)
+      self.iconImageView.tintColor = self.preset.iconColor?.palette(self)
       self.iconImageView.isHidden = false
       self.iconWidthConstraint?.constant = BezierToastSpec.iconLength
       self.iconHeightConstraint?.constant = BezierToastSpec.iconLength
@@ -167,21 +194,32 @@ public final class BezierToast: UIView, BezierComponentable {
     }
 
     if let title = self.title, !title.isEmpty {
-      self.titleLabel.attributedText = BezierToastSpec.typographyToken.attributedString(
+      var attributes = BezierToastSpec.typographyToken.attributes(
         self,
-        text: title,
         semanticColorToken: BezierToastSpec.textToken,
         alignment: .left
       )
-      self.titleLabel.isHidden = false
+      if let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle)?
+        .mutableCopy() as? NSMutableParagraphStyle {
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        attributes[.paragraphStyle] = paragraphStyle
+      }
+      self.titleLabel.attributedText = NSAttributedString(string: title, attributes: attributes)
+      self.titleContainerView.isHidden = false
     } else {
       self.titleLabel.attributedText = nil
-      self.titleLabel.isHidden = true
+      self.titleContainerView.isHidden = true
     }
   }
 
   private func refreshAppearance() {
-    self.backgroundColor = BezierToastSpec.backgroundToken.palette(self)
+    self.blurView.contentView.backgroundColor = BezierToastSpec.backgroundToken.palette(self)
+    switch (self.componentTheme, self.colorTheme) {
+    case (.normal, .light), (.inverted, .dark):
+      self.blurView.effect = UIBlurEffect(style: .systemThickMaterialLight)
+    case (.normal, .dark), (.inverted, .light):
+      self.blurView.effect = UIBlurEffect(style: .systemThickMaterialDark)
+    }
     self.refreshContent()
   }
 }

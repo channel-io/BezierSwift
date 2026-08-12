@@ -70,8 +70,8 @@ struct ButtonCatalog: View {
         variant: self.variant,
         semantic: self.semantic,
         title: self.title.isEmpty ? nil : self.title,
-        leadingIcon: self.hasLeadingIcon ? Image(systemName: "star.fill") : nil,
-        trailingIcon: self.hasTrailingIcon ? Image(systemName: "arrow.right") : nil,
+        leadingIcon: self.hasLeadingIcon ? BezierIcon.plus.image : nil,
+        trailingIcon: self.hasTrailingIcon ? BezierIcon.arrowRight.image : nil,
         isLoading: self.isLoading,
         action: {}
       )
@@ -93,8 +93,8 @@ struct ButtonCatalog: View {
           button.variant = self.variant
           button.semantic = self.semantic
           button.title = self.title.isEmpty ? nil : self.title
-          button.leadingIcon = self.hasLeadingIcon ? UIImage(systemName: "star.fill") : nil
-          button.trailingIcon = self.hasTrailingIcon ? UIImage(systemName: "arrow.right") : nil
+          button.leadingIcon = self.hasLeadingIcon ? BezierIcon.plus.uiImage : nil
+          button.trailingIcon = self.hasTrailingIcon ? BezierIcon.arrowRight.uiImage : nil
           button.isLoading = self.isLoading
           button.isEnabled = self.isEnabled
         }

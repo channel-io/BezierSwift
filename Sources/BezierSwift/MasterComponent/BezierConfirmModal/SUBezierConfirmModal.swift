@@ -16,6 +16,8 @@ public struct SUBezierConfirmModal<CustomContent: View>: View {
   private let customContent: CustomContent?
 
   /// 제목·설명·버튼 구성과 함께 추가 커스텀 콘텐츠를 `@ViewBuilder`로 받아 확인 모달을 생성한다.
+  ///
+  /// `title`·`description`에는 `<b>`(강조)·`<u>`(밑줄)·`<br />`(줄바꿈) 태그를 섞어 쓸 수 있다. 강조 구간에는 해당 typography의 bold 짝이 적용된다 — 제목은 이미 굵은 계열이라 변화가 없다. 태그를 글자 그대로 보여주는 방법은 없다.
   public init(
     title: String,
     description: String? = nil,
@@ -66,22 +68,10 @@ public struct SUBezierConfirmModal<CustomContent: View>: View {
     SUBezierModal {
       VStack(spacing: 0) {
         VStack(spacing: BezierConfirmModalSpec.contentSpacing) {
-          Text(self.title)
-            .applyBezierFontStyle(
-              BezierConfirmModalSpec.titleTypography,
-              semanticColorToken: BezierConfirmModalSpec.textColorToken
-            )
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
+          self.styledText(self.title, typography: BezierConfirmModalSpec.titleTypography)
 
           if let description = self.description {
-            Text(description)
-              .applyBezierFontStyle(
-                BezierConfirmModalSpec.descriptionTypography,
-                semanticColorToken: BezierConfirmModalSpec.textColorToken
-              )
-              .multilineTextAlignment(.center)
-              .frame(maxWidth: .infinity)
+            self.styledText(description, typography: BezierConfirmModalSpec.descriptionTypography)
           }
         }
         .padding(.bottom, BezierConfirmModalSpec.contentBottomPadding)
@@ -134,10 +124,29 @@ public struct SUBezierConfirmModal<CustomContent: View>: View {
       action: action.handler
     )
   }
+
+  private func styledText(_ raw: String, typography: BTSemanticToken) -> some View {
+    raw.bezierTagRuns()
+      .reduce(Text("")) { accumulated, run in
+        var text = Text(run.text)
+        if run.isBold {
+          text = text.font(typography.boldPair.font)
+        }
+        if run.isUnderlined {
+          text = text.underline()
+        }
+        return accumulated + text
+      }
+      .applyBezierFontStyle(typography, semanticColorToken: BezierConfirmModalSpec.textColorToken)
+      .multilineTextAlignment(.center)
+      .frame(maxWidth: .infinity)
+  }
 }
 
 extension SUBezierConfirmModal where CustomContent == EmptyView {
   /// 커스텀 콘텐츠 없이 제목·설명·버튼만으로 확인 모달을 생성하는 편의 이니셜라이저.
+  ///
+  /// `title`·`description`에는 `<b>`(강조)·`<u>`(밑줄)·`<br />`(줄바꿈) 태그를 섞어 쓸 수 있다. 강조 구간에는 해당 typography의 bold 짝이 적용된다 — 제목은 이미 굵은 계열이라 변화가 없다. 태그를 글자 그대로 보여주는 방법은 없다.
   public init(
     title: String,
     description: String? = nil,

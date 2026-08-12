@@ -205,7 +205,6 @@ private struct SUBezierSectionItemContainer: ViewModifier, Themeable {
 
   func body(content: Content) -> some View {
     content
-      // 콘텐츠만 축소 — pressed 배경은 full-size 유지
       .bezierPressScale(isPressed: self.isPressed)
       .padding(.horizontal, BezierSectionItemConstant.horizontalPadding)
       .padding(.vertical, self.size.verticalPadding)

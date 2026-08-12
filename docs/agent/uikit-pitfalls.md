@@ -54,15 +54,21 @@ border 위로 올라와야 하는 자식(badge·status indicator·overlay)이 �
 
 ## press 피드백은 `BezierPressFeedback`을 재사용한다
 
-`Sources/BezierSwift/Util/BezierPressFeedback.swift` (internal)에 UIKit·SwiftUI 양쪽 헬퍼가 있다.
+`Sources/BezierSwift/Util/BezierPressFeedback.swift` (public)에 UIKit·SwiftUI 양쪽 헬퍼가 있다.
 새로 만들지 말 것.
 
 ```swift
-BezierPressFeedback.apply(isPressed: true, to: self)   // UIKit
-BezierPressFeedback.reset(self)
+BezierPressFeedback.apply(isPressed: self.isHighlighted, to: self.rootStackView)   // UIKit
+BezierPressFeedback.reset(self.rootStackView)
+
+content.bezierPressScale(isPressed: configuration.isPressed)                       // SwiftUI
 ```
 
-사용 예시는 `BezierSectionItem.swift`. public 승격과 `BezierBaseItem` 마이그레이션은 MOB-6471에서 다룬다.
+**대상은 콘텐츠 뷰만이다.** 배경을 그리는 컴포넌트 루트(`self`)를 넘기면 pressed 배경까지 같이
+축소돼 행 경계가 수축한다. SwiftUI도 같은 이유로 `.padding`·`.background`보다 **앞**에 붙인다.
+계약과 사용 예시는 `BezierPressFeedback`의 doc comment에 있다.
+
+사용 예시는 `BezierBaseItem.swift`·`BezierSectionItem.swift`·`BezierCollapsibleSectionLabel.swift`.
 
 ## `UITextView`는 TextKit 1로 만들어야 line height 토큰이 먹는다
 
@@ -99,6 +105,31 @@ func textViewDidChange(_ textView: UITextView) {
 - 빈 문자열이 되면 `typingAttributes`가 시스템 기본값으로 되돌아갈 수 있으니 입력 경로의 갱신 자체는
   빼지 말 것
 - 실례: `BezierTextArea.swift` — 소프트 키보드 Enter로 줄바꿈할 때 캐럿이 위로 튀는 증상으로 발견
+
+## attributedText의 paragraphStyle이 `label.lineBreakMode`를 덮어쓴다
+
+`UILabel.lineBreakMode = .byTruncatingTail`을 설정해도, `attributedText`에 `paragraphStyle`이
+들어 있으면 **그쪽 `lineBreakMode`(토큰 헬퍼 기본값 `.byWordWrapping`)가 우선**한다.
+line height 토큰을 쓰는 라벨은 항상 paragraphStyle을 갖고 있으므로, 줄 수 제한 초과 시
+말줄임표("…") 없이 하드 클립된다 — 짧은 데모 텍스트로는 안 보이고 2줄 초과에서만 드러난다.
+
+`BTSemanticToken.attributes(...)`에 `lineBreakMode` 인자를 직접 넘기는 것도 답이 아니다 —
+`.byWordWrapping`일 때만 붙는 한글 줄바꿈 전략(`hangulWordPriority`)을 잃는다.
+**전략은 남긴 채 paragraphStyle의 lineBreakMode만 사후 주입한다:**
+
+```swift
+var attributes = token.attributes(self, semanticColorToken: colorToken)
+if let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle)?
+  .mutableCopy() as? NSMutableParagraphStyle {
+  paragraphStyle.lineBreakMode = .byTruncatingTail
+  attributes[.paragraphStyle] = paragraphStyle
+}
+label.attributedText = NSAttributedString(string: text, attributes: attributes)
+```
+
+- 실례: `BezierTextArea.swift`(placeholder), `BezierToast.swift`(2줄 제한) — 동일 패턴 사용
+- SwiftUI는 `.lineLimit(n).truncationMode(.tail)`이 그대로 동작해 이 함정이 없다 — 두 구현의
+  패리티를 볼 때 UIKit 쪽만 의심할 것
 
 ## 레이아웃 테스트
 

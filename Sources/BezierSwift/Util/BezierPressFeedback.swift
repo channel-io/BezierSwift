@@ -6,11 +6,36 @@
 import SwiftUI
 import UIKit
 
-// 아이템형 컴포넌트 공통 press 피드백 (Figma 외 · 협의 — ch-desk-ios ListItemPressFeedback 참조)
-// 콘텐츠가 눌림 시 0.97로 축소되고, 뗄 때 살짝 오버슈트하며 복귀한다.
-// 대상은 콘텐츠 뷰만 — pressed 배경은 컴포넌트가 full-size로 유지한다.
-// public 승격 + BezierBaseItem 마이그레이션은 MOB-6471에서 다룬다.
-enum BezierPressFeedback {
+/// 아이템형 컴포넌트가 공유하는 탭 press 피드백. 눌린 동안 콘텐츠가 `0.97`로 축소되고, 뗄 때 살짝 오버슈트하며 원래 크기로 돌아온다.
+///
+/// **적용 대상은 콘텐츠 뷰만이다.** 배경(pressed 하이라이트)은 축소하지 않고 full-size로 유지해야 한다 — 배경까지 함께 줄면 눌릴 때마다 행의 시각적 경계가 안쪽으로 수축해 리스트가 출렁인다. 그래서 UIKit은 배경을 그리는 컴포넌트 루트(`self`)가 아니라 그 안의 콘텐츠 스택뷰를, SwiftUI는 `.background(...)`를 붙이기 **전**의 콘텐츠를 대상으로 삼는다.
+///
+/// Reduce Motion이 켜져 있으면 축소 없이 원래 크기를 유지한다.
+///
+/// UIKit `UIControl`에서는 `isHighlighted` 변화에 맞춰 호출하고, 탭을 받지 않는 상태에서는 `reset(_:)`으로 되돌린다.
+/// `didSet`은 값이 그대로여도 대입마다 발동하므로, 같은 값 재대입에 release 애니메이션이 다시 걸리지 않도록 `oldValue`로 걸러야 한다.
+/// ```swift
+/// public override var isHighlighted: Bool {
+///   didSet {
+///     if oldValue != self.isHighlighted {
+///       self.refreshPressScale()
+///     }
+///   }
+/// }
+///
+/// private func refreshPressScale() {
+///   guard self.onTap != nil else {
+///     BezierPressFeedback.reset(self.rootStackView)
+///     return
+///   }
+///   BezierPressFeedback.apply(isPressed: self.isHighlighted, to: self.rootStackView)
+/// }
+/// ```
+///
+/// SwiftUI에서는 `View.bezierPressScale(isPressed:)`를 사용한다.
+///
+/// Figma에 대응 정의가 없는 코드 전용 동작이다 (협의 적용 · 원 패턴은 ch-desk-ios `ListItemPressFeedback`).
+public enum BezierPressFeedback {
   static let pressScale: CGFloat = 0.97
   static let pressInDuration: TimeInterval = 0.10
   static let releaseDuration: TimeInterval = 0.40
@@ -23,8 +48,15 @@ enum BezierPressFeedback {
 
   // MARK: - UIKit
 
+  /// `contentView`에 press 피드백을 적용한다. `isPressed`가 `true`면 축소하고, `false`면 오버슈트하며 원래 크기로 복귀한다.
+  ///
+  /// Reduce Motion이 켜져 있으면 어느 쪽이든 애니메이션 없이 원래 크기를 유지한다 — `isPressed`와 무관하게 `reset(_:)`과 같은 결과가 된다.
+  ///
+  /// - Parameters:
+  ///   - isPressed: 눌린 상태 여부. `UIControl`이면 `isHighlighted`를 그대로 넘긴다.
+  ///   - contentView: 축소할 **콘텐츠** 뷰. 배경을 그리는 컴포넌트 루트가 아니라 그 안의 콘텐츠 컨테이너를 넘긴다.
   @MainActor
-  static func apply(isPressed: Bool, to contentView: UIView) {
+  public static func apply(isPressed: Bool, to contentView: UIView) {
     guard !UIAccessibility.isReduceMotionEnabled else {
       self.reset(contentView)
       return
@@ -54,10 +86,19 @@ enum BezierPressFeedback {
     }
   }
 
+  /// 진행 중인 press 애니메이션을 제거하고 `contentView`를 원래 크기로 되돌린다. 탭을 받지 않는(비인터랙티브) 상태로 바뀔 때 호출한다.
   @MainActor
-  static func reset(_ contentView: UIView) {
+  public static func reset(_ contentView: UIView) {
     contentView.layer.removeAnimation(forKey: self.releaseAnimationKey)
-    contentView.transform = .identity
+    // press-in은 UIView.animate가 붙인 암묵 애니메이션이라 키로 제거할 수 없다. transform 대입만으로는
+    // 모델 값만 바뀌고 진행 중인 애니메이션이 완주해버리므로, duration 0 애니메이션으로 대체해 확정시킨다.
+    UIView.animate(
+      withDuration: 0,
+      delay: 0,
+      options: [.beginFromCurrentState, .overrideInheritedDuration]
+    ) {
+      contentView.transform = .identity
+    }
   }
 }
 
@@ -84,7 +125,24 @@ struct BezierPressScaleModifier: ViewModifier {
 }
 
 extension View {
-  func bezierPressScale(isPressed: Bool) -> some View {
+  /// 눌린 동안 콘텐츠를 `0.97`로 축소하는 press 피드백을 건다. 계약과 근거는 `BezierPressFeedback` 참조.
+  ///
+  /// 축소 애니메이션은 내장돼 있어 별도로 걸 필요가 없다. Reduce Motion이 켜져 있으면 축소하지 않는다.
+  ///
+  /// **`.padding`·`.background`보다 앞(콘텐츠 쪽)에 붙여야 한다.** 뒤에 붙이면 pressed 배경까지 함께 축소된다.
+  /// ```swift
+  /// func makeBody(configuration: Configuration) -> some View {
+  ///   configuration.label
+  ///     .bezierPressScale(isPressed: configuration.isPressed)          // 콘텐츠만 축소
+  ///     .padding(.horizontal, 6)
+  ///     .background(configuration.isPressed ? pressedColor : .clear)   // 배경은 full-size 유지
+  /// }
+  /// ```
+  ///
+  /// 내장 애니메이션은 scale에만 걸린다 — 위 예시의 pressed 배경은 즉시 전환된다.
+  ///
+  /// - Parameter isPressed: 눌린 상태 여부. `ButtonStyle`이면 `configuration.isPressed`를 그대로 넘긴다.
+  public func bezierPressScale(isPressed: Bool) -> some View {
     self.modifier(BezierPressScaleModifier(isPressed: isPressed))
   }
 }

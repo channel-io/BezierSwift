@@ -62,6 +62,13 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   // MARK: - Subviews
 
+  private let backgroundView: UIView = {
+    let view = UIView()
+    view.isUserInteractionEnabled = false
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   private let contentStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
@@ -143,6 +150,7 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.contentStackView.addArrangedSubview(self.titleLabel)
     self.contentStackView.addArrangedSubview(self.trailingImageView)
 
+    self.addSubview(self.backgroundView)
     self.addSubview(self.contentStackView)
     self.addSubview(self.spinner)
 
@@ -173,6 +181,10 @@ public final class BezierButton: UIControl, BezierComponentable {
       ).withIdentifier("contentTrailing"),
       self.spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       self.spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.backgroundView.topAnchor.constraint(equalTo: self.topAnchor),
+      self.backgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      self.backgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      self.backgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
     ])
 
     self.heightConstraint = heightConstraint
@@ -251,10 +263,7 @@ public final class BezierButton: UIControl, BezierComponentable {
     if let title = self.title, !title.isEmpty {
       self.titleLabel.attributedText = title.applyBezierFont(
         height: self.size.lineHeight,
-        font: BTGlobalToken.FontFamily.system.uiFont(
-          size: self.size.fontSize,
-          weight: self.size.fontWeight
-        ),
+        font: self.size.uiFont,
         color: foregroundColor,
         letterSpacing: 0,
         alignment: .center
@@ -267,11 +276,7 @@ public final class BezierButton: UIControl, BezierComponentable {
   }
 
   private func refreshAppearance() {
-    if let backgroundToken = self.variant.backgroundToken(self.semantic) {
-      self.backgroundColor = backgroundToken.palette(self)
-    } else {
-      self.backgroundColor = .clear
-    }
+    self.refreshBackground()
 
     if let borderToken = self.variant.borderToken(self.semantic) {
       self.layer.borderWidth = BezierButtonConstant.borderWidth
@@ -289,10 +294,23 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.refreshContent()
   }
 
+  private func refreshBackground() {
+    if self.isHighlighted, self.isEnabled, !self.isLoading {
+      self.backgroundView.backgroundColor = self.variant.pressedBackgroundToken(self.semantic).palette(self)
+    } else if let backgroundToken = self.variant.backgroundToken(self.semantic) {
+      self.backgroundView.backgroundColor = backgroundToken.palette(self)
+    } else {
+      self.backgroundView.backgroundColor = .clear
+    }
+
+    self.backgroundView.alpha = self.isLoading ? BezierButtonConstant.disabledOpacity : 1
+  }
+
   private func refreshLoading() {
     self.isUserInteractionEnabled = !self.isLoading
     self.contentStackView.isHidden = self.isLoading
     self.spinner.isHidden = !self.isLoading
+    self.refreshBackground()
   }
 
   private func refreshEnabled() {
@@ -301,9 +319,7 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   private func refreshHighlight() {
     UIView.animate(withDuration: 0.1) {
-      self.alpha = self.isHighlighted
-        ? BezierButtonConstant.pressedOpacity
-        : (self.isEnabled ? 1 : BezierButtonConstant.disabledOpacity)
+      self.refreshBackground()
     }
   }
 

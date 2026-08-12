@@ -54,14 +54,7 @@ struct ToastCatalog: View {
 
   private var uiKitPreview: some View {
     VStack(spacing: 16) {
-      UIKitWrap(
-        { BezierToast(preset: self.preset, title: self.displayTitle) },
-        update: { toast in
-          toast.preset = self.preset
-          toast.title = self.displayTitle
-        }
-      )
-      .fixedSize()
+      ToastUIKitRepresentable(preset: self.preset, title: self.displayTitle)
 
       SUBezierButton(
         size: .medium,
@@ -73,5 +66,40 @@ struct ToastCatalog: View {
       }
     }
     .frame(maxWidth: .infinity)
+  }
+}
+
+private struct ToastUIKitRepresentable: UIViewRepresentable {
+  let preset: BezierToastPreset
+  let title: String
+
+  func makeUIView(context: Context) -> UIView {
+    let wrapper = UIView()
+    let toast = BezierToast(preset: self.preset, title: self.title)
+    wrapper.addSubview(toast)
+    NSLayoutConstraint.activate([
+      toast.topAnchor.constraint(equalTo: wrapper.topAnchor),
+      toast.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor),
+      toast.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
+      toast.leadingAnchor.constraint(greaterThanOrEqualTo: wrapper.leadingAnchor),
+      toast.trailingAnchor.constraint(lessThanOrEqualTo: wrapper.trailingAnchor),
+    ])
+    return wrapper
+  }
+
+  func updateUIView(_ uiView: UIView, context: Context) {
+    guard let toast = uiView.subviews.compactMap({ $0 as? BezierToast }).first else { return }
+    toast.preset = self.preset
+    toast.title = self.title
+  }
+
+  func sizeThatFits(_ proposal: ProposedViewSize, uiView: UIView, context: Context) -> CGSize? {
+    let width = proposal.width ?? BezierToastSpec.maxWidth
+    let height = uiView.systemLayoutSizeFitting(
+      CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
+      withHorizontalFittingPriority: .required,
+      verticalFittingPriority: .fittingSizeLevel
+    ).height
+    return CGSize(width: width, height: height)
   }
 }

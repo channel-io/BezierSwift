@@ -81,6 +81,13 @@ struct ConfirmModalCatalog: View {
           )
       }
 
+      SUBezierConfirmModal(
+        title: "이메일을 확인해 주세요",
+        description: "<b>finn@channel.io</b>로 인증 메일을 보냈어요.<br />메일함을 확인해 주세요.",
+        confirmAction: BezierConfirmModalAction(title: "확인"),
+        cancelAction: BezierConfirmModalAction(title: "취소")
+      )
+
       HStack(spacing: 12) {
         SUBezierButton(
           size: .medium,
@@ -165,6 +172,38 @@ struct ConfirmModalCatalog: View {
           confirmAction: BezierConfirmModalAction(title: "OK"),
           cancelAction: nil
         )
+      }
+      .fixedSize()
+
+      UIKitWrap {
+        BezierConfirmModal(
+          title: "이메일을 확인해 주세요",
+          description: "<b>finn@channel.io</b>로 인증 메일을 보냈어요.<br />메일함을 확인해 주세요.",
+          confirmAction: BezierConfirmModalAction(title: "확인"),
+          cancelAction: BezierConfirmModalAction(title: "취소")
+        )
+      }
+      .fixedSize()
+
+      UIKitWrap {
+        let button = BezierButton(size: .medium, variant: .filled, semantic: .primary)
+        button.title = "Present (태그 서식)"
+        button.addAction(
+          UIAction { [weak button] _ in
+            guard let presenter = button?.topPresentingViewController else { return }
+            let modalController = BezierModalViewController.confirm(
+              title: "섹션을 삭제할까요?",
+              description: "<b>일반</b> 섹션의 팀 채팅이 모두 사라져요.<br />되돌릴 수 없어요.",
+              type: .destructive,
+              buttonLayout: .vertical(altAction: nil),
+              confirmAction: BezierConfirmModalAction(title: "삭제"),
+              cancelAction: BezierConfirmModalAction(title: "취소")
+            )
+            presenter.present(modalController, animated: true)
+          },
+          for: .touchUpInside
+        )
+        return button
       }
       .fixedSize()
 

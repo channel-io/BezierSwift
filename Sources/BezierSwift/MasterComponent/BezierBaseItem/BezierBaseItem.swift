@@ -328,47 +328,19 @@ public final class BezierBaseItem: UIControl, BezierComponentable {
     }
   }
 
-  private static let pressReleaseAnimationKey = "bezierBaseItemPressRelease"
-
   private func refreshInteraction() {
     self.isUserInteractionEnabled = self.onTap != nil
     if self.onTap == nil {
-      self.rootStackView.layer.removeAnimation(forKey: Self.pressReleaseAnimationKey)
-      self.rootStackView.transform = .identity
+      BezierPressFeedback.reset(self.rootStackView)
     }
   }
 
-  // 콘텐츠(rootStackView)만 press scale — 배경(self)은 full-size 유지.
-  // ch-desk-ios ListItemPressFeedback와 동일: press-in 축소 → release 시 오버슈트 복귀.
   private func refreshPressScale() {
-    guard self.onTap != nil, !UIAccessibility.isReduceMotionEnabled else {
-      self.rootStackView.layer.removeAnimation(forKey: Self.pressReleaseAnimationKey)
-      self.rootStackView.transform = .identity
+    guard self.onTap != nil else {
+      BezierPressFeedback.reset(self.rootStackView)
       return
     }
-
-    if self.isHighlighted {
-      self.rootStackView.layer.removeAnimation(forKey: Self.pressReleaseAnimationKey)
-      UIView.animate(
-        withDuration: BezierBaseItemConstant.pressInDuration,
-        delay: 0,
-        options: [.curveEaseInOut, .beginFromCurrentState]
-      ) {
-        self.rootStackView.transform = CGAffineTransform(
-          scaleX: BezierBaseItemConstant.pressScale,
-          y: BezierBaseItemConstant.pressScale
-        )
-      }
-    } else {
-      self.rootStackView.transform = .identity
-      let keyframe = CAKeyframeAnimation(keyPath: "transform.scale")
-      keyframe.values = BezierBaseItemConstant.releaseScaleValues
-      keyframe.keyTimes = BezierBaseItemConstant.releaseScaleKeyTimes
-      keyframe.duration = BezierBaseItemConstant.releaseDuration
-      keyframe.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-      keyframe.isRemovedOnCompletion = true
-      self.rootStackView.layer.add(keyframe, forKey: Self.pressReleaseAnimationKey)
-    }
+    BezierPressFeedback.apply(isPressed: self.isHighlighted, to: self.rootStackView)
   }
 
   private func refreshEnabled() {
