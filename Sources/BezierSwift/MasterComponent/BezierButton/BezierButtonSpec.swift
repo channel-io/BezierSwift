@@ -75,29 +75,38 @@ public enum BezierButtonSize: String, CaseIterable {
   }
 
   // MARK: - Typography
-  //
-  // Figma 변수 바인딩: xsmall·small·medium 은 `label/*` semantic, large·xlarge 는
-  // `font-size/16` + `line-height/24` global. BezierSwift 에는 16/24 조합의 label/text
-  // semantic 토큰이 없으므로 (내부 참조 가능한) BTGlobalToken raw 값을 직접 사용한다.
+
+  var typographyToken: BTSemanticToken? {
+    switch self {
+    case .xsmall: return .labelSmall
+    case .small:  return .labelMedium
+    case .medium: return .labelLarge
+    case .large, .xlarge: return nil
+    }
+  }
+
+  /// 라벨 폰트 크기.
   public var fontSize: CGFloat {
-    switch self {
-    case .xsmall: return BTGlobalToken.FontSize.size13
-    case .small:  return BTGlobalToken.FontSize.size14
-    case .medium: return BTGlobalToken.FontSize.size15
-    case .large, .xlarge: return BTGlobalToken.FontSize.size16
-    }
+    self.typographyToken?.fontSize ?? BTGlobalToken.FontSize.size16
   }
 
+  /// 라벨 행높이.
   public var lineHeight: CGFloat {
+    self.typographyToken?.lineHeight ?? BTGlobalToken.LineHeight.height24
+  }
+
+  /// 라벨 폰트 weight.
+  public var fontWeight: UIFont.Weight {
     switch self {
-    case .xsmall: return BTGlobalToken.LineHeight.height18
-    case .small, .medium: return BTGlobalToken.LineHeight.height20
-    case .large, .xlarge: return BTGlobalToken.LineHeight.height24
+    case .xsmall, .small, .medium: return .bold
+    case .large, .xlarge: return .medium
     }
   }
 
-  // Figma SemiBold(600) → iOS BTFontWeight binary system(`bold`) 매핑 (디자인 시스템 합의)
-  public var fontWeight: BTFontWeight { .bold }
+  /// 라벨 UIFont. SwiftUI에서는 `Font(uiFont)`로 사용한다.
+  public var uiFont: UIFont {
+    self.typographyToken?.uiFont ?? .systemFont(ofSize: self.fontSize, weight: self.fontWeight)
+  }
 }
 
 /// 버튼의 시각적 강조도. Figma `Button` 컴포넌트의 `variant` 프로퍼티에 대응 (case 이름 = Figma 값).
@@ -123,7 +132,6 @@ public enum BezierButtonSemantic: String, CaseIterable {
 enum BezierButtonConstant {
   static let borderWidth: CGFloat = 1
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
-  static let pressedOpacity: CGFloat = 0.7
 }
 
 extension BezierButtonVariant {
@@ -136,6 +144,10 @@ extension BezierButtonVariant {
          (.ghost, _):
       return nil
     }
+  }
+
+  func pressedBackgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
+    (self.backgroundToken(semantic) ?? .fillNeutralTransparent).pressedColor
   }
 
   func borderToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
@@ -153,7 +165,7 @@ extension BezierButtonVariant {
     switch (self, semantic) {
     case (.filled, .primary):     return .textInverse
     case (.filled, .secondary):   return .textNeutral
-    case (.filled, .destructive): return .textInverse
+    case (.filled, .destructive): return .textAbsoluteWhite
 
     case (.outlined, .primary):     return .textNeutralHeaviest
     case (.outlined, .secondary):   return .textNeutralLight
