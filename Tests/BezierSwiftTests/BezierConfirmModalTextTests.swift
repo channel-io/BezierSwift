@@ -2,163 +2,120 @@ import Testing
 import UIKit
 @testable import BezierSwift
 
-// 리치 텍스트를 만드는 시점엔 모달이 없어 호출부는 아무 컴포넌트나 넘기게 된다.
-// 테마를 전혀 따라가지 않는 컴포넌트를 일부러 넘겨, 모달이 색을 되찾는지 검증한다.
-private final class FrozenLightComponent: BezierComponentable {
-  var colorTheme: BezierColorTheme { .light }
-  var componentTheme: BezierComponentTheme = .normal
-}
-
-@Suite("BezierConfirmModal 텍스트 갱신 계약", .serialized)
+@Suite("BezierConfirmModal 태그 서식", .serialized)
 @MainActor
-struct BezierConfirmModalTextContractTests {
-  @Test("attributedTitle을 설정하면 title은 그 평문이 된다")
-  func attributedTitleReplacesPlainTitle() {
-    let modal = makeModal(title: "Plain")
-    #expect(modal.attributedTitle == nil)
+struct BezierConfirmModalTagStyleTests {
+  @Test("설명의 <b> 구간에만 bold 짝 폰트가 적용된다")
+  func boldTagAppliesBoldPairFont() throws {
+    let modal = makeModal(description: "일반 <b>강조</b> 끝")
+    let rendered = try #require(attributedText(matching: "일반 강조 끝", in: modal))
 
-    modal.attributedTitle = NSAttributedString(string: "Rich")
-
-    #expect(modal.title == "Rich")
-    #expect(modal.attributedTitle?.string == "Rich")
+    let typography = BezierConfirmModalSpec.descriptionTypography
+    #expect(typography.uiFont != typography.boldPair.uiFont)
+    #expect(rendered.attribute(.font, at: 0, effectiveRange: nil) as? UIFont == typography.uiFont)
+    #expect(rendered.attribute(.font, at: 3, effectiveRange: nil) as? UIFont == typography.boldPair.uiFont)
   }
 
-  @Test("title을 설정하면 attributedTitle 잔재가 남지 않는다")
-  func plainTitleClearsAttributedTitle() {
-    let modal = makeModal(title: "Plain")
-    modal.attributedTitle = NSAttributedString(string: "Rich")
+  @Test("설명의 <u> 구간에만 밑줄이 적용된다")
+  func underlineTagAppliesUnderline() throws {
+    let modal = makeModal(description: "보통 <u>밑줄</u>")
+    let rendered = try #require(attributedText(matching: "보통 밑줄", in: modal))
 
-    modal.title = "Plain again"
-
-    #expect(modal.attributedTitle == nil)
-    #expect(modal.title == "Plain again")
-    #expect(label(withText: "Rich", in: modal) == nil)
+    #expect(rendered.attribute(.underlineStyle, at: 0, effectiveRange: nil) == nil)
+    #expect(rendered.attribute(.underlineStyle, at: 3, effectiveRange: nil) != nil)
   }
 
-  @Test("attributedTitle에 nil을 넣으면 서식만 버리고 평문이 남는다")
-  func clearingAttributedTitleKeepsPlainText() {
-    let modal = makeModal(title: "Plain")
-    modal.attributedTitle = NSAttributedString(string: "Rich")
+  @Test("<br />는 줄바꿈이 된다")
+  func lineBreakTagBecomesNewline() {
+    let modal = makeModal(description: "첫 줄<br />둘째 줄")
 
-    modal.attributedTitle = nil
-
-    #expect(modal.attributedTitle == nil)
-    #expect(modal.title == "Rich")
+    #expect(attributedText(matching: "첫 줄\n둘째 줄", in: modal) != nil)
   }
 
-  @Test("attributedDescription을 설정하면 descriptionText는 그 평문이 된다")
-  func attributedDescriptionReplacesPlainDescription() {
-    let modal = makeModal(description: "Plain")
+  @Test("태그는 화면에 글자로 남지 않는다")
+  func tagsAreStrippedFromRenderedText() {
+    let modal = makeModal(title: "<b>제목</b>", description: "<u>설명</u>")
 
-    modal.attributedDescription = NSAttributedString(string: "Rich")
-
-    #expect(modal.descriptionText == "Rich")
-    #expect(modal.attributedDescription?.string == "Rich")
+    #expect(attributedText(matching: "제목", in: modal) != nil)
+    #expect(attributedText(matching: "설명", in: modal) != nil)
   }
 
-  @Test("descriptionText를 설정하면 attributedDescription 잔재가 남지 않는다")
-  func plainDescriptionClearsAttributedDescription() {
-    let modal = makeModal(description: "Plain")
-    modal.attributedDescription = NSAttributedString(string: "Rich")
+  @Test("태그가 없는 설명은 전 구간이 한 서식으로 렌더된다")
+  func plainDescriptionRendersUniformly() throws {
+    let modal = makeModal(description: "태그 없는 설명")
+    let rendered = try #require(attributedText(matching: "태그 없는 설명", in: modal))
 
-    modal.descriptionText = "Plain again"
+    var effectiveRange = NSRange()
+    let font = rendered.attribute(.font, at: 0, effectiveRange: &effectiveRange) as? UIFont
 
-    #expect(modal.attributedDescription == nil)
-    #expect(modal.descriptionText == "Plain again")
-    #expect(label(withText: "Rich", in: modal) == nil)
+    #expect(font == BezierConfirmModalSpec.descriptionTypography.uiFont)
+    #expect(effectiveRange.length == rendered.length)
   }
 
-  @Test("설명 없이 만든 모달에 attributedDescription을 넣으면 나타난다")
-  func attributedDescriptionAppearsOnModalCreatedWithoutDescription() throws {
-    let modal = makeModal(description: nil)
-    #expect(modal.descriptionText == nil)
+  @Test("태그를 써도 가운데 정렬과 행높이는 SPEC 값을 유지한다")
+  func paragraphStyleFollowsSpec() throws {
+    let modal = makeModal(description: "설명 <b>강조</b>")
+    let rendered = try #require(attributedText(matching: "설명 강조", in: modal))
+    let style = try #require(rendered.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle)
 
-    modal.attributedDescription = NSAttributedString(string: "Rich")
-
-    let descriptionLabel = try #require(label(withText: "Rich", in: modal))
-    #expect(descriptionLabel.isHidden == false)
+    #expect(style.alignment == .center)
+    #expect(style.minimumLineHeight == BezierConfirmModalSpec.descriptionTypography.lineHeight)
   }
 
-  @Test("descriptionText에 nil을 넣으면 attributed 여부와 무관하게 숨겨진다")
-  func nilDescriptionHidesRegardlessOfKind() {
-    let modal = makeModal(description: "Plain")
-    modal.attributedDescription = NSAttributedString(string: "Rich")
+  @Test("설명을 nil로 바꾸면 사라진다")
+  func settingNilDescriptionHidesIt() {
+    let modal = makeModal(description: "설명")
+    #expect(attributedText(matching: "설명", in: modal) != nil)
 
     modal.descriptionText = nil
 
-    #expect(modal.descriptionText == nil)
-    #expect(modal.attributedDescription == nil)
-    #expect(label(withText: "Rich", in: modal) == nil)
+    #expect(attributedText(matching: "설명", in: modal) == nil)
+  }
+
+  @Test("제목을 바꾸면 태그가 다시 해석된다")
+  func updatingTitleReparsesTags() {
+    let modal = makeModal(title: "처음")
+
+    modal.title = "<b>나중</b>"
+
+    #expect(attributedText(matching: "나중", in: modal) != nil)
+    #expect(attributedText(matching: "처음", in: modal) == nil)
   }
 }
 
-@Suite("BezierConfirmModal 리치 텍스트 색 소유", .serialized)
+@Suite("BezierConfirmModal 태그 텍스트 테마 추종", .serialized)
 @MainActor
-struct BezierConfirmModalAttributedColorTests {
-  @Test("주입한 전경색은 모달의 시맨틱 색으로 덮어써진다")
-  func injectedForegroundColorIsOverwritten() throws {
-    let modal = makeModal()
-    let injected = NSMutableAttributedString(string: "Rich")
-    injected.addAttribute(
-      .foregroundColor,
-      value: UIColor.red,
-      range: NSRange(location: 0, length: injected.length)
-    )
-    modal.attributedDescription = injected
+struct BezierConfirmModalTagThemeTests {
+  @Test("다크모드에서 태그 텍스트 색이 달라진다")
+  func tagTextFollowsDarkMode() throws {
+    let modal = makeModal(description: "일반 <b>강조</b>")
+    let color = try #require(foregroundColor(matching: "일반 강조", in: modal))
 
-    let rendered = try #require(foregroundColor(ofTextMatching: "Rich", in: modal))
-    let expected = BezierConfirmModalSpec.textColorToken.palette(modal)
-
-    for style in [UIUserInterfaceStyle.light, .dark] {
-      #expect(resolved(rendered, style: style) == resolved(expected, style: style))
-      #expect(resolved(rendered, style: style) != resolved(.red, style: style))
-    }
+    #expect(resolved(color, style: .light) != resolved(color, style: .dark))
   }
 
-  @Test("테마를 따라가지 않는 컴포넌트로 만든 리치 텍스트도 라이트·다크가 갈린다")
-  func attributedTextTracksInterfaceStyleEvenWhenBuiltWithFrozenComponent() throws {
-    let frozen = FrozenLightComponent()
-    let modal = makeModal()
-    modal.attributedDescription = BezierConfirmModalSpec.descriptionTypography.attributedString(
-      frozen,
-      text: "Rich",
-      semanticColorToken: BezierConfirmModalSpec.textColorToken,
-      alignment: .center
-    )
-
-    try withExtendedLifetime(frozen) {
-      let rendered = try #require(foregroundColor(ofTextMatching: "Rich", in: modal))
-      #expect(resolved(rendered, style: .light) != resolved(rendered, style: .dark))
-    }
-  }
-
-  @Test("componentTheme을 뒤집으면 리치 텍스트 색도 평문 경로처럼 반전된다")
-  func attributedTextFollowsComponentThemeInversion() throws {
-    let modal = makeModal()
-    modal.attributedDescription = NSAttributedString(string: "Rich")
-
-    let normal = try #require(foregroundColor(ofTextMatching: "Rich", in: modal))
+  @Test("componentTheme을 뒤집으면 태그 텍스트 색도 반전된다")
+  func tagTextFollowsComponentThemeInversion() throws {
+    let modal = makeModal(description: "일반 <b>강조</b>")
+    let normal = try #require(foregroundColor(matching: "일반 강조", in: modal))
     let normalDark = resolved(normal, style: .dark)
 
     modal.componentTheme = .inverted
-    let inverted = try #require(foregroundColor(ofTextMatching: "Rich", in: modal))
+    let inverted = try #require(foregroundColor(matching: "일반 강조", in: modal))
 
     #expect(resolved(inverted, style: .light) == normalDark)
   }
 
-  @Test("색만 덮어쓰고 글꼴은 넘긴 그대로 유지된다")
-  func fontRunsArePreserved() throws {
-    let modal = makeModal()
-    let bold = UIFont.boldSystemFont(ofSize: 20)
-    let injected = NSMutableAttributedString(string: "AB")
-    injected.addAttribute(.font, value: bold, range: NSRange(location: 1, length: 1))
-    modal.attributedDescription = injected
+  @Test("강조 구간도 나머지와 같은 색을 쓴다")
+  func boldRunSharesColorWithRest() throws {
+    let modal = makeModal(description: "일반 <b>강조</b>")
+    let rendered = try #require(attributedText(matching: "일반 강조", in: modal))
 
-    let descriptionLabel = try #require(label(withText: "AB", in: modal))
-    let rendered = try #require(descriptionLabel.attributedText)
+    let normal = try #require(rendered.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor)
+    let bold = try #require(rendered.attribute(.foregroundColor, at: 3, effectiveRange: nil) as? UIColor)
 
-    #expect(rendered.attribute(.font, at: 1, effectiveRange: nil) as? UIFont == bold)
-    #expect(rendered.attribute(.font, at: 0, effectiveRange: nil) as? UIFont == nil)
+    #expect(resolved(normal, style: .light) == resolved(bold, style: .light))
+    #expect(resolved(normal, style: .dark) == resolved(bold, style: .dark))
   }
 }
 
@@ -188,14 +145,16 @@ private func label(withText text: String, in view: UIView) -> UILabel? {
 }
 
 @MainActor
-private func foregroundColor(ofTextMatching text: String, in view: UIView) -> UIColor? {
-  label(withText: text, in: view)?
-    .attributedText?
+private func attributedText(matching text: String, in view: UIView) -> NSAttributedString? {
+  label(withText: text, in: view)?.attributedText
+}
+
+@MainActor
+private func foregroundColor(matching text: String, in view: UIView) -> UIColor? {
+  attributedText(matching: text, in: view)?
     .attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
 }
 
-// palette(_:)의 dynamic provider는 인자 대신 UITraitCollection.current를 읽으므로
-// performAsCurrent 없이 resolvedColor(with:)만 부르면 주변 스타일이 그대로 나온다
 private func resolved(_ color: UIColor, style: UIUserInterfaceStyle) -> UIColor {
   let traits = UITraitCollection(userInterfaceStyle: style)
   var result = color
