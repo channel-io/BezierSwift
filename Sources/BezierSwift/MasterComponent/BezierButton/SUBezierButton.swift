@@ -161,7 +161,6 @@ private struct SUBezierButtonStyle: ButtonStyle, Themeable {
     if isPressed, !self.isLoading {
       Capsule().fill(self.palette(self.variant.pressedBackgroundToken(self.semantic)))
     } else if let token = self.variant.backgroundToken(self.semantic) {
-      // loading 시 배경 레이어만 opacity/disabled 로 흐려지고 Spinner 는 full opacity (SPEC §6)
       Capsule()
         .fill(self.palette(token))
         .opacity(self.isLoading ? BezierButtonConstant.disabledOpacity : 1)

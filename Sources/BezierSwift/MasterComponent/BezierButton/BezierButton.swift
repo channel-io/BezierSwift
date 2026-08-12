@@ -62,8 +62,6 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   // MARK: - Subviews
 
-  // 배경은 root backgroundColor 가 아니라 전담 뷰로 칠한다 — loading 시 배경만
-  // opacity/disabled 로 흐려지고 Spinner 는 full opacity 를 유지해야 하기 때문 (SPEC §6).
   private let backgroundView: UIView = {
     let view = UIView()
     view.isUserInteractionEnabled = false

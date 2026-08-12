@@ -76,9 +76,6 @@ public enum BezierButtonSize: String, CaseIterable {
 
   // MARK: - Typography
 
-  // Figma 바인딩: xsmall·small·medium 은 `Typography/label/*` 스타일(= BTSemanticToken.label*),
-  // large·xlarge 는 raw 조합(`font-size/16` + `line-height/24` + `label/weight` 500)으로
-  // 대응 semantic 토큰이 없다 (SPEC §4). nil 이면 아래 프로퍼티들이 raw 값으로 fallback 한다.
   var typographyToken: BTSemanticToken? {
     switch self {
     case .xsmall: return .labelSmall
@@ -88,18 +85,17 @@ public enum BezierButtonSize: String, CaseIterable {
     }
   }
 
-  /// 라벨 폰트 크기. Figma `label/size/*`(xsmall~medium) 또는 `font-size/16`(large·xlarge).
+  /// 라벨 폰트 크기.
   public var fontSize: CGFloat {
     self.typographyToken?.fontSize ?? BTGlobalToken.FontSize.size16
   }
 
-  /// 라벨 행높이. Figma `label/line-height/*`(xsmall~medium) 또는 `line-height/24`(large·xlarge).
+  /// 라벨 행높이.
   public var lineHeight: CGFloat {
     self.typographyToken?.lineHeight ?? BTGlobalToken.LineHeight.height24
   }
 
-  /// 라벨 폰트 weight. Figma `label/weight/bold`(700 → `.bold`, xsmall~medium) 또는
-  /// `label/weight`(500 → `.medium`, large·xlarge).
+  /// 라벨 폰트 weight.
   public var fontWeight: UIFont.Weight {
     switch self {
     case .xsmall, .small, .medium: return .bold
@@ -150,8 +146,6 @@ extension BezierButtonVariant {
     }
   }
 
-  // Figma pressed 배경(`*-hovered` 변수)은 iOS에 sync된 토큰이 없어 pressedColor(HSL 계산)로 재현한다 (SPEC §8).
-  // outlined/ghost 는 투명 배경(fillNeutralTransparent) 위에 pressed fill 이 추가되는 모델.
   func pressedBackgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
     (self.backgroundToken(semantic) ?? .fillNeutralTransparent).pressedColor
   }
@@ -171,7 +165,6 @@ extension BezierButtonVariant {
     switch (self, semantic) {
     case (.filled, .primary):     return .textInverse
     case (.filled, .secondary):   return .textNeutral
-    // 붉은 배경 위 라벨은 테마 무관 항상 흰색 — textInverse(다크에서 검정)가 아니라 absolute white (SPEC §5)
     case (.filled, .destructive): return .textAbsoluteWhite
 
     case (.outlined, .primary):     return .textNeutralHeaviest
