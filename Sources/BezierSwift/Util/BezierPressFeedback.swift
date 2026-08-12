@@ -13,9 +13,14 @@ import UIKit
 /// Reduce Motion이 켜져 있으면 축소 없이 원래 크기를 유지한다.
 ///
 /// UIKit `UIControl`에서는 `isHighlighted` 변화에 맞춰 호출하고, 탭을 받지 않는 상태에서는 `reset(_:)`으로 되돌린다.
+/// `didSet`은 값이 그대로여도 대입마다 발동하므로, 같은 값 재대입에 release 애니메이션이 다시 걸리지 않도록 `oldValue`로 걸러야 한다.
 /// ```swift
 /// public override var isHighlighted: Bool {
-///   didSet { self.refreshPressScale() }
+///   didSet {
+///     if oldValue != self.isHighlighted {
+///       self.refreshPressScale()
+///     }
+///   }
 /// }
 ///
 /// private func refreshPressScale() {
@@ -44,6 +49,8 @@ public enum BezierPressFeedback {
   // MARK: - UIKit
 
   /// `contentView`에 press 피드백을 적용한다. `isPressed`가 `true`면 축소하고, `false`면 오버슈트하며 원래 크기로 복귀한다.
+  ///
+  /// Reduce Motion이 켜져 있으면 어느 쪽이든 애니메이션 없이 원래 크기를 유지한다 — `isPressed`와 무관하게 `reset(_:)`과 같은 결과가 된다.
   ///
   /// - Parameters:
   ///   - isPressed: 눌린 상태 여부. `UIControl`이면 `isHighlighted`를 그대로 넘긴다.
@@ -112,6 +119,8 @@ struct BezierPressScaleModifier: ViewModifier {
 extension View {
   /// 눌린 동안 콘텐츠를 `0.97`로 축소하는 press 피드백을 건다. 계약과 근거는 `BezierPressFeedback` 참조.
   ///
+  /// 축소 애니메이션은 내장돼 있어 별도로 걸 필요가 없다. Reduce Motion이 켜져 있으면 축소하지 않는다.
+  ///
   /// **`.padding`·`.background`보다 앞(콘텐츠 쪽)에 붙여야 한다.** 뒤에 붙이면 pressed 배경까지 함께 축소된다.
   /// ```swift
   /// func makeBody(configuration: Configuration) -> some View {
@@ -121,6 +130,8 @@ extension View {
   ///     .background(configuration.isPressed ? pressedColor : .clear)   // 배경은 full-size 유지
   /// }
   /// ```
+  ///
+  /// 내장 애니메이션은 scale에만 걸린다 — 위 예시의 pressed 배경은 즉시 전환된다.
   ///
   /// - Parameter isPressed: 눌린 상태 여부. `ButtonStyle`이면 `configuration.isPressed`를 그대로 넘긴다.
   public func bezierPressScale(isPressed: Bool) -> some View {
