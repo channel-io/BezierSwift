@@ -90,7 +90,15 @@ public enum BezierPressFeedback {
   @MainActor
   public static func reset(_ contentView: UIView) {
     contentView.layer.removeAnimation(forKey: self.releaseAnimationKey)
-    contentView.transform = .identity
+    // press-in은 UIView.animate가 붙인 암묵 애니메이션이라 키로 제거할 수 없다. transform 대입만으로는
+    // 모델 값만 바뀌고 진행 중인 애니메이션이 완주해버리므로, duration 0 애니메이션으로 대체해 확정시킨다.
+    UIView.animate(
+      withDuration: 0,
+      delay: 0,
+      options: [.beginFromCurrentState, .overrideInheritedDuration]
+    ) {
+      contentView.transform = .identity
+    }
   }
 }
 
