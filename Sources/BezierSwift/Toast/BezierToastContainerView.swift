@@ -7,6 +7,7 @@ import SwiftUI
 
 private enum Metric {
   static let topPadding = CGFloat(5)
+  static let horizontalInset = CGFloat(10)
 }
 
 struct BezierToastContainerView: View, Themeable {
@@ -36,6 +37,7 @@ struct BezierToastContainerView: View, Themeable {
       LegacyBezierToast(param: param)
     case .v3(let preset, let title):
       SUBezierToast(preset: preset, title: title)
+        .padding(.horizontal, Metric.horizontalInset)
     }
   }
 }
