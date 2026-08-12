@@ -75,29 +75,42 @@ public enum BezierButtonSize: String, CaseIterable {
   }
 
   // MARK: - Typography
-  //
-  // Figma 변수 바인딩: xsmall·small·medium 은 `label/*` semantic, large·xlarge 는
-  // `font-size/16` + `line-height/24` global. BezierSwift 에는 16/24 조합의 label/text
-  // semantic 토큰이 없으므로 (내부 참조 가능한) BTGlobalToken raw 값을 직접 사용한다.
+
+  // Figma 바인딩: xsmall·small·medium 은 `Typography/label/*` 스타일(= BTSemanticToken.label*),
+  // large·xlarge 는 raw 조합(`font-size/16` + `line-height/24` + `label/weight` 500)으로
+  // 대응 semantic 토큰이 없다 (SPEC §4). nil 이면 아래 프로퍼티들이 raw 값으로 fallback 한다.
+  var typographyToken: BTSemanticToken? {
+    switch self {
+    case .xsmall: return .labelSmall
+    case .small:  return .labelMedium
+    case .medium: return .labelLarge
+    case .large, .xlarge: return nil
+    }
+  }
+
+  /// 라벨 폰트 크기. Figma `label/size/*`(xsmall~medium) 또는 `font-size/16`(large·xlarge).
   public var fontSize: CGFloat {
-    switch self {
-    case .xsmall: return BTGlobalToken.FontSize.size13
-    case .small:  return BTGlobalToken.FontSize.size14
-    case .medium: return BTGlobalToken.FontSize.size15
-    case .large, .xlarge: return BTGlobalToken.FontSize.size16
-    }
+    self.typographyToken?.fontSize ?? BTGlobalToken.FontSize.size16
   }
 
+  /// 라벨 행높이. Figma `label/line-height/*`(xsmall~medium) 또는 `line-height/24`(large·xlarge).
   public var lineHeight: CGFloat {
+    self.typographyToken?.lineHeight ?? BTGlobalToken.LineHeight.height24
+  }
+
+  /// 라벨 폰트 weight. Figma `label/weight/bold`(700 → `.bold`, xsmall~medium) 또는
+  /// `label/weight`(500 → `.medium`, large·xlarge).
+  public var fontWeight: UIFont.Weight {
     switch self {
-    case .xsmall: return BTGlobalToken.LineHeight.height18
-    case .small, .medium: return BTGlobalToken.LineHeight.height20
-    case .large, .xlarge: return BTGlobalToken.LineHeight.height24
+    case .xsmall, .small, .medium: return .bold
+    case .large, .xlarge: return .medium
     }
   }
 
-  // Figma SemiBold(600) → iOS BTFontWeight binary system(`bold`) 매핑 (디자인 시스템 합의)
-  public var fontWeight: BTFontWeight { .bold }
+  /// 라벨 UIFont. SwiftUI에서는 `Font(uiFont)`로 사용한다.
+  public var uiFont: UIFont {
+    self.typographyToken?.uiFont ?? .systemFont(ofSize: self.fontSize, weight: self.fontWeight)
+  }
 }
 
 /// 버튼의 시각적 강조도. Figma `Button` 컴포넌트의 `variant` 프로퍼티에 대응 (case 이름 = Figma 값).
@@ -123,7 +136,6 @@ public enum BezierButtonSemantic: String, CaseIterable {
 enum BezierButtonConstant {
   static let borderWidth: CGFloat = 1
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
-  static let pressedOpacity: CGFloat = 0.7
 }
 
 extension BezierButtonVariant {
@@ -136,6 +148,12 @@ extension BezierButtonVariant {
          (.ghost, _):
       return nil
     }
+  }
+
+  // Figma pressed 배경(`*-hovered` 변수)은 iOS에 sync된 토큰이 없어 pressedColor(HSL 계산)로 재현한다 (SPEC §8).
+  // outlined/ghost 는 투명 배경(fillNeutralTransparent) 위에 pressed fill 이 추가되는 모델.
+  func pressedBackgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
+    (self.backgroundToken(semantic) ?? .fillNeutralTransparent).pressedColor
   }
 
   func borderToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
@@ -153,7 +171,8 @@ extension BezierButtonVariant {
     switch (self, semantic) {
     case (.filled, .primary):     return .textInverse
     case (.filled, .secondary):   return .textNeutral
-    case (.filled, .destructive): return .textInverse
+    // 붉은 배경 위 라벨은 테마 무관 항상 흰색 — textInverse(다크에서 검정)가 아니라 absolute white (SPEC §5)
+    case (.filled, .destructive): return .textAbsoluteWhite
 
     case (.outlined, .primary):     return .textNeutralHeaviest
     case (.outlined, .secondary):   return .textNeutralLight

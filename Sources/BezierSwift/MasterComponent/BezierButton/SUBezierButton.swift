@@ -106,19 +106,11 @@ public struct SUBezierButton: View, Themeable {
       }
 
       if let title = self.title, !title.isEmpty {
-        let uiFont = BTGlobalToken.FontFamily.system.uiFont(
-          size: self.size.fontSize,
-          weight: self.size.fontWeight
-        )
+        let uiFont = self.size.uiFont
         let lineSpacing = max(0, self.size.lineHeight - uiFont.lineHeight)
 
         Text(title)
-          .font(
-            BTGlobalToken.FontFamily.system.font(
-              size: self.size.fontSize,
-              weight: self.size.fontWeight
-            )
-          )
+          .font(Font(uiFont))
           .lineSpacing(lineSpacing)
           .padding(.vertical, lineSpacing / 2)
           .foregroundColor(self.palette(self.variant.foregroundToken(self.semantic)))
@@ -159,16 +151,20 @@ private struct SUBezierButtonStyle: ButtonStyle, Themeable {
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(self.backgroundShape)
+      .background(self.backgroundShape(isPressed: configuration.isPressed))
       .clipShape(Capsule())
       .overlay(self.borderShape)
-      .opacity(configuration.isPressed && !self.isLoading ? BezierButtonConstant.pressedOpacity : 1)
   }
 
   @ViewBuilder
-  private var backgroundShape: some View {
-    if let token = self.variant.backgroundToken(self.semantic) {
-      Capsule().fill(self.palette(token))
+  private func backgroundShape(isPressed: Bool) -> some View {
+    if isPressed, !self.isLoading {
+      Capsule().fill(self.palette(self.variant.pressedBackgroundToken(self.semantic)))
+    } else if let token = self.variant.backgroundToken(self.semantic) {
+      // loading 시 배경 레이어만 opacity/disabled 로 흐려지고 Spinner 는 full opacity (SPEC §6)
+      Capsule()
+        .fill(self.palette(token))
+        .opacity(self.isLoading ? BezierButtonConstant.disabledOpacity : 1)
     } else {
       Color.clear
     }
@@ -192,8 +188,8 @@ struct SUBezierButton_Previews: PreviewProvider {
       SUBezierButton(size: .xsmall, variant: .filled, semantic: .primary, title: "Label") {}
       SUBezierButton(size: .small, variant: .outlined, semantic: .secondary, title: "Label") {}
       SUBezierButton(size: .medium, variant: .ghost, semantic: .destructive, title: "Label") {}
-      SUBezierButton(size: .large, variant: .filled, semantic: .destructive, title: "Confirm", leadingIcon: Image(systemName: "trash")) {}
-      SUBezierButton(size: .xlarge, variant: .filled, semantic: .primary, title: "Continue", trailingIcon: Image(systemName: "arrow.right")) {}
+      SUBezierButton(size: .large, variant: .filled, semantic: .destructive, title: "Confirm", leadingIcon: BezierIcon.trash.image) {}
+      SUBezierButton(size: .xlarge, variant: .filled, semantic: .primary, title: "Continue", trailingIcon: BezierIcon.arrowRight.image) {}
       SUBezierButton(size: .medium, variant: .filled, semantic: .primary, title: "Loading", isLoading: true) {}
     }
     .padding()
