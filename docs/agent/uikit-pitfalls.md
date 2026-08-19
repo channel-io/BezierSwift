@@ -131,6 +131,37 @@ label.attributedText = NSAttributedString(string: text, attributes: attributes)
 - SwiftUI는 `.lineLimit(n).truncationMode(.tail)`이 그대로 동작해 이 함정이 없다 — 두 구현의
   패리티를 볼 때 UIKit 쪽만 의심할 것
 
+## `intrinsicContentSize`를 안 주면 폭이 "모호"해진다
+
+콘텐츠 폭을 하한 제약(`width >= minWidth`, 내부 스택 `leading >=` / `trailing <=`)으로만 잡고
+`intrinsicContentSize`를 오버라이드하지 않으면, **폭을 결정하는 제약이 하나도 없는 상태**가 된다.
+`hasAmbiguousLayout == true`이고, 값은 컨텍스트마다 다르게 나온다.
+
+`BezierButton(size: .small)` 실측 (동일한 제약 세트):
+
+| 호스트 | 결과 |
+|---|---|
+| 단독 컨테이너 / `systemLayoutSizeFitting` / `UIView-Encapsulated-Layout-Width` 흉내 | 58pt (hug) |
+| `UICollectionViewCompositionalLayout` + `UICollectionLayoutListConfiguration` | **317pt** (셀 폭까지 확장) |
+
+제약으로 흉내낸 self-sizing에서는 재현되지 않고 **실제 컬렉션뷰를 태워야만** 드러난다.
+`setContentHuggingPriority`·`setContentCompressionResistancePriority`는 이 상태에서 **무효다** —
+intrinsic size 대비 저항이라 기준이 없으면 작용할 대상이 없다(`.required`로 올려도 317 그대로).
+
+**UIKit 컴포넌트는 `intrinsicContentSize`를 콘텐츠 크기로 제공한다.** 배치는 여전히 컨테이너
+책임이다 — `equalTo` 제약이나 stretch 정렬(`.fill`, `.fillEqually`)이 intrinsic을 이긴다.
+
+```swift
+public override var intrinsicContentSize: CGSize {
+  // 가시 콘텐츠 + 패딩·간격을 더하고 minWidth를 하한으로
+}
+```
+
+- 콘텐츠가 바뀌는 지점(`refreshContent`)에서 `invalidateIntrinsicContentSize()`를 호출한다
+- 로딩 등 **일시 상태는 반영하지 않는다** — 스피너로 전환될 때 폭이 흔들린다
+- 실례: `BezierButton.swift`(MOB-6882), `BezierBadge.swift`(MOB-6018 — 같은 원인, 압축 붕괴로 발현)
+- 반대 증상(폭 붕괴)은 [`examples-pitfalls.md`](examples-pitfalls.md)의 "폭이 무너지는 세 케이스"
+
 ## 레이아웃 테스트
 
 UIKit 뷰의 압축·크기 거동은 `UIWindow`에 붙여야 측정이 유효하다. 상세는
