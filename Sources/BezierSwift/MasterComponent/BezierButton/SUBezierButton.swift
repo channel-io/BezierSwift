@@ -7,6 +7,10 @@ import SwiftUI
 
 /// Bezier 디자인 시스템 V3 버튼 (SwiftUI). `size`·`variant`·`semantic` 세 축으로 형태를 지정하고,
 /// 아이콘과 로딩 상태를 지원한다. UIKit에서는 `BezierButton`을 사용한다.
+///
+/// 폭은 콘텐츠를 hug 한다. `.frame(maxWidth: .infinity)`로는 늘어나지 않으므로(내부에서
+/// `fixedSize(horizontal:)`를 건다), 폭을 채워야 하면 컨테이너 쪽에서 레이아웃을 잡는다.
+/// UIKit `BezierButton`은 컨테이너 제약으로 hug·fill을 모두 만들 수 있다.
 public struct SUBezierButton: View, Themeable {
   private let size: BezierButtonSize
   private let variant: BezierButtonVariant

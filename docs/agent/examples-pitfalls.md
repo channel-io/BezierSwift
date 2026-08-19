@@ -71,6 +71,34 @@ UIKitWrap({ BezierIconButton(...) }, update: { (button: BezierIconButton) in
 쓰면 제네릭 `V`가 `UIView`로 폴백되어 프로퍼티를 못 찾는 컴파일 에러가 나므로, update
 클로저의 파라미터 타입을 위처럼 명시한다.
 
+### 레이아웃 버그 재현 화면은 셀 구성이 결과를 바꾼다
+
+폭이 모호한 상태(intrinsic 부재)의 버그를 카탈로그에서 재현할 때, 컬렉션뷰를 태우는 것만으로는
+부족하다. 엔진이 어느 해를 고를지는 주변 제약에 좌우되므로 아래 둘 중 하나만 어겨도 hug으로
+풀려 **버그가 가려진다**.
+
+| 지켜야 할 것 | 어기면 |
+|---|---|
+| 버튼 셀에는 검증 대상만 넣는다 | 같은 셀에 설명 라벨을 함께 두면 hug으로 풀림 → 설명·측정값은 별도 헤더 셀로 분리 |
+| 대상과 제약을 셀 `init`에서 만든다 | `cellForItemAt`에서 뒤늦게 붙이면 self-sizing 첫 측정에 제약이 없어 hug으로 풀림 → 레시피별 셀 서브클래스로 나눈다 |
+
+실례: `ButtonSelfSizingDemo.swift`(MOB-6882). 이 두 조건을 맞추기 전까지는 수정 전 코드에서도
+정상(hug)으로 보였다.
+
+### 측정값을 셀 `layoutSubviews`에서 재면 중간값이 잡힌다
+
+셀의 `layoutSubviews`는 `contentView` 내부 배치보다 먼저 돌아, 대상 뷰의 폭이 0이거나 직전
+패스의 값이다. 컨테이너 뷰의 `layoutSubviews`에서 `collectionView.layoutIfNeeded()` 뒤에
+visible cell을 훑어 갱신한다.
+
+### 컬렉션뷰를 `UIViewRepresentable`로 얹을 때 높이 측정은 캐시한다
+
+`sizeThatFits`에서 매번 레이아웃을 돌리면 SwiftUI가 다시 측정하는 루프가 생겨 **바깥
+`ScrollView`의 오프셋이 계속 초기화된다**(스크롤이 튕겨 돌아오는 증상). (width, 콘텐츠) 키로
+캐시하고 콘텐츠가 바뀔 때만 무효화한다. 높이 0짜리 프레임으로 재면 compositional layout이
+self-sizing 셀을 준비하지 않아 `collectionViewContentSize`가 0으로 나오므로, 충분히 큰
+프레임을 한 번 태운 뒤 읽는다.
+
 ## 레이아웃
 
 ### 화면 폭을 넘는 row는 가로 `ScrollView`로 감싼다

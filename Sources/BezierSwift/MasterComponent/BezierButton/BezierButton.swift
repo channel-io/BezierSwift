@@ -7,6 +7,38 @@ import UIKit
 
 /// Bezier 디자인 시스템 V3 버튼 (UIKit). `size`·`variant`·`semantic` 세 축으로 형태를 지정하고,
 /// 아이콘과 로딩 상태를 지원한다. SwiftUI에서는 `SUBezierButton`을 사용한다.
+///
+/// ## 폭 배치 — hug / fill
+///
+/// 폭을 정하는 프로퍼티는 없다(`resizing`·`isFullWidth` 같은 축을 두지 않는다). 버튼은
+/// 콘텐츠 크기(``intrinsicContentSize``)를 기본 폭으로 갖고, **늘릴지 말지는 컨테이너가
+/// 제약으로 정한다.** 둘의 차이는 "폭을 확정하는 제약을 걸었는가" 하나뿐이다.
+///
+/// | 목적 | 거는 제약 | 쓰는 곳 |
+/// |---|---|---|
+/// | **hug** — 콘텐츠 폭 | 폭을 확정하지 않는다. `centerX`(또는 `leading =`) + `leading >=` / `trailing <=`, 혹은 세로 `UIStackView`의 `alignment = .center` | 카드·리스트 행 안의 보조 액션 (`.small` / `.outlined`) |
+/// | **fill** — 컨테이너 폭 | 폭을 확정한다. `leading =` + `trailing =`, 세로 `UIStackView`의 `alignment = .fill`, 가로 `UIStackView`의 `distribution = .fillEqually` | 하단 CTA·모달 버튼 (`.large` / `.filled`) |
+///
+/// ```swift
+/// // hug — 셀 폭이 얼마든 "더 보기"만큼만 차지한다
+/// NSLayoutConstraint.activate([
+///   button.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+///   button.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 16),
+///   button.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -16),
+/// ])
+///
+/// // fill — 컨테이너 폭을 채운다
+/// NSLayoutConstraint.activate([
+///   button.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+///   button.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
+/// ])
+/// ```
+///
+/// hug 쪽에서 부등호 제약을 **빠뜨리면** 안 된다. 최소 폭(`size.minWidth`)만 남아 컨테이너가
+/// 좁을 때 라벨이 잘린다. 반대로 fill을 원하면서 부등호만 걸면 콘텐츠 폭으로 hug 된다.
+///
+/// `SUBezierButton`(SwiftUI)의 public API는 hug 전용이다 — fill은 모듈 내부 전용 축이라,
+/// SwiftUI에서 폭을 채워야 하면 컨테이너 쪽에서 레이아웃을 잡는다.
 public final class BezierButton: UIControl, BezierComponentable {
   // MARK: - BezierComponentable
 
@@ -206,6 +238,35 @@ public final class BezierButton: UIControl, BezierComponentable {
 
   // MARK: - Layout Update
 
+  /// 콘텐츠(아이콘·라벨)와 `size`의 패딩·간격으로 계산한 자연 크기. 폭의 하한은 `size.minWidth`다.
+  ///
+  /// 배치는 컨테이너 책임이므로 이 값은 기본 폭일 뿐이다. 컨테이너가 `equalTo` 제약이나
+  /// stretch 정렬(`UIStackView`의 `.fill`, `distribution = .fillEqually`)을 걸면 그쪽이 이긴다.
+  ///
+  /// `isLoading`은 반영하지 않는다 — 스피너로 전환될 때 버튼 폭이 흔들리면 안 되기 때문이다.
+  public override var intrinsicContentSize: CGSize {
+    var width = self.size.horizontalPadding * 2
+    var visibleContentCount = 0
+
+    if !self.leadingImageView.isHidden {
+      width += self.size.iconLength
+      visibleContentCount += 1
+    }
+    if !self.titleLabel.isHidden {
+      width += self.titleLabel.intrinsicContentSize.width
+      visibleContentCount += 1
+    }
+    if !self.trailingImageView.isHidden {
+      width += self.size.iconLength
+      visibleContentCount += 1
+    }
+    if visibleContentCount > 1 {
+      width += self.size.contentSpacing * CGFloat(visibleContentCount - 1)
+    }
+
+    return CGSize(width: max(width, self.size.minWidth), height: self.size.height)
+  }
+
   public override func layoutSubviews() {
     super.layoutSubviews()
     self.layer.cornerRadius = self.bounds.height / 2
@@ -244,7 +305,6 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.spinner.size = self.size.spinnerSize
     self.refreshContent()
     self.setNeedsLayout()
-    self.invalidateIntrinsicContentSize()
   }
 
   private func refreshContent() {
@@ -273,6 +333,8 @@ public final class BezierButton: UIControl, BezierComponentable {
       self.titleLabel.attributedText = nil
       self.titleLabel.isHidden = true
     }
+
+    self.invalidateIntrinsicContentSize()
   }
 
   private func refreshAppearance() {
