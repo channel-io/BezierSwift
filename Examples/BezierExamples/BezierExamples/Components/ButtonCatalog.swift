@@ -17,6 +17,11 @@ struct ButtonCatalog: View {
       self.controls
       CatalogSection(.swiftUI) { self.swiftUIPreview }
       CatalogSection(.uiKit) { self.uiKitPreview }
+      Text("Collection view self-sizing (MOB-6882)")
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(.secondary)
+        .textCase(.uppercase)
+      CatalogSection(.uiKit) { self.selfSizingDemo }
       Text("Matrix (medium · variant × semantic)")
         .font(.system(size: 13, weight: .semibold))
         .foregroundStyle(.secondary)
@@ -103,6 +108,22 @@ struct ButtonCatalog: View {
       Spacer()
     }
     .padding(.vertical, 8)
+  }
+
+  // MARK: - Collection View Self-Sizing (MOB-6882)
+
+  private var selfSizingDemo: some View {
+    VStack(alignment: .leading, spacing: 10) {
+      Text("실제 UICollectionView(compositional list) self-sizing 셀. 세 행은 셀 폭이 같고 버튼 제약만 다르다. 측정값이 초록이면 기대대로 배치된 것이다.")
+        .font(.caption2)
+        .foregroundStyle(.secondary)
+      ButtonSelfSizingDemo(
+        size: self.size,
+        variant: self.variant,
+        semantic: self.semantic,
+        title: self.title
+      )
+    }
   }
 
   // MARK: - Matrix
