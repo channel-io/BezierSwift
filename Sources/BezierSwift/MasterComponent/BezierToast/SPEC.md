@@ -138,7 +138,7 @@ Figma 컴포넌트는 정적 목업이며 state 축이 없다. 아래 런타임 
 Figma에 없는 구현 아키텍처 결정을 여기에 분리 표기한다. SSOT 값이 아니다.
 
 1. **표면 반전 구현**: §3의 반전 판독은 `componentTheme = .inverted`(UIKit) / `palette(_:isInverted: true)`(SwiftUI)로 구현한다. 근거: design spec §7 Behavior — "Toast는 `InvertedThemeProvider`로 감싸져 현재 테마가 반전되어 표시됨. 라이트 모드에서는 다크 배경, 다크 모드에서는 라이트 배경".
-2. **backdrop blur 구현**: Figma `Backdrop/large`(BACKGROUND_BLUR, radius 60)는 OS 표준 material로 구현한다 — SwiftUI `.thickMaterial`(저장소 유틸 `applyBlurEffect()`), UIKit `UIVisualEffectView`. 근거: design spec §6 Token Map — "런타임에서는 iOS `.thickMaterial` 또는 `backdrop-filter: blur(60px)` 로 구현".
+2. **backdrop blur 구현**: Figma `Backdrop/large`(BACKGROUND_BLUR, radius 60)는 iOS의 Ultra Thin Material로 구현한다 — SwiftUI `.ultraThinMaterial`(저장소 유틸 `applyBlurEffect(colorScheme:)`), UIKit `UIVisualEffectView`의 `systemUltraThinMaterialLight` / `systemUltraThinMaterialDark`. Toast의 semantic color는 앱 테마와 반전하지만 Material은 뒤 콘텐츠가 속한 앱 테마를 그대로 따른다.
 
 ---
 
