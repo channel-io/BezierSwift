@@ -214,12 +214,9 @@ public final class BezierToast: UIView, BezierComponentable {
 
   private func refreshAppearance() {
     self.blurView.contentView.backgroundColor = BezierToastSpec.backgroundToken.palette(self)
-    switch (self.componentTheme, self.colorTheme) {
-    case (.normal, .light), (.inverted, .dark):
-      self.blurView.effect = UIBlurEffect(style: .systemThickMaterialLight)
-    case (.normal, .dark), (.inverted, .light):
-      self.blurView.effect = UIBlurEffect(style: .systemThickMaterialDark)
-    }
+    self.blurView.effect = UIBlurEffect(
+      style: BezierToastSpec.blurEffectStyle(for: self.colorTheme)
+    )
     self.refreshContent()
   }
 }

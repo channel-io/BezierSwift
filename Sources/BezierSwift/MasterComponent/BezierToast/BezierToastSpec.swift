@@ -4,6 +4,7 @@
 //
 
 import CoreGraphics
+import UIKit
 
 /// 토스트의 표시 유형. Figma `Toast`(Mobile Components) 컴포넌트의 `preset` 프로퍼티(`success` / `error` / `info`)에 대응한다.
 public enum BezierToastPreset: String, CaseIterable {
@@ -49,4 +50,11 @@ public enum BezierToastSpec {
   public static let horizontalPaddingTextOnly: CGFloat = 14
   public static let textVerticalPadding: CGFloat = 1
   public static let textLineLimit: Int = 2
+
+  static func blurEffectStyle(for colorTheme: BezierColorTheme) -> UIBlurEffect.Style {
+    switch colorTheme {
+    case .light: return .systemUltraThinMaterialLight
+    case .dark: return .systemUltraThinMaterialDark
+    }
+  }
 }
