@@ -145,13 +145,13 @@ struct BezierBadgeLayoutTests {
     )
   }
 
-  /// 접근 A(라이브러리 무변경): 호출부에서 compressionResistance 를 낮추면, 표준 UIKit 메커니즘에 따라
-  /// 배지가 자연폭 미만으로 축소되고 내부 라벨이 tail truncation 조건(표시폭 < 콘텐츠폭)에 들어간다.
-  /// 즉 별도 API 없이 UIKit 표준만으로 "어느 정도 축소 허용 + 말줄임"이 가능하다.
-  @Test("compressionResistance를 낮추면 배지가 축소되고 라벨이 truncate 조건에 들어간다")
+  /// 호출부에서 compressionResistance 를 낮추면 배지가 자연폭 미만으로 축소되고,
+  /// 내부 라벨은 attributed paragraph style까지 tail truncation을 유지해야 한다.
+  @Test("compressionResistance를 낮추면 배지가 축소되고 라벨이 trailing ellipsis를 사용한다")
   func loweringResistanceAllowsTruncation() {
     let badge = BezierBadge(size: .xsmall)
     badge.label = "botbotbot"
+    badge.leadingIcon = UIImage()
     badge.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     let natural = badge.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
 
@@ -180,14 +180,34 @@ struct BezierBadgeLayoutTests {
     #expect(titleLabel != nil)
     if let titleLabel {
       #expect(titleLabel.numberOfLines == 1)
+      #expect(titleLabel.lineBreakMode == .byTruncatingTail)
       #expect(titleLabel.bounds.width < titleLabel.intrinsicContentSize.width)
+
+      let paragraphStyle = titleLabel.attributedText?.attribute(
+        .paragraphStyle,
+        at: 0,
+        effectiveRange: nil
+      ) as? NSParagraphStyle
+      #expect(paragraphStyle?.lineBreakMode == .byTruncatingTail)
     }
+
+    let leadingImageView = Self.firstImageView(in: badge)
+    #expect(leadingImageView != nil)
+    #expect(abs((leadingImageView?.bounds.width ?? 0) - BezierBadgeSize.xsmall.iconLength) < 0.5)
   }
 
   private static func firstLabel(in view: UIView) -> UILabel? {
     for subview in view.subviews {
       if let label = subview as? UILabel { return label }
       if let found = firstLabel(in: subview) { return found }
+    }
+    return nil
+  }
+
+  private static func firstImageView(in view: UIView) -> UIImageView? {
+    for subview in view.subviews {
+      if let imageView = subview as? UIImageView { return imageView }
+      if let found = firstImageView(in: subview) { return found }
     }
     return nil
   }

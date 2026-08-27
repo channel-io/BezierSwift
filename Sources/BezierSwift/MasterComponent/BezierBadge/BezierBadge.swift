@@ -60,6 +60,7 @@ public final class BezierBadge: UIView, BezierComponentable {
   private let titleLabel: BezierBadgePaddedLabel = {
     let label = BezierBadgePaddedLabel()
     label.numberOfLines = 1
+    label.lineBreakMode = .byTruncatingTail
     label.textAlignment = .center
     return label
   }()
@@ -197,7 +198,8 @@ public final class BezierBadge: UIView, BezierComponentable {
         font: font,
         color: foregroundToken.palette(self),
         letterSpacing: self.size.letterSpacing,
-        alignment: .center
+        alignment: .center,
+        lineBreakMode: .byTruncatingTail
       )
       self.titleLabel.isHidden = false
     } else {
