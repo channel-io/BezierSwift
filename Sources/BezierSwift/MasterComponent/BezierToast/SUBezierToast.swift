@@ -44,7 +44,9 @@ public struct SUBezierToast: View, Themeable {
     )
     .frame(minHeight: BezierToastSpec.minHeight)
     .background(self.palette(BezierToastSpec.backgroundToken, isInverted: true))
-    .applyBlurEffect()
+    // Toast 색상은 반전하지만 Material은 화면의 원래 테마를 따라야 하므로
+    // 아래의 반전 colorScheme environment와 분리해 전달한다.
+    .applyBlurEffect(colorScheme: self.colorScheme)
     .applyBezierCornerRadius(type: BezierToastSpec.cornerRadius)
     .frame(maxWidth: BezierToastSpec.maxWidth)
     // applyBezierFontStyle 내부 modifier가 자체 @Environment(\.colorScheme)로 텍스트 색을 해석해

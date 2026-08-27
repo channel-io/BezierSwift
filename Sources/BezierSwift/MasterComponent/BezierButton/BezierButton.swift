@@ -321,12 +321,14 @@ public final class BezierButton: UIControl, BezierComponentable {
     self.trailingImageView.tintColor = foregroundColor
 
     if let title = self.title, !title.isEmpty {
+      let font = self.size.uiFont
       self.titleLabel.attributedText = title.applyBezierFont(
         height: self.size.lineHeight,
-        font: self.size.uiFont,
+        font: font,
         color: foregroundColor,
         letterSpacing: 0,
-        alignment: .center
+        alignment: .center,
+        baselineOffset: (self.size.lineHeight - font.lineHeight) / 2
       )
       self.titleLabel.isHidden = false
     } else {

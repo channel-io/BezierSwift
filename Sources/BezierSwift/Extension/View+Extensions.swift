@@ -17,6 +17,14 @@ extension View {
   }
   
   func applyBlurEffect() -> some View {
-    return self.background(.thickMaterial)
+    self.background(.thickMaterial)
+  }
+
+  func applyBlurEffect(colorScheme: ColorScheme) -> some View {
+    self.background(
+      Rectangle()
+        .fill(.ultraThinMaterial)
+        .environment(\.colorScheme, colorScheme)
+    )
   }
 }

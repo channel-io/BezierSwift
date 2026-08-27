@@ -19,7 +19,8 @@ extension String {
     color: UIColor,
     letterSpacing: CGFloat,
     alignment: NSTextAlignment = .left,
-    lineBreakMode: NSLineBreakMode = .byWordWrapping
+    lineBreakMode: NSLineBreakMode = .byWordWrapping,
+    baselineOffset: CGFloat? = nil
   ) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineBreakMode = lineBreakMode
@@ -35,7 +36,7 @@ extension String {
       .font: font,
       .kern: letterSpacing,
       .paragraphStyle: paragraphStyle,
-      .baselineOffset: (paragraphStyle.minimumLineHeight - font.lineHeight) / 4
+      .baselineOffset: baselineOffset ?? (paragraphStyle.minimumLineHeight - font.lineHeight) / 4
     ]
     
     let attrText = NSMutableAttributedString(string: self)

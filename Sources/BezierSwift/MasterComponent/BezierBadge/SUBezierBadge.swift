@@ -41,7 +41,8 @@ public struct SUBezierBadge: View, Themeable {
           .padding(.vertical, self.size.verticalLineSpacing)
           .foregroundColor(self.palette(self.variant.foregroundToken))
           .padding(.horizontal, self.size.textHorizontalPadding)
-          .fixedSize(horizontal: true, vertical: false)
+          .lineLimit(1)
+          .truncationMode(.tail)
       }
     }
     .padding(.horizontal, self.size.horizontalPadding)
