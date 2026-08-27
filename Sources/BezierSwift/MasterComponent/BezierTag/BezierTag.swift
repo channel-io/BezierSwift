@@ -190,7 +190,8 @@ public final class BezierTag: UIView, BezierComponentable {
         font: font,
         color: foregroundColor,
         letterSpacing: self.size.letterSpacing,
-        alignment: .center
+        alignment: .center,
+        baselineOffset: (self.size.lineHeight - font.lineHeight) / 2
       )
       self.titleLabel.isHidden = false
     } else {

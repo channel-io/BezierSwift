@@ -197,7 +197,8 @@ public final class BezierBadge: UIView, BezierComponentable {
         font: font,
         color: foregroundToken.palette(self),
         letterSpacing: self.size.letterSpacing,
-        alignment: .center
+        alignment: .center,
+        baselineOffset: (self.size.lineHeight - font.lineHeight) / 2
       )
       self.titleLabel.isHidden = false
     } else {
