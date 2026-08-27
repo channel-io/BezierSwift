@@ -151,7 +151,7 @@ struct BezierBadgeLayoutTests {
   func loweringResistanceAllowsTruncation() {
     let badge = BezierBadge(size: .xsmall)
     badge.label = "botbotbot"
-    badge.leadingIcon = UIImage()
+    badge.leadingIcon = BezierIcon.plus.uiImage
     badge.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     let natural = badge.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
 
@@ -193,6 +193,8 @@ struct BezierBadgeLayoutTests {
 
     let leadingImageView = Self.firstImageView(in: badge)
     #expect(leadingImageView != nil)
+    #expect(leadingImageView?.isHidden == false)
+    #expect(leadingImageView?.image != nil)
     #expect(abs((leadingImageView?.bounds.width ?? 0) - BezierBadgeSize.xsmall.iconLength) < 0.5)
   }
 

@@ -44,6 +44,8 @@ struct BezierTagLayoutTests {
 
     let closeButton = Self.firstButton(in: tag)
     #expect(closeButton != nil)
+    #expect(closeButton?.isHidden == false)
+    #expect(closeButton?.image(for: .normal) != nil)
     #expect(abs((closeButton?.bounds.width ?? 0) - BezierTagSize.xsmall.closeIconLength) < 0.5)
   }
 
