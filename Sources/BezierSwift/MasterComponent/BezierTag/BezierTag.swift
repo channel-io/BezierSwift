@@ -59,6 +59,7 @@ public final class BezierTag: UIView, BezierComponentable {
   private let titleLabel: BezierTagPaddedLabel = {
     let label = BezierTagPaddedLabel()
     label.numberOfLines = 1
+    label.lineBreakMode = .byTruncatingTail
     label.textAlignment = .center
     return label
   }()
@@ -191,6 +192,7 @@ public final class BezierTag: UIView, BezierComponentable {
         color: foregroundColor,
         letterSpacing: self.size.letterSpacing,
         alignment: .center,
+        lineBreakMode: .byTruncatingTail,
         baselineOffset: (self.size.lineHeight - font.lineHeight) / 2
       )
       self.titleLabel.isHidden = false
