@@ -449,6 +449,7 @@ public enum BezierIcon: String, CaseIterable {
   case `plusSmall` = "icon-plus-small"
   case `plusSquare` = "icon-plus-square"
   case `point` = "icon-point"
+  case `pointer` = "icon-pointer"
   case `power` = "icon-power"
   case `print` = "icon-print"
   case `profile` = "icon-profile"
