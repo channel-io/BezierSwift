@@ -59,7 +59,7 @@ extension View {
 
 // 프레젠테이션 시각 결과(dim/너비 정책/전환)를 UIKit 경로 하나로 수렴시키기 위해
 // SwiftUI에서도 UIKit BezierConfirmModal을 카드로 present한다
-private struct SUBezierConfirmModalPresenter<CustomContent: View>: UIViewControllerRepresentable {
+struct SUBezierConfirmModalPresenter<CustomContent: View>: UIViewControllerRepresentable {
   @Binding var isPresented: Bool
   let title: String
   let description: String?
@@ -78,6 +78,23 @@ private struct SUBezierConfirmModalPresenter<CustomContent: View>: UIViewControl
     var isDismissing = false
     var isActive = true
     var updatePresentation: (() -> Void)?
+
+    func takeDismissalCompletion() -> () -> Void {
+      let handler = self.pendingHandler
+      self.pendingHandler = nil
+      // 액션의 수명은 presenter와 다르다. 해체돼도 이미 선택한 액션은 해제 완료 후 실행한다.
+      return { [weak self] in
+        if let self, self.isActive {
+          self.modalController = nil
+          self.modalView = nil
+          self.hostingController = nil
+          self.isDismissing = false
+        }
+        handler?()
+        guard let self, self.isActive else { return }
+        self.updatePresentation?()
+      }
+    }
   }
 
   func makeCoordinator() -> Coordinator {
@@ -118,30 +135,25 @@ private struct SUBezierConfirmModalPresenter<CustomContent: View>: UIViewControl
       }
     } else if let modalController = coordinator.modalController, !coordinator.isDismissing {
       coordinator.isDismissing = true
-      let pendingHandler = coordinator.pendingHandler
-      coordinator.pendingHandler = nil
-      modalController.dismiss(animated: true) { [weak coordinator] in
-        guard let coordinator, coordinator.isActive else { return }
-        coordinator.modalController = nil
-        coordinator.modalView = nil
-        coordinator.hostingController = nil
-        coordinator.isDismissing = false
-        pendingHandler?()
-        coordinator.updatePresentation?()
-      }
+      modalController.dismiss(animated: true, completion: coordinator.takeDismissalCompletion())
     }
   }
 
   static func dismantleUIViewController(_ uiViewController: BezierModalAnchorViewController, coordinator: Coordinator) {
+    let completion = coordinator.takeDismissalCompletion()
+    let modalController = coordinator.modalController
     coordinator.isActive = false
     coordinator.updatePresentation = nil
     uiViewController.onReady = nil
-    coordinator.modalController?.dismiss(animated: false)
     coordinator.modalController = nil
     coordinator.modalView = nil
     coordinator.hostingController = nil
-    coordinator.pendingHandler = nil
     coordinator.isDismissing = false
+    if let modalController {
+      modalController.dismiss(animated: false, completion: completion)
+    } else {
+      completion()
+    }
   }
 
   private func present(from anchor: UIViewController, coordinator: Coordinator) {
