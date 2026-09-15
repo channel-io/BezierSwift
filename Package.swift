@@ -5,7 +5,6 @@ import PackageDescription
 
 let package = Package(
   name: "BezierSwift",
-  defaultLocalization: "en",
   platforms: [
     .iOS(.v16),
   ],

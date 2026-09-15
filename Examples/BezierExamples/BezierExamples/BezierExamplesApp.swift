@@ -8,22 +8,9 @@ struct BezierExamplesApp: App {
 
   var body: some Scene {
     WindowGroup {
-      entryView
+      RootView()
         .onAppear(perform: self.setupBezierWindowIfNeeded)
     }
-  }
-
-  @ViewBuilder
-  private var entryView: some View {
-    #if DEBUG
-    if let scenario = SwiftUIReviewProbe.requestedCase {
-      SwiftUIReviewProbe(scenario: scenario)
-    } else {
-      RootView()
-    }
-    #else
-    RootView()
-    #endif
   }
 
   private func setupBezierWindowIfNeeded() {

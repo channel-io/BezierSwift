@@ -49,20 +49,6 @@ public struct SUBezierCheckbox: View, Themeable {
     // 레이어별 opacity 개별 적용 시 박스 fill·border 겹침이 이음새로 비쳐 flatten 후 일괄 적용
     .compositingGroup()
     .opacity(self.isEnabled ? 1 : BezierCheckboxConstant.disabledOpacity)
-    .accessibilityLabel(self.label)
-    .accessibilityValue(self.accessibilityState)
-    .accessibilityAddTraits(self.checked == .checked ? .isSelected : [])
-  }
-
-  private var accessibilityState: Text {
-    switch self.checked {
-    case .unchecked:
-      return Text("Unchecked", tableName: "Accessibility", bundle: .module, comment: "Checkbox state")
-    case .checked:
-      return Text("Checked", tableName: "Accessibility", bundle: .module, comment: "Checkbox state")
-    case .indeterminate:
-      return Text("Partially checked", tableName: "Accessibility", bundle: .module, comment: "Checkbox state when only some child items are selected")
-    }
   }
 
   private var boxView: some View {
