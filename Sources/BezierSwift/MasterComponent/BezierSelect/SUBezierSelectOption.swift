@@ -59,6 +59,7 @@ public struct SUBezierSelectOption<CenterSlot: View>: View, Themeable {
       centerSlot: { self.centerSlotView },
       trailing: { self.checkView }
     )
+    .accessibilityAddTraits(self.isSelected ? .isSelected : [])
   }
 
   private func iconView(_ icon: BezierIcon) -> some View {
@@ -90,6 +91,7 @@ public struct SUBezierSelectOption<CenterSlot: View>: View, Themeable {
           height: BezierSelectOptionConstant.checkIconLength
         )
         .foregroundColor(self.palette(BezierSelectOptionConstant.checkIconColor))
+        .accessibilityHidden(true)
     }
   }
 }

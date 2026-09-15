@@ -17,7 +17,7 @@ public struct SUBezierCard<Content: View>: View, Themeable {
   }
 
   public var body: some View {
-    self.content
+    VStack(alignment: .leading, spacing: 0) { self.content }
       .padding(
         EdgeInsets(
           top: BezierCardConstant.verticalPadding,
