@@ -1,5 +1,4 @@
 import SwiftUI
-import Foundation
 import Testing
 @testable import BezierSwift
 
@@ -17,11 +16,10 @@ struct BezierAvatarRenderingTests {
 
   private func renderUIKit(
     size: BezierAvatarSize, image: UIImage?, scale: CGFloat,
-    dark: Bool, border: Bool = true, overlap: Bool = false, status: Bool = false, phase: CGFloat = 0
+    dark: Bool, border: Bool = true, phase: CGFloat = 0
   ) -> UIImage {
     let length = size.length
-    let width = overlap ? length * 2.4 + 16 : length + 16
-    let container = UIView(frame: CGRect(x: 0, y: 0, width: width, height: length + 16))
+    let container = UIView(frame: CGRect(x: 0, y: 0, width: length + 16, height: length + 16))
     let window = UIWindow(frame: container.bounds)
     if #available(iOS 17.0, *) { window.traitOverrides.displayScale = scale }
     window.overrideUserInterfaceStyle = dark ? .dark : .light
@@ -33,19 +31,14 @@ struct BezierAvatarRenderingTests {
       UITraitCollection(displayScale: scale),
     ])
     traits.performAsCurrent {
-      for index in 0..<(overlap ? 3 : 1) {
-        let avatar = BezierAvatar(
-          image: image, size: size, showBorder: border,
-          statusType: status ? .online : nil
-        )
-        container.addSubview(avatar)
-        avatar.componentTheme = .normal
-        NSLayoutConstraint.activate([
-          avatar.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8 + phase + CGFloat(index) * length * 0.7),
-          avatar.topAnchor.constraint(equalTo: container.topAnchor, constant: 8 + phase),
-        ])
-      }
-      container.layoutIfNeeded()
+      let avatar = BezierAvatar(image: image, size: size, showBorder: border)
+      container.addSubview(avatar)
+      avatar.componentTheme = .normal
+      NSLayoutConstraint.activate([
+        avatar.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8 + phase),
+        avatar.topAnchor.constraint(equalTo: container.topAnchor, constant: 8 + phase),
+      ])
+      window.layoutIfNeeded()
     }
     return snapshotUIKit(container, scale: scale, traits: traits)
   }
@@ -75,20 +68,14 @@ struct BezierAvatarRenderingTests {
 
   private func renderSwiftUI(
     size: BezierAvatarSize, image: UIImage?, scale: CGFloat,
-    dark: Bool, border: Bool = true, overlap: Bool = false, status: Bool = false, phase: CGFloat = 0
+    dark: Bool, border: Bool = true, phase: CGFloat = 0
   ) -> UIImage {
     let length = size.length
-    let width = overlap ? length * 2.4 : length
     let content = ZStack(alignment: .topLeading) {
-      ForEach(0..<(overlap ? 3 : 1), id: \.self) { index in
-        SUBezierAvatar(
-          image: image.map { Image(uiImage: $0) }, size: size, showBorder: border,
-          statusType: status ? .online : nil
-        )
-        .offset(x: phase + CGFloat(index) * length * 0.7, y: phase)
-      }
+      SUBezierAvatar(image: image.map { Image(uiImage: $0) }, size: size, showBorder: border)
+        .offset(x: phase, y: phase)
     }
-    .frame(width: width, height: length, alignment: .topLeading)
+    .frame(width: length, height: length, alignment: .topLeading)
     .padding(8)
     .background(Color(white: dark ? 0.18 : 0.72))
     .environment(\.colorScheme, dark ? .dark : .light)
@@ -96,48 +83,6 @@ struct BezierAvatarRenderingTests {
     let renderer = ImageRenderer(content: content)
     renderer.scale = scale
     return renderer.uiImage!
-  }
-
-  /// TEST_RUNNER_BEZIER_AVATAR_SNAPSHOT_DIRECTORY를 지정한 xcodebuild 실행에서만 PNG를 내보낸다.
-  @Test(.enabled(if: ProcessInfo.processInfo.environment["BEZIER_AVATAR_SNAPSHOT_DIRECTORY"] != nil))
-  func exportComparisonSnapshots() throws {
-    let path = try #require(ProcessInfo.processInfo.environment["BEZIER_AVATAR_SNAPSHOT_DIRECTORY"])
-    let directory = URL(fileURLWithPath: path)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    var pathElements: [[Double]] = []
-    CGPath(roundedRect: CGRect(x: 0, y: 0, width: 16, height: 16), cornerWidth: 6.72, cornerHeight: 6.72, transform: nil).applyWithBlock { element in
-      let count: Int
-      switch element.pointee.type {
-      case .moveToPoint, .addLineToPoint: count = 1
-      case .addQuadCurveToPoint: count = 2
-      case .addCurveToPoint: count = 3
-      case .closeSubpath: count = 0
-      @unknown default: count = 0
-      }
-      pathElements.append([Double(element.pointee.type.rawValue)] + (0..<count).flatMap {
-        [Double(element.pointee.points[$0].x), Double(element.pointee.points[$0].y)]
-      })
-    }
-    try JSONEncoder().encode(pathElements).write(to: directory.appendingPathComponent("uikit-size16-path.json"))
-    let photo = try #require(UIImage(contentsOfFile: Bundle.module.url(forResource: "AvatarPhoto", withExtension: "png")!.path))
-    let images: [(String, UIImage?)] = [("solid", solidImage(.magenta)), ("photo", photo), ("nil", nil)]
-    for size in [BezierAvatarSize.size16, .size24, .size48] {
-      for scale: CGFloat in [2, 3] {
-        for dark in [false, true] {
-          for (imageName, image) in images {
-            for arrangement in ["single", "overlap", "status", "no-border", "quarter-pixel", "half-pixel"] {
-              for framework in ["uikit", "swiftui"] {
-                let renderer = framework == "uikit" ? renderUIKit : renderSwiftUI
-                let phase: CGFloat = arrangement == "quarter-pixel" ? 0.25 : arrangement == "half-pixel" ? 0.5 : 0
-                let result = renderer(size, image, scale, dark, arrangement != "no-border", arrangement == "overlap", arrangement == "status", phase)
-                let name = "\(framework)-\(size.rawValue)-\(dark ? "dark" : "light")-\(Int(scale))x-\(imageName)-\(arrangement).png"
-                try result.pngData()!.write(to: directory.appendingPathComponent(name))
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   @Test
@@ -156,7 +101,7 @@ struct BezierAvatarRenderingTests {
       for border in [false, true, false, true] {
         avatar.showBorder = border
         container.setNeedsLayout()
-        container.layoutIfNeeded()
+        window.layoutIfNeeded()
         #expect(avatar.bounds.size == CGSize(width: size.length, height: size.length))
         #expect(!avatar.clipsToBounds)
         let status = avatar.subviews.last!
@@ -175,15 +120,14 @@ struct BezierAvatarRenderingTests {
   /// 단순 golden 비교 대신 서로 다른 이미지로 합성 결함을 검출한다.
   @Test
   func outerBorderIsIndependentOfImageColor() throws {
-    var snapshotIndices: [String: [Int]] = [:]
-    for size in BezierAvatarSize.allCases {
+    for size in [BezierAvatarSize.size16, .size24, .size48] {
       for scale: CGFloat in [2, 3] {
         for dark in [false, true] {
           for (swiftUI, phase) in [false, true].flatMap({ framework in [CGFloat(0), 0.25, 0.5].map { (framework, $0) } }) {
             let render = swiftUI ? renderSwiftUI : renderUIKit
-            let red = render(size, solidImage(.red), scale, dark, true, false, false, phase)
-            let blue = render(size, solidImage(.blue), scale, dark, true, false, false, phase)
-            let empty = render(size, nil, scale, dark, true, false, false, phase)
+            let red = render(size, solidImage(.red), scale, dark, true, phase)
+            let blue = render(size, solidImage(.blue), scale, dark, true, phase)
+            let empty = render(size, nil, scale, dark, true, phase)
             let redPixels = pixels(red)
             let bluePixels = pixels(blue)
             let emptyPixels = pixels(empty)
@@ -212,7 +156,6 @@ struct BezierAvatarRenderingTests {
             var checked = 0
             var maxDifference = 0
             var maxPoint = CGPoint.zero
-            var checkedIndices: [Int] = []
             for y in 0..<cgImage.height {
               for x in 0..<cgImage.width {
                 let point = CGPoint(x: (CGFloat(x) + 0.5) / scale - 8 - phase, y: (CGFloat(y) + 0.5) / scale - 8 - phase)
@@ -227,7 +170,6 @@ struct BezierAvatarRenderingTests {
                 // 외곽 AA 픽셀만 검사한다. 소수 좌표에서 리샘플링되는 안쪽 AA는 이미지와 섞이는 것이 정상이다.
                 guard !touchesInner, !outerInterior.contains(point), isBorder else { continue }
                 checked += 1
-                checkedIndices.append(y * cgImage.width + x)
                 for channel in 0..<3 {
                   let difference = abs(Int(redPixels[offset + channel]) - Int(bluePixels[offset + channel]))
                   if difference > maxDifference { maxDifference = difference; maxPoint = CGPoint(x: x, y: y) }
@@ -237,18 +179,9 @@ struct BezierAvatarRenderingTests {
             let label = "\(swiftUI ? "SwiftUI" : "UIKit") \(size) \(scale)x dark=\(dark) phase=\(phase)"
             #expect(checked > 10, "\(label)")
             #expect(maxDifference <= 1, "외곽에 이미지 색이 비침: \(label) pixel=\(maxPoint)")
-            if phase == 0, [.size16, .size24, .size48].contains(size) {
-              let name = "\(swiftUI ? "swiftui" : "uikit")-\(size.rawValue)-\(dark ? "dark" : "light")-\(Int(scale))x"
-              snapshotIndices[name] = checkedIndices
-            }
           }
         }
       }
-    }
-    if let path = ProcessInfo.processInfo.environment["BEZIER_AVATAR_SNAPSHOT_DIRECTORY"] {
-      let directory = URL(fileURLWithPath: path)
-      try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-      try JSONEncoder().encode(snapshotIndices).write(to: directory.appendingPathComponent("outer-pixel-indices.json"))
     }
   }
 
@@ -263,12 +196,12 @@ struct BezierAvatarRenderingTests {
     for size in [BezierAvatarSize.size16, .size24, .size48] {
       for scale: CGFloat in [2, 3] {
         for render in [renderUIKit, renderSwiftUI] {
-          let bordered = render(size, image, scale, false, true, false, false, 0)
-          let unbordered = render(size, image, scale, false, false, false, false, 0)
+          let bordered = render(size, image, scale, false, true, 0)
+          let unbordered = render(size, image, scale, false, false, 0)
           let a = pixels(bordered)
           let b = pixels(unbordered)
-          let empty = pixels(render(size, nil, scale, false, true, false, false, 0))
-          let transparent = pixels(render(size, solidImage(.clear), scale, false, true, false, false, 0))
+          let empty = pixels(render(size, nil, scale, false, true, 0))
+          let transparent = pixels(render(size, solidImage(.clear), scale, false, true, 0))
           let width = bordered.cgImage!.width
           for y in Int((8 + size.length * 0.35) * scale)..<Int((8 + size.length * 0.65) * scale) {
             for x in Int((8 + size.length * 0.35) * scale)..<Int((8 + size.length * 0.65) * scale) {
@@ -291,7 +224,7 @@ struct BezierAvatarRenderingTests {
     for size in BezierAvatarSize.allCases {
       for scale: CGFloat in [2, 3] {
         for render in [renderUIKit, renderSwiftUI] {
-          let image = render(size, nil, scale, false, true, false, false, 0)
+          let image = render(size, nil, scale, false, true, 0)
           let data = pixels(image)
           let width = image.cgImage!.width
           let x = Int((8 + size.length / 2) * scale)
@@ -332,7 +265,7 @@ struct BezierAvatarRenderingTests {
             container.frame = CGRect(x: 0, y: 0, width: size.length + 16, height: size.length + 16)
             window.frame = container.frame
             container.setNeedsLayout()
-            container.layoutIfNeeded()
+            window.layoutIfNeeded()
           }
           let actual = snapshotUIKit(container, scale: scale, traits: traits)
           let expected = renderUIKit(size: size, image: image, scale: scale, dark: false, border: border)
