@@ -40,9 +40,9 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
   /// 주 액션(확인) 버튼. `type`에 따라 강조 색이 결정된다.
   public let confirmButton: BezierButton
   /// 취소 버튼. `cancelAction`을 지정하지 않으면 `nil`이다.
-  public let cancelButton: BezierButton?
+  public private(set) var cancelButton: BezierButton?
   /// 세로 배치에서 쓰는 세 번째 대체 액션 버튼. `.vertical(altAction:)`에 액션을 넘겼을 때만 존재한다.
-  public let altButton: BezierButton?
+  public private(set) var altButton: BezierButton?
 
   // MARK: - Subviews
 
@@ -188,41 +188,88 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
     altAction: BezierConfirmModalAction?,
     cancelAction: BezierConfirmModalAction?
   ) {
+    let buttons: [BezierButton]
     switch buttonLayout {
     case .vertical:
       self.buttonStackView.axis = .vertical
       self.buttonStackView.spacing = BezierConfirmModalSpec.verticalButtonSpacing
       self.buttonStackView.distribution = .fill
-      self.buttonStackView.addArrangedSubview(self.confirmButton)
-      if let altButton = self.altButton {
-        self.buttonStackView.addArrangedSubview(altButton)
-      }
-      if let cancelButton = self.cancelButton {
-        self.buttonStackView.addArrangedSubview(cancelButton)
-      }
+      buttons = [self.confirmButton, self.altButton, self.cancelButton].compactMap { $0 }
 
     case .horizontal:
       self.buttonStackView.axis = .horizontal
       self.buttonStackView.spacing = BezierConfirmModalSpec.horizontalButtonSpacing
       self.buttonStackView.distribution = .fillEqually
-      if let cancelButton = self.cancelButton {
-        self.buttonStackView.addArrangedSubview(cancelButton)
-      }
-      self.buttonStackView.addArrangedSubview(self.confirmButton)
+      buttons = [self.cancelButton, self.confirmButton].compactMap { $0 }
     }
 
-    self.confirmButton.title = confirmAction.title
-    self.confirmButton.addAction(UIAction { _ in confirmAction.handler() }, for: .touchUpInside)
-
-    if let cancelAction {
-      self.cancelButton?.title = cancelAction.title
-      self.cancelButton?.addAction(UIAction { _ in cancelAction.handler() }, for: .touchUpInside)
+    if !self.buttonStackView.arrangedSubviews.elementsEqual(buttons, by: { $0 === $1 }) {
+      self.buttonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+      buttons.forEach(self.buttonStackView.addArrangedSubview)
     }
 
-    if let altAction {
-      self.altButton?.title = altAction.title
-      self.altButton?.addAction(UIAction { _ in altAction.handler() }, for: .touchUpInside)
+    self.updateAction(confirmAction, on: self.confirmButton)
+
+    if let cancelAction, let cancelButton = self.cancelButton {
+      self.updateAction(cancelAction, on: cancelButton)
     }
+
+    if let altAction, let altButton = self.altButton {
+      self.updateAction(altAction, on: altButton)
+    }
+  }
+
+  private func updateAction(_ action: BezierConfirmModalAction, on button: BezierButton) {
+    let identifier = UIAction.Identifier("BezierConfirmModal.action")
+    button.title = action.title
+    button.removeAction(identifiedBy: identifier, for: .touchUpInside)
+    button.addAction(UIAction(identifier: identifier) { _ in action.handler() }, for: .touchUpInside)
+  }
+
+  func update(
+    title: String,
+    description: String?,
+    type: BezierConfirmModalType,
+    buttonLayout: BezierConfirmModalButtonLayout,
+    confirmAction: BezierConfirmModalAction,
+    cancelAction: BezierConfirmModalAction?
+  ) {
+    self.title = title
+    self.descriptionText = description
+    self.confirmButton.semantic = type.confirmButtonSemantic
+
+    var altAction: BezierConfirmModalAction?
+    if case .vertical(let action) = buttonLayout { altAction = action }
+    if cancelAction == nil, altAction != nil {
+      assertionFailure("cancelAction 없이 altAction을 사용할 수 없습니다")
+      altAction = nil
+    }
+
+    if cancelAction == nil {
+      self.cancelButton = nil
+    } else if self.cancelButton == nil {
+      self.cancelButton = self.makeSecondaryButton()
+    }
+    if altAction == nil {
+      self.altButton = nil
+    } else if self.altButton == nil {
+      self.altButton = self.makeSecondaryButton()
+    }
+
+    self.setUpButtons(
+      buttonLayout: buttonLayout, confirmAction: confirmAction,
+      altAction: altAction, cancelAction: cancelAction
+    )
+  }
+
+  private func makeSecondaryButton() -> BezierButton {
+    let button = BezierButton(
+      size: BezierConfirmModalSpec.buttonSize,
+      variant: BezierConfirmModalSpec.buttonVariant,
+      semantic: BezierConfirmModalSpec.cancelSemantic
+    )
+    button.componentTheme = self.componentTheme
+    return button
   }
 
   // MARK: - Layout Update

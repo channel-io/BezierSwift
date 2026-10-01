@@ -94,11 +94,7 @@ public struct SUBezierSection<Data: RandomAccessCollection, ID: Hashable, Row: V
     .background(self.backgroundView)
     .overlay(self.borderView)
 
-    if self.appearance.hasChrome {
-      rows.clipShape(RoundedRectangle(cornerRadius: self.appearance.cornerRadius))
-    } else {
-      rows
-    }
+    rows.clipShape(RoundedRectangle(cornerRadius: self.appearance.cornerRadius))
   }
 
   private func dividerView(_ divider: BezierSectionVariant.Appearance.Divider) -> some View {

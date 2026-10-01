@@ -30,43 +30,61 @@ struct SUBezierModalPresenter<ModalContent: View>: UIViewControllerRepresentable
 
   final class Coordinator {
     var modalController: BezierModalViewController?
-    var hostingController: UIHostingController<ModalContent>?
+    var hostingController: UIHostingController<BezierModalEnvironmentContent<ModalContent>>?
+    var environment = EnvironmentValues()
     var isDismissing = false
+    var isActive = true
+    var updatePresentation: (() -> Void)?
+    var onDismiss: (() -> Void)?
   }
 
   func makeCoordinator() -> Coordinator {
     Coordinator()
   }
 
-  func makeUIViewController(context: Context) -> UIViewController {
-    UIViewController()
+  func makeUIViewController(context: Context) -> BezierModalAnchorViewController {
+    BezierModalAnchorViewController()
   }
 
-  func updateUIViewController(_ anchor: UIViewController, context: Context) {
+  func updateUIViewController(_ anchor: BezierModalAnchorViewController, context: Context) {
     let coordinator = context.coordinator
+    coordinator.environment = context.environment
+    coordinator.onDismiss = self.onDismiss
+    coordinator.updatePresentation = { [weak anchor, weak coordinator] in
+      guard let anchor, let coordinator, coordinator.isActive else { return }
+      self.updatePresentation(from: anchor, coordinator: coordinator)
+    }
+    anchor.onReady = { [weak coordinator] in coordinator?.updatePresentation?() }
+    coordinator.updatePresentation?()
+  }
 
+  private func updatePresentation(from anchor: UIViewController, coordinator: Coordinator) {
     if self.isPresented {
       if let hostingController = coordinator.hostingController {
-        hostingController.rootView = self.modalContent()
+        hostingController.rootView = BezierModalEnvironmentContent(
+          content: self.modalContent(), environment: coordinator.environment
+        )
       } else if coordinator.modalController == nil, !coordinator.isDismissing {
         self.present(from: anchor, coordinator: coordinator)
       }
     } else if let modalController = coordinator.modalController, !coordinator.isDismissing {
       coordinator.isDismissing = true
-      modalController.dismiss(animated: true) {
+      modalController.dismiss(animated: true) { [weak coordinator] in
+        guard let coordinator, coordinator.isActive else { return }
         coordinator.modalController = nil
         coordinator.hostingController = nil
         coordinator.isDismissing = false
-        self.onDismiss?()
-        // dismiss 진행 중 binding이 다시 true가 된 경우 여기서 재-present (update가 다시 불리지 않음)
-        if self.isPresented {
-          self.present(from: anchor, coordinator: coordinator)
-        }
+        coordinator.onDismiss?()
+        coordinator.updatePresentation?()
       }
     }
   }
 
-  static func dismantleUIViewController(_ uiViewController: UIViewController, coordinator: Coordinator) {
+  static func dismantleUIViewController(_ uiViewController: BezierModalAnchorViewController, coordinator: Coordinator) {
+    coordinator.isActive = false
+    coordinator.updatePresentation = nil
+    coordinator.onDismiss = nil
+    uiViewController.onReady = nil
     coordinator.modalController?.dismiss(animated: false)
     coordinator.modalController = nil
     coordinator.hostingController = nil
@@ -74,16 +92,12 @@ struct SUBezierModalPresenter<ModalContent: View>: UIViewControllerRepresentable
   }
 
   private func present(from anchor: UIViewController, coordinator: Coordinator) {
-    // 최초 렌더 직후에는 anchor가 아직 window에 붙지 않았을 수 있어 다음 runloop에 재시도
-    guard anchor.view.window != nil else {
-      DispatchQueue.main.async {
-        guard self.isPresented, coordinator.modalController == nil, !coordinator.isDismissing else { return }
-        self.present(from: anchor, coordinator: coordinator)
-      }
-      return
-    }
+    // 최초 갱신은 window 연결보다 빠를 수 있다. 준비 전에는 viewDidAppear 알림을 기다린다.
+    guard anchor.view.window != nil else { return }
 
-    let hostingController = UIHostingController(rootView: self.modalContent())
+    let hostingController = UIHostingController(rootView: BezierModalEnvironmentContent(
+      content: self.modalContent(), environment: coordinator.environment
+    ))
     hostingController.view.backgroundColor = .clear
     hostingController.sizingOptions = .intrinsicContentSize
 
@@ -95,5 +109,23 @@ struct SUBezierModalPresenter<ModalContent: View>: UIViewControllerRepresentable
     coordinator.hostingController = hostingController
 
     anchor.present(modalController, animated: true)
+  }
+}
+
+final class BezierModalAnchorViewController: UIViewController {
+  var onReady: (() -> Void)?
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.onReady?()
+  }
+}
+
+struct BezierModalEnvironmentContent<Content: View>: View {
+  let content: Content
+  let environment: EnvironmentValues
+
+  var body: some View {
+    self.content.environment(\.self, self.environment)
   }
 }
