@@ -27,7 +27,8 @@ let package = Package(
       resources: [.process("Resources")]),
     .testTarget(
       name: "BezierSwiftTests",
-      dependencies: ["BezierSwift"]),
+      dependencies: ["BezierSwift"],
+      resources: [.process("Resources")]),
   ],
   swiftLanguageVersions: [.v5]
 )

@@ -43,6 +43,21 @@ public final class BezierAvatar: UIView, BezierComponentable {
 
   // MARK: - Subviews
 
+  /// 이미지와 테두리를 먼저 합성하고 외곽을 한 번만 마스킹한다. Status는 이 컨테이너 밖에 둔다.
+  private let contentView: UIView = {
+    let view = UIView()
+    view.isUserInteractionEnabled = false
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
+  private let contentMask = CAShapeLayer()
+  private let borderLayer: CAShapeLayer = {
+    let layer = CAShapeLayer()
+    layer.fillRule = .evenOdd
+    return layer
+  }()
+
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
@@ -51,9 +66,8 @@ public final class BezierAvatar: UIView, BezierComponentable {
     return imageView
   }()
 
-  /// CALayer 렌더링 순서상 `layer.border`는 sublayers보다 항상 위에 그려지므로,
-  /// status overlay가 border에 의해 가려지지 않도록 별도 subview로 border를 분리한다.
-  /// z-order: imageView(bottom) → borderView(middle) → statusView(top).
+  /// 외곽은 사각형으로 완전히 덮고 안쪽 경계만 안티앨리어싱한다.
+  /// 둥근 바깥 경계는 합성된 contentView의 마스크가 담당한다.
   private let borderView: UIView = {
     let view = UIView()
     view.isUserInteractionEnabled = false
@@ -100,12 +114,14 @@ public final class BezierAvatar: UIView, BezierComponentable {
   private func setUp() {
     self.translatesAutoresizingMaskIntoConstraints = false
     // Status overlay가 Avatar 바깥(좌표 (12,12) + 6×6 등)으로 일부 spill하므로 wrapper는 clip하지 않는다.
-    // 이미지의 corner radius clipping은 imageView 자체의 masksToBounds가 담당.
+    // 이미지·테두리 clipping은 contentView 내부에서 처리한다.
     self.clipsToBounds = false
     self.imageView.image = self.image
 
-    self.addSubview(self.imageView)
-    self.addSubview(self.borderView)
+    self.addSubview(self.contentView)
+    self.contentView.addSubview(self.imageView)
+    self.contentView.addSubview(self.borderView)
+    self.borderView.layer.addSublayer(self.borderLayer)
 
     let widthConstraint = self.widthAnchor.constraint(equalToConstant: self.size.length)
     let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.length)
@@ -113,14 +129,18 @@ public final class BezierAvatar: UIView, BezierComponentable {
     NSLayoutConstraint.activate([
       widthConstraint,
       heightConstraint,
-      self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
-      self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      self.borderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      self.borderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      self.borderView.topAnchor.constraint(equalTo: self.topAnchor),
-      self.borderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
+      self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      self.imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+      self.imageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+      self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+      self.imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+      self.borderView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+      self.borderView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+      self.borderView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+      self.borderView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
     ])
 
     self.widthConstraint = widthConstraint
@@ -135,8 +155,35 @@ public final class BezierAvatar: UIView, BezierComponentable {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
-    self.imageView.layer.cornerRadius = self.size.cornerRadius
-    self.borderView.layer.cornerRadius = self.size.cornerRadius
+    // showBorder=false는 기존 UIImageView clipping을 그대로 사용한다.
+    self.imageView.layer.cornerRadius = self.showBorder ? 0 : self.size.cornerRadius
+    guard self.showBorder else {
+      self.contentView.layer.mask = nil
+      return
+    }
+    let bounds = self.bounds
+    let radius = self.size.cornerRadius
+    let width = self.size.borderWidth
+    // 사각형 끝의 AA가 외곽 마스크와 겹치지 않도록 채움은 마스크 바깥까지 연장한다.
+    let borderPath = CGMutablePath()
+    borderPath.addRect(bounds.insetBy(dx: -width, dy: -width))
+    borderPath.addRoundedRect(
+      in: bounds.insetBy(dx: width, dy: width),
+      cornerWidth: max(0, radius - width), cornerHeight: max(0, radius - width)
+    )
+
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
+    self.contentMask.frame = bounds
+    self.contentMask.contentsScale = self.traitCollection.displayScale
+    // UIBezierPath의 둥근 사각형은 작은 크기에서 반경을 확장/제한할 수 있으므로
+    // Core Graphics의 원호 경로로 기존 CALayer.cornerRadius의 기하를 유지한다.
+    self.contentMask.path = CGPath(roundedRect: bounds, cornerWidth: radius, cornerHeight: radius, transform: nil)
+    self.borderLayer.frame = bounds
+    self.borderLayer.contentsScale = self.traitCollection.displayScale
+    self.borderLayer.path = borderPath
+    self.contentView.layer.mask = self.contentMask
+    CATransaction.commit()
   }
 
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -157,15 +204,17 @@ public final class BezierAvatar: UIView, BezierComponentable {
   }
 
   private func refreshAppearance() {
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
     if self.showBorder {
-      self.borderView.layer.borderWidth = self.size.borderWidth
-      self.borderView.layer.borderColor = BCSemanticToken.surface.palette(self).cgColor
+      self.borderLayer.fillColor = BCSemanticToken.surface.palette(self).cgColor
       self.borderView.isHidden = false
     } else {
-      self.borderView.layer.borderWidth = 0
-      self.borderView.layer.borderColor = nil
+      self.borderLayer.fillColor = nil
       self.borderView.isHidden = true
     }
+    CATransaction.commit()
+    self.setNeedsLayout()
   }
 
   private func refreshStatusOverlay() {
