@@ -30,8 +30,12 @@ public struct SUBezierAvatar: View, Themeable {
 
   public var body: some View {
     ZStack(alignment: .topLeading) {
-      self.imageLayer
-      self.borderLayer
+      ZStack {
+        self.imageLayer
+        self.borderLayer
+      }
+      .compositingGroup()
+      .clipShape(RoundedRectangle(cornerRadius: self.size.cornerRadius, style: .continuous))
       self.statusLayer
     }
     .frame(width: self.size.length, height: self.size.length, alignment: .topLeading)
@@ -51,14 +55,14 @@ public struct SUBezierAvatar: View, Themeable {
       }
     }
     .frame(width: self.size.length, height: self.size.length)
-    .clipShape(RoundedRectangle(cornerRadius: self.size.cornerRadius, style: .continuous))
   }
 
   @ViewBuilder
   private var borderLayer: some View {
     if self.showBorder {
-      RoundedRectangle(cornerRadius: self.size.cornerRadius, style: .continuous)
-        .strokeBorder(self.palette(BCSemanticToken.surface), lineWidth: self.size.borderWidth)
+      // 외곽은 완전히 덮고 안쪽 경계만 AA한다. 바깥쪽 AA는 합성 후 clipShape가 담당한다.
+      AvatarBorderShape(cornerRadius: self.size.cornerRadius, borderWidth: self.size.borderWidth)
+        .fill(self.palette(BCSemanticToken.surface), style: FillStyle(eoFill: true))
         .frame(width: self.size.length, height: self.size.length)
     }
   }
@@ -79,6 +83,22 @@ public struct SUBezierAvatar: View, Themeable {
       .offset(x: self.size.statusOverlayPosition.x, y: self.size.statusOverlayPosition.y)
       .zIndex(1)
     }
+  }
+}
+
+private struct AvatarBorderShape: Shape {
+  let cornerRadius: CGFloat
+  let borderWidth: CGFloat
+
+  func path(in rect: CGRect) -> Path {
+    // 채움 끝의 AA는 외곽 마스크 밖에서 처리되도록 한다(소수 픽셀 좌표에서도 색 번짐 방지).
+    var path = Path(rect.insetBy(dx: -self.borderWidth, dy: -self.borderWidth))
+    path.addPath(
+      RoundedRectangle(cornerRadius: self.cornerRadius, style: .continuous)
+        .inset(by: self.borderWidth)
+        .path(in: rect)
+    )
+    return path
   }
 }
 
