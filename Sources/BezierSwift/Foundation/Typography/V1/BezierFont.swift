@@ -217,18 +217,18 @@ extension BezierFont {
   }
   
   func getNormalFont(size: CGFloat) -> Font {
-    return .system(size: size, weight: .regular)
+    return ChannelSans.font(size: size)
   }
   
   func getNormalUIFont(size: CGFloat) -> UIFont {
-    return .systemFont(ofSize: size, weight: .regular)
+    return ChannelSans.uiFont(ofSize: size)
   }
   
   func getBoldFont(size: CGFloat) -> Font {
-    return .system(size: size, weight: .bold)
+    return ChannelSans.font(size: size, weight: .bold)
   }
   
   func getBoldUIFont(size: CGFloat) -> UIFont {
-    return .systemFont(ofSize: size, weight: .bold)
+    return ChannelSans.uiFont(ofSize: size, weight: .bold)
   }
 }

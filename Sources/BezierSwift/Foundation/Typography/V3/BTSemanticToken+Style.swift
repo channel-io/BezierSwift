@@ -113,7 +113,7 @@ extension BTSemanticToken {
     case .codeMedium, .codeSmall:
       return .monospace
     default:
-      return .system
+      return .channelSans
     }
   }
 

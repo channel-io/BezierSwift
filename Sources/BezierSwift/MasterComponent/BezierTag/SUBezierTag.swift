@@ -35,7 +35,7 @@ public struct SUBezierTag: View, Themeable {
       if let label = self.label, !label.isEmpty {
         // TYPO-MIGRATION: Figma raw 값을 직접 사용. 추후 BTSemanticToken으로 통합 예정 (BezierTagSpec.swift 참고).
         Text(label)
-          .font(.system(size: self.size.fontSize, weight: self.size.fontWeight.swiftUIWeight))
+          .font(ChannelSans.font(size: self.size.fontSize, weight: self.size.fontWeight.channelSansWeight))
           .tracking(self.size.letterSpacing)
           .lineSpacing(self.size.lineSpacing)
           .padding(.vertical, self.size.verticalLineSpacing)

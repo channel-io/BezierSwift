@@ -7,6 +7,13 @@ public enum BTFontWeight: Equatable {
   case regular
   case bold
 
+  var channelSansWeight: ChannelSans.Weight {
+    switch self {
+    case .regular: return .regular
+    case .bold: return .bold
+    }
+  }
+
   var swiftUIWeight: Font.Weight {
     switch self {
     case .regular: return .regular

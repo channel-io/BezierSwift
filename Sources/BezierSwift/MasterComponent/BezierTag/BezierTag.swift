@@ -182,10 +182,7 @@ public final class BezierTag: UIView, BezierComponentable {
 
     if let label = self.label, !label.isEmpty {
       // TYPO-MIGRATION: Figma raw 값을 직접 사용. 추후 BTSemanticToken으로 통합 예정 (BezierTagSpec.swift 참고).
-      let font = UIFont.systemFont(
-        ofSize: self.size.fontSize,
-        weight: self.size.fontWeight.uiKitWeight
-      )
+      let font = ChannelSans.uiFont(ofSize: self.size.fontSize, weight: self.size.fontWeight.channelSansWeight)
       self.titleLabel.attributedText = label.applyBezierFont(
         height: self.size.lineHeight,
         font: font,
