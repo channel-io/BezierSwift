@@ -122,8 +122,8 @@ public enum BezierAvatarGroupSize: String, CaseIterable {
 struct BezierAvatarGroupCountFont: Equatable {
   let fontSize: CGFloat
 
-  var uiFont: UIFont { .systemFont(ofSize: self.fontSize, weight: .regular) }
-  var font: Font { .system(size: self.fontSize, weight: .regular) }
+  var uiFont: UIFont { ChannelSans.uiFont(ofSize: self.fontSize) }
+  var font: Font { ChannelSans.font(size: self.fontSize) }
 }
 
 // MARK: - Ellipsis Type

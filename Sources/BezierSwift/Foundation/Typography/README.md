@@ -1,5 +1,19 @@
 # Bezier Typography V3
 
+## 폰트 패밀리
+
+일반 텍스트의 V3·V1 토큰과 Bezier 컴포넌트는 패키지에 포함된 Channel Sans 0.1.2를 사용합니다. `codeMedium`·`codeSmall`은 고정폭 글자 정렬을 위해 시스템 monospace를 사용합니다.
+
+라이브러리를 사용하는 앱도 `import BezierSwift` 후 같은 폰트를 사용할 수 있습니다.
+
+```swift
+let titleFont = ChannelSans.uiFont(ofSize: 18, weight: .bold)
+let bodyFont = ChannelSans.font(size: 14)
+let fontFileURL = ChannelSans.fontURL
+```
+
+`ChannelSans.uiFont`와 `ChannelSans.font`는 필요한 시점에 폰트를 자동 등록합니다. 폰트 파일을 직접 다룰 때는 `ChannelSans.register()`로 등록 결과를 확인할 수 있습니다. 제공되는 굵기는 Thin부터 Black까지 9개 인스턴스입니다. 폰트 라이선스는 패키지 리소스의 `ChannelSans-OFL.txt`에 포함되어 있습니다.
+
 ## 개요
 
 Bezier Typography V3는 크로스 플랫폼 공통 명세 기반의 시멘틱 토큰 체계입니다. 22개 토큰이 6개 카테고리로 구성되며, UI 역할에 따라 토큰을 선택합니다.

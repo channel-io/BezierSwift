@@ -38,13 +38,13 @@ enum BTGlobalToken {
   }
 
   enum FontFamily: Equatable {
-    case system
+    case channelSans
     case monospace
 
     func font(size: CGFloat, weight: BTFontWeight) -> Font {
       switch self {
-      case .system:
-        return .system(size: size, weight: weight.swiftUIWeight)
+      case .channelSans:
+        return ChannelSans.font(size: size, weight: weight.channelSansWeight)
       case .monospace:
         return .system(size: size, weight: weight.swiftUIWeight, design: .monospaced)
       }
@@ -52,8 +52,8 @@ enum BTGlobalToken {
 
     func uiFont(size: CGFloat, weight: BTFontWeight) -> UIFont {
       switch self {
-      case .system:
-        return .systemFont(ofSize: size, weight: weight.uiKitWeight)
+      case .channelSans:
+        return ChannelSans.uiFont(ofSize: size, weight: weight.channelSansWeight)
       case .monospace:
         return .monospacedSystemFont(ofSize: size, weight: weight.uiKitWeight)
       }

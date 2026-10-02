@@ -79,7 +79,7 @@ public enum BezierBadgeSize: String, CaseIterable {
   /// SwiftUI `.lineSpacing` modifier에 전달할 값. UIFont의 line height와 spec의
   /// lineHeight 차이를 보정한다.
   public var lineSpacing: CGFloat {
-    let font = UIFont.systemFont(ofSize: self.fontSize, weight: self.fontWeight.uiKitWeight)
+    let font = ChannelSans.uiFont(ofSize: self.fontSize, weight: self.fontWeight.channelSansWeight)
     return max(0, self.lineHeight - font.lineHeight)
   }
 
