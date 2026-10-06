@@ -33,7 +33,7 @@ variant / state 축 없음 — 단일 COMPONENT (component set 아님).
 
 | 영역 | Token | Figma Variable | Raw |
 |---|---|---|---|
-| 배경 | `surface` | `color/surface` | `#FFFFFF` |
+| 배경 | `surfaceHigh` | `color/surface/high` | `#FFFFFF` |
 | 테두리 | `borderNeutral` | `color/border/neutral` | `#00000014` |
 
 ## 4. Typography
