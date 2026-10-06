@@ -52,6 +52,8 @@
 
 콘텐츠 영역은 `Card` 인스턴스(`4990:10631`)다.
 
+구현은 MOB-8134에 따라 Card 배경에 `surfaceHigh`를 사용한다. 아래 Figma 실측값인 `surface`와 달리 다크 모드에서 `grey850`으로 해석되며, 라이트 모드는 `white100`으로 동일하다.
+
 | Part | 값 | Figma Variable |
 |---|---|---|
 | Card 배경 | `surface` | `color/surface` |
