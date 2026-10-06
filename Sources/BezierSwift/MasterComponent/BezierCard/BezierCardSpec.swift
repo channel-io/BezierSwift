@@ -11,6 +11,6 @@ public enum BezierCardConstant {
   public static let verticalPadding: CGFloat = 2
   public static let horizontalPadding: CGFloat = 4
 
-  static let backgroundColor: BCSemanticToken = .surface
+  static let backgroundColor: BCSemanticToken = .surfaceHigh
   static let borderColor: BCSemanticToken = .borderNeutral
 }

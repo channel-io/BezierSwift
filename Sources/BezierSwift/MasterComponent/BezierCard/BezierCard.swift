@@ -5,7 +5,7 @@
 
 import UIKit
 
-/// 콘텐츠를 하나의 독립 묶음으로 감싸는 카드 컨테이너 (UIKit). `surface` 배경 + 1pt `borderNeutral` 테두리 + radius 16의 외형만 소유하고 내용은 `content` 슬롯에 위임한다. 너비는 소비자 제약으로 정하고 높이는 콘텐츠에 맞게 늘어난다. SwiftUI에서는 `SUBezierCard`를 사용한다.
+/// 콘텐츠를 하나의 독립 묶음으로 감싸는 카드 컨테이너 (UIKit). `surfaceHigh` 배경 + 1pt `borderNeutral` 테두리 + radius 16의 외형만 소유하고 내용은 `content` 슬롯에 위임한다. 너비는 소비자 제약으로 정하고 높이는 콘텐츠에 맞게 늘어난다. SwiftUI에서는 `SUBezierCard`를 사용한다.
 public final class BezierCard: UIView, BezierComponentable {
   // MARK: - BezierComponentable
 

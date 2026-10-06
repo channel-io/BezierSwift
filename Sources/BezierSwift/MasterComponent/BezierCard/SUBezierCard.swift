@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-/// 콘텐츠를 하나의 독립 묶음으로 감싸는 카드 컨테이너 (SwiftUI). `surface` 배경 + 1pt `borderNeutral` 테두리 + radius 16의 외형만 소유하고 내용은 `content`에 위임한다. 제안받은 너비를 채우고 높이는 콘텐츠에 맞게 늘어난다. UIKit에서는 `BezierCard`를 사용한다.
+/// 콘텐츠를 하나의 독립 묶음으로 감싸는 카드 컨테이너 (SwiftUI). `surfaceHigh` 배경 + 1pt `borderNeutral` 테두리 + radius 16의 외형만 소유하고 내용은 `content`에 위임한다. 제안받은 너비를 채우고 높이는 콘텐츠에 맞게 늘어난다. UIKit에서는 `BezierCard`를 사용한다.
 public struct SUBezierCard<Content: View>: View, Themeable {
   @Environment(\.colorScheme) public var colorScheme
 
