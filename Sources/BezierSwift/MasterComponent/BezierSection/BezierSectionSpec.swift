@@ -112,7 +112,7 @@ public enum BezierSectionConstant {
 
   static let labelTypography: BTSemanticToken = .textMedium(weight: .bold)
 
-  static let cardBackgroundColor: BCSemanticToken = .surface
+  static let cardBackgroundColor: BCSemanticToken = .surfaceHigh
   static let cardBorderColor: BCSemanticToken = .borderNeutral
   static let cardBorderWidth: CGFloat = 1
   static let cardCornerRadius: CGFloat = 16

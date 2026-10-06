@@ -20,11 +20,11 @@ struct BezierSectionAppearanceTests {
     #expect(appearance.contentInsets.trailing == 0)
   }
 
-  @Test("card는 surface 배경/테두리/라운드/divider를 가진다")
+  @Test("card는 surfaceHigh 배경/테두리/라운드/divider를 가진다")
   func cardHasChromeAndDivider() throws {
     let appearance = BezierSectionVariant.card.appearance
 
-    #expect(appearance.backgroundColor == .surface)
+    #expect(appearance.backgroundColor == .surfaceHigh)
     #expect(appearance.cornerRadius == 16)
     #expect(appearance.hasChrome == true)
     #expect(appearance.contentInsets.top == 2)

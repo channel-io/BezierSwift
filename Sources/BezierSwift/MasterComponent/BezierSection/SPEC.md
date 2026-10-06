@@ -54,7 +54,7 @@
 
 | Part | 값 | Figma Variable |
 |---|---|---|
-| Card 배경 | `surface` | `color/surface` |
+| Card 배경 | `surfaceHigh` | `color/surface/high` |
 | Card 테두리 | `1pt` solid `borderNeutral` | `color/border/neutral` |
 | Card radius | `16pt` | `radius/16` |
 | Card 패딩 | 상하 `2pt`, 좌우 `0` | — |
@@ -81,7 +81,7 @@
 | Variant | 영역 | Token | Figma Variable | Raw |
 |---|---|---|---|---|
 | `solid` | 콘텐츠 배경 | — *(transparent)* | — | — |
-| `card` | Card 배경 | `surface` | `color/surface` | `#FFFFFF` |
+| `card` | Card 배경 | `surfaceHigh` | `color/surface/high` | `#FFFFFF` |
 | `card` | Card 테두리 | `borderNeutral` | `color/border/neutral` | `#00000014` |
 | `card` | 행 간 divider | `borderNeutral` | `color/border/neutral` | `#00000014` |
 
