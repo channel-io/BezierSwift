@@ -52,11 +52,9 @@
 
 콘텐츠 영역은 `Card` 인스턴스(`4990:10631`)다.
 
-구현은 MOB-8134에 따라 Card 배경에 `surfaceHigh`를 사용한다. 아래 Figma 실측값인 `surface`와 달리 다크 모드에서 `grey850`으로 해석되며, 라이트 모드는 `white100`으로 동일하다.
-
 | Part | 값 | Figma Variable |
 |---|---|---|
-| Card 배경 | `surface` | `color/surface` |
+| Card 배경 | `surfaceHigh` | `color/surface/high` |
 | Card 테두리 | `1pt` solid `borderNeutral` | `color/border/neutral` |
 | Card radius | `16pt` | `radius/16` |
 | Card 패딩 | 상하 `2pt`, 좌우 `0` | — |
@@ -83,7 +81,7 @@
 | Variant | 영역 | Token | Figma Variable | Raw |
 |---|---|---|---|---|
 | `solid` | 콘텐츠 배경 | — *(transparent)* | — | — |
-| `card` | Card 배경 | `surface` | `color/surface` | `#FFFFFF` |
+| `card` | Card 배경 | `surfaceHigh` | `color/surface/high` | `#FFFFFF` |
 | `card` | Card 테두리 | `borderNeutral` | `color/border/neutral` | `#00000014` |
 | `card` | 행 간 divider | `borderNeutral` | `color/border/neutral` | `#00000014` |
 
