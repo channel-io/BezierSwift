@@ -24,7 +24,7 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
 
   /// 모달 상단에 표시하는 제목.
   ///
-  /// `<b>`(강조)·`<u>`(밑줄)·`<br />`(줄바꿈) 태그를 문자열에 그대로 섞어 쓸 수 있다. 다만 제목 typography는 이미 굵은 계열이라 `<b>`로 굵기가 더 달라지지는 않는다. 태그를 글자 그대로 보여주는 방법은 없다.
+  /// `<b>`(강조)·`<u>`(밑줄)·`<br>`·`<br/>`·`<br />`(줄바꿈) 태그를 문자열에 그대로 섞어 쓸 수 있다. 다만 제목 typography는 이미 굵은 계열이라 `<b>`로 굵기가 더 달라지지는 않는다. 태그를 글자 그대로 보여주는 방법은 없다.
   public var title: String {
     didSet { self.refreshAppearance() }
   }
@@ -32,7 +32,7 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
   // UIView.description(NSObject)과의 충돌을 피하기 위한 명명
   /// 제목 아래 표시하는 설명 텍스트. `nil`이면 숨겨진다.
   ///
-  /// `<b>`(강조)·`<u>`(밑줄)·`<br />`(줄바꿈) 태그를 문자열에 그대로 섞어 쓸 수 있다. 강조 구간에는 설명 typography의 bold 짝이 적용된다. 태그를 글자 그대로 보여주는 방법은 없다.
+  /// `<b>`(강조)·`<u>`(밑줄)·`<br>`·`<br/>`·`<br />`(줄바꿈) 태그를 문자열에 그대로 섞어 쓸 수 있다. 강조 구간에는 설명 typography의 bold 짝이 적용된다. 태그를 글자 그대로 보여주는 방법은 없다.
   public var descriptionText: String? {
     didSet { self.refreshAppearance() }
   }
@@ -57,7 +57,7 @@ public final class BezierConfirmModal: UIView, BezierComponentable {
 
   /// 제목·설명·버튼 구성으로 확인 모달을 생성한다. `type`으로 확인 버튼의 강조를, `buttonLayout`으로 버튼 배치를 정하며, `cancelAction`이 `nil`이면 확인 단일 버튼이 된다.
   ///
-  /// `title`·`description`에는 `<b>`(강조)·`<u>`(밑줄)·`<br />`(줄바꿈) 태그를 섞어 쓸 수 있다. 자세한 내용은 `title` 프로퍼티에 있다.
+  /// `title`·`description`에는 `<b>`(강조)·`<u>`(밑줄)·`<br>`·`<br/>`·`<br />`(줄바꿈) 태그를 섞어 쓸 수 있다. 자세한 내용은 `title` 프로퍼티에 있다.
   public init(
     title: String,
     description: String? = nil,
