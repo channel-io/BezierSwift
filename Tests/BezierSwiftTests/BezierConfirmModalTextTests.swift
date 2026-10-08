@@ -25,11 +25,12 @@ struct BezierConfirmModalTagStyleTests {
     #expect(rendered.attribute(.underlineStyle, at: 3, effectiveRange: nil) != nil)
   }
 
-  @Test("<br />는 줄바꿈이 된다")
-  func lineBreakTagBecomesNewline() {
-    let modal = makeModal(description: "첫 줄<br />둘째 줄")
+  @Test("제목과 설명의 줄바꿈 태그를 변환한다", arguments: ["<br>", "<br/>", "<br />", "<BR>", "<BR/>", "<bR   />", "<br\t/>"])
+  func lineBreakTagBecomesNewline(tag: String) {
+    let modal = makeModal(title: "제목\(tag)다음 줄", description: "설명\(tag)다음 줄")
 
-    #expect(attributedText(matching: "첫 줄\n둘째 줄", in: modal) != nil)
+    #expect(attributedText(matching: "제목\n다음 줄", in: modal) != nil)
+    #expect(attributedText(matching: "설명\n다음 줄", in: modal) != nil)
   }
 
   @Test("태그는 화면에 글자로 남지 않는다")
