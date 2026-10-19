@@ -135,6 +135,8 @@ large(nested)는 인덴트 없음 (centerContent 좌측 정렬).
 | `pressed` | 루트 배경 `fillNeutralLighter` |
 | `disabled` | 루트 전체 opacity `0.4`, 상호작용 차단 |
 
+위 표는 기본 `pressStyle = .inSection` 기준이다. 코드 전용 `pressStyle = .standalone`의 pressed 동작은 §8-10 참조.
+
 ## 6. 디자이너 가이드라인 (Figma component description 인용)
 
 ### Internal/SectionItem
@@ -160,7 +162,7 @@ large(nested)는 인덴트 없음 (centerContent 좌측 정렬).
 |---|---|
 | UIKit 구현 | `BezierSectionItem.swift` |
 | SwiftUI 구현 | `SUBezierSectionItem.swift` |
-| size / accessory / constant 정의 | `BezierSectionItemSpec.swift` |
+| size / accessory / pressStyle / constant 정의 | `BezierSectionItemSpec.swift` |
 | accessory 뷰 (UIKit, internal) | `BezierSectionItemAccessoryView.swift` |
 
 아이콘 자산: `BezierIcon.chevronSmallRight` / `BezierIcon.arrowRightUpSmall` / `BezierIcon.chevronUpdown` (모두 실재 확인).
@@ -178,6 +180,21 @@ Figma에 없는 구현 결정은 아래에 분리 표기한다. SSOT 값이 아�
 7. **press scale 적용**: Figma pressed state는 배경 fill 변화만 정의하나, BaseItem과 동일한 press scale 피드백(콘텐츠 0.97 축소 → release 오버슈트 복귀, reduce motion 시 비활성)을 협의로 적용한다 (2026-07-24). 구현은 public 유틸 `BezierPressFeedback`(`Util/BezierPressFeedback.swift`) — BaseItem도 같은 유틸을 쓴다 (MOB-6471).
 8. **state 코드 매핑**: pressed → UIKit `isHighlighted` / SwiftUI ButtonStyle `isPressed`, disabled → `isEnabled`/`.disabled()`. `onTap == nil`이면 비인터랙티브(pressed 없음).
 9. **leading 아이콘 색 heavy 고정**: §3의 실측 편차(기본 variant만 heavy, 8개 variant는 neutral)에 대해 구현은 `iconNeutralHeavy`를 전 state·size에 고정 적용한다 — 근거: defaultVariant가 heavy이고, §5의 state 정의(배경/opacity만 변경)와 team-design Section-spec.md §13의 토큰 기재가 heavy를 지지.
+10. **pressStyle (코드 전용 축)**: Figma에 대응 정의가 없는 코드 전용 옵션이다 (협의 적용 · 원 패턴은 ch-desk-ios `ListItemPressFeedback`, 2026-10-18). `BezierSectionItemPressStyle` — UIKit `pressStyle` 프로퍼티·init 파라미터, SwiftUI init 파라미터.
+    - `inSection`(기본): §5 표와 §8-7 그대로 — 모서리 `0`(DL-113) 루트 배경이 `fillNeutralLighter`로 즉시 전환, 콘텐츠만 `0.97` 축소. 기존 결정을 변경하지 않는다.
+    - `standalone`: `BezierSection` 카드 없이 리스트 행으로 단독 배치할 때 쓴다 (Figma 가이드 "Do not place standalone"의 예외로, 앱 리스트 행 재사용을 위한 협의 옵션).
+
+    | 항목 | 값 |
+    |---|---|
+    | 하이라이트 | 아이템 bounds 전체, cornerRadius `10` (cornerCurve 기본값), 콘텐츠 뒤 |
+    | 하이라이트 색 | 쉴 때 `fillNeutralTransparent` / pressed `fillNeutralLightest` (루트 배경은 항상 clear) |
+    | press-in | `0.10s` cubic-bezier `(0.42, 0, 0.58, 1)` — 하이라이트 색과 **아이템 전체(하이라이트 포함)** `0.97` 축소를 함께 |
+    | release | 하이라이트 `0.10s` easeInOut 페이드 + scale keyframe `[0.97, 1.004, 1.0]` / keyTimes `[0, 0.55, 1.0]` / `0.40s` easeInEaseOut |
+    | Reduce Motion | 축소·튕김 생략, 하이라이트 페이드만 |
+    | 켜지는 시점 (UIKit) | 손가락이 닿는 즉시 — 스크롤 뷰 `delaysContentTouches`와 무관 (제스처 인식기 기반, `isHighlighted` 미사용) |
+    | 스크롤 (UIKit) | 행 위에서 시작한 드래그도 스크롤로 넘어간다 — hit view가 `UIControl`이 아닌 내부 터치 면이라 `touchesShouldCancel(in:)`이 `true`. 스크롤로 터치가 취소되면 release |
+    | 초기화 | `onTap == nil`, `isEnabled == false`, `pressStyle` 변경, window에서 빠질 때 하이라이트·transform 초기화 |
+    | SwiftUI | 배경 RoundedRectangle(반경 `10`), 색 전환 `.easeInOut(0.10)`, `bezierPressScale`을 배경 뒤에 적용해 전체 축소. pressed 시점은 SwiftUI `Button` 기본 동작을 따른다 |
 
 ## 9. Variant 매트릭스
 

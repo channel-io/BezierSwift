@@ -146,6 +146,75 @@ struct BezierSectionItemStructureTests {
     #expect(abs(item.alpha - 0.4) < 0.001)
   }
 
+  @Test("기본 pressStyle은 inSection이고 탭 위치의 hit view는 아이템 자신이다")
+  func inSectionHitTestReturnsSelf() {
+    let (window, item) = Self.layoutItem(BezierSectionItem(content: "Label", onTap: {}))
+    #expect(item.pressStyle == .inSection)
+
+    let hitView = window.hitTest(CGPoint(x: 20, y: 20), with: nil)
+    #expect(hitView === item)
+  }
+
+  @Test("inSection은 isHighlighted일 때 루트 배경이 pressed 색이 된다")
+  func inSectionHighlightUsesRootBackground() {
+    let item = BezierSectionItem(content: "Label", onTap: {})
+    item.isHighlighted = true
+    #expect(item.backgroundColor != .clear)
+    item.isHighlighted = false
+    #expect(item.backgroundColor == .clear)
+  }
+
+  @Test("standalone은 hit view가 UIControl이 아니라 스크롤이 터치를 취소할 수 있다")
+  func standaloneHitTestReturnsPlainView() {
+    let (window, item) = Self.layoutItem(
+      BezierSectionItem(content: "Label", pressStyle: .standalone, onTap: {})
+    )
+
+    let hitView = window.hitTest(CGPoint(x: 20, y: 20), with: nil)
+    #expect(hitView !== item)
+    #expect(hitView?.isDescendant(of: item) == true)
+    #expect((hitView is UIControl) == false)
+    #expect(UIScrollView().touchesShouldCancel(in: hitView!))
+  }
+
+  @Test("standalone은 반경 10 하이라이트를 쓰고 루트 배경을 바꾸지 않는다")
+  func standaloneHighlightView() {
+    let item = BezierSectionItem(content: "Label", onTap: {})
+    item.pressStyle = .standalone
+    item.isHighlighted = true
+
+    #expect(item.backgroundColor == .clear)
+    let highlight = item.subviews.first { !$0.isHidden && $0.layer.cornerRadius == 10 }
+    #expect(highlight != nil)
+    #expect(highlight?.isUserInteractionEnabled == false)
+  }
+
+  @Test("inSection으로 되돌리면 standalone 서브뷰가 숨겨지고 hit view가 다시 자신이 된다")
+  func revertToInSection() {
+    let (window, item) = Self.layoutItem(
+      BezierSectionItem(content: "Label", pressStyle: .standalone, onTap: {})
+    )
+    item.pressStyle = .inSection
+
+    #expect(item.subviews.allSatisfy { $0.isHidden || $0 is UIStackView })
+    #expect(item.transform == .identity)
+    #expect(window.hitTest(CGPoint(x: 20, y: 20), with: nil) === item)
+  }
+
+  private static func layoutItem(_ item: BezierSectionItem) -> (UIWindow, BezierSectionItem) {
+    let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 100))
+    window.isHidden = false
+    window.addSubview(item)
+    NSLayoutConstraint.activate([
+      item.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+      item.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+      item.topAnchor.constraint(equalTo: window.topAnchor),
+    ])
+    window.setNeedsLayout()
+    window.layoutIfNeeded()
+    return (window, item)
+  }
+
   private static func allLabels(in view: UIView) -> [UILabel] {
     var result: [UILabel] = []
     for subview in view.subviews {
