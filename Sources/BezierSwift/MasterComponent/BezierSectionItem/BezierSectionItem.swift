@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import UIKit.UIGestureRecognizerSubclass
 
 /// `BezierSection` 안에 넣는 리스트 행 아이템 (UIKit). leading(아이콘/아바타/커스텀) · 텍스트 · description · centerSlot · 우측 accessory로 구성되며 탭·pressed·disabled 상호작용을 지원한다. 섹션 밖 독립 리스트 행에는 `BezierBaseItem`을 쓴다. SwiftUI에서는 `SUBezierSectionItem`을 사용한다.
 public final class BezierSectionItem: UIControl, BezierComponentable {
@@ -71,6 +72,11 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
   /// 행 탭 핸들러. `nil`이면 비인터랙티브(pressed 없음)가 된다.
   public var onTap: (() -> Void)? {
     didSet { self.refreshInteraction() }
+  }
+
+  /// 눌림 스타일 (기본값 `.inSection`). 섹션 카드 없이 리스트 행으로 단독 배치할 때 `.standalone`을 지정한다.
+  public var pressStyle: BezierSectionItemPressStyle = .inSection {
+    didSet { if oldValue != self.pressStyle { self.refreshPressStyle() } }
   }
 
   // MARK: - State
@@ -168,6 +174,28 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   private let accessoryView = BezierSectionItemAccessoryView()
 
+  private let standaloneHighlightView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isUserInteractionEnabled = false
+    view.layer.cornerRadius = BezierSectionItemConstant.standaloneHighlightCornerRadius
+    view.isHidden = true
+    return view
+  }()
+
+  private let standaloneTouchSurfaceView: BezierSectionItemTouchSurfaceView = {
+    let view = BezierSectionItemTouchSurfaceView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isHidden = true
+    return view
+  }()
+
+  private let standalonePressGestureRecognizer = BezierSectionItemPressGestureRecognizer()
+  private let standaloneTapGestureRecognizer = UITapGestureRecognizer()
+  private let standaloneGestureDelegate = BezierSectionItemStandaloneGestureDelegate()
+  private var standalonePressAnimator: UIViewPropertyAnimator?
+  private var isStandalonePressed = false
+
   // MARK: - Constraints
 
   private var leadingWidthConstraint: NSLayoutConstraint?
@@ -176,16 +204,18 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   // MARK: - Init
 
-  /// size·본문 텍스트·description·탭 핸들러로 행을 만든다. leading·accessory 등 나머지 구성은 생성 후 프로퍼티로 지정한다.
+  /// size·본문 텍스트·description·눌림 스타일·탭 핸들러로 행을 만든다. leading·accessory 등 나머지 구성은 생성 후 프로퍼티로 지정한다.
   public init(
     size: BezierSectionItemSize = .medium,
     content: String,
     description: String? = nil,
+    pressStyle: BezierSectionItemPressStyle = .inSection,
     onTap: (() -> Void)? = nil
   ) {
     self.size = size
     self.content = content
     self.itemDescription = description
+    self.pressStyle = pressStyle
     self.onTap = onTap
     super.init(frame: .zero)
     self.setUp()
@@ -211,6 +241,8 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     self.contentColumnStackView.addArrangedSubview(self.denestDescriptionWrapper)
     self.rootStackView.addArrangedSubview(self.contentColumnStackView)
     self.rootStackView.addArrangedSubview(self.accessoryView)
+    self.addSubview(self.standaloneHighlightView)
+    self.addSubview(self.standaloneTouchSurfaceView)
     self.addSubview(self.rootStackView)
 
     let expandingPriority = UILayoutPriority(1)
@@ -231,15 +263,34 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
       self.rootStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
       minHeightConstraint,
     ])
+    [self.standaloneHighlightView, self.standaloneTouchSurfaceView].forEach { view in
+      NSLayoutConstraint.activate([
+        view.topAnchor.constraint(equalTo: self.topAnchor),
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      ])
+    }
 
     self.addTarget(self, action: #selector(self.handleTap), for: .touchUpInside)
+    self.setUpStandaloneGestures()
 
     self.accessoryView.apply(self.accessory)
     self.refreshSize()
     self.refreshLeading()
     self.refreshInteraction()
     self.refreshEnabled()
-    self.refreshAppearance()
+    self.refreshPressStyle()
+  }
+
+  private func setUpStandaloneGestures() {
+    self.standalonePressGestureRecognizer.addTarget(self, action: #selector(self.handleStandalonePress(_:)))
+    self.standaloneTapGestureRecognizer.addTarget(self, action: #selector(self.handleStandaloneTap))
+    self.standaloneGestureDelegate.boundary = self
+    [self.standalonePressGestureRecognizer, self.standaloneTapGestureRecognizer].forEach { recognizer in
+      recognizer.delegate = self.standaloneGestureDelegate
+      self.standaloneTouchSurfaceView.addGestureRecognizer(recognizer)
+    }
   }
 
   private func setUpLeading() {
@@ -320,6 +371,13 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
     self.refreshAppearance()
+  }
+
+  public override func didMoveToWindow() {
+    super.didMoveToWindow()
+    if self.window == nil, self.pressStyle == .standalone {
+      self.resetStandalonePress()
+    }
   }
 
   // MARK: - Refresh
@@ -413,10 +471,25 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
     self.isUserInteractionEnabled = self.onTap != nil
     if self.onTap == nil {
       BezierPressFeedback.reset(self.rootStackView)
+      if self.pressStyle == .standalone {
+        self.resetStandalonePress()
+      }
     }
   }
 
+  private func refreshPressStyle() {
+    let isStandalone = self.pressStyle == .standalone
+    BezierPressFeedback.reset(self.rootStackView)
+    self.resetStandalonePress()
+    self.standaloneHighlightView.isHidden = !isStandalone
+    self.standaloneTouchSurfaceView.isHidden = !isStandalone
+    self.standalonePressGestureRecognizer.isEnabled = isStandalone
+    self.standaloneTapGestureRecognizer.isEnabled = isStandalone
+    self.refreshAppearance()
+  }
+
   private func refreshPressScale() {
+    guard self.pressStyle == .inSection else { return }
     guard self.onTap != nil else {
       BezierPressFeedback.reset(self.rootStackView)
       return
@@ -426,12 +499,16 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   private func refreshEnabled() {
     self.alpha = self.isEnabled ? 1 : BezierSectionItemConstant.disabledOpacity
+    if !self.isEnabled, self.pressStyle == .standalone {
+      self.resetStandalonePress()
+    }
   }
 
   private func refreshAppearance() {
-    self.backgroundColor = self.isHighlighted
+    self.backgroundColor = (self.pressStyle == .inSection && self.isHighlighted)
       ? BezierSectionItemConstant.pressedBackgroundColor.palette(self)
       : .clear
+    self.standaloneHighlightView.backgroundColor = self.standaloneHighlightColor(isPressed: self.isStandalonePressed)
 
     if case .icon = self.leading {
       let iconColor = self.isDestructive
@@ -488,5 +565,170 @@ public final class BezierSectionItem: UIControl, BezierComponentable {
 
   @objc private func handleTap() {
     self.onTap?()
+  }
+
+  @objc private func handleStandaloneTap() {
+    guard self.canStandalonePress else { return }
+    self.onTap?()
+  }
+
+  @objc private func handleStandalonePress(_ recognizer: UIGestureRecognizer) {
+    switch recognizer.state {
+    case .began:
+      guard self.canStandalonePress else { return }
+      self.standalonePressIn()
+    case .ended, .cancelled, .failed:
+      guard self.isStandalonePressed else { return }
+      self.standalonePressRelease()
+    default:
+      break
+    }
+  }
+
+  // MARK: - Standalone Press
+
+  private var canStandalonePress: Bool {
+    self.pressStyle == .standalone && self.onTap != nil && self.isEnabled
+  }
+
+  private var isStandaloneScaleEnabled: Bool {
+    !UIAccessibility.isReduceMotionEnabled
+  }
+
+  private func standaloneHighlightColor(isPressed: Bool) -> UIColor {
+    let token = isPressed
+      ? BezierSectionItemConstant.standalonePressedBackgroundColor
+      : BezierSectionItemConstant.standaloneRestBackgroundColor
+    return token.palette(self)
+  }
+
+  private func standalonePressIn() {
+    self.isStandalonePressed = true
+    self.standalonePressAnimator?.stopAnimation(true)
+    self.layer.removeAnimation(forKey: Self.standaloneReleaseAnimationKey)
+    self.transform = .identity
+
+    let pressedColor = self.standaloneHighlightColor(isPressed: true)
+    let animator = UIViewPropertyAnimator(
+      duration: BezierPressFeedback.pressInDuration,
+      controlPoint1: BezierSectionItemConstant.standalonePressInControlPoint1,
+      controlPoint2: BezierSectionItemConstant.standalonePressInControlPoint2
+    ) { [weak self] in
+      guard let self else { return }
+      self.standaloneHighlightView.backgroundColor = pressedColor
+      if self.isStandaloneScaleEnabled {
+        self.transform = CGAffineTransform(
+          scaleX: BezierPressFeedback.pressScale,
+          y: BezierPressFeedback.pressScale
+        )
+      }
+    }
+    self.standalonePressAnimator = animator
+    animator.startAnimation()
+  }
+
+  private func standalonePressRelease() {
+    self.isStandalonePressed = false
+    self.standalonePressAnimator?.stopAnimation(true)
+    self.standalonePressAnimator = nil
+
+    let restColor = self.standaloneHighlightColor(isPressed: false)
+    UIViewPropertyAnimator(
+      duration: BezierSectionItemConstant.standaloneHighlightFadeDuration,
+      curve: .easeInOut
+    ) { [weak self] in
+      self?.standaloneHighlightView.backgroundColor = restColor
+    }
+    .startAnimation()
+
+    self.transform = .identity
+    guard self.isStandaloneScaleEnabled else { return }
+
+    let keyframe = CAKeyframeAnimation(keyPath: "transform.scale")
+    keyframe.values = BezierPressFeedback.releaseScaleValues
+    keyframe.keyTimes = BezierPressFeedback.releaseScaleKeyTimes
+    keyframe.duration = BezierPressFeedback.releaseDuration
+    keyframe.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+    keyframe.isRemovedOnCompletion = true
+    self.layer.add(keyframe, forKey: Self.standaloneReleaseAnimationKey)
+  }
+
+  private func resetStandalonePress() {
+    self.isStandalonePressed = false
+    self.standalonePressAnimator?.stopAnimation(true)
+    self.standalonePressAnimator = nil
+    self.layer.removeAnimation(forKey: Self.standaloneReleaseAnimationKey)
+    self.transform = .identity
+    self.standaloneHighlightView.layer.removeAllAnimations()
+    self.standaloneHighlightView.backgroundColor = self.standaloneHighlightColor(isPressed: false)
+  }
+
+  private static let standaloneReleaseAnimationKey = "bezierSectionItemStandaloneRelease"
+}
+
+// MARK: - Standalone Touch
+
+private final class BezierSectionItemStandaloneGestureDelegate: NSObject, UIGestureRecognizerDelegate {
+  weak var boundary: UIView?
+
+  func gestureRecognizer(
+    _ gestureRecognizer: UIGestureRecognizer,
+    shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+  ) -> Bool {
+    true
+  }
+
+  func gestureRecognizer(
+    _ gestureRecognizer: UIGestureRecognizer,
+    shouldReceive touch: UITouch
+  ) -> Bool {
+    var view = touch.view
+    while let current = view, current !== self.boundary {
+      if current is UIControl { return false }
+      view = current.superview
+    }
+    return true
+  }
+}
+
+private final class BezierSectionItemTouchSurfaceView: UIView {
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {}
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {}
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {}
+}
+
+private final class BezierSectionItemPressGestureRecognizer: UIGestureRecognizer {
+  override init(target: Any?, action: Selector?) {
+    super.init(target: target, action: action)
+    self.cancelsTouchesInView = false
+    self.delaysTouchesBegan = false
+    self.delaysTouchesEnded = false
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+    super.touchesBegan(touches, with: event)
+    guard self.state == .possible else {
+      touches.forEach { self.ignore($0, for: event) }
+      return
+    }
+    self.state = .began
+  }
+
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+    super.touchesMoved(touches, with: event)
+    if self.state == .began || self.state == .changed {
+      self.state = .changed
+    }
+  }
+
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+    super.touchesEnded(touches, with: event)
+    self.state = .ended
+  }
+
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+    super.touchesCancelled(touches, with: event)
+    self.state = .cancelled
   }
 }
