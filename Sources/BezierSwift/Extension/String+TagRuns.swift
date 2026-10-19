@@ -18,7 +18,7 @@ private extension NSAttributedString.Key {
 }
 
 extension String {
-  /// `<b>`·`<u>`·`<br />` 태그를 파싱해 서식 조각으로 쪼갠다.
+  /// `<b>`·`<u>`·`<br>`·`<br/>`·`<br />` 태그를 파싱해 서식 조각으로 쪼갠다.
   ///
   /// SwiftUI `Text`는 `NSAttributedString`을 그대로 받으면 `paragraphStyle`을 무시해 UIKit과 행높이가 어긋난다. 그래서 서식을 조각 단위로 옮겨 `Text`를 잇는데, 파싱만은 UIKit 경로와 같은 파서를 타게 해 두 구현의 태그 해석이 갈라지지 않게 한다.
   func bezierTagRuns() -> [BezierTagRun] {

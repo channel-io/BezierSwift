@@ -17,10 +17,11 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
   private let customCenterContent: AnyView?
   private let accessory: BezierSectionItemAccessory<AnyView>?
   private let isDestructive: Bool
+  private let pressStyle: BezierSectionItemPressStyle
   private let onTap: (() -> Void)?
   private let centerSlot: CenterSlot
 
-  /// size·본문·description·leading·accessory·탭 핸들러와 `centerSlot` 빌더로 행을 만든다.
+  /// size·본문·description·leading·accessory·눌림 스타일·탭 핸들러와 `centerSlot` 빌더로 행을 만든다.
   public init(
     size: BezierSectionItemSize = .medium,
     content: String,
@@ -29,6 +30,7 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
     customCenterContent: AnyView? = nil,
     accessory: BezierSectionItemAccessory<AnyView>? = nil,
     isDestructive: Bool = false,
+    pressStyle: BezierSectionItemPressStyle = .inSection,
     onTap: (() -> Void)? = nil,
     @ViewBuilder centerSlot: () -> CenterSlot
   ) {
@@ -39,6 +41,7 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
     self.customCenterContent = customCenterContent
     self.accessory = accessory
     self.isDestructive = isDestructive
+    self.pressStyle = pressStyle
     self.onTap = onTap
     self.centerSlot = centerSlot()
   }
@@ -47,9 +50,11 @@ public struct SUBezierSectionItem<CenterSlot: View>: View, Themeable {
     Group {
       if let onTap = self.onTap {
         Button(action: onTap) { self.row }
-          .buttonStyle(SUBezierSectionItemStyle(size: self.size))
+          .buttonStyle(SUBezierSectionItemStyle(size: self.size, pressStyle: self.pressStyle))
       } else {
-        self.row.modifier(SUBezierSectionItemContainer(size: self.size, isPressed: false))
+        self.row.modifier(
+          SUBezierSectionItemContainer(size: self.size, pressStyle: self.pressStyle, isPressed: false)
+        )
       }
     }
     .opacity(self.isEnabled ? 1 : BezierSectionItemConstant.disabledOpacity)
@@ -179,6 +184,7 @@ extension SUBezierSectionItem where CenterSlot == EmptyView {
     customCenterContent: AnyView? = nil,
     accessory: BezierSectionItemAccessory<AnyView>? = nil,
     isDestructive: Bool = false,
+    pressStyle: BezierSectionItemPressStyle = .inSection,
     onTap: (() -> Void)? = nil
   ) {
     self.init(
@@ -189,6 +195,7 @@ extension SUBezierSectionItem where CenterSlot == EmptyView {
       customCenterContent: customCenterContent,
       accessory: accessory,
       isDestructive: isDestructive,
+      pressStyle: pressStyle,
       onTap: onTap,
       centerSlot: { EmptyView() }
     )
@@ -201,21 +208,48 @@ private struct SUBezierSectionItemContainer: ViewModifier, Themeable {
   @Environment(\.colorScheme) var colorScheme
 
   let size: BezierSectionItemSize
+  let pressStyle: BezierSectionItemPressStyle
   let isPressed: Bool
 
+  @ViewBuilder
   func body(content: Content) -> some View {
-    content
-      .bezierPressScale(isPressed: self.isPressed)
-      .padding(.horizontal, BezierSectionItemConstant.horizontalPadding)
-      .padding(.vertical, self.size.verticalPadding)
-      .frame(minHeight: self.size.minHeight)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .background(
-        self.isPressed
-          ? self.palette(BezierSectionItemConstant.pressedBackgroundColor)
-          : Color.clear
-      )
-      .contentShape(Rectangle())
+    switch self.pressStyle {
+    case .inSection:
+      content
+        .bezierPressScale(isPressed: self.isPressed)
+        .padding(.horizontal, BezierSectionItemConstant.horizontalPadding)
+        .padding(.vertical, self.size.verticalPadding)
+        .frame(minHeight: self.size.minHeight)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+          self.isPressed
+            ? self.palette(BezierSectionItemConstant.pressedBackgroundColor)
+            : Color.clear
+        )
+        .contentShape(Rectangle())
+    case .standalone:
+      content
+        .padding(.horizontal, BezierSectionItemConstant.horizontalPadding)
+        .padding(.vertical, self.size.verticalPadding)
+        .frame(minHeight: self.size.minHeight)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+          RoundedRectangle(cornerRadius: BezierSectionItemConstant.standaloneHighlightCornerRadius)
+            .fill(
+              self.palette(
+                self.isPressed
+                  ? BezierSectionItemConstant.standalonePressedBackgroundColor
+                  : BezierSectionItemConstant.standaloneRestBackgroundColor
+              )
+            )
+            .animation(
+              .easeInOut(duration: BezierSectionItemConstant.standaloneHighlightFadeDuration),
+              value: self.isPressed
+            )
+        )
+        .contentShape(Rectangle())
+        .bezierPressScale(isPressed: self.isPressed)
+    }
   }
 }
 
@@ -223,10 +257,17 @@ private struct SUBezierSectionItemContainer: ViewModifier, Themeable {
 
 private struct SUBezierSectionItemStyle: ButtonStyle {
   let size: BezierSectionItemSize
+  let pressStyle: BezierSectionItemPressStyle
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .modifier(SUBezierSectionItemContainer(size: self.size, isPressed: configuration.isPressed))
+      .modifier(
+        SUBezierSectionItemContainer(
+          size: self.size,
+          pressStyle: self.pressStyle,
+          isPressed: configuration.isPressed
+        )
+      )
   }
 }
 

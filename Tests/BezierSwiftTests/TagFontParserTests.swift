@@ -95,6 +95,16 @@ struct NSAttributedStringTagParserTests {
 
 @Suite("String Tag Parser (Legacy)")
 struct StringTagParserTests {
+  @Test("줄바꿈 표기를 변환하고 뒤따르는 강조 서식을 유지한다", arguments: ["<br>", "<br/>", "<br />", "<BR>", "<BR/>", "<bR   />", "<br\t/>"])
+  func lineBreakTagsPreserveBold(tag: String) {
+    let boldFont = UIFont.boldSystemFont(ofSize: 14)
+    let result = "앞\(tag)<b>강조</b>".attributes(with: .bold, attributes: [.font: boldFont])
+
+    #expect(result.string == "앞\n강조")
+    #expect(result.attribute(.font, at: 2, effectiveRange: nil) as? UIFont == boldFont)
+    #expect("앞\(tag)뒤".attributes(attributes: [:]).string == "앞\n뒤")
+  }
+
   @Test("단일 bold 태그 파싱")
   func singleBoldTag() {
     let input = "Hello <b>World</b>"
@@ -145,6 +155,28 @@ struct StringTagParserTests {
 
 @Suite("Integrated Tag Font Path")
 struct IntegratedTagFontPathTests {
+  @Test("여러 줄바꿈 표기를 섞어도 강조와 밑줄의 위치가 유지된다")
+  func mixedLineBreakTagsPreserveStyles() {
+    let boldFont = UIFont.boldSystemFont(ofSize: 14)
+    let result = "🙂<br><b>강조</b><br/><u>밑줄</u><br />끝".attributes(
+      [:],
+      tagAttributes: [
+        .bold: [.font: boldFont],
+        .underline: [.underlineStyle: NSUnderlineStyle.single.rawValue],
+      ]
+    )
+
+    #expect(result.string == "🙂\n강조\n밑줄\n끝")
+    #expect(result.attribute(.font, at: 3, effectiveRange: nil) as? UIFont == boldFont)
+    #expect(result.attribute(.underlineStyle, at: 6, effectiveRange: nil) as? Int == NSUnderlineStyle.single.rawValue)
+  }
+
+  @Test("지원하지 않는 태그와 이스케이프 문자열은 그대로 유지한다")
+  func unsupportedTagsRemainLiteral() {
+    let input = "<broad><br class='line'></br>&lt;br&gt;"
+    #expect(input.attributes([:]).string == input)
+  }
+
   @Test("다중 bold 태그 — V1/V3 공통 attributes(_:tagAttributes:) 경로")
   func multiTagThroughIntegratedPath() {
     let input = "<b>Hello</b> world <b>foo</b>"

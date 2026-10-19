@@ -86,10 +86,18 @@ extension String {
     )
   }
   
+  private func replacingLineBreakTags() -> String {
+    self.replacingOccurrences(
+      of: #"<br\s*/?>"#,
+      with: "\n",
+      options: [.regularExpression, .caseInsensitive]
+    )
+  }
+
   func attributes(
     _ attributes: [NSAttributedString.Key: Any],
     tagAttributes: [StringTagType: [NSAttributedString.Key: Any]]? = nil) -> NSAttributedString {
-      let keyString = self.replace("<br />", withString: "\n")
+      let keyString = self.replacingLineBreakTags()
       var attributedString = NSMutableAttributedString(string: keyString)
       
       attributedString.addAttributes(attributes, range: NSRange(location: 0, length: keyString.utf16.count))
@@ -107,7 +115,7 @@ extension String {
     with tag: StringTagType? = nil,
     attributes: [NSAttributedString.Key: Any]
   ) -> NSMutableAttributedString {
-    let keyString = self.replace("<br />", withString: "\n")
+    let keyString = self.replacingLineBreakTags()
     let attributedString = NSMutableAttributedString(string: keyString)
     
     if tag == nil {

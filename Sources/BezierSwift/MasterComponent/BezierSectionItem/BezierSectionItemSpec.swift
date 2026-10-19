@@ -99,6 +99,16 @@ public enum BezierSectionItemAccessory<Content> {
   case custom(Content)
 }
 
+// MARK: - Press Style
+
+/// 섹션 아이템의 눌림 스타일. Figma에 대응 property가 없는 코드 전용 축이다.
+public enum BezierSectionItemPressStyle: CaseIterable {
+  /// `BezierSection` 카드 안에 넣을 때 쓰는 기본값. 모서리 0 사각형 배경이 `fillNeutralLighter`로 즉시 바뀌고 콘텐츠만 `0.97`로 축소된다.
+  case inSection
+  /// 섹션 카드 없이 리스트 행으로 단독 배치할 때 쓴다. 반경 10 하이라이트가 `fillNeutralLightest`로 0.1초 페이드되고, 하이라이트를 포함한 행 전체가 `0.97`로 축소된다. UIKit에서는 손가락이 닿는 즉시 켜지고, 행 위에서 시작한 드래그도 스크롤로 넘어간다.
+  case standalone
+}
+
 // MARK: - Constant
 
 public enum BezierSectionItemConstant {
@@ -126,6 +136,11 @@ public enum BezierSectionItemConstant {
 
   static let disabledOpacity: CGFloat = BOGlobalToken.disabled
 
+  static let standaloneHighlightCornerRadius: CGFloat = 10
+  static let standaloneHighlightFadeDuration: Double = 0.10
+  static let standalonePressInControlPoint1 = CGPoint(x: 0.42, y: 0)
+  static let standalonePressInControlPoint2 = CGPoint(x: 0.58, y: 1)
+
   static let contentTypography: BTSemanticToken = .textXLarge(weight: .regular)
   static let descriptionTypography: BTSemanticToken = .captionMedium(weight: .regular)
   static let accessoryTextTypography: BTSemanticToken = .textLarge(weight: .regular)
@@ -134,6 +149,8 @@ public enum BezierSectionItemConstant {
   static let descriptionColor: BCSemanticToken = .textNeutralLighter
   static let leadingIconColor: BCSemanticToken = .iconNeutralHeavy
   static let pressedBackgroundColor: BCSemanticToken = .fillNeutralLighter
+  static let standaloneRestBackgroundColor: BCSemanticToken = .fillNeutralTransparent
+  static let standalonePressedBackgroundColor: BCSemanticToken = .fillNeutralLightest
   static let destructiveContentColor: BCSemanticToken = .textAccentRed
   static let destructiveIconColor: BCSemanticToken = .iconAccentRed
 

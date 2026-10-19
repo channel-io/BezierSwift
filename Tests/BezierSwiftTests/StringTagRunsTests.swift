@@ -45,9 +45,9 @@ struct StringTagRunsTests {
     ])
   }
 
-  @Test("<br />는 조각을 나누지 않고 개행 문자가 된다")
-  func lineBreakStaysInsideRun() {
-    #expect("첫 줄<br />둘째 줄".bezierTagRuns() == [
+  @Test("줄바꿈 태그는 조각을 나누지 않고 개행 문자가 된다", arguments: ["<br>", "<br/>", "<br />", "<BR>", "<BR/>", "<bR   />", "<br\t/>"])
+  func lineBreakStaysInsideRun(tag: String) {
+    #expect("첫 줄\(tag)둘째 줄".bezierTagRuns() == [
       BezierTagRun(text: "첫 줄\n둘째 줄", isBold: false, isUnderlined: false),
     ])
   }

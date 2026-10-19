@@ -22,6 +22,7 @@ struct SectionItemCatalog: View {
   }
 
   @State private var size: BezierSectionItemSize = .medium
+  @State private var pressStyle: BezierSectionItemPressStyle = .inSection
   @State private var leadingKind: LeadingKind = .icon
   @State private var accessoryKind: AccessoryKind = .navigation
   @State private var hasDescription = false
@@ -42,6 +43,13 @@ struct SectionItemCatalog: View {
       Picker("size", selection: self.$size) {
         ForEach(BezierSectionItemSize.allCases, id: \.self) { size in
           Text(self.sizeLabel(size)).tag(size)
+        }
+      }
+      .pickerStyle(.segmented)
+
+      Picker("pressStyle", selection: self.$pressStyle) {
+        ForEach(BezierSectionItemPressStyle.allCases, id: \.self) { style in
+          Text(self.pressStyleLabel(style)).tag(style)
         }
       }
       .pickerStyle(.segmented)
@@ -85,6 +93,7 @@ struct SectionItemCatalog: View {
         leading: self.swiftUILeading,
         accessory: self.swiftUIAccessory,
         isDestructive: self.isDestructive,
+        pressStyle: self.pressStyle,
         onTap: {}
       )
       .disabled(!self.isEnabled)
@@ -92,6 +101,7 @@ struct SectionItemCatalog: View {
       SUBezierSectionItem(
         size: self.size,
         content: "centerSlot 데모",
+        pressStyle: self.pressStyle,
         onTap: {},
         centerSlot: {
           Circle().fill(Color.red).frame(width: 6, height: 6)
@@ -108,6 +118,7 @@ struct SectionItemCatalog: View {
             Text("BETA").font(.caption2).foregroundStyle(.secondary)
           }
         ),
+        pressStyle: self.pressStyle,
         onTap: {}
       )
 
@@ -172,6 +183,7 @@ struct SectionItemCatalog: View {
   private var uiKitPreview: some View {
     SectionItemUIKitRepresentable(
       size: self.size,
+      pressStyle: self.pressStyle,
       leadingKind: self.leadingKind.rawValue,
       accessoryKind: self.accessoryKind.rawValue,
       hasDescription: self.hasDescription,
@@ -179,6 +191,13 @@ struct SectionItemCatalog: View {
       isEnabled: self.isEnabled,
       isToggleOn: self.isToggleOn
     )
+  }
+
+  private func pressStyleLabel(_ style: BezierSectionItemPressStyle) -> String {
+    switch style {
+    case .inSection: return "inSection"
+    case .standalone: return "standalone"
+    }
   }
 
   private func sizeLabel(_ size: BezierSectionItemSize) -> String {
@@ -192,6 +211,7 @@ struct SectionItemCatalog: View {
 
 private struct SectionItemUIKitRepresentable: UIViewRepresentable {
   let size: BezierSectionItemSize
+  let pressStyle: BezierSectionItemPressStyle
   let leadingKind: String
   let accessoryKind: String
   let hasDescription: Bool
@@ -223,6 +243,7 @@ private struct SectionItemUIKitRepresentable: UIViewRepresentable {
     guard let stackView = wrapper.subviews.first as? UIStackView else { return }
     for case let item as BezierSectionItem in stackView.arrangedSubviews {
       item.size = self.size
+      item.pressStyle = self.pressStyle
       item.itemDescription = self.hasDescription ? "보조 설명 텍스트입니다." : nil
       item.leading = self.uiKitLeading
       item.accessory = self.uiKitAccessory
