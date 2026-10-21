@@ -22,7 +22,7 @@ public final class BezierSpinner: UIView, BezierComponentable {
 
   // MARK: - Public Properties
 
-  /// 스피너 크기. 기본값은 `.size12`다.
+  /// 호의 지름. 기본값은 `.size12`이며, 할당 영역이 작아도 축소하지 않고 중앙에서 회전한다.
   public var size: BezierSpinnerSize = .size12 {
     didSet { if oldValue != self.size { self.refreshLayout() } }
   }
@@ -36,11 +36,6 @@ public final class BezierSpinner: UIView, BezierComponentable {
   // MARK: - Subviews
 
   private let arcLayer = CAShapeLayer()
-
-  // MARK: - Layout Constraints
-
-  private var widthConstraint: NSLayoutConstraint?
-  private var heightConstraint: NSLayoutConstraint?
 
   // MARK: - Init
 
@@ -63,23 +58,27 @@ public final class BezierSpinner: UIView, BezierComponentable {
     self.isUserInteractionEnabled = false
     self.layer.addSublayer(self.arcLayer)
 
-    let widthConstraint = self.widthAnchor.constraint(equalToConstant: self.size.length)
-    let heightConstraint = self.heightAnchor.constraint(equalToConstant: self.size.length)
-    NSLayoutConstraint.activate([widthConstraint, heightConstraint])
-
-    self.widthConstraint = widthConstraint
-    self.heightConstraint = heightConstraint
-
     self.refreshLayout()
     self.refreshAppearance()
   }
 
   // MARK: - Layout Update
 
+  /// 외부 크기 제약이 없을 때 사용하는 기본 크기다.
+  public override var intrinsicContentSize: CGSize {
+    CGSize(width: self.size.length, height: self.size.length)
+  }
+
   public override func layoutSubviews() {
     super.layoutSubviews()
-    self.arcLayer.frame = self.bounds
+
+    // 회전 transform에 영향을 받는 frame 대신 호의 크기와 회전축을 독립적으로 갱신한다.
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
+    self.arcLayer.bounds = CGRect(origin: .zero, size: self.intrinsicContentSize)
+    self.arcLayer.position = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
     self.arcLayer.path = self.donutArcPath(length: self.size.length)
+    CATransaction.commit()
   }
 
   public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -99,8 +98,6 @@ public final class BezierSpinner: UIView, BezierComponentable {
   // MARK: - Refresh
 
   private func refreshLayout() {
-    self.widthConstraint?.constant = self.size.length
-    self.heightConstraint?.constant = self.size.length
     self.invalidateIntrinsicContentSize()
     self.setNeedsLayout()
   }
