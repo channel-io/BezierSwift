@@ -5,6 +5,17 @@ struct RootView: View {
   @State private var selection: CatalogItem?
 
   var body: some View {
+    if ProcessInfo.processInfo.arguments.contains("--switch-settings-demo") {
+      NavigationStack {
+        SwitchSettingsDemo()
+      }
+      .environmentObject(self.env)
+    } else {
+      self.catalog
+    }
+  }
+
+  private var catalog: some View {
     NavigationSplitView {
       List(selection: self.$selection) {
         ForEach(CatalogSectionKind.allCases) { section in

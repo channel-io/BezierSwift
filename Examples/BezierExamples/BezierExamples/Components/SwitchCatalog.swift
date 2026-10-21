@@ -6,9 +6,13 @@ struct SwitchCatalog: View {
   @State private var isOn: Bool = false
   @State private var hasError: Bool = false
   @State private var isEnabled: Bool = true
+  @State private var showsSettingsDemo = false
 
   var body: some View {
     CatalogScreen(title: "Switch") {
+      Button("Settings 방식 갱신 테스트") {
+        self.showsSettingsDemo = true
+      }
       self.controls
       CatalogSection(.swiftUI) { self.swiftUIPreview }
       CatalogSection(.uiKit) { self.uiKitPreview }
@@ -18,6 +22,16 @@ struct SwitchCatalog: View {
         .textCase(.uppercase)
       CatalogSection(.swiftUI) { self.swiftUIMatrix }
       CatalogSection(.uiKit) { self.uiKitMatrix }
+    }
+    .sheet(isPresented: self.$showsSettingsDemo) {
+      NavigationStack {
+        SwitchSettingsDemo()
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button("닫기") { self.showsSettingsDemo = false }
+            }
+          }
+      }
     }
   }
 
