@@ -28,10 +28,20 @@ public final class BezierModal: UIView, BezierComponentable {
 
   // MARK: - Init
 
-  /// 빈 모달 카드를 생성한다. 선택 옵션이 없어 인자를 받지 않으며, 본문은 `contentView`에 직접 구성한다.
+  /// 기본 여백(상단 20·하단 16·좌우 16pt)을 유지한 빈 모달 카드를 생성한다. 본문은 `contentView`에 직접 구성한다.
   public init() {
     super.init(frame: .zero)
     self.setUp()
+  }
+
+  /// 콘텐츠 여백을 명시적으로 지정하는 코드 전용 생성자. 일반 콘텐츠는 기본 `init()`을 사용한다.
+  ///
+  /// 웹 콘텐츠처럼 자체 padding을 관리하며 카드 전체 영역을 사용해야 할 때만
+  /// `BezierModal(contentInsets: .zero)`로 생성한다. 최소 콘텐츠 높이 1pt와 카드의 모서리 클리핑·그림자는 유지된다.
+  /// 구성한 카드는 `BezierModalViewController(modalView:)`로 표시할 수 있다.
+  public init(contentInsets: UIEdgeInsets) {
+    super.init(frame: .zero)
+    self.setUp(contentInsets: contentInsets)
   }
 
   public required init?(coder: NSCoder) {
@@ -41,7 +51,12 @@ public final class BezierModal: UIView, BezierComponentable {
 
   // MARK: - Setup
 
-  private func setUp() {
+  private func setUp(contentInsets: UIEdgeInsets = UIEdgeInsets(
+    top: BezierModalSpec.topPadding,
+    left: BezierModalSpec.horizontalPadding,
+    bottom: BezierModalSpec.bottomPadding,
+    right: BezierModalSpec.horizontalPadding
+  )) {
     self.translatesAutoresizingMaskIntoConstraints = false
 
     // 그림자는 클리핑되지 않는 바깥 layer에, 콘텐츠 클리핑은 containerView에 분리 적용
@@ -70,19 +85,19 @@ public final class BezierModal: UIView, BezierComponentable {
       self.containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       self.contentView.topAnchor.constraint(
         equalTo: self.containerView.topAnchor,
-        constant: BezierModalSpec.topPadding
+        constant: contentInsets.top
       ),
       self.contentView.bottomAnchor.constraint(
         equalTo: self.containerView.bottomAnchor,
-        constant: -BezierModalSpec.bottomPadding
+        constant: -contentInsets.bottom
       ),
-      self.contentView.leadingAnchor.constraint(
-        equalTo: self.containerView.leadingAnchor,
-        constant: BezierModalSpec.horizontalPadding
+      self.contentView.leftAnchor.constraint(
+        equalTo: self.containerView.leftAnchor,
+        constant: contentInsets.left
       ),
-      self.contentView.trailingAnchor.constraint(
-        equalTo: self.containerView.trailingAnchor,
-        constant: -BezierModalSpec.horizontalPadding
+      self.contentView.rightAnchor.constraint(
+        equalTo: self.containerView.rightAnchor,
+        constant: -contentInsets.right
       ),
       self.contentView.heightAnchor.constraint(
         greaterThanOrEqualToConstant: BezierModalSpec.contentMinHeight
