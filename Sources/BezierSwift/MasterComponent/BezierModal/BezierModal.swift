@@ -34,11 +34,7 @@ public final class BezierModal: UIView, BezierComponentable {
     self.setUp()
   }
 
-  /// 콘텐츠 여백을 명시적으로 지정하는 코드 전용 생성자. 일반 콘텐츠는 기본 `init()`을 사용한다.
-  ///
-  /// 웹 콘텐츠처럼 자체 padding을 관리하며 카드 전체 영역을 사용해야 할 때만
-  /// `BezierModal(contentInsets: .zero)`로 생성한다. 최소 콘텐츠 높이 1pt와 카드의 모서리 클리핑·그림자는 유지된다.
-  /// 구성한 카드는 `BezierModalViewController(modalView:)`로 표시할 수 있다.
+  /// 콘텐츠 inset을 조절해야 하는 경우 사용한다.
   public init(contentInsets: UIEdgeInsets) {
     super.init(frame: .zero)
     self.setUp(contentInsets: contentInsets)
