@@ -54,8 +54,8 @@ public final class BezierToastManager: BezierToastManageable {
         equalTo: keyWindow.safeAreaLayoutGuide.topAnchor,
         constant: Constant.containerTopInset
       ),
-      container.leadingAnchor.constraint(equalTo: keyWindow.leadingAnchor),
-      container.trailingAnchor.constraint(equalTo: keyWindow.trailingAnchor),
+      container.leadingAnchor.constraint(equalTo: keyWindow.safeAreaLayoutGuide.leadingAnchor),
+      container.trailingAnchor.constraint(equalTo: keyWindow.safeAreaLayoutGuide.trailingAnchor),
       container.bottomAnchor.constraint(equalTo: keyWindow.bottomAnchor),
     ])
 
