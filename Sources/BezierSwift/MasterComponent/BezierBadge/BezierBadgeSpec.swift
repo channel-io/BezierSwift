@@ -141,7 +141,7 @@ extension BezierBadgeVariant {
 
   public var foregroundToken: BCSemanticToken {
     switch self {
-    case .default:         return .textNeutral
+    case .default:         return .textNeutralDefault
     case .monochromeLight: return .textNeutralLighter
     case .monochromeDark:  return .textAbsoluteWhite
     case .blue:            return .textAccentBlue

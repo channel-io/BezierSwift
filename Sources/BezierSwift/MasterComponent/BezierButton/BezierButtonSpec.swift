@@ -138,7 +138,7 @@ extension BezierButtonVariant {
   func backgroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
     switch (self, semantic) {
     case (.filled, .primary):     return .fillNeutralHeaviest
-    case (.filled, .secondary):   return .fillNeutral
+    case (.filled, .secondary):   return .fillNeutralDefault
     case (.filled, .destructive): return .fillAccentRedHeavier
     case (.outlined, _),
          (.ghost, _):
@@ -152,7 +152,7 @@ extension BezierButtonVariant {
 
   func borderToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken? {
     switch self {
-    case .outlined: return .borderNeutral
+    case .outlined: return .borderNeutralDefault
     case .filled, .ghost: return nil
     }
   }
@@ -164,7 +164,7 @@ extension BezierButtonVariant {
   func foregroundToken(_ semantic: BezierButtonSemantic) -> BCSemanticToken {
     switch (self, semantic) {
     case (.filled, .primary):     return .textInverse
-    case (.filled, .secondary):   return .textNeutral
+    case (.filled, .secondary):   return .textNeutralDefault
     case (.filled, .destructive): return .textAbsoluteWhite
 
     case (.outlined, .primary):     return .textNeutralHeaviest

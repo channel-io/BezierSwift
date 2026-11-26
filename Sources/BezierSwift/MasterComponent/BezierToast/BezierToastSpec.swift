@@ -36,8 +36,8 @@ public enum BezierToastPreset: String, CaseIterable {
 }
 
 public enum BezierToastSpec {
-  public static let backgroundToken: BCSemanticToken = .surfaceGlass
-  public static let textToken: BCSemanticToken = .textNeutral
+  public static let backgroundToken: BCSemanticToken = .surfaceGlassDefault
+  public static let textToken: BCSemanticToken = .textNeutralDefault
   public static let typographyToken: BTSemanticToken = .textMedium(weight: .bold)
 
   public static let cornerRadius: BezierCornerRadius = .round20

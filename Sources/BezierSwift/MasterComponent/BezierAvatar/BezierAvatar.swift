@@ -207,7 +207,7 @@ public final class BezierAvatar: UIView, BezierComponentable {
     CATransaction.begin()
     CATransaction.setDisableActions(true)
     if self.showBorder {
-      self.borderLayer.fillColor = BCSemanticToken.surface.palette(self).cgColor
+      self.borderLayer.fillColor = BCSemanticToken.surfaceDefault.palette(self).cgColor
       self.borderView.isHidden = false
     } else {
       self.borderLayer.fillColor = nil

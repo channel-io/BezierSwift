@@ -45,7 +45,7 @@ extension BezierFont {
   public func attributedString(
     _ component: BezierComponentable,
     text: String,
-    semanticColorToken: BCSemanticToken = .textNeutral,
+    semanticColorToken: BCSemanticToken = .textNeutralDefault,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping,
     hasTagProperty: Bool = false
@@ -94,7 +94,7 @@ extension View {
 
   public func applyBezierFontStyle(
     _ bezierFont: BezierFont,
-    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutral
+    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutralDefault
   ) -> some View {
     self.modifier(BezierFontStyle(bezierFont: bezierFont, semanticColor: semanticColor))
   }

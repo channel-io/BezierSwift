@@ -62,7 +62,7 @@ public struct SUBezierAvatar: View, Themeable {
     if self.showBorder {
       // 외곽은 완전히 덮고 안쪽 경계만 AA한다. 바깥쪽 AA는 합성 후 clipShape가 담당한다.
       AvatarBorderShape(cornerRadius: self.size.cornerRadius, borderWidth: self.size.borderWidth)
-        .fill(self.palette(BCSemanticToken.surface), style: FillStyle(eoFill: true))
+        .fill(self.palette(BCSemanticToken.surfaceDefault), style: FillStyle(eoFill: true))
         .frame(width: self.size.length, height: self.size.length)
     }
   }

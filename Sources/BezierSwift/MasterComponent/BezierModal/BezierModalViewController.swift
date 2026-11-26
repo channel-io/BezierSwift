@@ -7,7 +7,7 @@ import UIKit
 
 // Figma에 dim/프레젠테이션 스펙이 없어 BezierModalSpec(SPEC.md 매핑)과 분리한 협의 상수
 enum BezierModalPresentationConstant {
-  static let dimToken: BCSemanticToken = .dimAbsoluteBlack
+  static let dimToken: BCSemanticToken = .dimAbsoluteBlackDefault
   static let horizontalMargin: CGFloat = 40
   static let expandedWidth: CGFloat = BezierModalSpec.maxWidth
   // BezierModal 내장 width 320 제약을 1만큼 이겨서 카드를 최대로 확장하고,

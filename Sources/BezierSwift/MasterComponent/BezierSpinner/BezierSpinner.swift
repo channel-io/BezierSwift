@@ -107,7 +107,7 @@ public final class BezierSpinner: UIView, BezierComponentable {
   private func refreshAppearance() {
     // 다른 창의 current traits가 색상에 섞이지 않도록 override palette도 이 뷰의 환경에서 해석한다.
     self.traitCollection.performAsCurrent {
-      let fillColor = self.fillColorOverride ?? BCSemanticToken.borderNeutral.palette(self)
+      let fillColor = self.fillColorOverride ?? BCSemanticToken.borderNeutralDefault.palette(self)
       self.arcLayer.fillColor = fillColor.resolvedColor(with: self.traitCollection).cgColor
     }
   }

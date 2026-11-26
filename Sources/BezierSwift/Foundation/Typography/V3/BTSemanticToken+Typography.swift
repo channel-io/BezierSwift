@@ -24,7 +24,7 @@ extension View {
 
   public func applyBezierFontStyle(
     _ token: BTSemanticToken,
-    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutral
+    _ semanticColor: SemanticColorProtocol = BCSemanticToken.textNeutralDefault
   ) -> some View {
     self.modifier(BezierTypographyStyle(token: token, semanticColor: semanticColor))
   }
@@ -66,7 +66,7 @@ extension BTSemanticToken {
   public func attributedString(
     _ component: BezierComponentable,
     text: String,
-    semanticColorToken: BCSemanticToken = .textNeutral,
+    semanticColorToken: BCSemanticToken = .textNeutralDefault,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping,
     hasTagProperty: Bool = false
@@ -125,7 +125,7 @@ extension BTSemanticToken {
 
   public func attributes(
     _ component: BezierComponentable,
-    semanticColorToken: BCSemanticToken = .textNeutral,
+    semanticColorToken: BCSemanticToken = .textNeutralDefault,
     alignment: NSTextAlignment = .left,
     lineBreakMode: NSLineBreakMode = .byWordWrapping
   ) -> [NSAttributedString.Key: Any] {

@@ -131,5 +131,5 @@ extension BezierTagVariant {
   }
 
   // SPEC §4: 모든 variant에서 foreground는 동일한 `color/text/neutral`.
-  public var foregroundToken: BCSemanticToken { .textNeutral }
+  public var foregroundToken: BCSemanticToken { .textNeutralDefault }
 }

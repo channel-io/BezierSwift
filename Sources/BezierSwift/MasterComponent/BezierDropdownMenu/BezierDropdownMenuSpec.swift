@@ -16,7 +16,7 @@ public enum BezierDropdownMenuItemVariant: CaseIterable {
 
   var titleColor: BCSemanticToken {
     switch self {
-    case .neutral: return .textNeutral
+    case .neutral: return .textNeutralDefault
     case .destructive: return .textAccentRed
     }
   }

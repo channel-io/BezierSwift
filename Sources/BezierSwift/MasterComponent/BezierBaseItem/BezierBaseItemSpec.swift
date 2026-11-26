@@ -66,7 +66,7 @@ public enum BezierBaseItemConstant {
   static let titleTypography: BTSemanticToken = .textXLarge(weight: .regular)
   static let descriptionTypography: BTSemanticToken = .captionMedium(weight: .regular)
 
-  static let titleColor: BCSemanticToken = .textNeutral
+  static let titleColor: BCSemanticToken = .textNeutralDefault
   static let descriptionColor: BCSemanticToken = .textNeutralLighter
   static let pressedBackgroundColor: BCSemanticToken = .fillNeutralLighter
 }

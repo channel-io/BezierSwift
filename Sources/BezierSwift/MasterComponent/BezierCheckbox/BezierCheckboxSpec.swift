@@ -45,11 +45,11 @@ public enum BezierCheckboxConstant {
 
   static let labelTypography: BTSemanticToken = .textXLarge(weight: .regular)
 
-  static let labelColor: BCSemanticToken = .textNeutral
+  static let labelColor: BCSemanticToken = .textNeutralDefault
   static let uncheckedBackgroundColor: BCSemanticToken = .fillGreyLight
   static let uncheckedDisabledBackgroundColor: BCSemanticToken = .fillNeutralHeavy
   static let uncheckedBorderColor: BCSemanticToken = .borderNeutralHeavy
   static let checkedBackgroundColor: BCSemanticToken = .fillNeutralHeaviest
   static let iconColor: BCSemanticToken = .iconInverseHeavier
-  static let errorRingColor: BCSemanticToken = .stateWarning
+  static let errorRingColor: BCSemanticToken = .stateWarningDefault
 }

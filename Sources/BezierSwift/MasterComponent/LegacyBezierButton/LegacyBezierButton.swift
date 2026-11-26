@@ -174,12 +174,12 @@ public enum LegacyButtonType: Equatable {
         case .xsmall, .small:
           return .textNeutralLight
         case .medium, .large, .xlarge:
-          return .textNeutral
+          return .textNeutralDefault
         }
       case .monochromeLight:
         return .textNeutralLight
       case .monochromeDark:
-        return .textNeutral
+        return .textNeutralDefault
       case .absoulteWhite:
         return .textAbsoluteWhite
       }
@@ -188,7 +188,7 @@ public enum LegacyButtonType: Equatable {
       case .blue, .red, .green, .yellow, .cobalt, .absoulteWhite, .orange:
         return .textAbsoluteWhite
       case .monochrome, .monochromeLight, .monochromeDark:
-        return .textNeutral
+        return .textNeutralDefault
       }
     }
   }
@@ -217,12 +217,12 @@ public enum LegacyButtonType: Equatable {
       case .monochrome:
         switch size {
         case .xsmall, .small:
-          return .iconNeutral
+          return .iconNeutralDefault
         case .medium, .large, .xlarge:
           return .iconNeutralHeavy
         }
       case .monochromeLight:
-        return .iconNeutral
+        return .iconNeutralDefault
       case .monochromeDark:
         return .iconNeutralHeavy
       case .absoulteWhite:
@@ -289,7 +289,7 @@ public enum LegacyButtonType: Equatable {
         case .default, .disabled:
           return .fillAbsoluteBlackLight
         case .pressed:
-          return .dimAbsoluteBlack
+          return .dimAbsoluteBlackDefault
         }
       case .monochromeLight:
         return .fillNeutralHeavier
@@ -303,42 +303,42 @@ public enum LegacyButtonType: Equatable {
       case .blue:
         switch state {
         case .default, .disabled:
-          return .fillAccentBlue
+          return .fillAccentBlueDefault
         case .pressed:
           return .fillAccentBlueHeavy
         }
       case .red:
         switch state {
         case .default, .disabled:
-          return .fillAccentRed
+          return .fillAccentRedDefault
         case .pressed:
           return .fillAccentRedHeavy
         }
       case .green:
         switch state {
         case .default, .disabled:
-          return .fillAccentGreen
+          return .fillAccentGreenDefault
         case .pressed:
           return .fillAccentGreenHeavy
         }
       case .yellow:
         switch state {
         case .default, .disabled:
-          return .fillAccentYellow
+          return .fillAccentYellowDefault
         case .pressed:
           return .fillAccentYellowHeavy
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
-          return .fillAccentCobalt
+          return .fillAccentCobaltDefault
         case .pressed:
           return .fillAccentCobaltHeavy
         }
       case .orange:
         switch state {
         case .default, .disabled:
-          return .fillAccentOrange
+          return .fillAccentOrangeDefault
         case .pressed:
           return .fillAccentOrangeHeavy
         }
@@ -359,42 +359,42 @@ public enum LegacyButtonType: Equatable {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentBlue
+          return .fillAccentBlueDefault
         }
       case .red:
         switch state {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentRed
+          return .fillAccentRedDefault
         }
       case .green:
         switch state {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentGreen
+          return .fillAccentGreenDefault
         }
       case .yellow:
         switch state {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentYellow
+          return .fillAccentYellowDefault
         }
       case .cobalt:
         switch state {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentCobalt
+          return .fillAccentCobaltDefault
         }
       case .orange:
         switch state {
         case .default, .disabled:
           return .fillNeutralTransparent
         case .pressed:
-          return .fillAccentOrange
+          return .fillAccentOrangeDefault
         }
       case .monochrome, .monochromeLight, .monochromeDark:
         switch state {
