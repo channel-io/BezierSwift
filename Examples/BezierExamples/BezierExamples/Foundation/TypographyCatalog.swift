@@ -10,7 +10,7 @@ struct TypographyCatalog: View {
           ForEach(TypographyTokenSpec.all) { spec in
             VStack(alignment: .leading, spacing: 4) {
               Text(spec.sample)
-                .applyBezierFontStyle(spec.token, semanticColorToken: .textNeutral)
+                .applyBezierFontStyle(spec.token, semanticColorToken: .textNeutralDefault)
               Text("\(spec.name)  ·  \(spec.detail)")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
@@ -26,7 +26,7 @@ struct TypographyCatalog: View {
                 let label = UILabel()
                 label.text = spec.sample
                 label.font = spec.token.uiFont
-                label.textColor = BCSemanticToken.textNeutral.palette(BezierExamplesComponent.shared)
+                label.textColor = BCSemanticToken.textNeutralDefault.palette(BezierExamplesComponent.shared)
                 label.numberOfLines = 0
                 return label
               }

@@ -54,15 +54,14 @@ Tests/BezierSwiftTests/          단위 테스트
 - **배치는 컨테이너 책임** — public `resizing`/`isFullWidth` 류 프로퍼티를 만들지 않는다.
   UIKit은 스택·제약이 intrinsic size를 이기므로 무수정으로 해결되고, SwiftUI 내부에서
   stretch가 필요하면 internal init 오버로드로만 처리해 public 표면을 바꾸지 않는다
-- **public 심볼에는 `///` doc comment 필수.** 선택 축 enum은 선언부에 대응하는 Figma
-  property를 적고, 각 case에 "언제 쓰는지"(Selection Rules)를 1~2줄 적는다.
-  Figma에 대응이 없는 축은 "코드 전용 축"으로 명시한다 — 억지 매핑보다 낫다
+- 컴포넌트의 선택 축 enum을 문서화할 때는 대응하는 Figma property와 각 case의 선택 기준을 적는다.
+  Figma에 대응이 없는 축은 "코드 전용 축"으로 명시한다.
 
 ## 주석 정책
 
-주석은 **비정상 코드**(회피 hack·workaround·비자명한 invariant)의 *왜*를 설명할 때만 단다.
+구현 주석은 **비정상 코드**(회피 hack·workaround·비자명한 invariant)의 *왜*를 설명할 때만 단다.
 SPEC 참조(`// SPEC §5`)·동작 설명·정상 코드의 의도는 주석이 아니라 PR description으로 쓴다.
-public API의 `///` doc comment는 이 정책의 예외로 필수다.
+자동 생성 토큰에 문서 주석이 필요하면 생성 원본에서 관리한다.
 
 ## 빌드·테스트
 

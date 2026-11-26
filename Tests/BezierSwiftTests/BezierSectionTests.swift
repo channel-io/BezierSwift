@@ -33,11 +33,11 @@ struct BezierSectionAppearanceTests {
     #expect(appearance.contentInsets.trailing == 0)
 
     let border = try #require(appearance.border)
-    #expect(border.color == .borderNeutral)
+    #expect(border.color == .borderNeutralDefault)
     #expect(border.width == 1)
 
     let divider = try #require(appearance.divider)
-    #expect(divider.color == .borderNeutral)
+    #expect(divider.color == .borderNeutralDefault)
     #expect(divider.thickness == 1)
     #expect(divider.leadingInset == 0)
     #expect(divider.trailingInset == 0)
@@ -72,9 +72,9 @@ struct BezierSectionAppearanceTests {
 
 @Suite("BezierSectionLabelColor 색 토큰")
 struct BezierSectionLabelColorTests {
-  @Test("neutralDark → textNeutral, neutralLight → textNeutralLighter")
+  @Test("neutralDark → textNeutralDefault, neutralLight → textNeutralLighter")
   func labelColorTokens() {
-    #expect(BezierSectionLabelColor.neutralDark.textColor == .textNeutral)
+    #expect(BezierSectionLabelColor.neutralDark.textColor == .textNeutralDefault)
     #expect(BezierSectionLabelColor.neutralLight.textColor == .textNeutralLighter)
   }
 }

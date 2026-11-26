@@ -11,7 +11,7 @@ import CoreGraphics
 public enum BezierSectionVariant: CaseIterable {
   /// 배경·테두리·divider 없는 투명 섹션. 화면 배경 위에 그대로 얹는 기본 리스트에 쓴다.
   case solid
-  /// `surface` 배경 + 1pt `borderNeutral` 테두리 + radius 16 카드. 행 사이에 divider가 들어간다. 리스트를 카드로 감싸 구분할 때 쓴다.
+  /// `surfaceHigh` 배경 + 1pt `borderNeutralDefault` 테두리 + radius 16 카드. 행 사이에 divider가 들어간다. 리스트를 카드로 감싸 구분할 때 쓴다.
   case card
 }
 
@@ -19,14 +19,14 @@ public enum BezierSectionVariant: CaseIterable {
 
 /// 섹션 라벨 텍스트 색. Figma `Internal/SectionLabel`의 `color` 프로퍼티에 대응 (Figma 값 `neutral-dark`/`neutral-light` = 코드 `neutralDark`/`neutralLight`).
 public enum BezierSectionLabelColor: CaseIterable {
-  /// 진한 라벨(`textNeutral`). 일반 섹션 헤더의 기본값이다.
+  /// 진한 라벨(`textNeutralDefault`). 일반 섹션 헤더의 기본값이다.
   case neutralDark
   /// 연한 라벨(`textNeutralLighter`). 오버레이/시트 내부 등 약하게 표기할 때 쓴다.
   case neutralLight
 
   var textColor: BCSemanticToken {
     switch self {
-    case .neutralDark: return .textNeutral
+    case .neutralDark: return .textNeutralDefault
     case .neutralLight: return .textNeutralLighter
     }
   }
@@ -113,10 +113,10 @@ public enum BezierSectionConstant {
   static let labelTypography: BTSemanticToken = .textMedium(weight: .bold)
 
   static let cardBackgroundColor: BCSemanticToken = .surfaceHigh
-  static let cardBorderColor: BCSemanticToken = .borderNeutral
+  static let cardBorderColor: BCSemanticToken = .borderNeutralDefault
   static let cardBorderWidth: CGFloat = 1
   static let cardCornerRadius: CGFloat = 16
-  static let cardDividerColor: BCSemanticToken = .borderNeutral
+  static let cardDividerColor: BCSemanticToken = .borderNeutralDefault
   static let cardDividerThickness: CGFloat = 1
   static let cardContentInsets = BezierSectionVariant.Appearance.Insets(
     top: 2,

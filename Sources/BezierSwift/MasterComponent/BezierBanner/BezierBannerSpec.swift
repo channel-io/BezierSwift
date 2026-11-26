@@ -25,17 +25,17 @@ public enum BezierBannerVariant: CaseIterable {
   var backgroundColor: BCSemanticToken {
     switch self {
     case .default: return .fillNeutralLighter
-    case .blue: return .fillAccentBlue
-    case .cobalt: return .fillAccentCobalt
-    case .green: return .fillAccentGreen
-    case .orange: return .fillAccentOrange
-    case .red: return .fillAccentRed
+    case .blue: return .fillAccentBlueDefault
+    case .cobalt: return .fillAccentCobaltDefault
+    case .green: return .fillAccentGreenDefault
+    case .orange: return .fillAccentOrangeDefault
+    case .red: return .fillAccentRedDefault
     }
   }
 
   var iconColor: BCSemanticToken {
     switch self {
-    case .default: return .iconNeutral
+    case .default: return .iconNeutralDefault
     case .blue: return .iconAccentBlue
     case .cobalt: return .iconAccentCobalt
     case .green: return .iconAccentGreen

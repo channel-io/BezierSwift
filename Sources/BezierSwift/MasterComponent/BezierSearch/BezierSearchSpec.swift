@@ -17,5 +17,5 @@ enum BezierSearchConstant {
   static let cancelButtonSpacing: CGFloat = 8
   static let cancelButtonHorizontalPadding: CGFloat = 4
   static let cancelButtonTypography: BTSemanticToken = .textMedium(weight: .regular)
-  static let cancelButtonTextColor: BCSemanticToken = .textNeutral
+  static let cancelButtonTextColor: BCSemanticToken = .textNeutralDefault
 }

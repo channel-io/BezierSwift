@@ -61,10 +61,10 @@ enum BezierBaseInputConstant {
   static let textTypography: BTSemanticToken = .textXLarge(weight: .regular)
   static let affixTypography: BTSemanticToken = .textLarge(weight: .regular)
 
-  static let textColor: BCSemanticToken = .textNeutral
+  static let textColor: BCSemanticToken = .textNeutralDefault
   static let readOnlyTextColor: BCSemanticToken = .textNeutralLight
   static let placeholderColor: BCSemanticToken = .textNeutralLighter
-  static let iconColor: BCSemanticToken = .iconNeutral
+  static let iconColor: BCSemanticToken = .iconNeutralDefault
   static let affixTextColor: BCSemanticToken = .textNeutralLight
 }
 
@@ -78,7 +78,7 @@ enum BezierBaseInputAppearance {
     switch variant {
     case .primary:
       switch state {
-      case .default, .disabled: return .fillGrey
+      case .default, .disabled: return .fillGreyDefault
       case .focused, .error: return .fillGreyLight
       case .readOnly: return .fillGreyHeavy
       }
@@ -93,7 +93,7 @@ enum BezierBaseInputAppearance {
   ) -> BCSemanticToken? {
     switch state {
     case .focused: return .stateActive
-    case .error: return .stateWarning
+    case .error: return .stateWarningDefault
     case .default, .readOnly, .disabled:
       switch variant {
       case .primary: return .stateDefault

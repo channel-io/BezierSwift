@@ -64,7 +64,7 @@ struct FloatingBannerCatalog: View {
   }
 
   private var leadingIconColor: BCSemanticToken {
-    self.tintLeadingIcon ? .iconAccentGreen : .iconNeutral
+    self.tintLeadingIcon ? .iconAccentGreen : .iconNeutralDefault
   }
 
   private var floatingClickArea: BezierFloatingBannerClickArea {

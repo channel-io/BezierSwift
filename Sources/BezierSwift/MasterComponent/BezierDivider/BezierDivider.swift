@@ -95,6 +95,6 @@ public final class BezierDivider: UIView, BezierComponentable {
   }
 
   private func refreshAppearance() {
-    self.lineView.backgroundColor = BCSemanticToken.borderNeutral.palette(self)
+    self.lineView.backgroundColor = BCSemanticToken.borderNeutralDefault.palette(self)
   }
 }

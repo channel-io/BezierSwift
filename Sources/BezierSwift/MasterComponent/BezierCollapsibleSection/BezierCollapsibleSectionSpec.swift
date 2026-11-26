@@ -29,7 +29,7 @@ extension BezierSectionLabelColor {
   var chevronColor: BCSemanticToken {
     switch self {
     case .neutralDark: return .iconNeutralHeavier
-    case .neutralLight: return .iconNeutral
+    case .neutralLight: return .iconNeutralDefault
     }
   }
 }

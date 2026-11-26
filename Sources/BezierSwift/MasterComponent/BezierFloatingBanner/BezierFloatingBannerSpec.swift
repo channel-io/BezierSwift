@@ -48,8 +48,8 @@ public enum BezierFloatingBannerConstant {
 
   static let backgroundColor: BCSemanticToken = .surfaceHighest
   static let textColor: BCSemanticToken = .textNeutralLight
-  static let actionIconColor: BCSemanticToken = .iconNeutral
-  public static let defaultLeadingIconColor: BCSemanticToken = .iconNeutral
+  static let actionIconColor: BCSemanticToken = .iconNeutralDefault
+  public static let defaultLeadingIconColor: BCSemanticToken = .iconNeutralDefault
 
   static let titleTypography: BTSemanticToken = .textMedium(weight: .bold)
   static let descriptionTypography: BTSemanticToken = .textMedium(weight: .regular)

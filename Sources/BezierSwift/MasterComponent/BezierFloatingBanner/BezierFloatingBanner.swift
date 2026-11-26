@@ -21,7 +21,7 @@ public final class BezierFloatingBanner: UIView, BezierComponentable {
     didSet { if oldValue != self.leadingIcon { self.refreshContent() } }
   }
 
-  /// leading 아이콘의 tint 색. 아이콘 색으로 상태(성공·경고 등) 의미를 암시한다 (기본값 `iconNeutral`).
+  /// leading 아이콘의 tint 색. 아이콘 색으로 상태(성공·경고 등) 의미를 암시한다 (기본값 `iconNeutralDefault`).
   public var leadingIconColor: BCSemanticToken = BezierFloatingBannerConstant.defaultLeadingIconColor {
     didSet { if oldValue != self.leadingIconColor { self.refreshAppearance() } }
   }

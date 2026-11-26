@@ -126,7 +126,7 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
         self.managedSubviews.append(ellipsisAvatar)
 
         let overlay = UIView()
-        overlay.backgroundColor = BCSemanticToken.dimAbsoluteBlack.palette(self)
+        overlay.backgroundColor = BCSemanticToken.dimAbsoluteBlackDefault.palette(self)
         overlay.layer.cornerRadius = self.size.avatarSize.cornerRadius
         overlay.layer.masksToBounds = true
         overlay.translatesAutoresizingMaskIntoConstraints = false
@@ -157,7 +157,7 @@ public final class BezierAvatarGroup: UIView, BezierComponentable {
           let borderView = UIView()
           borderView.translatesAutoresizingMaskIntoConstraints = false
           borderView.isUserInteractionEnabled = false
-          borderView.layer.borderColor = BCSemanticToken.surface.palette(self).cgColor
+          borderView.layer.borderColor = BCSemanticToken.surfaceDefault.palette(self).cgColor
           borderView.layer.borderWidth = self.size.borderWidth
           borderView.layer.cornerRadius = self.size.avatarSize.cornerRadius
           self.addSubview(borderView)

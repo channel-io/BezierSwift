@@ -26,5 +26,5 @@ enum BezierSwitchConstant {
   static let trackOffColor: BCSemanticToken = .fillNeutralHeavy
   static let trackOnColor: BCSemanticToken = .fillNeutralHeaviest
   static let thumbColor: BCSemanticToken = .iconInverseHeavier
-  static let errorRingColor: BCSemanticToken = .stateWarning
+  static let errorRingColor: BCSemanticToken = .stateWarningDefault
 }

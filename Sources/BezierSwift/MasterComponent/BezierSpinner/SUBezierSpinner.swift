@@ -26,7 +26,7 @@ public struct SUBezierSpinner: View, Themeable {
 
   public var body: some View {
     SpinnerArcShape()
-      .fill(self.fillColorOverride ?? self.palette(BCSemanticToken.borderNeutral))
+      .fill(self.fillColorOverride ?? self.palette(BCSemanticToken.borderNeutralDefault))
       .frame(width: self.size.length, height: self.size.length)
       .rotationEffect(.degrees(self.isRotating ? 360 : 0))
       .animation(

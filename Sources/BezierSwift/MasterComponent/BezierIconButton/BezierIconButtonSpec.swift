@@ -72,7 +72,7 @@ extension BezierIconButtonVariant {
   func backgroundToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken? {
     switch (self, semantic) {
     case (.filled, .primary):     return .fillNeutralHeaviest
-    case (.filled, .secondary):   return .fillNeutral
+    case (.filled, .secondary):   return .fillNeutralDefault
     case (.filled, .destructive): return .fillAccentRedHeavier
     case (.outlined, _),
          (.ghost, _):
@@ -82,7 +82,7 @@ extension BezierIconButtonVariant {
 
   func borderToken(_ semantic: BezierIconButtonSemantic) -> BCSemanticToken? {
     switch self {
-    case .outlined: return .borderNeutral
+    case .outlined: return .borderNeutralDefault
     case .filled, .ghost: return nil
     }
   }
@@ -94,11 +94,11 @@ extension BezierIconButtonVariant {
     case (.filled, .destructive): return .iconInverseHeavier
 
     case (.outlined, .primary):     return .iconNeutralHeavier
-    case (.outlined, .secondary):   return .iconNeutral
+    case (.outlined, .secondary):   return .iconNeutralDefault
     case (.outlined, .destructive): return .textAccentRed
 
     case (.ghost, .primary):     return .iconNeutralHeavier
-    case (.ghost, .secondary):   return .iconNeutral
+    case (.ghost, .secondary):   return .iconNeutralDefault
     case (.ghost, .destructive): return .textAccentRed
     }
   }

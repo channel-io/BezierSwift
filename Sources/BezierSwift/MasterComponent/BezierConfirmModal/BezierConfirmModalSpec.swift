@@ -55,5 +55,5 @@ public enum BezierConfirmModalSpec {
   public static let cancelSemantic: BezierButtonSemantic = .secondary
   public static let titleTypography: BTSemanticToken = .headingXSmall
   public static let descriptionTypography: BTSemanticToken = .textLarge(weight: .regular)
-  public static let textColorToken: BCSemanticToken = .textNeutral
+  public static let textColorToken: BCSemanticToken = .textNeutralDefault
 }

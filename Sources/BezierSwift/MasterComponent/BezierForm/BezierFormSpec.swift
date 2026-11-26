@@ -55,7 +55,7 @@ public enum BezierFormConstant {
   static let descriptionTypography: BTSemanticToken = .textXSmall(weight: .regular)
   static let errorMessageTypography: BTSemanticToken = .captionMedium(weight: .regular)
 
-  static let labelColor: BCSemanticToken = .textNeutral
+  static let labelColor: BCSemanticToken = .textNeutralDefault
   static let requiredMarkerColor: BCSemanticToken = .textAccentOrange
   static let descriptionColor: BCSemanticToken = .textNeutralLighter
   static let errorMessageTextColor: BCSemanticToken = .textAccentOrange

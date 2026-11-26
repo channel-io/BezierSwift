@@ -86,7 +86,7 @@ public struct SUBezierAvatarGroup: View, Themeable {
       SUBezierAvatar(image: self.avatars[BezierAvatarGroupConstant.maxVisibleAvatars], size: self.size.avatarSize, showBorder: false)
 
       RoundedRectangle(cornerRadius: self.size.avatarSize.cornerRadius, style: .continuous)
-        .fill(self.palette(BCSemanticToken.dimAbsoluteBlack))
+        .fill(self.palette(BCSemanticToken.dimAbsoluteBlackDefault))
         .frame(width: self.size.avatarLength, height: self.size.avatarLength)
 
       BezierIcon.more.image
@@ -99,7 +99,7 @@ public struct SUBezierAvatarGroup: View, Themeable {
 
       if self.overlap {
         RoundedRectangle(cornerRadius: self.size.avatarSize.cornerRadius, style: .continuous)
-          .strokeBorder(self.palette(BCSemanticToken.surface), lineWidth: self.size.borderWidth)
+          .strokeBorder(self.palette(BCSemanticToken.surfaceDefault), lineWidth: self.size.borderWidth)
           .frame(width: self.size.avatarLength, height: self.size.avatarLength)
       }
     }

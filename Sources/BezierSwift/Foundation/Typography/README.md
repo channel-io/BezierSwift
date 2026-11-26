@@ -46,19 +46,19 @@ iOS는 **400(Regular) / 700(Bold) 이진 체계**를 사용합니다.
 ```swift
 // 기본
 Text("메시지 본문")
-  .applyBezierFontStyle(.textMedium(), semanticColorToken: .textNeutral)
+  .applyBezierFontStyle(.textMedium(), semanticColorToken: .textNeutralDefault)
 
 // Bold 강조
 Text("중요한 텍스트")
-  .applyBezierFontStyle(.textMedium(weight: .bold), semanticColorToken: .textNeutral)
+  .applyBezierFontStyle(.textMedium(weight: .bold), semanticColorToken: .textNeutralDefault)
 
 // 섹션 제목
 Text("설정")
-  .applyBezierFontStyle(.headingSmall, semanticColorToken: .textNeutral)
+  .applyBezierFontStyle(.headingSmall, semanticColorToken: .textNeutralDefault)
 
 // 버튼 라벨
 Text("전송")
-  .applyBezierFontStyle(.labelLarge, semanticColorToken: .textNeutral)
+  .applyBezierFontStyle(.labelLarge, semanticColorToken: .textNeutralDefault)
 
 // 타임스탬프
 Text("오후 3:42")
@@ -70,14 +70,14 @@ Text("오후 3:42")
 ```swift
 // 단일 스타일
 let attributed = BTSemanticToken.textMedium()
-  .attributedString(component, text: "안녕하세요", semanticColorToken: .textNeutral)
+  .attributedString(component, text: "안녕하세요", semanticColorToken: .textNeutralDefault)
 
 // 태그 폰트 (<b>, <u> 파싱)
 let tagged = BTSemanticToken.textMedium()
   .attributedString(
     component,
     text: "<b>홍길동</b>님이 초대했습니다",
-    semanticColorToken: .textNeutral,
+    semanticColorToken: .textNeutralDefault,
     hasTagProperty: true  // <b> → boldPair 자동 적용
   )
 ```
@@ -96,7 +96,7 @@ UITextView, UITextField 등에서 attribute를 직접 설정할 때:
 ```swift
 // 색상 포함
 let attrs = BTSemanticToken.textMedium()
-  .attributes(component, semanticColorToken: .textNeutral)
+  .attributes(component, semanticColorToken: .textNeutralDefault)
 textView.typingAttributes = attrs
 
 // 색상 없이 (사이즈 계산용)
@@ -118,9 +118,9 @@ let size = NSAttributedString(
 let attributed = "Hello <b>World</b>".applyBezierTagFont(
   component,
   normalToken: .textMedium(),
-  normalColor: .textNeutral,
+  normalColor: .textNeutralDefault,
   boldToken: .textMedium(weight: .bold),
-  boldColor: .textNeutral
+  boldColor: .textNeutralDefault
 )
 ```
 

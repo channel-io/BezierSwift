@@ -145,7 +145,7 @@ public enum BezierSectionItemConstant {
   static let descriptionTypography: BTSemanticToken = .captionMedium(weight: .regular)
   static let accessoryTextTypography: BTSemanticToken = .textLarge(weight: .regular)
 
-  static let contentColor: BCSemanticToken = .textNeutral
+  static let contentColor: BCSemanticToken = .textNeutralDefault
   static let descriptionColor: BCSemanticToken = .textNeutralLighter
   static let leadingIconColor: BCSemanticToken = .iconNeutralHeavy
   static let pressedBackgroundColor: BCSemanticToken = .fillNeutralLighter
@@ -155,7 +155,7 @@ public enum BezierSectionItemConstant {
   static let destructiveIconColor: BCSemanticToken = .iconAccentRed
 
   static let accessoryTextColor: BCSemanticToken = .textNeutralLighter
-  static let accessoryIconColor: BCSemanticToken = .iconNeutral
+  static let accessoryIconColor: BCSemanticToken = .iconNeutralDefault
   static let toggleTrackOffColor: BCSemanticToken = .fillNeutralHeavy
   static let toggleTrackOnColor: BCSemanticToken = .fillNeutralHeaviest
   static let toggleThumbColor: BCSemanticToken = .iconInverseHeavier
