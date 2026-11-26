@@ -20,22 +20,27 @@ Bezier Typography V3는 크로스 플랫폼 공통 명세 기반의 시멘틱 �
 |---------|------|------|--------|
 | **Display** | `displayLarge`, `displayMedium` | 대시보드 숫자, KPI | 700 고정 |
 | **Heading** | `headingXLarge` ~ `headingXXSmall` (6개) | 페이지/섹션 제목 | 700 고정 |
-| **Text** | `textXXLarge` ~ `textXXSmall` (7개) | 본문, 설명, 메시지 | 기본 400, bold 700 |
-| **Label** | `labelLarge` ~ `labelSmall` (3개) | 버튼, 탭, 필드 라벨 | 700 고정 |
-| **Caption** | `captionMedium`, `captionSmall` | 타임스탬프, 헬퍼 텍스트 | 기본 400, bold 700 |
+| **Text** | `textXXLarge` ~ `textXXSmall` (7개) | 본문, 설명, 메시지 | 기본 400, 선택 600·700 |
+| **Label** | `labelLarge` ~ `labelSmall` (3개) | 버튼, 탭, 필드 라벨 | 600 고정 |
+| **Caption** | `captionMedium`, `captionSmall` | 타임스탬프, 헬퍼 텍스트 | 기본 400, 굵게 700 |
 | **Code** | `codeMedium`, `codeSmall` | 코드 블록, 인라인 코드 | 400 고정, monospace |
 
 ### Weight 정책
 
-iOS는 **400(Regular) / 700(Bold) 이진 체계**를 사용합니다.
+iOS는 **Regular 400 / Medium 600 / Bold 700**을 사용합니다. SwiftUI와 UIKit에서 Medium 600은 시스템 폰트의 `.semibold`에 대응합니다.
 
-- **고정 weight** (Display, Heading, Label, Code): weight가 토큰에 내장되어 있어 별도 지정 불가
-- **가변 weight** (Text, Caption): `weight` 파라미터로 `.regular`(기본) 또는 `.bold` 선택
+- Display, Heading, Label, Code는 토큰에 지정된 굵기를 사용합니다. Label은 `label/weight/medium`을 따릅니다.
+- Text와 Caption의 `weight` 파라미터는 `BTFontWeight`를 공유합니다. 기본값은 `.regular`입니다. Foundation의 Caption 스타일은 Regular와 Bold를 정의합니다.
 
 ```swift
-.textMedium()              // Regular (400)
-.textMedium(weight: .bold) // Bold (700)
+.textMedium()                // Regular (400)
+.textMedium(weight: .medium) // Medium (600)
+.textMedium(weight: .bold)   // Bold (700)
 ```
+
+### 기본 자간
+
+Foundation의 `heading/letter-spacing/default`, `text/letter-spacing/default`, `paragraph/letter-spacing/default`는 모두 0pt입니다. Swift에서는 `headingMedium`과 `textMedium` 이하 크기의 기본 자간을 `BTSemanticToken.letterSpacing`으로 읽습니다. Paragraph는 Foundation의 토큰 경로로만 문서화합니다.
 
 ---
 
@@ -145,7 +150,7 @@ label.snp.makeConstraints {
 | `fontSize` | `CGFloat` | 폰트 크기 (pt) |
 | `lineHeight` | `CGFloat` | 줄 높이 (pt) |
 | `letterSpacing` | `CGFloat` | 자간 (pt) |
-| `resolvedWeight` | `BTFontWeight` | 해석된 weight (.regular/.bold) |
+| `resolvedWeight` | `BTFontWeight` | 해석된 weight (.regular/.medium/.bold) |
 | `boldPair` | `BTSemanticToken` | bold 버전 토큰 (Text/Caption은 weight 변경, 나머지는 self) |
 | `isMonospace` | `Bool` | monospace 여부 |
 | `font` | `Font` | SwiftUI Font |

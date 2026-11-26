@@ -85,9 +85,9 @@ size 별 값:
 | large | raw 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) | 500 (`label/weight`) |
 | xlarge | raw 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) | 500 (`label/weight`) |
 
-> weight는 size에 따라 갈린다 — xsmall·small·medium은 `label/weight/bold`(700), large·xlarge는 `label/weight`(500).
+> 위 표는 Figma 컴포넌트 측정 당시의 바인딩을 기록한다.
 >
-> iOS 매핑 (디자인 시스템 합의): `Typography/label/{small,medium,large}` ↔ `BTSemanticToken.label{Small,Medium,Large}` (13/18·14/20·15/20, weight bold 고정 — 값 완전 일치). large·xlarge의 16/24/500 조합은 대응 semantic 토큰이 없어 raw 값(`UIFont.Weight.medium`)으로 직접 구성한다.
+> iOS 매핑은 Foundation의 `label/weight/medium`(600)을 적용한다. xsmall·small·medium은 `BTSemanticToken.label{Small,Medium,Large}`(13/18·14/20·15/20, `UIFont.Weight.semibold`)를 사용한다. large·xlarge는 16/24/500 조합을 `UIFont.Weight.medium`으로 구성한다.
 
 ## 5. Color (variant × semantic 별, default state)
 
