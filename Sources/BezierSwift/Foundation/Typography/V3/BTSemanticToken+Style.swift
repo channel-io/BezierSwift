@@ -85,9 +85,11 @@ extension BTSemanticToken {
     switch self {
     case .displayLarge, .displayMedium,
          .headingXLarge, .headingLarge, .headingMedium,
-         .headingSmall, .headingXSmall, .headingXXSmall,
-         .labelLarge, .labelMedium, .labelSmall:
+         .headingSmall, .headingXSmall, .headingXXSmall:
       return .bold
+
+    case .labelLarge, .labelMedium, .labelSmall:
+      return .medium
 
     case .textXXLarge(let weight),
          .textXLarge(let weight),

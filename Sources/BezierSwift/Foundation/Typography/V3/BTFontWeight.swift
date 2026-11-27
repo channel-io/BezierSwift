@@ -1,15 +1,19 @@
 import SwiftUI
 import UIKit
 
-/// Text, Caption 카테고리에서 사용하는 weight prop.
-/// iOS는 400(regular)/700(bold) 이진 체계.
+/// Bezier V3 타이포그래피의 iOS 폰트 굵기.
 public enum BTFontWeight: Equatable {
+  /// Regular (400).
   case regular
+  /// Medium (600). Apple 시스템 폰트에서는 semibold에 해당한다.
+  case medium
+  /// Bold (700).
   case bold
 
   var swiftUIWeight: Font.Weight {
     switch self {
     case .regular: return .regular
+    case .medium: return .semibold
     case .bold: return .bold
     }
   }
@@ -17,6 +21,7 @@ public enum BTFontWeight: Equatable {
   var uiKitWeight: UIFont.Weight {
     switch self {
     case .regular: return .regular
+    case .medium: return .semibold
     case .bold: return .bold
     }
   }
