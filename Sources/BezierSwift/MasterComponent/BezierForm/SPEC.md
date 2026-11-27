@@ -112,7 +112,7 @@
 
 | 위치 | Token | Figma Style 이름 |
 |---|---|---|
-| FormLabel · RequiredMarker | `BTSemanticToken.labelLarge` | `Typography/label/large` (15 / 700 / lh 20 / ls 0) |
+| FormLabel · RequiredMarker | `BTSemanticToken.labelLarge` | `Typography/label/large` (15 / 600 / lh 20 / ls 0) |
 | Description | `BTSemanticToken.textXSmall(weight: .regular)` | `Typography/text/xsmall` (12 / 400 / lh 16 / ls 0) |
 | ErrorMessage 텍스트 | `BTSemanticToken.captionMedium(weight: .regular)` | `Typography/caption/medium` (12 / 400 / lh 16 / ls 0) |
 

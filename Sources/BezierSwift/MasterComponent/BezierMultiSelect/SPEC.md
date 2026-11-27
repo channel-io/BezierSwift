@@ -150,7 +150,7 @@
 |---|---|---|
 | option label | `.textXLarge(weight: .regular)` | `Typography/text/xlarge` (Inter Regular, size 16, lineHeight 24, letterSpacing `text/letter-spacing/tight` −0.1) |
 | option description | `.captionMedium(weight: .regular)` | `Typography/caption/medium` (Inter Regular, size 12, lineHeight 16, letterSpacing `caption/letter-spacing` 0) |
-| group label | `.textMedium(weight: .bold)` | `Typography/text/medium-bold` (Inter Bold, size 14, lineHeight 18, letterSpacing `text/letter-spacing` 0) |
+| group label | `.textMedium(weight: .bold)` | `Typography/text/medium-bold` (Inter Bold, size 14, lineHeight 18, letterSpacing `text/letter-spacing/default` 0) |
 
 ### Case B — Custom Typography
 

@@ -97,7 +97,7 @@ public enum BezierButtonSize: String, CaseIterable {
 
   /// 라벨 폰트 weight.
   public var fontWeight: UIFont.Weight {
-    self.typographyToken?.resolvedWeight.uiKitWeight ?? .medium
+    self.typographyToken?.resolvedWeight.uiKitWeight ?? BTFontWeight.medium.uiKitWeight
   }
 
   /// 라벨 UIFont. SwiftUI에서는 `Font(uiFont)`로 사용한다.

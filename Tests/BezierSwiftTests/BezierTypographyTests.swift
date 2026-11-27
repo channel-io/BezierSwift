@@ -38,16 +38,10 @@ struct BezierTypographyTests {
     #expect(token.font == .system(size: token.fontSize, weight: .bold))
   }
 
-  @Test("버튼은 크기별 라벨 굵기와 폰트를 일치시킨다", arguments: BezierButtonSize.allCases)
+  @Test("모든 버튼 크기는 Medium 라벨을 사용한다", arguments: BezierButtonSize.allCases)
   func buttonWeight(size: BezierButtonSize) {
-    let expected: UIFont.Weight
-    switch size {
-    case .xsmall, .small, .medium: expected = .semibold
-    case .large, .xlarge: expected = .medium
-    }
-
-    #expect(size.fontWeight == expected)
-    #expect(size.uiFont == .systemFont(ofSize: size.fontSize, weight: expected))
+    #expect(size.fontWeight == .semibold)
+    #expect(size.uiFont == .systemFont(ofSize: size.fontSize, weight: .semibold))
   }
 
   @Test("헤딩과 본문의 기본 자간은 0pt다")

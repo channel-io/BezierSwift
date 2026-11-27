@@ -68,26 +68,23 @@ Figma 매트릭스 총량: 5 × 3 × 3 × 5 = **225 symbols** (전부 실재).
 
 ## 4. Typography (size별)
 
-> **xsmall·small·medium**은 Foundation `Typography/label/*` 텍스트 스타일 토큰에 바인딩되어 있고,
-> **large·xlarge**는 대응 label 스타일 미등록으로 raw 변수 조합(`font-size/16` + `line-height/24` + `label/weight`)이 직접 적용되어 있다.
+> **xsmall·small·medium**은 Foundation `Typography/label/*` 텍스트 스타일을 사용한다.
+> **large·xlarge**는 `font-size/16`, `line-height/24`와 공통 라벨 굵기를 조합한다.
 
 공통값 (5 size 동일):
 - `font-family`: `Inter` (variable: `label/font-family`)
 - `letter-spacing`: `0` (variable: `label/letter-spacing`)
+- iOS 굵기는 모든 크기에서 `label/weight/medium`(600)을 적용한다. UIKit과 SwiftUI는 시스템 폰트의 `.semibold`를 사용한다.
 
 size 별 값:
 
-| size | Figma 바인딩 | fontSize | lineHeight | fontWeight |
-|---|---|---|---|---|
-| xsmall | `Typography/label/small` | 13 (`label/size/small`) | 18 (`label/line-height/small`) | 700 (`label/weight/bold`) |
-| small | `Typography/label/medium` | 14 (`label/size/medium`) | 20 (`label/line-height/medium`) | 700 (`label/weight/bold`) |
-| medium | `Typography/label/large` | 15 (`label/size/large`) | 20 (`label/line-height/large`) | 700 (`label/weight/bold`) |
-| large | raw 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) | 500 (`label/weight`) |
-| xlarge | raw 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) | 500 (`label/weight`) |
-
-> 위 표는 Figma 컴포넌트 측정 당시의 바인딩을 기록한다.
->
-> iOS 매핑은 Foundation의 `label/weight/medium`(600)을 적용한다. xsmall·small·medium은 `BTSemanticToken.label{Small,Medium,Large}`(13/18·14/20·15/20, `UIFont.Weight.semibold`)를 사용한다. large·xlarge는 16/24/500 조합을 `UIFont.Weight.medium`으로 구성한다.
+| size | 스타일 | fontSize | lineHeight |
+|---|---|---|---|
+| xsmall | `Typography/label/small` | 13 (`label/size/small`) | 18 (`label/line-height/small`) |
+| small | `Typography/label/medium` | 14 (`label/size/medium`) | 20 (`label/line-height/medium`) |
+| medium | `Typography/label/large` | 15 (`label/size/large`) | 20 (`label/line-height/large`) |
+| large | 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) |
+| xlarge | 변수 조합 | 16 (`font-size/16`) | 24 (`line-height/24`) |
 
 ## 5. Color (variant × semantic 별, default state)
 

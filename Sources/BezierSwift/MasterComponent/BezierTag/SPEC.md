@@ -48,7 +48,7 @@ Figma 컴포넌트가 정의하는 property와 옵션은 다음이 전부다.
 
 | Size | Font Size | Line Height | Letter Spacing | Font Family Variable |
 |---|---|---|---|---|
-| `xsmall` | 12pt | 16pt | 0 (`text/letter-spacing`) | `text/font-family` (Inter) |
+| `xsmall` | 12pt | 16pt | 0 (`text/letter-spacing/default`) | `text/font-family` (Inter) |
 | `small`  | 14pt | 18pt | 0 (`label/letter-spacing`) | `label/font-family` (Inter) |
 | `medium` | 15pt | 18pt | -0.1pt (`text/letter-spacing/tight`) | `font-family/sans-kr` (Inter) |
 | `large`  | 16pt | 20pt | -0.1pt (`text/letter-spacing/tight`) | `text/font-family` (Inter) |
