@@ -145,7 +145,7 @@ public enum BCSemanticToken: Equatable {
   case stateActive
   case stateDefault
   case stateFocus
-  case stateWarningDefault
+  case stateWarning
   case surfaceDefault
   case surfaceGlassDefault
   case surfaceGlassHigh
@@ -206,25 +206,25 @@ extension BCSemanticToken {
     case .borderNeutralHeavy:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
     case .chartThemeDefault01:
-      return (light: ColorComponentsWithAlpha(red: 0x00, green: 0x97, blue: 0x93, alpha: 1), dark: ColorComponentsWithAlpha(red: 0x02, green: 0xB3, blue: 0xA4, alpha: 1))
+      return Self.chartColor(0x7C, 0x72, 0xFD)
     case .chartThemeDefault02:
-      return (light: ColorComponentsWithAlpha(red: 0x11, green: 0x38, blue: 0x80, alpha: 1), dark: ColorComponentsWithAlpha(red: 0x1B, green: 0x4E, blue: 0xAC, alpha: 1))
+      return Self.chartColor(0x81, 0xDF, 0xDD)
     case .chartThemeDefault03:
-      return Self.chartColor(0xA5, 0x6F, 0xFF)
+      return Self.chartColor(0xFC, 0x97, 0x83)
     case .chartThemeDefault04:
-      return (light: ColorComponentsWithAlpha(red: 0x12, green: 0x92, blue: 0xE9, alpha: 1), dark: ColorComponentsWithAlpha(red: 0x1D, green: 0x9F, blue: 0xF8, alpha: 1))
-    case .chartThemeDefault05:
-      return (light: ColorComponentsWithAlpha(red: 0x69, green: 0x29, blue: 0xC4, alpha: 1), dark: ColorComponentsWithAlpha(red: 0x7B, green: 0x33, blue: 0xE2, alpha: 1))
-    case .chartThemeDefault06:
       return Self.chartColor(0xB1, 0x59, 0x6A)
+    case .chartThemeDefault05:
+      return Self.chartColor(0xFE, 0x71, 0xBA)
+    case .chartThemeDefault06:
+      return Self.chartColor(0xC9, 0x71, 0xEC)
     case .chartThemeDefault07:
-      return Self.chartColor(0xFE, 0xBB, 0xB3)
+      return Self.chartColor(0x4A, 0x75, 0xE3)
     case .chartThemeDefault08:
-      return Self.chartColor(0xF9, 0x6C, 0x62)
+      return Self.chartColor(0x80, 0xB6, 0xFD)
     case .chartThemeDefault09:
-      return Self.chartColor(0xEF, 0xB6, 0x0A)
+      return Self.chartColor(0xFB, 0x90, 0xF1)
     case .chartThemeDefault10:
-      return Self.chartColor(0xB1, 0xB6, 0xC4)
+      return Self.chartColor(0xB4, 0xD6, 0xE5)
     case .dimAbsoluteBlackDefault:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.black40.value)
     case .dimAbsoluteBlackHeavy:
@@ -456,12 +456,12 @@ extension BCSemanticToken {
     case .iconWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
     case .stateActive:
-      return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white80.value)
+      return (light: BCGlobalToken.black85.value, dark: BCGlobalToken.white40.value)
     case .stateDefault:
       return (light: BCGlobalToken.black15.value, dark: BCGlobalToken.white20.value)
     case .stateFocus:
       return (light: BCGlobalToken.black40.value, dark: BCGlobalToken.white40.value)
-    case .stateWarningDefault:
+    case .stateWarning:
       return (light: BCGlobalToken.orange400.value, dark: BCGlobalToken.orange300.value)
     case .surfaceDefault:
       return (light: BCGlobalToken.white100.value, dark: BCGlobalToken.grey900.value)
